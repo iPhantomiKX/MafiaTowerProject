@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <None Include="Assets\Sprites\AddSpritesHere.txt" />
+     <None Include="Assets\Scenes\AddScenesHere.txt" />
+     <None Include="Assets\Prefabs\AddPrefabsHere.txt" />
+     <None Include="Assets\Scripts\AddScriptsHere.txt" />
+     <None Include="Assets\Animation\AddAnimationHere.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
