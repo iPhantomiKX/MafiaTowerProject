@@ -7,7 +7,10 @@ public class PlayerController : MonoBehaviour {
     public Rigidbody2D rb;
     public float speed;
 
+	public static bool shootButton;
+
     private Vector2 velocity;
+
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +21,8 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         //Move player
         Move();
+		FaceMousePos();
+		Shootbutton();
 	}
 
     void Move()
@@ -26,4 +31,23 @@ public class PlayerController : MonoBehaviour {
         velocity = MoveDirectionLR * speed;
         rb.velocity = new Vector2(velocity.x, velocity.y);
     }
+
+	void FaceMousePos()
+	{
+		Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+		Vector3 dir = Input.mousePosition - pos;
+		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+	}
+
+	bool Shootbutton()
+	{
+		if (Input.GetMouseButtonDown (0)) {
+			shootButton = true;
+		} 
+		else
+			shootButton = false;
+
+		return shootButton;
+	}
 }
