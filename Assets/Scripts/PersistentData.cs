@@ -14,7 +14,8 @@ public class PersistentData : MonoBehaviour {
 
 	public static PersistentData m_Instance;
 
-    public List<string> PlayerTraitNames;
+    public List<string> PlayerTraitNames = new List<string>();
+    public int CurrentLevel;
 
 	public bool InitialLoad = false;
 	public bool LoadFailed = false;
@@ -75,14 +76,18 @@ public class PersistentData : MonoBehaviour {
 
 	PlayerData CopyData()
 	{
-		PlayerData returnData = new PlayerData();    
+		PlayerData returnData = new PlayerData();
+
+        returnData.PlayerTraitNames = PlayerTraitNames;
+        returnData.CurrentLevel = CurrentLevel;
 
 		return returnData;
 	}
 
 	void LoadData(PlayerData theData)
 	{
-		
+        this.PlayerTraitNames = theData.PlayerTraitNames;
+        this.CurrentLevel = theData.CurrentLevel;
 	}
 
 	public void SaveDate()
@@ -117,7 +122,8 @@ public class PersistentData : MonoBehaviour {
 [System.Serializable]
 class PlayerData
 {
-
+    public List<string> PlayerTraitNames;
+    public int CurrentLevel;
 }
 
 [System.Serializable]
