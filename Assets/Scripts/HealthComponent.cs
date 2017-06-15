@@ -17,7 +17,9 @@ public class HealthComponent : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		// Debug
+		if (Input.GetKeyUp(KeyCode.K))
+			onDeath ();
 	}
 
 	void TakeDmg(int dmg)

@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\ButtonElement.cs" />
      <Compile Include="Assets\Scripts\ChosenList.cs" />
      <Compile Include="Assets\Scripts\FillList.cs" />
+     <Compile Include="Assets\Scripts\FinishLevel.cs" />
      <Compile Include="Assets\Scripts\GetTraitCount.cs" />
      <Compile Include="Assets\Scripts\Gun.cs" />
      <Compile Include="Assets\Scripts\HealthComponent.cs" />

@@ -30,13 +30,6 @@ public class TraitHolder : MonoBehaviour {
 
 		if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
             SetInputReceived();
-
-		//Debug
-        if (Input.GetKeyUp(KeyCode.K))
-            OnDeath();
-
-		if (Input.GetKeyUp(KeyCode.L))
-			SceneManager.LoadScene("NextLevelScene");
 	}
 
     public void SetCheckObjects(GameObject checkObject)
