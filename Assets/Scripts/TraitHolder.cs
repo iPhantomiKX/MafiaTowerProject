@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class TraitHolder : MonoBehaviour {
 
     public List<TraitBaseClass> TraitList;
@@ -25,6 +27,9 @@ public class TraitHolder : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.E))
             SetInputReceived();
+
+        if (Input.GetKeyUp(KeyCode.K))
+            OnDeath();
 	}
 
     public void SetCheckObjects(GameObject checkObject)
@@ -41,5 +46,19 @@ public class TraitHolder : MonoBehaviour {
         {
             aTrait.SetInput(true);
         }
+    }
+
+    public void OnDeath()
+    {
+        foreach (TraitBaseClass aTrait in TraitList)
+        {
+            if (!PersistentData.m_Instance.PlayerTraitNames.Contains(aTrait.name))
+            {
+                PersistentData.m_Instance.PlayerTraitNames.Add(aTrait.name);
+            }
+        }
+
+        PersistentData.m_Instance.CurrentLevel = 1;
+        SceneManager.LoadScene("DeathScene");
     }
 }
