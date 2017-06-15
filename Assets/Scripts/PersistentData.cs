@@ -93,7 +93,7 @@ public class PersistentData : MonoBehaviour {
 	public void SaveDate()
 	{
 		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create(Application.persistentDataPath);
+		FileStream file = File.Create(Application.persistentDataPath + "/PersistentData.dat");
 
 		PlayerData data = CopyData();
 

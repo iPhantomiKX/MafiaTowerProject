@@ -8,8 +8,11 @@ public class TraitHolder : MonoBehaviour {
 
     public List<TraitBaseClass> TraitList;
 
+	bool b_InTrigger = false;
+
 	// Use this for initialization
 	void Start () {
+		
         foreach (TraitBaseClass aTrait in TraitList)
         {
 			aTrait.StartUp();
@@ -25,15 +28,19 @@ public class TraitHolder : MonoBehaviour {
             aTrait.DoTrait();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+		if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
             SetInputReceived();
 
+		//Debug
         if (Input.GetKeyUp(KeyCode.K))
             OnDeath();
+
+		if (Input.GetKeyUp(KeyCode.L))
+			SceneManager.LoadScene("NextLevelScene");
 	}
 
     public void SetCheckObjects(GameObject checkObject)
-    {
+	{
         foreach (TraitBaseClass aTrait in TraitList)
         {
             aTrait.SetCheckObject(checkObject);
@@ -47,6 +54,11 @@ public class TraitHolder : MonoBehaviour {
             aTrait.SetInput(true);
         }
     }
+
+	public void SetInTrigger(bool status)
+	{
+		b_InTrigger = status;
+	}
 
     public void OnDeath()
     {

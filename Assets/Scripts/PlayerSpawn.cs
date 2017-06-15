@@ -16,8 +16,17 @@ public class PlayerSpawn : MonoBehaviour {
         GameObject go = Instantiate(PlayerPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
 
         // Assign traits through persistentdata 
-        for (int i = 0; i < TraitsList.Count; ++i)
-            go.GetComponent<TraitHolder>().TraitList.Add(TraitsList[i]);
+		for (int i = 0; i < TraitsList.Count; ++i) {
+		
+			foreach (string TraitName in PersistentData.m_Instance.PlayerTraitNames)
+			{
+				if (TraitName.Contains (TraitsList[i].name)) 
+				{
+					Debug.Log (TraitName);
+					go.GetComponentInChildren<TraitHolder> ().TraitList.Add (TraitsList [i]);
+				}
+			}
+		}
 
         PlayerReference = go;
 	}

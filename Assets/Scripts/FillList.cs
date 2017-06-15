@@ -11,7 +11,7 @@ public class FillList : MonoBehaviour {
         foreach (string aTraitName in PersistentData.m_Instance.PlayerTraitNames)
         {
             GameObject go = Instantiate(ButtonPrefab) as GameObject;
-            go.transform.parent = transform;
+            go.transform.SetParent(transform);
             go.GetComponent<ButtonElement>().AttachedTrait = aTraitName;
 
             go.SetActive(true);
@@ -22,4 +22,26 @@ public class FillList : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void AddToList(GameObject toAdd)
+    {
+        GameObject go = Instantiate(ButtonPrefab) as GameObject;
+        go.transform.SetParent(transform);
+        go.GetComponent<ButtonElement>().AttachedTrait = toAdd.GetComponent<ButtonElement>().AttachedTrait;
+
+        go.SetActive(true);
+    }
+
+    public void RemoveFromList(GameObject toRemove)
+    {
+        Transform[] TransformList = GetComponentsInChildren<Transform>();
+        foreach (Transform aTransform in TransformList)
+        {
+            if (aTransform.gameObject == toRemove)
+            {
+                Destroy(aTransform.gameObject);
+                break;
+            }
+        }
+    }
 }

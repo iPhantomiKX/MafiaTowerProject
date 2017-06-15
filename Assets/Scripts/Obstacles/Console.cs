@@ -28,6 +28,7 @@ public class Console : MonoBehaviour {
         Debug.Log("console enter");
 
         col.transform.GetComponent<TraitHolder>().SetCheckObjects(this.gameObject);
+		col.transform.GetComponent<TraitHolder>().SetInTrigger(true);
     }
 
     void OnTriggerExit2D(Collider2D col)
@@ -35,5 +36,6 @@ public class Console : MonoBehaviour {
         Debug.Log("console leave");
 
         col.transform.GetComponent<TraitHolder>().SetCheckObjects(null);
+		col.transform.GetComponent<TraitHolder>().SetInTrigger(false);
     }
 }
