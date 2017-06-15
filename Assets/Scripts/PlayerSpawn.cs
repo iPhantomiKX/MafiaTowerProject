@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSpawn : MonoBehaviour {
 
+	public GameObject Enemy;
     public GameObject PlayerPrefab;
     public List<TraitBaseClass> TraitsList; // List of all traits
 
@@ -28,7 +29,8 @@ public class PlayerSpawn : MonoBehaviour {
 			}
 		}
 
-        PlayerReference = go;
+		PlayerReference = go;
+		Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
 	}
 	
 	// Update is called once per frame
