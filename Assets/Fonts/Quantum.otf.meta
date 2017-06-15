@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: a6ddd98660596414e9a5218219b51c13
+timeCreated: 1497511935
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 200
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Quantum
+  fontNames:
+  - Quantum
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 8caf101a372100c41aeb26db41e5e268, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
