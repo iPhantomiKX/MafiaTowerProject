@@ -19,10 +19,14 @@ public class FinishLevel : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if(ObjectiveManager.GetComponent<ObjectiveManager>().IsComplete()){
-			SceneManager.LoadScene("NextLevelScene");
-			PersistentData.m_Instance.CurrentLevel = SceneManager.GetActiveScene ().buildIndex;
-		}
+        if (col.gameObject.name.Contains("Player"))
+        {
+            if (ObjectiveManager.GetComponent<ObjectiveManager>().IsComplete())
+            {
+                SceneManager.LoadScene("NextLevelScene");
+                PersistentData.m_Instance.CurrentLevel = SceneManager.GetActiveScene().buildIndex;
+            }
+        }
 	}
 
 }
