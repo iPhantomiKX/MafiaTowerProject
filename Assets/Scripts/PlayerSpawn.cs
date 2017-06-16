@@ -31,7 +31,7 @@ public class PlayerSpawn : MonoBehaviour {
 		}
 
 		PlayerReference = go;
-
+        
         if (Enemy)
 		    Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
 		

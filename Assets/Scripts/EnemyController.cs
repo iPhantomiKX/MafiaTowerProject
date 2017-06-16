@@ -31,8 +31,8 @@ public class EnemyController : MonoBehaviour {
 			this.transform.position = Vector2.MoveTowards (this.transform.position, playerPosition, 0.5f * Time.deltaTime);
 		}
 	}
-
-	void OnCollisionEnter2D(Collision2D otherCollider)
+    
+	void OnCollisionStay2D(Collision2D otherCollider)
 	{
 		if (otherCollider.gameObject.tag == "Player") 
 		{
