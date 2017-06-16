@@ -7,8 +7,12 @@ public class EnemyController : MonoBehaviour {
 	public GameObject player;
 	public float radius;
 
+    void Start() {
+        player = GameObject.Find("PlayerObject");
+    }
 	void Update () {
-		UpdateEnemyMovement ();
+        if(player == null) player = GameObject.Find("PlayerObject");
+        UpdateEnemyMovement();
 	}
 
 	void OnDrawGizmosSelected()
@@ -20,11 +24,11 @@ public class EnemyController : MonoBehaviour {
 	void UpdateEnemyMovement()
 	{
 		float distance = Vector2.Distance (this.transform.position, player.transform.position);
-		if (distance < radius) 
+		if (distance <= radius) 
 		{
 			Vector2 enemyPosition = this.transform.position;
 			Vector2 playerPosition = player.transform.position;
-			this.transform.position = Vector2.MoveTowards (this.transform.position, playerPosition, 1f * Time.deltaTime);
+			this.transform.position = Vector2.MoveTowards (this.transform.position, playerPosition, 0.5f * Time.deltaTime);
 		}
 	}
 }
