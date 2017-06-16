@@ -27,4 +27,12 @@ public class EnemyController : MonoBehaviour {
 			this.transform.position = Vector2.MoveTowards (this.transform.position, playerPosition, 1f * Time.deltaTime);
 		}
 	}
+
+	void OnCollisionEnter2D(Collision2D otherCollider)
+	{
+		if (otherCollider.gameObject.tag == "Player") 
+		{
+			player.GetComponent<HealthComponent>().TakeDmg(1);
+		}
+	}
 }

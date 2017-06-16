@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour {
         Move();
 		FaceMousePos();
 		Shootbutton();
+
+		Camera.main.gameObject.transform.position = new Vector3 (rb.position.x, rb.position.y, -10);
+		Camera.main.orthographicSize = 2;
+		
 	}
 
     void Move()
