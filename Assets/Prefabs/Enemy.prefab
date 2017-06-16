@@ -89,8 +89,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  point1: {fileID: 0}
+  point2: {fileID: 0}
   radius: 1
-  dmgCooldown: 0
+  dmgCooldown: 50
 --- !u!212 &212903623144924690
 SpriteRenderer:
   m_ObjectHideFlags: 1

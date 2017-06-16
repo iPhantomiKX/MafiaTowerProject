@@ -18,6 +18,6 @@ public class RescueObjt : Objective {
 	{
 		Debug.Log ("RescuePeep");
 		complete = true;
-		this.GetComponent<SpriteRenderer> ().enabled = false;
+		this.GetComponent<SpriteRenderer>().enabled = false;
 	}
 }

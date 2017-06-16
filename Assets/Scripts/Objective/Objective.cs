@@ -18,6 +18,7 @@ public abstract class Objective : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
+		Debug.Log ("Mousedown");
 		if (ObjectiveManager.GetComponent<ObjectiveManager>().PickAble(this.transform.position)) {
 			doAction ();
 		}

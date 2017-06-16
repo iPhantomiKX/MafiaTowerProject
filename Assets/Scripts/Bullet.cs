@@ -34,7 +34,6 @@ public class Bullet : MonoBehaviour {
 			//
 			//transform.position = position;
 			Vector2 velocity = _direction * speed;
-			Debug.Log(velocity);
 			bullet.velocity = new Vector2(velocity.x, velocity.y);
 
 			Vector2 min = Camera.main.ViewportToWorldPoint (new Vector2 (0, 0));
