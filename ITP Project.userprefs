@@ -1,12 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\StealthScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\HealthComponent.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="45" Column="31" />
-      <File FileName="Assets\Scripts\Gun.cs" Line="24" Column="13" />
-      <File FileName="Assets\Scripts\HealthComponent.cs" Line="38" Column="1" />
-      <File FileName="Assets\Scripts\Bullet.cs" Line="36" Column="37" />
-      <File FileName="Assets\Scripts\StealthScript.cs" Line="34" Column="1" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Gun.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\HealthComponent.cs" Line="25" Column="2" />
+      <File FileName="Assets\Scripts\Bullet.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\StealthScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ObjectiveManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\FinishLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EnemyController.cs" Line="33" Column="49" />
+      <File FileName="Assets\Scripts\Obstacles\Console.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Restart.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

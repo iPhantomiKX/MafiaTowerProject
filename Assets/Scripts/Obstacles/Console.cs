@@ -25,17 +25,24 @@ public class Console : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("console enter");
+        if (col.gameObject.name.Contains("Player"))
+        {
 
-        col.transform.GetComponent<TraitHolder>().SetCheckObjects(this.gameObject);
-		col.transform.GetComponent<TraitHolder>().SetInTrigger(true);
+            Debug.Log("console enter");
+
+            col.transform.GetComponent<TraitHolder>().SetCheckObjects(this.gameObject);
+            col.transform.GetComponent<TraitHolder>().SetInTrigger(true);
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        Debug.Log("console leave");
+        if (col.gameObject.name.Contains("Player"))
+        {
+            Debug.Log("console leave");
 
-        col.transform.GetComponent<TraitHolder>().SetCheckObjects(null);
-		col.transform.GetComponent<TraitHolder>().SetInTrigger(false);
+            col.transform.GetComponent<TraitHolder>().SetCheckObjects(null);
+            col.transform.GetComponent<TraitHolder>().SetInTrigger(false);
+        }
     }
 }

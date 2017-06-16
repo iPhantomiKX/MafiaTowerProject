@@ -31,8 +31,11 @@ public class PlayerSpawn : MonoBehaviour {
 		}
 
 		PlayerReference = go;
-		Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
-		ObjectiveManager.GetComponent<ObjectiveManager> ().PlayerRef = go;
+
+        if (Enemy)
+		    Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
+		
+        ObjectiveManager.GetComponent<ObjectiveManager> ().PlayerRef = go;
 	}
 	
 	// Update is called once per frame
