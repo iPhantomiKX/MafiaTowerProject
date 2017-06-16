@@ -63,7 +63,7 @@ public class TraitHolder : MonoBehaviour {
             }
         }
 
-        PersistentData.m_Instance.CurrentLevel = 1;
+        PersistentData.m_Instance.CurrentLevel = 0;
         SceneManager.LoadScene("DeathScene");
     }
 }

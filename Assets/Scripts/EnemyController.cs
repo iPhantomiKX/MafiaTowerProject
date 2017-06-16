@@ -10,6 +10,10 @@ public class EnemyController : MonoBehaviour {
 	GameObject target;
 
 	public float radius;
+	public float dmgCooldown;
+
+	private float dmgCooldownCountdown = 0.0f;
+	private bool PlayerContact = false;
 
 	void Start(){
 		target = point1;
@@ -17,6 +21,7 @@ public class EnemyController : MonoBehaviour {
 
 	void Update () {
 		UpdateEnemyMovement ();
+		//Debug.Log (dmgCooldownCountdown);
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
@@ -43,8 +48,32 @@ public class EnemyController : MonoBehaviour {
 			UpdateWalking ();
 		}
 	}
-
+		
 	void UpdateWalking(){
 		this.transform.position = Vector2.MoveTowards (this.transform.position, target.transform.position, 0.7f * Time.deltaTime);
+	}
+	void OnCollisionStay2D(Collision2D otherCollider)
+	{
+		if (otherCollider.gameObject.tag == "Player") 
+		{
+			if (!PlayerContact) 
+			{
+				PlayerContact = true;
+				player.GetComponent<HealthComponent>().TakeDmg(1);
+				dmgCooldownCountdown = dmgCooldown;
+			}
+			if (PlayerContact) 
+			{
+				dmgCooldownCountdown -= 1.0f;
+				if (dmgCooldownCountdown <= 0) {
+					player.GetComponent<HealthComponent> ().TakeDmg (1);
+					dmgCooldownCountdown = dmgCooldown;
+				}
+				else 
+				{
+					player.GetComponent<HealthComponent> ().TakeDmg (0);
+				}
+			}
+		}
 	}
 }

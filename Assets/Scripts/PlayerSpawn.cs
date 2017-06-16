@@ -8,6 +8,7 @@ public class PlayerSpawn : MonoBehaviour {
     public GameObject PlayerPrefab;
     public List<TraitBaseClass> TraitsList; // List of all traits
 
+	public GameObject ObjectiveManager;
     private GameObject PlayerReference;
 
 	// Use this for initialization
@@ -30,7 +31,11 @@ public class PlayerSpawn : MonoBehaviour {
 		}
 
 		PlayerReference = go;
-		Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
+        
+        if (Enemy)
+		    Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
+		
+        ObjectiveManager.GetComponent<ObjectiveManager> ().PlayerRef = go;
 	}
 	
 	// Update is called once per frame

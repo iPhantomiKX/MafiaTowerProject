@@ -7,15 +7,18 @@ public class Bullet : MonoBehaviour {
 	public float speed;
 	Vector2 _direction;
 	bool isReady;
+	Rigidbody2D bullet;
 
 	// Use this for initialization
 	void Awake () {
+		bullet = GetComponent<Rigidbody2D> ();
 		isReady = false;
 	}
 
 	public void SetDirection(Vector2 direction)
 	{
 		_direction = direction;
+		_direction = _direction.normalized;
 		isReady = true;
 	}
 	
@@ -23,19 +26,24 @@ public class Bullet : MonoBehaviour {
 	void Update () {
 		if (isReady) 
 		{
-			Vector2 position = transform.position;
-
-			position += _direction * speed * Time.deltaTime;
-
-			transform.position = position;
+			//Vector2 position = transform.position;
+			//
+			//Vector2 velocity = _direction * speed * Time.deltaTime;
+			//
+			//position += new Vector2 (velocity.x, velocity.y);
+			//
+			//transform.position = position;
+			Vector2 velocity = _direction * speed;
+			Debug.Log(velocity);
+			bullet.velocity = new Vector2(velocity.x, velocity.y);
 
 			Vector2 min = Camera.main.ViewportToWorldPoint (new Vector2 (0, 0));
 			Vector2 max = Camera.main.ViewportToWorldPoint (new Vector2 (1, 1));
 
-			if (transform.position.x <= min.x 
-				|| transform.position.y <= min.y
-			    || transform.position.x >= max.x 
-				|| transform.position.y >= max.y) 
+			if (bullet.position.x <= min.x 
+				|| bullet.position.y <= min.y
+			    || bullet.position.x >= max.x 
+				|| bullet.position.y >= max.y) 
 			{
 				Destroy (this.gameObject);
 			}
@@ -46,7 +54,6 @@ public class Bullet : MonoBehaviour {
 	{
 		if (otherCollider.gameObject.tag != "Player") 
 		{
-			Debug.Log (otherCollider.gameObject.name);
 			Destroy (this.gameObject);
 		}
 	}

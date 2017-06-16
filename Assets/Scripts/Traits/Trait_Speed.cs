@@ -28,6 +28,6 @@ public class Trait_Speed : TraitBaseClass {
 
     public override void DoEffect()
     {
-        //PlayerObject.modifier_speed = speed;
+        playerObject.mod_speed = speed;
     }
 }

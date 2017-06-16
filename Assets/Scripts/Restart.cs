@@ -29,7 +29,8 @@ public class Restart : MonoBehaviour {
             	PersistentData.m_Instance.PlayerTraitNames.Add(aTransform.gameObject.GetComponent<ButtonElement>().AttachedTrait);
         }
 
-		SceneManager.LoadScene ("DonTest");
+        PersistentData.m_Instance.CurrentLevel = 0;
+        SceneManager.LoadScene(PersistentData.m_Instance.CurrentLevel);
     }
 
 }
