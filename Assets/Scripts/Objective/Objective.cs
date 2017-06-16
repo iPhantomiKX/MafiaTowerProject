@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Objective : MonoBehaviour {
 
 	public GameObject ObjectiveManager;
+	public string objtname{ get; set; }
 	public bool complete{ get; set;}
 
 	// Use this for initialization
@@ -18,7 +19,6 @@ public abstract class Objective : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		Debug.Log ("Mousedown");
 		if (ObjectiveManager.GetComponent<ObjectiveManager>().PickAble(this.transform.position)) {
 			doAction ();
 		}
