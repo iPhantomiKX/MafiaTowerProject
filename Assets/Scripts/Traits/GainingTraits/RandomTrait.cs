@@ -23,13 +23,13 @@ public class RandomTrait : MonoBehaviour {
 	{
 		int rand = Random.Range (0, TraitList.Count);
 
-		GetComponentInChildren<Text> ().text = TraitList [rand].name;
+		GetComponentInChildren<Text> ().text = TraitList [rand].DisplayName;
 
 		if (PersistentData.m_Instance.PlayerTraitNames.Count == 0) {
-			PersistentData.m_Instance.PlayerTraitNames.Add (TraitList [rand].name);
+            PersistentData.m_Instance.PlayerTraitNames.Add(TraitList[rand].DisplayName);
 		}
-		else if (!PersistentData.m_Instance.PlayerTraitNames.Contains (TraitList [rand].name))
-			PersistentData.m_Instance.PlayerTraitNames.Add (TraitList [rand].name);
+        else if (!PersistentData.m_Instance.PlayerTraitNames.Contains(TraitList[rand].DisplayName))
+            PersistentData.m_Instance.PlayerTraitNames.Add(TraitList[rand].DisplayName);
 
         GetComponent<Button>().interactable = false;
         ButtonToTurnOn.interactable = true;

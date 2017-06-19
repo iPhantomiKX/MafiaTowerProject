@@ -61,9 +61,9 @@ public class TraitHolder : MonoBehaviour {
     {
         foreach (TraitBaseClass aTrait in TraitList)
         {
-            if (!PersistentData.m_Instance.PlayerTraitNames.Contains(aTrait.name))
+            if (!PersistentData.m_Instance.PlayerTraitNames.Contains(aTrait.DisplayName))
             {
-                PersistentData.m_Instance.PlayerTraitNames.Add(aTrait.name);
+                PersistentData.m_Instance.PlayerTraitNames.Add(aTrait.DisplayName);
             }
         }
 

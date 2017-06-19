@@ -12,6 +12,7 @@ public abstract class TraitBaseClass : MonoBehaviour {
     public GameObject ConditionObject;
     public bool IfRequireInput;
     public TRAIT_TYPE traitType;
+    public string DisplayName;
 
     protected GameObject checkObject;
     protected bool inputReceived;
