@@ -3766,6 +3766,14 @@ Prefab:
       propertyPath: objectives.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4015488677932938, guid: 68c4c7004f86efb42b50a088cc33ee08, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015488677932938, guid: 68c4c7004f86efb42b50a088cc33ee08, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.186
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68c4c7004f86efb42b50a088cc33ee08, type: 2}
   m_IsPrefabParent: 0
