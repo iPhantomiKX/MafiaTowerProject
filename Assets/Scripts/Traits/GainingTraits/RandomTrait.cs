@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class RandomTrait : MonoBehaviour {
 
 	public List<TraitBaseClass> TraitList;
+    public Button ButtonToTurnOn;
 
 	// Use this for initialization
 	void Start () {
@@ -29,5 +30,8 @@ public class RandomTrait : MonoBehaviour {
 		}
 		else if (!PersistentData.m_Instance.PlayerTraitNames.Contains (TraitList [rand].name))
 			PersistentData.m_Instance.PlayerTraitNames.Add (TraitList [rand].name);
+
+        GetComponent<Button>().interactable = false;
+        ButtonToTurnOn.interactable = true;
 	}
 }

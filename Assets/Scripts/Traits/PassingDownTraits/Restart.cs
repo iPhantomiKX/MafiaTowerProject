@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Restart : MonoBehaviour {
@@ -16,7 +17,15 @@ public class Restart : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+	
+	    if (ChosenTraitPanel)
+        {
+            if (ChosenTraitPanel.AttachedText.text == "")
+                GetComponent<Button>().interactable = false;
+            else
+                GetComponent<Button>().interactable = true;
+            }
+
 	}
 
     public void DoRestart()
