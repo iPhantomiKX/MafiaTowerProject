@@ -7,6 +7,7 @@ public class Gun : MonoBehaviour {
 	public GameObject GunObject;
 	public GameObject bulletGO;
 	public float fireRate;
+	public int ammo;
 
 	private GameObject newBulletGO;
 	private float fireRateCountdown;
@@ -14,12 +15,13 @@ public class Gun : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		ammo = 20;
 		isShot = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (!isShot && PlayerController.shootButton) 
+		if (!isShot && PlayerController.shootButton && ammo > 0) 
 		{
 			Shoot ();
 			isShot = true;
@@ -39,6 +41,7 @@ public class Gun : MonoBehaviour {
 
 	void Shoot()
 	{
+		ammo--;
 		newBulletGO = (GameObject)Instantiate (bulletGO);
 		newBulletGO.transform.position = GunObject.transform.position;
 		Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - GunObject.transform.position;
