@@ -30,6 +30,10 @@ public class TraitHolder : MonoBehaviour {
 
 		if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
             SetInputReceived();
+
+        // Debug
+        if (Input.GetKeyDown(KeyCode.F))
+            SceneManager.LoadScene("LoseTraitScene");
 	}
 
     public void SetCheckObjects(GameObject checkObject)

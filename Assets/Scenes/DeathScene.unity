@@ -469,7 +469,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599e8fd7639bbbc4eab84c2ea8fbf0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChosenTraitList: {fileID: 1891607713}
+  ChosenTraitList: {fileID: 1891607719}
+  ChosenTraitPanel: {fileID: 0}
 --- !u!1 &208246977
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,53 +539,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 208246977}
---- !u!1 &253623604
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1017194534019056, guid: 72e07b0c98f32ff42b63f77216a5353c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1129950263}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 253623606}
-  - component: {fileID: 253623605}
-  m_Layer: 0
-  m_Name: PersistentData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &253623605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114414101063323276, guid: 72e07b0c98f32ff42b63f77216a5353c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1129950263}
-  m_GameObject: {fileID: 253623604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0478f13419c506747bfa016b9ad87e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerTraitNames: []
-  CurrentLevel: 0
-  InitialLoad: 0
-  LoadFailed: 0
---- !u!4 &253623606
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4266574362385476, guid: 72e07b0c98f32ff42b63f77216a5353c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1129950263}
-  m_GameObject: {fileID: 253623604}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &320188696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,7 +1482,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72e07b0c98f32ff42b63f77216a5353c, type: 2}
-  m_RootGameObject: {fileID: 253623604}
   m_IsPrefabParent: 0
 --- !u!1 &1131886340
 GameObject:
