@@ -1,0 +1,9 @@
+[
+  {
+    "objectSlug": "potion_log",
+    "itemName": "Log Potion",
+    "description": "A potion that logs something to the console.",
+    "itemType": "Consumable",
+    "actionName": "Drink"
+  }   
+]
