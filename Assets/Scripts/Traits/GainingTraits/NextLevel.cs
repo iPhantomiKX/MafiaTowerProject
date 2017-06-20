@@ -19,7 +19,8 @@ public class NextLevel : MonoBehaviour {
 	public void GoNextLevel()
 	{
 		int NextLevelIdx = PersistentData.m_Instance.CurrentLevel + 1;
-		Debug.Log (NextLevelIdx);
+        PersistentData.m_Instance.CurrentLevel = NextLevelIdx;
+
 		SceneManager.LoadScene(NextLevelIdx);
 	}
 }

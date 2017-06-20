@@ -54,4 +54,5 @@ MonoBehaviour:
   ConditionObject: {fileID: 0}
   IfRequireInput: 0
   traitType: 0
+  DisplayName: Speed Feet
   speed: 2

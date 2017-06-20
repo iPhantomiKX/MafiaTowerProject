@@ -22,7 +22,7 @@ public class PlayerSpawn : MonoBehaviour {
 		
 			foreach (string TraitName in PersistentData.m_Instance.PlayerTraitNames)
 			{
-				if (TraitName.Contains (TraitsList[i].name)) 
+                if (TraitName.Contains(TraitsList[i].DisplayName)) 
 				{
 					Debug.Log (TraitName);
 					go.GetComponentInChildren<TraitHolder> ().TraitList.Add (TraitsList [i]);

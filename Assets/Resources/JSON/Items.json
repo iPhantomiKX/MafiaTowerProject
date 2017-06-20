@@ -1,0 +1,18 @@
+[
+  {
+    "id": 0,
+    "itemName": "Medkit",
+    "description": "A medkit for healing purposes.",
+    "itemType": "Consumable",
+    "actionName": "Heal",
+    "slug":  "medkit_temp"
+  },
+  {
+    "id": 1,
+    "itemName": "Weapon",
+    "description": "A weapon for shooting stuff.",
+    "itemType": "Consumable",
+    "actionName": "Shoot",
+    "slug":  "pistol_temp"
+  }   
+]

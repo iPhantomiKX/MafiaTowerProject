@@ -15,5 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DeathScene.unity
   - enabled: 1
     path: Assets/Scenes/NextLevelScene.unity
+  - enabled: 1
+    path: Assets/Scenes/LoseTraitScene.unity
   - enabled: 0
     path: Assets/Scenes/DonTest.unity
