@@ -10,11 +10,17 @@ public class PlayerController : MonoBehaviour {
 
 	public static bool shootButton;
 
+    public Canvas PauseCanvasTemplate;
+
     private Vector2 velocity;
+    private Canvas PauseCanvasRef;
 
 	// Use this for initialization
 	void Start () {
-		
+
+        Canvas cv = Instantiate(PauseCanvasTemplate) as Canvas;
+        cv.gameObject.SetActive(false);
+        PauseCanvasRef = cv;
 	}
 	
 	// Update is called once per frame
@@ -23,6 +29,7 @@ public class PlayerController : MonoBehaviour {
         Move();
 		FaceMousePos();
 		Shootbutton();
+        GetKeyInputs();
 
 		Camera.main.gameObject.transform.position = new Vector3 (rb.position.x, rb.position.y, -10);
 		Camera.main.orthographicSize = 2;
@@ -54,4 +61,12 @@ public class PlayerController : MonoBehaviour {
 
 		return shootButton;
 	}
+
+    void GetKeyInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            PauseCanvasRef.gameObject.SetActive(!PauseCanvasRef.gameObject.activeInHierarchy);
+        }
+    }
 }
