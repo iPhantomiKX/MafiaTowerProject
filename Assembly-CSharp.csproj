@@ -53,11 +53,24 @@
      <Compile Include="Assets\Scripts\FinishLevel.cs" />
      <Compile Include="Assets\Scripts\Gun.cs" />
      <Compile Include="Assets\Scripts\HealthComponent.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ConsumableController.cs" />
+     <Compile Include="Assets\Scripts\Inventory\IConsumable.cs" />
+     <Compile Include="Assets\Scripts\Inventory\InventoryController.cs" />
+     <Compile Include="Assets\Scripts\Inventory\InventoryUI.cs" />
+     <Compile Include="Assets\Scripts\Inventory\InventoryUIDetails.cs" />
+     <Compile Include="Assets\Scripts\Inventory\InventoryUIItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Item.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
+     <Compile Include="Assets\Scripts\Inventory\PotionLog.cs" />
+     <Compile Include="Assets\Scripts\Inventory\UIEventHandler.cs" />
      <Compile Include="Assets\Scripts\Objective\FindObjt.cs" />
      <Compile Include="Assets\Scripts\Objective\Objective.cs" />
      <Compile Include="Assets\Scripts\Objective\RescueObjt.cs" />
      <Compile Include="Assets\Scripts\ObjectiveManager.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Console.cs" />
+     <Compile Include="Assets\Scripts\Pause\CurrentTabDisplay.cs" />
+     <Compile Include="Assets\Scripts\Pause\PauseTabSelection.cs" />
+     <Compile Include="Assets\Scripts\Pause\TabElement.cs" />
      <Compile Include="Assets\Scripts\PersistentData.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PlayerSpawn.cs" />
@@ -97,6 +110,21 @@
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>C:/Users/DonovanSim/Desktop/MafiaTowerProject/Assets/UnityPackages/JsonNet-Lite/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.Cecil">
+ <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Common">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
