@@ -55,4 +55,5 @@ MonoBehaviour:
   IfRequireInput: 0
   traitType: 0
   DisplayName: Speed Feet
+  DisplayDescription: Ability to move faster
   speed: 2

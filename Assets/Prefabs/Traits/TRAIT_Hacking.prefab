@@ -56,3 +56,4 @@ MonoBehaviour:
   IfRequireInput: 1
   traitType: 1
   DisplayName: Hackerman
+  DisplayDescription: Ability to hack certain doors

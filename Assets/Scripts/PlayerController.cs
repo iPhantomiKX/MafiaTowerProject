@@ -26,9 +26,13 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //Move player
-        Move();
-		FaceMousePos();
-		Shootbutton();
+
+        if (!PauseCanvasRef.isActiveAndEnabled)
+        {
+            Move();
+            FaceMousePos();
+            Shootbutton();
+        }
         GetKeyInputs();
 
 		Camera.main.gameObject.transform.position = new Vector3 (rb.position.x, rb.position.y, -10);
