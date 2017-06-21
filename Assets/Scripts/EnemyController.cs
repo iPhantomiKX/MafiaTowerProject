@@ -16,8 +16,15 @@ public class EnemyController : MonoBehaviour {
 	private bool PlayerContact = false;
 
 
+	private Vector3 LastPlayerPosition;
+	public Vector3 SuspiciousPosition{ get; set; }
+	public float SuspiciousTime{ get; set; }
+
+
 
 	void Start(){
+		SuspiciousPosition = Vector3.forward;
+		SuspiciousTime = 0f;
 		
 	}
 
@@ -51,7 +58,12 @@ public class EnemyController : MonoBehaviour {
 		float distance = Vector3.Distance (player.transform.position, this.transform.position);
 
 
-
+		if(SuspiciousPosition != Vector3.forward){
+			SuspiciousTime -= Time.deltaTime;
+			if (SuspiciousTime <= 0)
+				stopSuspicious();
+			return false;
+		} 
 
 		if (angle < angleFOV && distance < radius) {
 			int layerMask = 1 << 8;
@@ -95,6 +107,11 @@ public class EnemyController : MonoBehaviour {
 
 
 
+	}
+
+	void stopSuspicious(){
+		SuspiciousPosition = Vector3.forward;
+		SuspiciousTime = 0;
 	}
 
 	void enemyWalk(){
