@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 
     private Vector2 velocity;
     private Canvas PauseCanvasRef;
+    private GameStateManager GameStateRef;
 
 	// Use this for initialization
 	void Start () {
@@ -21,18 +22,28 @@ public class PlayerController : MonoBehaviour {
         Canvas cv = Instantiate(PauseCanvasTemplate) as Canvas;
         cv.gameObject.SetActive(false);
         PauseCanvasRef = cv;
+
+        GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         //Move player
 
-        if (!PauseCanvasRef.isActiveAndEnabled)
+        if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
         {
+            if (rb.IsSleeping())
+                rb.WakeUp();
+
             Move();
             FaceMousePos();
             Shootbutton();
         }
+        else
+        {
+            rb.Sleep();
+        }
+
         GetKeyInputs();
 
 		Camera.main.gameObject.transform.position = new Vector3 (rb.position.x, rb.position.y, -10);
@@ -71,6 +82,11 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             PauseCanvasRef.gameObject.SetActive(!PauseCanvasRef.gameObject.activeInHierarchy);
+
+            if (PauseCanvasRef.gameObject.activeInHierarchy)
+                GameStateRef.CurrentState = GameStateManager.GAME_STATE.PAUSED;
+            else
+                GameStateRef.CurrentState = GameStateManager.GAME_STATE.RUNNING;
         }
     }
 }

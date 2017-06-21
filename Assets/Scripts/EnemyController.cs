@@ -20,24 +20,39 @@ public class EnemyController : MonoBehaviour {
 	public Vector3 SuspiciousPosition{ get; set; }
 	public float SuspiciousTime{ get; set; }
 
-
+    private GameStateManager GameStateRef;
 
 	void Start(){
 		SuspiciousPosition = Vector3.forward;
 		SuspiciousTime = 0f;
-		
 	}
 
-	void Update () {
-		//Debug.Log (dmgCooldownCountdown);
+    void Update()
+    {
+        //Debug.Log (dmgCooldownCountdown);
 
-		if (isWalking ()) {
-			enemyWalk ();
-		} else {
-			catchPlayer ();
-		}
-			
-	}
+        if (!GameStateRef)
+            GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
+
+        if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+        {
+            if (rb.IsSleeping())
+                rb.WakeUp();
+
+            if (isWalking())
+            {
+                enemyWalk();
+            }
+            else
+            {
+                catchPlayer();
+            }
+        }
+        else
+        {
+            rb.Sleep();
+        }
+    }
 
 	private void Awake(){
 		rb = GetComponent<Rigidbody2D>();
@@ -50,7 +65,6 @@ public class EnemyController : MonoBehaviour {
 		else
 			return true;
 			*/
-
 
 		Vector3 playerDir = player.transform.position - this.transform.position;
 		Vector3 forward = this.transform.up;

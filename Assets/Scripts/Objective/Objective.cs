@@ -13,25 +13,36 @@ public abstract class Objective : MonoBehaviour {
     //public Rect timeBar;
     public RectTransform timeBar;
     public float timeBarWidth;
+
+    private GameStateManager GameStateRef;
+
 	// Use this for initialization
 	public virtual void Start () {
         Debug.Log("Initiated objective: " + this.objtname);
         if(this.isTimed) this.remainingTime = this.time;
         Debug.Log("Timer started. Remaining: " + this.remainingTime + " seconds");
+
+        GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
 	}
 	
 	// Update is called once per frame
 	public virtual void Update () {
 		if(this.isTimed && timeBar != null)
         {
-            remainingTime -= Time.deltaTime;
-            if(remainingTime <= 0 && !complete)
+            if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+            {
+                remainingTime -= Time.deltaTime;
+
+                Vector2 barSize = timeBar.sizeDelta;
+                barSize.x -= (Time.deltaTime / time) * timeBarWidth;
+                timeBar.sizeDelta = barSize;
+            }
+            
+            if (remainingTime <= 0 && !complete)
             {
                 onFail();
             }
-            Vector2 barSize = timeBar.sizeDelta;
-            barSize.x -= (Time.deltaTime / time) * timeBarWidth;
-            timeBar.sizeDelta = barSize;
+
         }
 	}
     public virtual void OnGUI()
