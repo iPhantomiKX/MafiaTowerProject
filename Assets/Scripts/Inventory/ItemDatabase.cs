@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-public class ItemDatabase : MonoBehaviour {
+public class ItemDatabase : MonoBehaviour
+{
     public static ItemDatabase Instance { get; set; }
     private List<Item> Items { get; set; }
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake()
+    {
         if (Instance != null && Instance != this)
             Destroy(gameObject);
         else
             Instance = this;
         BuildDatabase();
-	}
+    }
 
     private void BuildDatabase()
     {
@@ -22,14 +24,14 @@ public class ItemDatabase : MonoBehaviour {
         //Debug.Log(Items[0].ActionName);
     }
 
-    public Item GetItem(string itemSlug)
+    public Item FetchItemByID(int id)
     {
-        foreach(Item item in Items)
+        foreach (Item item in Items)
         {
-            if (item.ObjectSlug == itemSlug)
-                return item; 
+            if (item.ID == id)
+                return item;
         }
-        Debug.LogWarning("couldn't find item: " + itemSlug);
+        Debug.LogWarning("couldn't find item with id: " + id);
         return null;
     }
 }

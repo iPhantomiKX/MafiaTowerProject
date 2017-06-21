@@ -7,22 +7,50 @@ public abstract class Objective : MonoBehaviour {
 	public GameObject ObjectiveManager;
 	public string objtname{ get; set; }
 	public bool complete{ get; set;}
-
+	public bool isTimed;
+    public float time;
+    public float remainingTime;
+    //public Rect timeBar;
+    public RectTransform timeBar;
+    public float timeBarWidth;
 	// Use this for initialization
-	void Start () {
-		
+	public virtual void Start () {
+        Debug.Log("Initiated objective: " + this.objtname);
+        if(this.isTimed) this.remainingTime = this.time;
+        Debug.Log("Timer started. Remaining: " + this.remainingTime + " seconds");
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	public virtual void Update () {
+		if(this.isTimed && timeBar != null)
+        {
+            remainingTime -= Time.deltaTime;
+            if(remainingTime <= 0 && !complete)
+            {
+                onFail();
+            }
+            Vector2 barSize = timeBar.sizeDelta;
+            barSize.x -= (Time.deltaTime / time) * timeBarWidth;
+            timeBar.sizeDelta = barSize;
+        }
 	}
-
+    public virtual void OnGUI()
+    {
+        //if(this.isTimed)
+        //{
+        //    GUI.Box(this.timeBar, Texture2D.whiteTexture);
+        //}
+    }
 	void OnMouseDown(){
 		if (ObjectiveManager.GetComponent<ObjectiveManager>().PickAble(this.transform.position)) {
-			doAction ();
+            if (remainingTime > 0 || !isTimed)
+            {
+                doAction();
+            }
+            else Debug.Log("Time's up");
 		}
 	}
 
+    public abstract void onFail();
 	public abstract void doAction ();
 }

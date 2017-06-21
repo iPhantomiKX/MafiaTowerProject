@@ -9,10 +9,13 @@ public class EnemyController : MonoBehaviour {
 	private float timeToChangeDirection;
 
 	public float radius;
+	public float angleFOV;
 	public float dmgCooldown;
 
 	private float dmgCooldownCountdown = 0.0f;
 	private bool PlayerContact = false;
+
+
 
 	void Start(){
 		
@@ -34,16 +37,69 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	bool isWalking(){
-		float distance = Vector2.Distance (this.transform.position, player.transform.position);
+		/**float distance = Vector2.Distance (this.transform.position, player.transform.position);
 		if (distance < radius)
 			return false;
 		else
 			return true;
+			*/
+
+
+		Vector3 playerDir = player.transform.position - this.transform.position;
+		Vector3 forward = this.transform.up;
+		float angle = Vector3.Angle (playerDir, forward);
+		float distance = Vector3.Distance (player.transform.position, this.transform.position);
+
+
+
+
+		if (angle < angleFOV && distance < radius) {
+			int layerMask = 1 << 8;
+			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, playerDir,Mathf.Infinity,layerMask);
+
+			if (hit.collider != null) {
+				if (hit.collider.gameObject.tag == "Player") {
+					return false;
+
+
+				}
+			} else {
+				//In case part of the body is seen
+				RaycastHit2D hit2 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(playerDir.z + 10f, Vector3.forward) * playerDir,Mathf.Infinity,layerMask);
+
+				if (hit2.collider != null) {
+					if (hit2.collider.gameObject.tag == "Player") {
+						return false;
+
+
+					}
+				} else {
+					RaycastHit2D hit3 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(playerDir.z - 10f, Vector3.forward) * playerDir,Mathf.Infinity,layerMask);
+
+					if (hit3.collider != null) {
+						if (hit3.collider.gameObject.tag == "Player") {
+							return false;
+
+
+						}
+					} 
+				}
+			}
+
+			return true;
+		} else
+			return true;
+
+
+
+
+
+
 	}
 
 	void enemyWalk(){
 		timeToChangeDirection -= Time.deltaTime;
-		if (timeToChangeDirection <= 0) {
+		if (timeToChangeDirection <= 0)  {
 			ChangeDirection ();
 		}
 		rb.velocity = transform.up * 0.5f;
@@ -52,6 +108,10 @@ public class EnemyController : MonoBehaviour {
 	void catchPlayer(){
 		Vector2 playerPosition = player.transform.position;
 		this.transform.position = Vector2.MoveTowards (this.transform.position, playerPosition, 1f * Time.deltaTime);
+		Vector3 toTarget = player.transform.position - this.transform.position;
+		float angle = (Mathf.Atan2 (toTarget.y, toTarget.x) * Mathf.Rad2Deg)-90;
+		Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
+		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, q, Time.deltaTime * 5f);
 	}
 
 	void OnDrawGizmosSelected(){

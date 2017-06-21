@@ -9,7 +9,8 @@ public class ObjectiveManager : MonoBehaviour {
 	public List<GameObject> objectives;
 	public GameObject canvas;
 	public List<Text> objtTexts = new List<Text>();
-
+    public float timeBarWidth;
+    public float timeBarHeight;
 
 	// Use this for initialization
 	void Start () {
@@ -37,25 +38,59 @@ public class ObjectiveManager : MonoBehaviour {
 		GameObject panel =  canvas.transform.GetChild (1).GetChild (1).GetChild (0).gameObject;
 		Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
 		for(int i = 0;i<=objectives.Count-1;i++) {
-			GameObject newText = new GameObject ("Objective" + i);
+			GameObject newText = new GameObject ("Objective " + i);
 			newText.transform.SetParent (panel.transform);
-			newText.transform.localPosition = -Vector3.up * i * 35f;
+			newText.transform.localPosition = -Vector3.up * i * 50f;
 			Text text = newText.AddComponent<Text>();
 			text.font = ArialFont;
 			text.material = ArialFont.material;
 			text.color = Color.yellow;
-			text.text = objectives [i].GetComponent<Objective> ().objtname;
+            Objective thisObjt = objectives[i].GetComponent<Objective>();
+			text.text = thisObjt.objtname;
 			objtTexts.Add (text);
+            if(thisObjt.isTimed)
+            {
+                GameObject objtTimeBar = new GameObject("Objective " + i + " Bar");
+                objtTimeBar.transform.SetParent(newText.transform);
+                objtTimeBar.transform.localPosition = new Vector2(0,30);
+                Image timeBar = objtTimeBar.AddComponent<Image>();
+                //Rect bar = new Rect(text.transform.position.x, text.transform.position.y, timeBarWidth, timeBarHeight);
+                Color barColor = Color.yellow;
+                barColor.a = 0.5f;
+                timeBar.color = barColor;
+                timeBar.rectTransform.pivot = new Vector2(0, 0);
+                timeBar.rectTransform.anchorMin = new Vector2(0, 0.5f);
+                timeBar.rectTransform.anchorMax = new Vector2(0, 0.5f);
+                timeBar.rectTransform.sizeDelta = new Vector2(timeBarWidth, timeBarHeight);
+                thisObjt.timeBar = timeBar.rectTransform;
+
+                thisObjt.timeBarWidth = timeBarWidth;
+                
+            }
 		}
 		panel.SetActive (true);
 		panel.GetComponent<Animator> ().Play ("ObjectiveUIAnimation");
 	}
 
+    public void OnFail(GameObject failObjt)
+    {
+        foreach (Text text in objtTexts)
+        {
+            if (text.text == failObjt.GetComponent<Objective>().objtname)
+            {
+                text.text = text.text + "...failed";
+                text.color = Color.red;
+                return;
+            }
 
-	public void OnComplete(GameObject compObjt){
+        }
+    }
+    public void OnComplete(GameObject compObjt){
 		foreach (Text text in objtTexts) {
 			if (text.text == compObjt.GetComponent<Objective> ().objtname) {
-				text.gameObject.SetActive (false);
+				// text.gameObject.SetActive (false);
+                text.text = text.text + "...done!";
+                text.color = Color.green;
 				return;
 			}
 
