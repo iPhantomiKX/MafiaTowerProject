@@ -32,20 +32,22 @@ public class Restart : MonoBehaviour {
     {
         if (ChosenTraitList != null)
         {
-            PersistentData.m_Instance.PlayerTraitNames.Clear();
+            // Restarting to start
+            PersistentData.m_Instance.PlayerTraits.Clear();
 
             Transform[] TransformList = ChosenTraitList.gameObject.GetComponentsInChildren<Transform>();
             foreach (Transform aTransform in TransformList)
             {
                 if (aTransform.gameObject.name.Contains("Button"))
-                    PersistentData.m_Instance.PlayerTraitNames.Add(aTransform.gameObject.GetComponent<ButtonElement>().AttachedTrait);
+                    PersistentData.m_Instance.PlayerTraits.Add(aTransform.gameObject.GetComponent<ButtonElement>().AttachedTrait);
             }
-
             PersistentData.m_Instance.CurrentLevel = 0;
         }
         else if (ChosenTraitPanel != null)
         {
-            PersistentData.m_Instance.PlayerTraitNames.Remove(ChosenTraitPanel.GetComponent<ChosenTrait>().AttachedText.text);
+            // Restarting back one level
+
+            PersistentData.m_Instance.PlayerTraits.Remove(ChosenTraitPanel.GetComponent<ChosenTrait>().AttachedTrait);
 
             PersistentData.m_Instance.CurrentLevel = Mathf.Max(0, PersistentData.m_Instance.CurrentLevel - 1);
         }

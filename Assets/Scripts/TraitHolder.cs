@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TraitHolder : MonoBehaviour {
 
-    public List<TraitBaseClass> TraitList;
+    List<TraitBaseClass> TraitList= new List<TraitBaseClass>();
 
 	bool b_InTrigger = false;
 
@@ -59,15 +59,25 @@ public class TraitHolder : MonoBehaviour {
 
     public void OnDeath()
     {
-        foreach (TraitBaseClass aTrait in TraitList)
-        {
-            if (!PersistentData.m_Instance.PlayerTraitNames.Contains(aTrait.DisplayName))
-            {
-                PersistentData.m_Instance.PlayerTraitNames.Add(aTrait.DisplayName);
-            }
-        }
+        //foreach (TraitBaseClass aTrait in TraitList)
+        //{
+        //    if (!PersistentData.m_Instance.PlayerTraitNames.Contains(aTrait.DisplayName))
+        //    {
+        //        PersistentData.m_Instance.PlayerTraitNames.Add(aTrait.DisplayName);
+        //    }
+        //}
 
         PersistentData.m_Instance.CurrentLevel = 0;
         SceneManager.LoadScene("DeathScene");
+    }
+
+    public void SetTraits(List<TraitBaseClass> aTraitList)
+    {
+        TraitList = aTraitList;
+        foreach (TraitBaseClass aTrait in TraitList)
+        {
+            aTrait.StartUp();
+            aTrait.SetPlayer(gameObject);
+        }
     }
 }

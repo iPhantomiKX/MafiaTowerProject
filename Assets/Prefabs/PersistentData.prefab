@@ -51,6 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0478f13419c506747bfa016b9ad87e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AllTraits:
+  - {fileID: 114060698452245596, guid: 141f7322e51d8a44d8a6baf5e62b9264, type: 2}
+  - {fileID: 114972266103806630, guid: 9c6b5b25078a164409c621af6415ab95, type: 2}
+  PlayerTraits: []
   PlayerTraitNames: []
   CurrentLevel: 0
   InitialLoad: 0

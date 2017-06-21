@@ -8,11 +8,11 @@ public class FillList : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        foreach (string aTraitName in PersistentData.m_Instance.PlayerTraitNames)
+        foreach (TraitBaseClass aTrait in PersistentData.m_Instance.PlayerTraits)
         {
             GameObject go = Instantiate(ButtonPrefab) as GameObject;
             go.transform.SetParent(transform);
-            go.GetComponent<ButtonElement>().AttachedTrait = aTraitName;
+            go.GetComponent<ButtonElement>().AttachedTrait = aTrait;
 
             go.SetActive(true);
         }

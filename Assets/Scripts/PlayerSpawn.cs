@@ -6,32 +6,21 @@ public class PlayerSpawn : MonoBehaviour {
 
 	public GameObject Enemy;
     public GameObject PlayerPrefab;
-    public List<TraitBaseClass> TraitsList; // List of all traits
-
 	public GameObject ObjectiveManager;
+    
     private GameObject PlayerReference;
-
-	// Use this for initialization
+    private List<TraitBaseClass> TraitsList;
+	
+    // Use this for initialization
 	void Start () {
 
         // Spawn player at the start
         GameObject go = Instantiate(PlayerPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
 
-        // Assign traits through persistentdata 
-		for (int i = 0; i < TraitsList.Count; ++i) {
-		
-			foreach (string TraitName in PersistentData.m_Instance.PlayerTraitNames)
-			{
-                if (TraitName.Contains(TraitsList[i].DisplayName)) 
-				{
-					Debug.Log (TraitName);
-					go.GetComponentInChildren<TraitHolder> ().TraitList.Add (TraitsList [i]);
-				}
-			}
-		}
+        go.GetComponentInChildren<TraitHolder>().SetTraits(PersistentData.m_Instance.PlayerTraits);
 
 		PlayerReference = go;
-        
+
         if (Enemy)
 		    Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
 		

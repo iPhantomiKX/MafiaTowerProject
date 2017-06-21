@@ -14,6 +14,9 @@ public class PersistentData : MonoBehaviour {
 
 	public static PersistentData m_Instance;
 
+    public List<TraitBaseClass> AllTraits = new List<TraitBaseClass>();
+
+    public List<TraitBaseClass> PlayerTraits = new List<TraitBaseClass>();
     public List<string> PlayerTraitNames = new List<string>();
     public int CurrentLevel;
 
@@ -35,14 +38,14 @@ public class PersistentData : MonoBehaviour {
 		{
 			Destroy(gameObject);
 		}
-	}
+        LoadData();
+    }
 
 	// Update is called once per frame
 	void Update () {
 
 		if (!InitialLoad)
 		{
-			LoadData();
 			InitialLoad = true;
 		}
 
@@ -76,6 +79,12 @@ public class PersistentData : MonoBehaviour {
 
 	PlayerData CopyData()
 	{
+        PlayerTraitNames.Clear();
+        foreach (TraitBaseClass aTrait in PlayerTraits)
+        {
+            PlayerTraitNames.Add(aTrait.DisplayName);
+        }
+
 		PlayerData returnData = new PlayerData();
 
         returnData.PlayerTraitNames = PlayerTraitNames;
@@ -86,12 +95,28 @@ public class PersistentData : MonoBehaviour {
 
 	void LoadData(PlayerData theData)
 	{
+        Debug.Log("Load Called");
+
         this.PlayerTraitNames = theData.PlayerTraitNames;
         this.CurrentLevel = theData.CurrentLevel;
+
+        // Load PlayerTraits
+        for (int i = 0; i < AllTraits.Count; ++i)
+        {
+            foreach (string TraitName in PersistentData.m_Instance.PlayerTraitNames)
+            {
+                if (TraitName.Contains(AllTraits[i].DisplayName))
+                {
+                    PlayerTraits.Add(AllTraits[i]);
+                }
+            }
+        }
 	}
 
 	public void SaveDate()
 	{
+        Debug.Log("Save Called");
+
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/PersistentData.dat");
 
@@ -103,10 +128,10 @@ public class PersistentData : MonoBehaviour {
 
 	public void LoadData()
 	{
-		if (File.Exists(Application.persistentDataPath))
+        if (File.Exists(Application.persistentDataPath + "/PersistentData.dat"))
 		{
 			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open(Application.persistentDataPath, FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/PersistentData.dat", FileMode.Open);
 			PlayerData data = (PlayerData)(bf.Deserialize(file));
 
 			LoadData(data);

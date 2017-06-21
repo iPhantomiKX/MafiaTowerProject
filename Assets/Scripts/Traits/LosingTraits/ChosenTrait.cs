@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ChosenTrait : MonoBehaviour {
 
+    public TraitBaseClass AttachedTrait;
     public Text AttachedText;
 
 	// Use this for initialization
@@ -20,6 +21,7 @@ public class ChosenTrait : MonoBehaviour {
 
     public void SetChosenTrait(GameObject toSet)
     {
-        AttachedText.text = toSet.GetComponent<ButtonElement>().AttachedTrait;
+        AttachedTrait = toSet.GetComponent<ButtonElement>().AttachedTrait;
+        AttachedText.text = AttachedTrait.DisplayName;
     }
 }
