@@ -28,8 +28,10 @@ public class TraitHolder : MonoBehaviour {
             aTrait.DoTrait();
         }
 
-		if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
-            SetInputReceived();
+        //if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
+        
+        //if (Input.anyKeyDown)
+            SetInputReceived(FetchKey());
 
         // Debug
         if (Input.GetKeyDown(KeyCode.F))
@@ -44,11 +46,14 @@ public class TraitHolder : MonoBehaviour {
         }
     }
 
-    public void SetInputReceived()
+    public void SetInputReceived(KeyCode key)
     {
         foreach (TraitBaseClass aTrait in TraitList)
         {
-            aTrait.SetInput(true);
+            if (key == KeyCode.None)
+                aTrait.SetInput(false, key);
+            else
+                aTrait.SetInput(true, key);
         }
     }
 
@@ -79,5 +84,19 @@ public class TraitHolder : MonoBehaviour {
             aTrait.StartUp();
             aTrait.SetPlayer(gameObject);
         }
+    }
+
+    KeyCode FetchKey()
+    {
+        int e = System.Enum.GetNames(typeof(KeyCode)).Length;
+        for (int i = 0; i < e; i++)
+        {
+            if (Input.GetKey((KeyCode)i))
+            {
+                return (KeyCode)i;
+            }
+        }
+
+        return KeyCode.None;
     }
 }

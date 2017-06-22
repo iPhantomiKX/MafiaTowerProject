@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour {
     private Canvas PauseCanvasRef;
     private GameStateManager GameStateRef;
 
+    private bool IsDashing = false;
+    private Vector2 DashDir;
+    private float DashSpeed;
+
 	// Use this for initialization
 	void Start () {
 
@@ -56,6 +60,16 @@ public class PlayerController : MonoBehaviour {
         Vector2 MoveDirectionLR = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         velocity = MoveDirectionLR * (speed + mod_speed);
         rb.velocity = new Vector2(velocity.x, velocity.y);
+
+        if (IsDashing)
+        {
+            Vector2 newForce = DashDir * DashSpeed;
+            rb.velocity = newForce;
+            DashSpeed -= Time.deltaTime * 25;
+
+            if (DashSpeed <= 0)
+                IsDashing = false;
+        }
     }
 
 	void FaceMousePos()
@@ -88,5 +102,18 @@ public class PlayerController : MonoBehaviour {
             else
                 GameStateRef.CurrentState = GameStateManager.GAME_STATE.RUNNING;
         }
+    }
+
+    public void SetDash(Vector2 dir, float force)
+    {
+        IsDashing = true;
+
+        DashDir = dir;
+        DashSpeed = force;
+    }
+
+    void OnCollisionEnter()
+    {
+        IsDashing = false;
     }
 }
