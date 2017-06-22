@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Objective : MonoBehaviour {
 
-	public GameObject ObjectiveManager;
+	public ObjectiveManager om;
 	public string objtname{ get; set; }
 	public bool complete{ get; set;}
 	public bool isTimed;
@@ -19,9 +19,12 @@ public abstract class Objective : MonoBehaviour {
 	// Use this for initialization
 	public virtual void Start () {
         Debug.Log("Initiated objective: " + this.objtname);
-        if(this.isTimed) this.remainingTime = this.time;
-        Debug.Log("Timer started. Remaining: " + this.remainingTime + " seconds");
-
+        if (this.isTimed)
+        {
+            this.remainingTime = this.time;
+            Debug.Log("Timer started. Remaining: " + this.remainingTime + " seconds");
+        }
+        om = GameObject.FindObjectOfType<ObjectiveManager>();
         GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
 	}
 	
@@ -53,7 +56,7 @@ public abstract class Objective : MonoBehaviour {
         //}
     }
 	void OnMouseDown(){
-		if (ObjectiveManager.GetComponent<ObjectiveManager>().PickAble(this.transform.position)) {
+		if (om.PickAble(this.transform.position)) {
             if (remainingTime > 0 || !isTimed)
             {
                 doAction();

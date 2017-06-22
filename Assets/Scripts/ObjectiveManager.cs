@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ObjectiveManager : MonoBehaviour {
 
 	public GameObject PlayerRef{ get; set;}
-	public List<GameObject> objectives;
+	public Objective[] objectives;
 	public GameObject canvas;
 	public List<Text> objtTexts = new List<Text>();
     public float timeBarWidth;
@@ -14,6 +14,7 @@ public class ObjectiveManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        objectives = FindObjectsOfType<Objective>();
 		Invoke ("GenerateObjtUI" , 0.5f);
 	}
 	
@@ -23,8 +24,8 @@ public class ObjectiveManager : MonoBehaviour {
 	}
 
 	public bool IsComplete(){
-		foreach (GameObject objt in objectives) {
-			if (!objt.GetComponent<Objective>().complete)
+		foreach (Objective objt in objectives) {
+			if (!objt.complete)
 				return false;
 		}
 		return true;
@@ -37,7 +38,7 @@ public class ObjectiveManager : MonoBehaviour {
 	public void GenerateObjtUI(){
 		GameObject panel =  canvas.transform.GetChild (1).GetChild (1).GetChild (0).gameObject;
 		Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
-		for(int i = 0;i<=objectives.Count-1;i++) {
+		for(int i = 0;i<=objectives.Length-1;i++) {
 			GameObject newText = new GameObject ("Objective " + i);
 			newText.transform.SetParent (panel.transform);
 			newText.transform.localPosition = -Vector3.up * i * 50f;
@@ -45,7 +46,7 @@ public class ObjectiveManager : MonoBehaviour {
 			text.font = ArialFont;
 			text.material = ArialFont.material;
 			text.color = Color.yellow;
-            Objective thisObjt = objectives[i].GetComponent<Objective>();
+            Objective thisObjt = objectives[i];
 			text.text = thisObjt.objtname;
 			objtTexts.Add (text);
             if(thisObjt.isTimed)

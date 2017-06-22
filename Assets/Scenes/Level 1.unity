@@ -2076,16 +2076,6 @@ Prefab:
       propertyPath: objectives.Array.data[1]
       value: 
       objectReference: {fileID: 1689152692}
-    - target: {fileID: 114303098508716836, guid: 68c4c7004f86efb42b50a088cc33ee08,
-        type: 2}
-      propertyPath: timeBarWidth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114303098508716836, guid: 68c4c7004f86efb42b50a088cc33ee08,
-        type: 2}
-      propertyPath: timeBarHeight
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68c4c7004f86efb42b50a088cc33ee08, type: 2}
   m_IsPrefabParent: 0
