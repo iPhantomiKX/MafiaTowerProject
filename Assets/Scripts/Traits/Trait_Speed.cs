@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Trait_Speed : TraitBaseClass {
 
+    [Header("Speed Trait Values")]
     public float speed;
 
     // Use this for initialization

@@ -9,15 +9,20 @@ public abstract class TraitBaseClass : MonoBehaviour {
         PASSIVE,
         ACTIVE,
     }
+
+    [Header("Base Trait Values")]
     public GameObject ConditionObject;
-    public bool IfRequireInput;
     public TRAIT_TYPE traitType;
+    public KeyCode InputKey;
+    public double CooldownTime = 0.0;
     public string DisplayName;
     public string DisplayDescription;
 
     protected GameObject checkObject;
     protected bool inputReceived;
+    protected KeyCode inputKeyReceived;
     protected PlayerController playerObject;
+    protected double CooldownTimer = 0.0;
 
     // Use this for initialization
     void Start()
@@ -43,9 +48,10 @@ public abstract class TraitBaseClass : MonoBehaviour {
         this.checkObject = checkObject;
     }
 
-    public void SetInput(bool status)
+    public void SetInput(bool status, KeyCode key)
     {
         inputReceived = status;
+        inputKeyReceived = key;
     }
 
     public void SetPlayer(GameObject Player)
@@ -61,16 +67,36 @@ public abstract class TraitBaseClass : MonoBehaviour {
         }
         else
         {
-            if (checkObject != null)
+            if (ConditionObject)
             {
-                if (Check(checkObject))
+                if (checkObject != null)
                 {
-                    Debug.Log("check object correct");
-                    if (inputReceived)
+                    // Traits that have a specific object to interact with
+                    if (Check(checkObject))
+                    {
+                        if (inputReceived && inputKeyReceived == InputKey)
+                        {
+                            DoEffect();
+                            inputReceived = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Traits that can be used anywhere
+                if (CooldownTimer <= 0.0)
+                {
+                    if (inputReceived && inputKeyReceived == InputKey)
                     {
                         DoEffect();
                         inputReceived = false;
+                        CooldownTimer = CooldownTime;
                     }
+                }
+                else
+                {
+                    CooldownTimer -= Time.deltaTime;
                 }
             }
         }
