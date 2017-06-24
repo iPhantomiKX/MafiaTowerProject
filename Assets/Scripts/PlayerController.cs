@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
     public float mod_speed = 0; // speed added on by traits
 
 	public static bool shootButton;
+	public static bool meleeButton;
+
 
     public Canvas PauseCanvasTemplate;
 
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour {
             Move();
             FaceMousePos();
             Shootbutton();
+			Meleebutton();
         }
         else
         {
@@ -87,6 +90,17 @@ public class PlayerController : MonoBehaviour {
 		} 
 		else
 			shootButton = false;
+
+		return shootButton;
+	}
+
+	bool Meleebutton()
+	{
+		if (Input.GetKeyDown(KeyCode.C)) {
+			meleeButton = true;
+		} 
+		else
+			meleeButton = false;
 
 		return shootButton;
 	}
