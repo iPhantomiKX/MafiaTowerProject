@@ -41,5 +41,7 @@ public class Trait_Dash : TraitBaseClass
         //playerObject.rb.velocity = (dir * DashDistance );
 
         playerObject.SetDash(dir, DashDistance);
+
+        CooldownTimer = CooldownTime;
     }
 }

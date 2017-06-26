@@ -54,7 +54,6 @@ MonoBehaviour:
   ConditionObject: {fileID: 1225595087646622, guid: 7414b4189c37f0f44a410620702c669b,
     type: 2}
   traitType: 1
-  InputKey: 101
   CooldownTime: 0
   DisplayName: Hackerman
   DisplayDescription: Ability to hack certain doors

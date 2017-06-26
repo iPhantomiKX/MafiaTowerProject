@@ -13,7 +13,6 @@ public abstract class TraitBaseClass : MonoBehaviour {
     [Header("Base Trait Values")]
     public GameObject ConditionObject;
     public TRAIT_TYPE traitType;
-    public KeyCode InputKey;
     public double CooldownTime = 0.0;
     public string DisplayName;
     public string DisplayDescription;
@@ -61,47 +60,67 @@ public abstract class TraitBaseClass : MonoBehaviour {
 
     public void DoTrait()
     {
-        if (traitType == TRAIT_TYPE.PASSIVE)
-        {
-            DoEffect();
-        }
-        else
-        {
-            if (ConditionObject)
-            {
-                if (checkObject != null)
-                {
-                    // Traits that have a specific object to interact with
-                    if (Check(checkObject))
-                    {
-                        if (inputReceived && inputKeyReceived == InputKey)
-                        {
-                            DoEffect();
-                            inputReceived = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // Traits that can be used anywhere
-                if (CooldownTimer <= 0.0)
-                {
-                    if (inputReceived && inputKeyReceived == InputKey)
-                    {
-                        DoEffect();
-                        inputReceived = false;
-                        CooldownTimer = CooldownTime;
-                    }
-                }
-                else
-                {
-                    CooldownTimer -= Time.deltaTime;
-                }
-            }
-        }
+        DoEffect();
+
+        //if (traitType == TRAIT_TYPE.PASSIVE)
+        //{
+        //    DoEffect();
+        //}
+        //else
+        //{
+        //    if (ConditionObject)
+        //    {
+        //        if (checkObject != null)
+        //        {
+        //            // Traits that have a specific object to interact with
+        //            if (Check(checkObject))
+        //            {
+        //                if (inputReceived && inputKeyReceived == InputKey)
+        //                {
+        //                    DoEffect();
+        //                    inputReceived = false;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // Traits that can be used anywhere
+        //        if (CooldownTimer <= 0.0)
+        //        {
+        //            if (inputReceived && inputKeyReceived == InputKey)
+        //            {
+        //                DoEffect();
+        //                inputReceived = false;
+        //                CooldownTimer = CooldownTime;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            CooldownTimer -= Time.deltaTime;
+        //        }
+        //    }
+        //}
     }
 
     public abstract bool Check(GameObject checkObject);
     public abstract void DoEffect();
+
+    public bool GetIfSkill()
+    {
+        if (!ConditionObject && traitType == TRAIT_TYPE.ACTIVE)
+            return true;
+        else
+            return false;
+    }
+
+    public void DoCooldown()
+    {
+        CooldownTimer -= Time.deltaTime;
+    }
+
+    public double GetCooldown()
+    {
+        return CooldownTimer;
+    }
 }

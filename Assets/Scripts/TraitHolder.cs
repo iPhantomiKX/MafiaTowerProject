@@ -25,13 +25,16 @@ public class TraitHolder : MonoBehaviour {
 		
         foreach (TraitBaseClass aTrait in TraitList)
         {
-            aTrait.DoTrait();
+            if (aTrait.traitType == TraitBaseClass.TRAIT_TYPE.PASSIVE)
+                aTrait.DoTrait();
+            else
+                aTrait.DoCooldown();
         }
 
         //if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
         
         //if (Input.anyKeyDown)
-            SetInputReceived(FetchKey());
+            //SetInputReceived(FetchKey());
 
         // Debug
         if (Input.GetKeyDown(KeyCode.F))
