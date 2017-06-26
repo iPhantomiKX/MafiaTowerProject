@@ -628,6 +628,7 @@ MonoBehaviour:
   rb: {fileID: 50314794004968368}
   speed: 1
   mod_speed: 0
+  inspectionRange: 0.3
   PauseCanvasTemplate: {fileID: 223070812105744754, guid: 8f8bd4c18a2c8a34984a30120cc5cf19,
     type: 2}
 --- !u!114 &114215312794144514

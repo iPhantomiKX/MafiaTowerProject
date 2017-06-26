@@ -92,6 +92,7 @@ public class ObjectiveManager : MonoBehaviour {
 				// text.gameObject.SetActive (false);
                 text.text = text.text + "...done!";
                 text.color = Color.green;
+                compObjt.GetComponent<Objective>().remainingTime = 0;
 				return;
 			}
 

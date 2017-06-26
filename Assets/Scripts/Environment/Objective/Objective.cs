@@ -13,6 +13,8 @@ public abstract class Objective : MonoBehaviour {
     //public Rect timeBar;
     public RectTransform timeBar;
     public float timeBarWidth;
+    public int numCompleted = 0;
+    public int numRequired = 1;
 
     private GameStateManager GameStateRef;
 
@@ -37,7 +39,7 @@ public abstract class Objective : MonoBehaviour {
                 remainingTime -= Time.deltaTime;
 
                 Vector2 barSize = timeBar.sizeDelta;
-                barSize.x -= (Time.deltaTime / time) * timeBarWidth;
+                barSize.x = (remainingTime / time) * timeBarWidth;
                 timeBar.sizeDelta = barSize;
             }
             
@@ -47,24 +49,12 @@ public abstract class Objective : MonoBehaviour {
             }
 
         }
-	}
-    public virtual void OnGUI()
-    {
-        //if(this.isTimed)
-        //{
-        //    GUI.Box(this.timeBar, Texture2D.whiteTexture);
-        //}
-    }
-	void OnMouseDown(){
-		if (om.PickAble(this.transform.position)) {
-            if (remainingTime > 0 || !isTimed)
-            {
-                doAction();
-            }
-            else Debug.Log("Time's up");
-		}
+        if (numCompleted == numRequired)
+        {
+            complete = true;
+            om.OnComplete(gameObject);
+        }
 	}
 
     public abstract void onFail();
-	public abstract void doAction ();
 }
