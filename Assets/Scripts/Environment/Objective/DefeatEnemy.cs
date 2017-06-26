@@ -26,10 +26,6 @@ public class DefeatEnemy : Objective
         base.Update();
     }
 
-    public override void doAction()
-    {
-
-    }
     public override void onFail()
     {
         this.enabled = false;

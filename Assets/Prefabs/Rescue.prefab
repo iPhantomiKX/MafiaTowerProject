@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212295014867276928}
   - component: {fileID: 114814704481172936}
   - component: {fileID: 61470144880425142}
+  - component: {fileID: 114119973686641524}
   m_Layer: 0
   m_Name: Rescue
   m_TagString: Untagged
@@ -53,20 +54,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
+--- !u!114 &114119973686641524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797228185905298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcb74afe35c639479c7861eb84463a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114814704481172936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,7 +79,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a33ae264f4a2544b81949f05d94ef75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectiveManager: {fileID: 0}
+  om: {fileID: 0}
+  isTimed: 0
+  time: 0
+  remainingTime: 0
+  timeBar: {fileID: 0}
+  timeBarWidth: 0
+  numCompleted: 0
+  numRequired: 1
 --- !u!212 &212295014867276928
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -109,13 +117,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 1, b: 0.048275948, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0

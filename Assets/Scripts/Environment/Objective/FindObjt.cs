@@ -9,6 +9,8 @@ public class FindObjt : Objective {
     public override void Start()
     {
         objtname = "Find an Item";
+        //Inspect check = GetComponent<Inspect>();
+        //Debug.Log(check);
         base.Start();
 
     }
@@ -19,13 +21,6 @@ public class FindObjt : Objective {
 
     //}
 
-    public override void doAction ()
-	{
-		Debug.Log ("KeyPickup");
-		complete = true;
-		this.GetComponent<SpriteRenderer> ().enabled = false;
-		om.OnComplete (this.gameObject);
-	}
     public override void onFail()
     {
         this.GetComponent<SpriteRenderer>().enabled = false;

@@ -545,31 +545,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114646834594887198, guid: a99b064725221c742ab2ad48f0485d86,
-        type: 2}
-      propertyPath: ObjectiveManager
-      value: 
-      objectReference: {fileID: 1886598874}
-    - target: {fileID: 114646834594887198, guid: a99b064725221c742ab2ad48f0485d86,
-        type: 2}
-      propertyPath: istimed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114646834594887198, guid: a99b064725221c742ab2ad48f0485d86,
-        type: 2}
-      propertyPath: time
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114646834594887198, guid: a99b064725221c742ab2ad48f0485d86,
-        type: 2}
-      propertyPath: isTimed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114646834594887198, guid: a99b064725221c742ab2ad48f0485d86,
-        type: 2}
-      propertyPath: timeBarWidth
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a99b064725221c742ab2ad48f0485d86, type: 2}
   m_IsPrefabParent: 0

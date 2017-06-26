@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 
 	public static bool shootButton;
 	public static bool meleeButton;
-
+    public float inspectionRange;
 
     public Canvas PauseCanvasTemplate;
 
@@ -116,6 +116,33 @@ public class PlayerController : MonoBehaviour {
             else
                 GameStateRef.CurrentState = GameStateManager.GAME_STATE.RUNNING;
         }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            //Inspect[] objects = FindObjectsOfType<Inspect>();
+            //foreach(Inspect ins in objects)
+            //{
+            //    GameObject obj = ins.gameObject;
+                
+            //}
+            Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
+            Debug.Log(obj.Length);
+            
+            foreach (Collider2D col in obj)
+            {
+                if (col != null && col.GetComponent<Inspect>() != null)
+                {
+                    Debug.Log("Inspect " + col);
+                    col.GetComponent<Inspect>().inspect();
+                    break;
+                }
+            
+            }
+        }
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(this.transform.position, inspectionRange);
     }
 
     public void SetDash(Vector2 dir, float force)
