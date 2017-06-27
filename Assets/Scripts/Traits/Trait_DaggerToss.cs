@@ -17,16 +17,6 @@ public class Trait_DaggerToss : TraitBaseClass {
     {
     }
 
-    public override bool Check(GameObject checkObject)
-    {
-        if (checkObject.name == ConditionObject.name)
-        {
-            return true;
-        }
-        else
-            return false;
-    }
-
     public override void DoEffect()
     {
         Vector3 worldMouse = Input.mousePosition;

@@ -15,16 +15,6 @@ public class Trait_Dash : TraitBaseClass
     void Update() {
     }
 
-    public override bool Check(GameObject checkObject)
-    {
-        if (checkObject.name == ConditionObject.name)
-        {
-            return true;
-        }
-        else
-            return false;
-    }
-
     public override void DoEffect()
     {
         Debug.Log("Dash");

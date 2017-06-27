@@ -17,16 +17,6 @@ public class Trait_Speed : TraitBaseClass {
 
     }
 
-    public override bool Check(GameObject checkObject)
-    {
-        if (checkObject == ConditionObject)
-        {
-            return true;
-        }
-        else
-            return false;
-    }
-
     public override void DoEffect()
     {
         playerObject.mod_speed = speed;

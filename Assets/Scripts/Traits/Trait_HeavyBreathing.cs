@@ -19,16 +19,7 @@ public class Trait_HeavyBreathing : TraitBaseClass
     // Update is called once per frame
     void Update()
     {
-    }
 
-    public override bool Check(GameObject checkObject)
-    {
-        if (checkObject.name == ConditionObject.name)
-        {
-            return true;
-        }
-        else
-            return false;
     }
 
     public override void DoEffect()

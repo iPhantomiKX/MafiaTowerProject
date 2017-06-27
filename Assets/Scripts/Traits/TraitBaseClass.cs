@@ -105,7 +105,14 @@ public abstract class TraitBaseClass : MonoBehaviour {
         //}
     }
 
-    public abstract bool Check(GameObject checkObject);
+    public bool Check(GameObject checkObject)
+    {
+        if (ConditionObject == checkObject)
+            return true;
+        else
+            return false;
+    }
+
     public abstract void DoEffect();
 
     public bool GetIfAbility()
