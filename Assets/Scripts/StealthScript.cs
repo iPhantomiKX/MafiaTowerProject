@@ -47,9 +47,9 @@ public class StealthScript : MonoBehaviour {
         {
             if (collider.tag == "Enemy")
             {
-                EnemyController enem = collider.gameObject.GetComponent<EnemyController>();
+				EnemySM enem = collider.gameObject.GetComponent<EnemySM>();
                 enem.SuspiciousPosition = this.transform.position;
-                enem.SuspiciousTime += 2;
+                enem.SuspiciousTime = 10f;
             }
         }
 
