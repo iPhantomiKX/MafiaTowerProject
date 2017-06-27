@@ -75,4 +75,9 @@ public class TraitHolder : MonoBehaviour {
 
         return KeyCode.None;
     }
+
+    public bool CheckForTrait(TraitBaseClass checkTrait)
+    {
+        return TraitList.Contains(checkTrait);
+    }
 }
