@@ -106,8 +106,9 @@ public abstract class EnemySM : MonoBehaviour {
 		if (angle < angleFOV && distance < visionRange) {
 
 			//check if player behind any obstacle
-			int layerMask = 1 << 8;
+			int layerMask = (1 << 8 | 1 << 11);
 			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, playerDir,Mathf.Infinity,layerMask);
+			print (hit.collider.gameObject);
 			if (hit.collider != null) {
 				if (hit.collider.gameObject.tag == "Player") {
 					return true;

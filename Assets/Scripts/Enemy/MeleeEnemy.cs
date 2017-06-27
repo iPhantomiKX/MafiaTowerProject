@@ -205,7 +205,8 @@ public class MeleeEnemy : EnemySM {
 
 		case (int)ENEMY_STATE.DEAD:
 			CurrentState = ENEMY_STATE.DEAD;
-			this.GetComponent<CircleCollider2D>().enabled = false;
+			this.GetComponent<CircleCollider2D> ().enabled = false;
+			Destroy (this.gameObject);
 			break;
 		}
 	}
