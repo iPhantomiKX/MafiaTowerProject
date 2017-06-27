@@ -25,6 +25,13 @@ public class PlayerSpawn : MonoBehaviour {
 		    Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
 		
         ObjectiveManager.GetComponent<ObjectiveManager> ().PlayerRef = go;
+
+        Inspect[] Obstacles = GameObject.FindObjectsOfType<Inspect>();
+        foreach (Inspect anObject in Obstacles)
+        {
+            Debug.Log(anObject.name);
+            anObject.TraitHolderRef = PlayerReference.GetComponentInChildren<TraitHolder>();
+        }
 	}
 	
 	// Update is called once per frame

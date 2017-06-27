@@ -5,7 +5,7 @@ using UnityEngine;
 public class TraitObstacle : MonoBehaviour {
 
     [Tooltip("Trait needed to overcome this obstacle")]
-    public TraitBaseClass RequiredTrait;
+    public ObstacleTrait RequiredTrait;
 
 	// Use this for initialization
 	void Start () {
