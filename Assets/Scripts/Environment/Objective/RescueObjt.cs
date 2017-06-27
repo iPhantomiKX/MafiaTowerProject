@@ -16,18 +16,18 @@ public class RescueObjt : Objective {
 		
 	//}
 
-	public override void doAction ()
-	{
-		Debug.Log ("RescuePeep");
-		complete = true;
-		this.GetComponent<SpriteRenderer> ().enabled = false;
-		ObjectiveManager.GetComponent<ObjectiveManager> ().OnComplete (this.gameObject);
-	}
+	//public override void doAction ()
+	//{
+	//	Debug.Log ("RescuePeep");
+ //       numCompleted++;
+	//	this.GetComponent<SpriteRenderer> ().enabled = false;
+	//	om.OnComplete (this.gameObject);
+	//}
 
     public override void onFail()
     {
         this.GetComponent<SpriteRenderer>().enabled = false;
         this.enabled = false;
-        ObjectiveManager.GetComponent<ObjectiveManager>().OnFail(this.gameObject);
+        om.OnFail(this.gameObject);
     }
 }

@@ -427,6 +427,8 @@ MonoBehaviour:
   - {fileID: 0}
   canvas: {fileID: 1356083654444018}
   objtTexts: []
+  timeBarWidth: 100
+  timeBarHeight: 20
 --- !u!114 &114311309102491818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -535,9 +537,6 @@ MonoBehaviour:
   Enemy: {fileID: 0}
   PlayerPrefab: {fileID: 1754182232926060, guid: 20000c9467437c241bc5301e26dc56ad,
     type: 2}
-  TraitsList:
-  - {fileID: 114060698452245596, guid: 141f7322e51d8a44d8a6baf5e62b9264, type: 2}
-  - {fileID: 114972266103806630, guid: 9c6b5b25078a164409c621af6415ab95, type: 2}
   ObjectiveManager: {fileID: 1211391345353874}
 --- !u!114 &114818669761589536
 MonoBehaviour:

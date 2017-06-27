@@ -25,32 +25,21 @@ public class TraitHolder : MonoBehaviour {
 		
         foreach (TraitBaseClass aTrait in TraitList)
         {
-            aTrait.DoTrait();
+            if (aTrait.GetTraitType() == TraitBaseClass.TRAIT_TYPE.PASSIVE)
+                aTrait.DoTrait();
+            else if (aTrait.GetTraitType() == TraitBaseClass.TRAIT_TYPE.ABILITY)
+                (aTrait as AbilityTrait).DoCooldown();
         }
 
-		if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
-            SetInputReceived();
+        //if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
+        
+        //if (Input.anyKeyDown)
+            //SetInputReceived(FetchKey());
 
         // Debug
         if (Input.GetKeyDown(KeyCode.F))
             SceneManager.LoadScene("LoseTraitScene");
 	}
-
-    public void SetCheckObjects(GameObject checkObject)
-	{
-        foreach (TraitBaseClass aTrait in TraitList)
-        {
-            aTrait.SetCheckObject(checkObject);
-        }
-    }
-
-    public void SetInputReceived()
-    {
-        foreach (TraitBaseClass aTrait in TraitList)
-        {
-            aTrait.SetInput(true);
-        }
-    }
 
 	public void SetInTrigger(bool status)
 	{
@@ -59,14 +48,6 @@ public class TraitHolder : MonoBehaviour {
 
     public void OnDeath()
     {
-        //foreach (TraitBaseClass aTrait in TraitList)
-        //{
-        //    if (!PersistentData.m_Instance.PlayerTraitNames.Contains(aTrait.DisplayName))
-        //    {
-        //        PersistentData.m_Instance.PlayerTraitNames.Add(aTrait.DisplayName);
-        //    }
-        //}
-
         PersistentData.m_Instance.CurrentLevel = 0;
         SceneManager.LoadScene("DeathScene");
     }
@@ -79,5 +60,19 @@ public class TraitHolder : MonoBehaviour {
             aTrait.StartUp();
             aTrait.SetPlayer(gameObject);
         }
+    }
+
+    KeyCode FetchKey()
+    {
+        int e = System.Enum.GetNames(typeof(KeyCode)).Length;
+        for (int i = 0; i < e; i++)
+        {
+            if (Input.GetKey((KeyCode)i))
+            {
+                return (KeyCode)i;
+            }
+        }
+
+        return KeyCode.None;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Objective : MonoBehaviour {
 
-	public GameObject ObjectiveManager;
+	public ObjectiveManager om;
 	public string objtname{ get; set; }
 	public bool complete{ get; set;}
 	public bool isTimed;
@@ -13,28 +13,33 @@ public abstract class Objective : MonoBehaviour {
     //public Rect timeBar;
     public RectTransform timeBar;
     public float timeBarWidth;
+    public int numCompleted = 0;
+    public int numRequired = 1;
 
     private GameStateManager GameStateRef;
 
 	// Use this for initialization
 	public virtual void Start () {
         Debug.Log("Initiated objective: " + this.objtname);
-        if(this.isTimed) this.remainingTime = this.time;
-        Debug.Log("Timer started. Remaining: " + this.remainingTime + " seconds");
+        if (this.isTimed)
+        {
+            this.remainingTime = this.time;
+            Debug.Log("Timer started. Remaining: " + this.remainingTime + " seconds");
+        }
+        om = GameObject.FindObjectOfType<ObjectiveManager>();
+    }
 
+    // Update is called once per frame
+    public virtual void Update () {
         GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
-	}
-	
-	// Update is called once per frame
-	public virtual void Update () {
-		if(this.isTimed && timeBar != null)
+        if (this.isTimed && timeBar != null)
         {
             if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
             {
                 remainingTime -= Time.deltaTime;
 
                 Vector2 barSize = timeBar.sizeDelta;
-                barSize.x -= (Time.deltaTime / time) * timeBarWidth;
+                barSize.x = (remainingTime / time) * timeBarWidth;
                 timeBar.sizeDelta = barSize;
             }
             
@@ -44,24 +49,12 @@ public abstract class Objective : MonoBehaviour {
             }
 
         }
-	}
-    public virtual void OnGUI()
-    {
-        //if(this.isTimed)
-        //{
-        //    GUI.Box(this.timeBar, Texture2D.whiteTexture);
-        //}
-    }
-	void OnMouseDown(){
-		if (ObjectiveManager.GetComponent<ObjectiveManager>().PickAble(this.transform.position)) {
-            if (remainingTime > 0 || !isTimed)
-            {
-                doAction();
-            }
-            else Debug.Log("Time's up");
-		}
+        if (numCompleted == numRequired)
+        {
+            complete = true;
+            om.OnComplete(gameObject);
+        }
 	}
 
     public abstract void onFail();
-	public abstract void doAction ();
 }

@@ -10,6 +10,7 @@ public class StealthScript : MonoBehaviour {
 
 	public Vector3 DefaultScale;
 
+    bool b_RingExpanding = false;
 
 	// Use this for initialization
 	void Start () {
@@ -18,19 +19,13 @@ public class StealthScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (0)) 
+
+        if (Input.GetMouseButtonDown(0))
+            b_RingExpanding = true;
+
+		if (b_RingExpanding) 
 		{
-			StealthRing.gameObject.transform.localScale += StealthRingScaleIncrease;
-			LayerMask layermask = 1 << 9;
-			float radius = this.transform.localScale.x/6;
-			Collider2D [] colliders = Physics2D.OverlapCircleAll (this.transform.position,radius,layermask);
-			foreach (Collider2D collider in colliders) {
-				if (collider.tag == "Enemy") {
-					EnemyController enem = collider.gameObject.GetComponent<EnemyController> ();
-					enem.SuspiciousPosition = this.transform.position;
-					enem.SuspiciousTime += 2;
-				}
-			}
+            ExpandRing();
 		}
 		else 
 		{
@@ -41,5 +36,24 @@ public class StealthScript : MonoBehaviour {
 			}
 		}
 	}
+
+    public void ExpandRing()
+    {
+        StealthRing.gameObject.transform.localScale += StealthRingScaleIncrease;
+        LayerMask layermask = 1 << 9;
+        float radius = this.transform.localScale.x / 6;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(this.transform.position, radius, layermask);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.tag == "Enemy")
+            {
+                EnemyController enem = collider.gameObject.GetComponent<EnemyController>();
+                enem.SuspiciousPosition = this.transform.position;
+                enem.SuspiciousTime += 2;
+            }
+        }
+
+        b_RingExpanding = false;
+    }
 }
 	

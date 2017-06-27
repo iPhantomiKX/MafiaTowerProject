@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trait_Speed : TraitBaseClass {
+public class Trait_Speed : PassiveTrait {
 
+    [Header("Speed Trait Values")]
     public float speed;
 
     // Use this for initialization
@@ -14,16 +15,6 @@ public class Trait_Speed : TraitBaseClass {
     void Update()
     {
 
-    }
-
-    public override bool Check(GameObject checkObject)
-    {
-        if (checkObject == ConditionObject)
-        {
-            return true;
-        }
-        else
-            return false;
     }
 
     public override void DoEffect()

@@ -6,17 +6,16 @@ public abstract class TraitBaseClass : MonoBehaviour {
 
     public enum TRAIT_TYPE
     {
-        PASSIVE,
-        ACTIVE,
+        NIL,
+        PASSIVE,    // Traits that add to player's stats
+        OBSTACLE,     // Traits that have a specific object to trigger
+        ABILITY,    // Traits that can be used anywhere
     }
-    public GameObject ConditionObject;
-    public bool IfRequireInput;
-    public TRAIT_TYPE traitType;
+
+    [Header("Base Trait Values")]
     public string DisplayName;
     public string DisplayDescription;
 
-    protected GameObject checkObject;
-    protected bool inputReceived;
     protected PlayerController playerObject;
 
     // Use this for initialization
@@ -33,49 +32,17 @@ public abstract class TraitBaseClass : MonoBehaviour {
 
 	public void StartUp()
 	{
-		checkObject = null;
-		inputReceived = false;
 		playerObject = null;
 	}
-
-    public void SetCheckObject(GameObject checkObject)
-    {
-        this.checkObject = checkObject;
-    }
-
-    public void SetInput(bool status)
-    {
-        inputReceived = status;
-    }
 
     public void SetPlayer(GameObject Player)
     {
         playerObject = Player.GetComponent<PlayerController>();
     }
 
-    public void DoTrait()
-    {
-        if (traitType == TRAIT_TYPE.PASSIVE)
-        {
-            DoEffect();
-        }
-        else
-        {
-            if (checkObject != null)
-            {
-                if (Check(checkObject))
-                {
-                    Debug.Log("check object correct");
-                    if (inputReceived)
-                    {
-                        DoEffect();
-                        inputReceived = false;
-                    }
-                }
-            }
-        }
-    }
+    public virtual void DoTrait() { }
 
-    public abstract bool Check(GameObject checkObject);
-    public abstract void DoEffect();
+    public virtual void DoEffect() { }
+
+    public virtual TRAIT_TYPE GetTraitType() { return TRAIT_TYPE.NIL; }
 }
