@@ -22,14 +22,16 @@ public class FillSkillbar : MonoBehaviour {
         int skillIdx = 0;
         foreach (TraitBaseClass aTrait in PersistentData.m_Instance.PlayerTraits)
         {
-            if (aTrait.GetIfSkill())
+            if (aTrait.GetIfAbility())
             {
-                SkillSlotList[0].AttachedTrait = aTrait;
+                SkillSlotList[skillIdx].AttachedTrait = aTrait;
+                ++skillIdx;
             }
             else
             {
-                SkillSlotList[0].AttachedTrait = null;
+                SkillSlotList[skillIdx].AttachedTrait = null;
             }
+
         }
 
         TheInputManager.SetSkillSlots(SkillSlotList);

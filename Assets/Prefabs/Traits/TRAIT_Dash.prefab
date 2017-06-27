@@ -52,8 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConditionObject: {fileID: 0}
-  traitType: 1
-  InputKey: 49
+  traitType: 2
   CooldownTime: 3
   DisplayName: Dash
   DisplayDescription: Ability to dash in a straight line

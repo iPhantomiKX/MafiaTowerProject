@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SkillsInputManager : MonoBehaviour {
 
-    public TraitHolder theTraitHolder;
     List<SkillSlot> SkillsSlotList = new List<SkillSlot>(); 
 
 	// Use this for initialization
@@ -13,8 +12,11 @@ public class SkillsInputManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        SetInputReceived(FetchKey());
-	}
+        if (Input.anyKeyDown)
+            SetInputReceived(FetchKey());
+        else
+            SetInputReceived(KeyCode.None);
+    }
 
     public void SetSkillSlots(List<SkillSlot> aList)
     {
@@ -23,14 +25,12 @@ public class SkillsInputManager : MonoBehaviour {
 
     public void SetInputReceived(KeyCode key)
     {
-        //theTraitHolder.SetInputReceived(key);
-
         foreach (SkillSlot aSlot in SkillsSlotList)
         {
             if (!aSlot.AttachedTrait)
                 continue;
 
-            if (key == aSlot.InputKey && aSlot.AttachedTrait.GetCooldown() < 0)
+            if (key == aSlot.InputKey)
                 aSlot.AttachedTrait.DoTrait();
         }
     }

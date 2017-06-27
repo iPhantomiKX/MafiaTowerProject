@@ -6,8 +6,9 @@ public abstract class TraitBaseClass : MonoBehaviour {
 
     public enum TRAIT_TYPE
     {
-        PASSIVE,
-        ACTIVE,
+        PASSIVE,    // Traits that add to player's stats
+        ACTIVE,     // Traits that have a specific object to trigger
+        ABILITY,    // Traits that can be used anywhere
     }
 
     [Header("Base Trait Values")]
@@ -60,7 +61,8 @@ public abstract class TraitBaseClass : MonoBehaviour {
 
     public void DoTrait()
     {
-        DoEffect();
+        if (CooldownTimer <= 0.0)
+            DoEffect();
 
         //if (traitType == TRAIT_TYPE.PASSIVE)
         //{
@@ -106,9 +108,9 @@ public abstract class TraitBaseClass : MonoBehaviour {
     public abstract bool Check(GameObject checkObject);
     public abstract void DoEffect();
 
-    public bool GetIfSkill()
+    public bool GetIfAbility()
     {
-        if (!ConditionObject && traitType == TRAIT_TYPE.ACTIVE)
+        if (traitType == TRAIT_TYPE.ABILITY)
             return true;
         else
             return false;

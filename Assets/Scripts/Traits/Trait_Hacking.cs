@@ -16,9 +16,7 @@ public class Trait_Hacking : TraitBaseClass {
     public override bool Check(GameObject checkObject)
     {
 		if (checkObject.name == ConditionObject.name)
-        {
             return true;
-        }
         else
             return false;
     }
