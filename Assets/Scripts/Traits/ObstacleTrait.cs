@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trait_Persuasion : ObstacleTrait {
+public class ObstacleTrait : TraitBaseClass {
 
 	// Use this for initialization
 	void Start () {
@@ -14,9 +14,15 @@ public class Trait_Persuasion : ObstacleTrait {
 		
 	}
 
-    public override void DoEffect()
+    public override void DoTrait()
     {
 
     }
 
+    public virtual void DoEffect() { }
+
+    public override TRAIT_TYPE GetTraitType()
+    {
+        return TRAIT_TYPE.OBSTACLE;
+    }
 }

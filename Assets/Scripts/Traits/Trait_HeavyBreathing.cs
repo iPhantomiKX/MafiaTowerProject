@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trait_HeavyBreathing : TraitBaseClass
+public class Trait_HeavyBreathing : PassiveTrait
 {
 
     [Header("HeavyBreathing Trait Values")]

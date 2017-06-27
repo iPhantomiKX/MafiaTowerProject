@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trait_DaggerToss : TraitBaseClass {
+public class Trait_DaggerToss : AbilityTrait {
 
     [Header("DaggerToss Trait Values")]
     public GameObject DaggerPrefab;
@@ -31,7 +31,5 @@ public class Trait_DaggerToss : TraitBaseClass {
         go.transform.position = playerObject.transform.position;
 
         go.GetComponent<Bullet>().SetDirection(dir);
-
-        CooldownTimer = CooldownTime;
     }
 }

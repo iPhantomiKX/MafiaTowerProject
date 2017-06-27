@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trait_Hacking : TraitBaseClass {
+public class Trait_Hacking : ObstacleTrait {
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +15,6 @@ public class Trait_Hacking : TraitBaseClass {
 
     public override void DoEffect()
     {
-        checkObject.GetComponent<Console>().OpenDoor();
+        //checkObject.GetComponent<Console>().OpenDoor();
     }
 }

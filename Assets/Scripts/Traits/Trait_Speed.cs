@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trait_Speed : TraitBaseClass {
+public class Trait_Speed : PassiveTrait {
 
     [Header("Speed Trait Values")]
     public float speed;

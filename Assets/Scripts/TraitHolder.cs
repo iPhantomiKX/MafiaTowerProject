@@ -25,10 +25,10 @@ public class TraitHolder : MonoBehaviour {
 		
         foreach (TraitBaseClass aTrait in TraitList)
         {
-            if (aTrait.traitType == TraitBaseClass.TRAIT_TYPE.PASSIVE)
+            if (aTrait.GetTraitType() == TraitBaseClass.TRAIT_TYPE.PASSIVE)
                 aTrait.DoTrait();
-            else
-                aTrait.DoCooldown();
+            else if (aTrait.GetTraitType() == TraitBaseClass.TRAIT_TYPE.ABILITY)
+                (aTrait as AbilityTrait).DoCooldown();
         }
 
         //if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
@@ -41,25 +41,6 @@ public class TraitHolder : MonoBehaviour {
             SceneManager.LoadScene("LoseTraitScene");
 	}
 
-    public void SetCheckObjects(GameObject checkObject)
-	{
-        foreach (TraitBaseClass aTrait in TraitList)
-        {
-            aTrait.SetCheckObject(checkObject);
-        }
-    }
-
-    public void SetInputReceived(KeyCode key)
-    {
-        foreach (TraitBaseClass aTrait in TraitList)
-        {
-            if (key == KeyCode.None)
-                aTrait.SetInput(false, key);
-            else
-                aTrait.SetInput(true, key);
-        }
-    }
-
 	public void SetInTrigger(bool status)
 	{
 		b_InTrigger = status;
@@ -67,14 +48,6 @@ public class TraitHolder : MonoBehaviour {
 
     public void OnDeath()
     {
-        //foreach (TraitBaseClass aTrait in TraitList)
-        //{
-        //    if (!PersistentData.m_Instance.PlayerTraitNames.Contains(aTrait.DisplayName))
-        //    {
-        //        PersistentData.m_Instance.PlayerTraitNames.Add(aTrait.DisplayName);
-        //    }
-        //}
-
         PersistentData.m_Instance.CurrentLevel = 0;
         SceneManager.LoadScene("DeathScene");
     }
