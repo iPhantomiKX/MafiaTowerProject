@@ -27,12 +27,12 @@ public abstract class Objective : MonoBehaviour {
             Debug.Log("Timer started. Remaining: " + this.remainingTime + " seconds");
         }
         om = GameObject.FindObjectOfType<ObjectiveManager>();
+    }
+
+    // Update is called once per frame
+    public virtual void Update () {
         GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
-	}
-	
-	// Update is called once per frame
-	public virtual void Update () {
-		if(this.isTimed && timeBar != null)
+        if (this.isTimed && timeBar != null)
         {
             if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
             {
