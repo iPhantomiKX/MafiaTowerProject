@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61808649471693830}
   - component: {fileID: 50732411278629414}
   - component: {fileID: 114505512383454472}
+  - component: {fileID: 114382082532320434}
   m_Layer: 0
   m_Name: LaserAlarm
   m_TagString: Untagged
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1349152441447342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.424, y: 0.484, z: 0}
+  m_LocalPosition: {x: 2.7441318, y: -0.661437, z: 0}
   m_LocalScale: {x: 0.65237224, y: 18.458467, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,6 +78,23 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -0.00091977516}
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.14099185}
+--- !u!114 &114382082532320434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1349152441447342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9601a6fad1eaabd4395788a96ed76238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxInitialRadius: 50
+  expandSpeed: 1
+  stayExpandSpeed: 0.25
+  maxRadius: 60
+  fadeSpeed: 0.02
+  sc: {fileID: 114821803060620018, guid: f09d552dff7a86444a0fad6c845a325a, type: 2}
 --- !u!114 &114505512383454472
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -16,6 +16,7 @@ public class Glass : MonoBehaviour {
     public void glassBreak() {
         if (GetComponent<Collider2D>().enabled)
         {
+            GetComponent<EmitSound>().emitSound();
             GetComponent<Collider2D>().enabled = false;
             Debug.Log("Glass broken!");
         }
