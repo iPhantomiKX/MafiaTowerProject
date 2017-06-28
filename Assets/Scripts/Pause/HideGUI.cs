@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserAlarm : TraitObstacle {
+public class HideGUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -11,19 +11,11 @@ public class LaserAlarm : TraitObstacle {
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if(col.gameObject.tag == "Player")
-        {
-            GetComponent<EmitSound>().emitSound();
-        }
-    }
-
-    public void SwitchOff()
+    public void HideGUIElements()
     {
         gameObject.SetActive(false);
     }
+
 }

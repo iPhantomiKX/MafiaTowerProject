@@ -57,6 +57,7 @@ MonoBehaviour:
   - {fileID: 114792850568278244, guid: bfb527a012f968d4e9c101122fc73a98, type: 2}
   - {fileID: 114298861836104356, guid: 414e8fe6a30f14645839c419cc6f0717, type: 2}
   - {fileID: 114365465604991374, guid: 503e931bd44daab4baeddc0577b473ec, type: 2}
+  - {fileID: 114611864192511310, guid: fd4c96812fc04264cb214940de46641f, type: 2}
   PlayerTraits: []
   PlayerTraitNames: []
   CurrentLevel: 0

@@ -11,10 +11,8 @@ public class SkillNumber : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        if (AttachedButton.GetComponent<SkillSlot>().AttachedTrait)
             GetComponent<Text>().text = AttachedButton.GetComponent<SkillSlot>().InputKey.ToString();
-        else
-            GetComponent<Text>().text = "";
+
         }
 	
 	// Update is called once per frame

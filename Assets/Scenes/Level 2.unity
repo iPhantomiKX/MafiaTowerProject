@@ -2511,6 +2511,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 212933034901790488, guid: 7b17364290145cb4586b94ed228d72f0,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b17364290145cb4586b94ed228d72f0, type: 2}
   m_IsPrefabParent: 0
@@ -4018,6 +4023,16 @@ Prefab:
         type: 2}
       propertyPath: enemies.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114689061988038064, guid: ad8186df4bf70414080c8387ceead241,
+        type: 2}
+      propertyPath: all
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114689061988038064, guid: ad8186df4bf70414080c8387ceead241,
+        type: 2}
+      propertyPath: isTimed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad8186df4bf70414080c8387ceead241, type: 2}

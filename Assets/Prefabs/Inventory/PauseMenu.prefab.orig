@@ -3427,6 +3427,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 775, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
 --- !u!224 &224997854463127298
 RectTransform:
   m_ObjectHideFlags: 1
@@ -3445,7 +3446,10 @@ RectTransform:
   m_AnchoredPosition: {x: -197, y: 83}
   m_SizeDelta: {x: 749, y: 426}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225983484871881572
+=======
 --- !u!225 &225671057040486024
+>>>>>>> 7677b457e0424dc96e2046b9da195cc9e0345162
 CanvasGroup:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

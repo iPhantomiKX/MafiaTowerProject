@@ -16,5 +16,14 @@
     "itemType": "Consumable",
     "actionName": "Shoot",
     "slug":  "pistol_temp"
+  },
+  {
+    "id": 2,
+    "itemName": "Yellow Key",
+    "description": "A key to unlock some doors.",
+    "stackable": false,
+    "itemType": "KeyItem",
+    "actionName": "Unlock",
+    "slug":  "yellow_key_temp"
   }   
 ]

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 public class Item {
 
-    public enum ItemTypes { Weapon, Consumable}
+    public enum ItemTypes { Weapon, Consumable, KeyItem}
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public ItemTypes ItemType { get; set; }
     public Sprite Sprite { get; set; }
@@ -17,7 +17,7 @@ public class Item {
     public string Slug { get; set; }
     // public List<BaseStat> Stats { get; s et; }
     //public bool ItemModifier { get; set; }
-    // Other values to maybe add later: Stackable, Value, rarity, power
+    // Other values to maybe add later:  Value, rarity, power
             
     [Newtonsoft.Json.JsonConstructor]
     public Item(int id, string description, ItemTypes itemType ,string actionName, string itemName, string slug)

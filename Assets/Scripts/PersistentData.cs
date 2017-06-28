@@ -54,6 +54,12 @@ public class PersistentData : MonoBehaviour {
 		{
 			// Load whatever numbers here
 		}
+
+        if (Input.GetKeyUp(KeyCode.Alpha0))
+        {
+            PlayerTraits = AllTraits;
+        }
+
 	}
 
 	#if UNITY_ANDROID

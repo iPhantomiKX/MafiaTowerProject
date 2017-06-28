@@ -23,6 +23,7 @@ public abstract class EnemySM : MonoBehaviour {
 	public Vector3 LastPLayerPosition;
 	public Vector3 PatrolPosition;
 	public float SuspiciousTime;
+	public float SuspiciousMax;
 	public float AlertTime;
 	public bool alert;
 	public float idleTime;
@@ -145,6 +146,13 @@ public abstract class EnemySM : MonoBehaviour {
 	public void StopSuspicious(){
 		SuspiciousPosition = Vector3.forward;
 		SuspiciousTime = 0;
+		SuspiciousMax = 0;
+	}
+
+	public void StartSuspicious(Vector3 pos,float t){
+		SuspiciousPosition = pos;
+		SuspiciousMax = t;
+		SuspiciousTime = t;
 	}
 
 	protected void WalkForward(){
