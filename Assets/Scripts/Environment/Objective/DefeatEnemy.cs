@@ -5,7 +5,7 @@ using UnityEngine;
 public class DefeatEnemy : Objective
 {
 
-    public EnemyController[] enemies;
+	public EnemySM[] enemies;
     public bool all;
     // Use this for initialization
     public override void Start()
@@ -13,7 +13,7 @@ public class DefeatEnemy : Objective
         objtname = "Defeat enemies";
         if(all)
         {
-            enemies = GameObject.FindObjectsOfType<EnemyController>();
+			enemies = GameObject.FindObjectsOfType<EnemySM>();
         }
         base.Start();
 
