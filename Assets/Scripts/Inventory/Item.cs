@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 public class Item {
 
-    public enum ItemTypes { Weapon, Consumable}
+    public enum ItemTypes { Weapon, Consumable, KeyItem}
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public ItemTypes ItemType { get; set; }
     public Sprite Sprite { get; set; }

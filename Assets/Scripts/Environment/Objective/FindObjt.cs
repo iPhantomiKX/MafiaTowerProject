@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FindObjt : Objective {
 
-
+    public int itemID;
     // Use this for initialization
     public override void Start()
     {
