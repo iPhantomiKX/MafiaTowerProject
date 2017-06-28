@@ -49,37 +49,76 @@
      <Compile Include="Assets\Scripts\AI\BaseFSM.cs" />
      <Compile Include="Assets\Scripts\AI\MeleeExample.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
+     <Compile Include="Assets\Scripts\CooldownDisplay.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemySM.cs" />
+     <Compile Include="Assets\Scripts\Enemy\MeleeEnemy.cs" />
+     <Compile Include="Assets\Scripts\Enemy\Message.cs" />
+     <Compile Include="Assets\Scripts\Enemy\MessageBoard.cs" />
      <Compile Include="Assets\Scripts\EnemyController.cs" />
+     <Compile Include="Assets\Scripts\Environment\EmitSound.cs" />
+     <Compile Include="Assets\Scripts\Environment\Inspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Inspectable.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\DefeatEnemy.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\FindObjt.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\FindObjtInspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\Objective.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\ReachArea.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\RescueObjt.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\RescueObjtInspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\Console.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\ConsoleInspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\Glass.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\GlassInspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\LaserAlarm.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\TraitObstacle.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\WaitTrap.cs" />
+     <Compile Include="Assets\Scripts\Environment\SoundCircleController.cs" />
+     <Compile Include="Assets\Scripts\FillSkillbar.cs" />
      <Compile Include="Assets\Scripts\FinishLevel.cs" />
+     <Compile Include="Assets\Scripts\GameStateManager.cs" />
      <Compile Include="Assets\Scripts\Gun.cs" />
      <Compile Include="Assets\Scripts\HealthComponent.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemData.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
-     <Compile Include="Assets\Scripts\Objective\FindObjt.cs" />
-     <Compile Include="Assets\Scripts\Objective\Objective.cs" />
-     <Compile Include="Assets\Scripts\Objective\RescueObjt.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Slot.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Tooltip.cs" />
+     <Compile Include="Assets\Scripts\Melee.cs" />
      <Compile Include="Assets\Scripts\ObjectiveManager.cs" />
-     <Compile Include="Assets\Scripts\Obstacles\Console.cs" />
+     <Compile Include="Assets\Scripts\Pause\AssignTrait.cs" />
      <Compile Include="Assets\Scripts\Pause\CurrentTabDisplay.cs" />
+     <Compile Include="Assets\Scripts\Pause\GetTraitDescription.cs" />
+     <Compile Include="Assets\Scripts\Pause\HideGUI.cs" />
      <Compile Include="Assets\Scripts\Pause\PauseTabSelection.cs" />
      <Compile Include="Assets\Scripts\Pause\TabElement.cs" />
+     <Compile Include="Assets\Scripts\Pause\TraitSelectMenu.cs" />
      <Compile Include="Assets\Scripts\PersistentData.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PlayerSpawn.cs" />
      <Compile Include="Assets\Scripts\PlayerUIScript.cs" />
+     <Compile Include="Assets\Scripts\SkillNumber.cs" />
+     <Compile Include="Assets\Scripts\SkillSlot.cs" />
+     <Compile Include="Assets\Scripts\SkillsInputManager.cs" />
      <Compile Include="Assets\Scripts\StealthScript.cs" />
      <Compile Include="Assets\Scripts\TraitHolder.cs" />
+     <Compile Include="Assets\Scripts\Traits\AbilityTrait.cs" />
      <Compile Include="Assets\Scripts\Traits\GainingTraits\NextLevel.cs" />
      <Compile Include="Assets\Scripts\Traits\GainingTraits\RandomTrait.cs" />
      <Compile Include="Assets\Scripts\Traits\LosingTraits\ChosenTrait.cs" />
+     <Compile Include="Assets\Scripts\Traits\ObstacleTrait.cs" />
      <Compile Include="Assets\Scripts\Traits\PassingDownTraits\ButtonElement.cs" />
      <Compile Include="Assets\Scripts\Traits\PassingDownTraits\ChosenList.cs" />
      <Compile Include="Assets\Scripts\Traits\PassingDownTraits\FillList.cs" />
      <Compile Include="Assets\Scripts\Traits\PassingDownTraits\GetTraitCount.cs" />
      <Compile Include="Assets\Scripts\Traits\PassingDownTraits\Restart.cs" />
+     <Compile Include="Assets\Scripts\Traits\PassiveTrait.cs" />
      <Compile Include="Assets\Scripts\Traits\TraitBaseClass.cs" />
+     <Compile Include="Assets\Scripts\Traits\Trait_DaggerToss.cs" />
+     <Compile Include="Assets\Scripts\Traits\Trait_Dash.cs" />
      <Compile Include="Assets\Scripts\Traits\Trait_Hacking.cs" />
+     <Compile Include="Assets\Scripts\Traits\Trait_HeavyBreathing.cs" />
+     <Compile Include="Assets\Scripts\Traits\Trait_Persuasion.cs" />
      <Compile Include="Assets\Scripts\Traits\Trait_Speed.cs" />
      <None Include="Assets\Resources\Sprites\AddSpritesHere.txt" />
      <None Include="Assets\Scenes\AddScenesHere.txt" />
@@ -106,7 +145,19 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/Noot/Documents/GitHub/MafiaTowerProject/Assets/UnityPackages/JsonNet-Lite/Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/DonovanSim/Desktop/MafiaTowerProject/Assets/UnityPackages/JsonNet-Lite/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.Cecil">
+ <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Common">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
