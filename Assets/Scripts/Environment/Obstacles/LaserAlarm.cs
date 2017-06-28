@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserAlarm : MonoBehaviour {
+public class LaserAlarm : TraitObstacle {
 
 	// Use this for initialization
 	void Start () {
@@ -13,11 +13,17 @@ public class LaserAlarm : MonoBehaviour {
 	void Update () {
 		
 	}
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "Player")
         {
             GetComponent<EmitSound>().emitSound();
         }
+    }
+
+    public void SwitchOff()
+    {
+        gameObject.SetActive(false);
     }
 }
