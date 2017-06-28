@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class SkillsInputManager : MonoBehaviour {
 
-    List<SkillSlot> SkillsSlotList = new List<SkillSlot>(); 
+    List<SkillSlot> SkillsSlotList = new List<SkillSlot>();
+
+    List<KeyCode> InputBuffer = new List<KeyCode>();
 
 	// Use this for initialization
 	void Start () {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (Input.anyKeyDown)
-            SetInputReceived(FetchKey());
+    void Update()
+    {
+        if (Input.anyKey)
+        {
+            InputBuffer.Add(FetchKey());
+            SetInputReceived(InputBuffer);
+        }
         else
-            SetInputReceived(KeyCode.None);
+        {
+            InputBuffer.Clear();
+        }
     }
 
     public void SetSkillSlots(List<SkillSlot> aList)
@@ -23,15 +31,22 @@ public class SkillsInputManager : MonoBehaviour {
         SkillsSlotList = aList;
     }
 
-    public void SetInputReceived(KeyCode key)
+    public void SetInputReceived(List<KeyCode> keyBuffer)
     {
         foreach (SkillSlot aSlot in SkillsSlotList)
         {
             if (!aSlot.AttachedTrait)
                 continue;
 
-            if (key == aSlot.InputKey)
-                aSlot.AttachedTrait.DoTrait();
+            foreach (KeyCode key in keyBuffer)
+            {
+                if (key == aSlot.InputKey)
+                {
+                    aSlot.AttachedTrait.DoTrait();
+                    InputBuffer.Clear();
+                    return;
+                }
+            }
         }
     }
 
@@ -40,7 +55,7 @@ public class SkillsInputManager : MonoBehaviour {
         int e = System.Enum.GetNames(typeof(KeyCode)).Length;
         for (int i = 0; i < e; i++)
         {
-            if (Input.GetKey((KeyCode)i))
+            if (Input.GetKey((KeyCode)i) && !InputBuffer.Contains(((KeyCode)i)))
             {
                 return (KeyCode)i;
             }
