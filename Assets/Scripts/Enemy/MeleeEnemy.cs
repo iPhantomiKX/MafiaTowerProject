@@ -159,19 +159,20 @@ public class MeleeEnemy : EnemySM {
 			if (Vector2.Distance (this.transform.position, SuspiciousPosition) < 0.3f) {
 				SuspiciousTime -= Time.deltaTime;
 				float angle;
-				if (SuspiciousTime > 8) {
-				} else if (SuspiciousTime > 6) {
+				float delayAct = SuspiciousMax / 5;
+				if (SuspiciousTime > SuspiciousMax * 8/10) {
+				} else if (SuspiciousTime > SuspiciousMax *6/10) {
 					angle = 0;
-					FaceTowardAngle (angle, 0.10f);
-				} else if (SuspiciousTime > 4) {
+					FaceTowardAngle (angle, 0.1f);
+				} else if (SuspiciousTime > SuspiciousMax *4/10) {
 					angle = 180;
-					FaceTowardAngle (angle, 0.10f);
-				} else if (SuspiciousTime > 2) {
+					FaceTowardAngle (angle, 0.1f);
+				} else if (SuspiciousTime > SuspiciousMax * 2/10) {
 					angle = 90;
-					FaceTowardAngle (angle, 0.10f);
+					FaceTowardAngle (angle, 0.1f);
 				} else if (SuspiciousTime > 0) {
 					angle = 270;
-					FaceTowardAngle (angle, 0.10f);
+					FaceTowardAngle (angle, 0.1f);
 				} else {
 					SuspiciousTime = 0;
 					StopSuspicious ();

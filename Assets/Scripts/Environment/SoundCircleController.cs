@@ -36,8 +36,7 @@ public class SoundCircleController : MonoBehaviour {
         Debug.Log(other.name + " noticed the sound!");
         if (other.gameObject.tag == "Enemy")
         {
-            other.GetComponent<EnemySM>().SuspiciousPosition = this.transform.position;
-            other.GetComponent<EnemySM>().SuspiciousTime = 5f;
+			other.GetComponent<EnemySM>().StartSuspicious(this.transform.position,5f);
         }
     }
 }
