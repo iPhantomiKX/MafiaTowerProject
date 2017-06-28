@@ -10,6 +10,10 @@ public class FindObjtInspect : Inspect {
         Objective objt = GetComponent<Objective>();
         if (!objt.complete && (objt.remainingTime > 0 || !objt.isTimed))
         {
+            GameObject pm = GameObject.FindGameObjectWithTag("PauseMenu");
+            pm.SetActive(true);
+            pm.GetComponent<Inventory>().AddItem(2);
+            pm.SetActive(false);
             Debug.Log("Found an objective item!");
             objt.numCompleted++;
             GetComponent<SpriteRenderer>().enabled = false;
