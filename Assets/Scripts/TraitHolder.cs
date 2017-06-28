@@ -8,8 +8,6 @@ public class TraitHolder : MonoBehaviour {
 
     List<TraitBaseClass> TraitList= new List<TraitBaseClass>();
 
-	bool b_InTrigger = false;
-
 	// Use this for initialization
 	void Start () {
 		
@@ -39,11 +37,6 @@ public class TraitHolder : MonoBehaviour {
         // Debug
         if (Input.GetKeyDown(KeyCode.F))
             SceneManager.LoadScene("LoseTraitScene");
-	}
-
-	public void SetInTrigger(bool status)
-	{
-		b_InTrigger = status;
 	}
 
     public void OnDeath()

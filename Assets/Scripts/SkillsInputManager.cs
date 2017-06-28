@@ -57,7 +57,6 @@ public class SkillsInputManager : MonoBehaviour {
         {
             if (Input.GetKey((KeyCode)i) && !InputBuffer.Contains(((KeyCode)i)))
             {
-                Debug.Log("key input " + ((KeyCode)i).ToString());
                 return (KeyCode)i;
             }
         }
