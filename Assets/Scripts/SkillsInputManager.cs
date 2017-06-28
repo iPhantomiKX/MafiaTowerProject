@@ -48,4 +48,32 @@ public class SkillsInputManager : MonoBehaviour {
 
         return KeyCode.None;
     }
+
+    public int GetListSize()
+    {
+        return SkillsSlotList.Count;
+    }
+
+    public void AssignATrait(int slotNum, AbilityTrait aTrait)
+    {
+        Debug.Log(slotNum + " " + aTrait.DisplayName);
+
+        int slotIdx = slotNum - 1;
+
+        // Check if need to add a new trait or move existing trait
+        foreach (SkillSlot aSlot in SkillsSlotList)
+        {
+            if (aSlot.AttachedTrait == aTrait)
+            {
+                aSlot.AttachedTrait = null;
+                break;
+            }
+        }
+
+        SkillsSlotList[slotIdx].AttachedTrait = aTrait;
+        foreach (SkillSlot aSlot in SkillsSlotList)
+        {
+            aSlot.ApplyText();
+        }
+    }
 }

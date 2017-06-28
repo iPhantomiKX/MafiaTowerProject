@@ -24,4 +24,12 @@ public class SkillSlot : MonoBehaviour {
     {
 
     }
+
+    public void ApplyText()
+    {
+        if (AttachedTrait != null)
+            AttachedText.text = AttachedTrait.DisplayName;
+        else
+            AttachedText.text = "";
+    }
 }
