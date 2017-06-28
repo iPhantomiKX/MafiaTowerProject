@@ -9,6 +9,7 @@ TagManager:
   - SuspiciousSound
   - Enemy
   - GameStateManager
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

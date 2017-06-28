@@ -4,8 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
-    GameObject inventoryPanel;
+    GameObject phoneBG;
+    GameObject currentTab;
+    GameObject inventoryCanvas;
     GameObject slotPanel;
+
     ItemDatabase database;
     public GameObject inventorySlot;
     public GameObject inventoryItem;
@@ -14,40 +17,79 @@ public class Inventory : MonoBehaviour {
     public List<Item> items = new List<Item>();
     public List<GameObject> slots = new List<GameObject>();
 
+
     void Start()
     {
+
         database = GetComponent<ItemDatabase>();
 
-        slotAmount = 16;
-        inventoryPanel = GameObject.Find("Inventory Panel");
-        slotPanel = inventoryPanel.transform.FindChild("Slot Panel").gameObject; 
+        slotAmount = 18;
+
+        phoneBG = GameObject.Find("PhoneBG");
+        currentTab = phoneBG.transform.FindChild("CurrentTab").gameObject;
+        inventoryCanvas = currentTab.transform.FindChild("Inventory_").gameObject;
+        slotPanel = inventoryCanvas.transform.FindChild("SlotPanel").gameObject;
+
         for(int i = 0; i < slotAmount; i++)
         {
             items.Add(new Item());
             slots.Add(Instantiate(inventorySlot));
+            slots[i].GetComponent<Slot>().id = i;
             slots[i].transform.SetParent(slotPanel.transform);
         }
 
         AddItem(0);
+        AddItem(0);
+        AddItem(0);
+        AddItem(0);
+        AddItem(1);
         AddItem(1);
     }
 
     public void AddItem(int id)
     {
         Item itemToAdd = database.FetchItemByID(id);
-        for(int i = 0; i < items.Count; i++)
+        if(itemToAdd.Stackable && CheckIfItemIsInInventory(itemToAdd))
         {
-            if(items[i].ID == -1)
+            for (int i = 0; i < items.Count; i++)
             {
-                items[i] = itemToAdd;
-                GameObject itemObj = Instantiate(inventoryItem);
-                itemObj.transform.SetParent(slots[i].transform);
-                itemObj.transform.position = Vector2.zero;
-                itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
-                itemObj.name = itemToAdd.ItemName;
-                break;
+                if(items[i].ID == id)
+                {
+                    ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+                    data.amount++;
+                    data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
+                    break;
+                }
             }
         }
+        else
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if(items[i].ID == -1)
+                {
+                    items[i] = itemToAdd;
+                    GameObject itemObj = Instantiate(inventoryItem);
+                    itemObj.GetComponent<ItemData>().item = itemToAdd;
+                    itemObj.GetComponent<ItemData>().slot = i;
+                    itemObj.transform.SetParent(slots[i].transform);
+                    itemObj.transform.position = Vector2.zero;
+                    itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
+                    itemObj.name = itemToAdd.ItemName;
+                    break;
+                }
+            }
+        }
+    }
+
+    bool CheckIfItemIsInInventory(Item item)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].ID == item.ID)
+                return true;
+        }
+        return false;  
     }
 
 }

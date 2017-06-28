@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224442839178354518}
   - component: {fileID: 222937829634905212}
   - component: {fileID: 114426451177934398}
+  - component: {fileID: 114905901896018262}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -55,6 +56,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114905901896018262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1735467809716762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 228aad893cbb9f74988ce722a3fcddf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
 --- !u!222 &222937829634905212
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -77,5 +90,5 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
