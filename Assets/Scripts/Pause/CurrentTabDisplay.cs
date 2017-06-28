@@ -36,8 +36,6 @@ public class CurrentTabDisplay : MonoBehaviour {
         Canvas aCanvas = aCanvasGO.GetComponent<TabElement>().GetCanvas();
         if (TabList.Contains(aCanvas))
         {
-            Debug.Log("Contains");
-
             foreach (Canvas canvas in TabList)
             {
                 if (canvas == aCanvas)
