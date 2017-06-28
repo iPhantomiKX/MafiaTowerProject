@@ -11,7 +11,6 @@ public class ItemDatabase : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        DontDestroyOnLoad(transform.gameObject);
         if (Instance != null && Instance != this)
             Destroy(gameObject);
         else
