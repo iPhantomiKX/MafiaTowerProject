@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DefeatEnemy : Objective
 {
-
 	public EnemySM[] enemies;
     public bool all;
     // Use this for initialization
@@ -22,7 +21,12 @@ public class DefeatEnemy : Objective
     //// Update is called once per frame
     public override void Update()
     {
-
+        int killed = 0;
+        foreach(EnemySM enemy in enemies)
+        {
+            if (enemy.HP <= 0) killed++;
+        }
+        numCompleted = killed;
         base.Update();
     }
 
