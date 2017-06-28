@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - GameStateManager
   - PauseMenu
+  - Sound
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - 
   - GameObjectLayer
   - Enemy
-  - 
-  - 
+  - PlayerProjectile
+  - Player
   - 
   - 
   - 

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224379617966024084}
   - component: {fileID: 222885730274082902}
   - component: {fileID: 114437414470651554}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 224909937835141850}
   - component: {fileID: 222972803802593814}
   - component: {fileID: 114135396431685378}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 224001946931243916}
   - component: {fileID: 222253831937466146}
   - component: {fileID: 114513352688057174}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 114641836540803846}
   - component: {fileID: 114608188583830448}
   - component: {fileID: 114517358679669300}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 222321367075381288}
   - component: {fileID: 114024868620840584}
   - component: {fileID: 114716703606380252}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: InputKeyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 224351967129242042}
   - component: {fileID: 222856094280770962}
   - component: {fileID: 114953883528821580}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224719857261198390}
   - component: {fileID: 114189680339163480}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 114593653194400706}
   - component: {fileID: 114803117733823462}
   - component: {fileID: 114409633923708166}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Button (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 114313234341539960}
   - component: {fileID: 114677177652170492}
   - component: {fileID: 114075753947687826}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Button (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224479303867888614}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 224611636673318900}
   - component: {fileID: 222172145391265396}
   - component: {fileID: 114032747390426220}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224170293101267296}
   - component: {fileID: 114639806983968408}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 222685575331580880}
   - component: {fileID: 114697053672960154}
   - component: {fileID: 114115215530898330}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: InputKeyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 224513665775849292}
   - component: {fileID: 222147617723860514}
   - component: {fileID: 114136433095033916}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 222187782563544172}
   - component: {fileID: 114017551440701768}
   - component: {fileID: 114098731048495916}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: InputKeyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224881860618261744}
   - component: {fileID: 114131202778641228}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: HealthSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 224801629219779642}
   - component: {fileID: 222108979442789226}
   - component: {fileID: 114402195914431216}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 223368378417965596}
   - component: {fileID: 114373387190645240}
   - component: {fileID: 114899551173442298}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: PlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 224347912116972620}
   - component: {fileID: 222865824679809330}
   - component: {fileID: 114364215063181240}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224492973048001070}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 224002674856476464}
   - component: {fileID: 222928753203889348}
   - component: {fileID: 114925556964170392}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 224603447770591090}
   - component: {fileID: 222871924432673654}
   - component: {fileID: 114627955354327514}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 114625693613553646}
   - component: {fileID: 114750283515309666}
   - component: {fileID: 114210922809160280}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Button (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224799496147955032}
   - component: {fileID: 114122670085129836}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: AmmoSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 114258879481565170}
   - component: {fileID: 114171314731814816}
   - component: {fileID: 114215312794144514}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: PlayerObject
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -493,7 +493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4293100126099394}
   - component: {fileID: 114932067811744018}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: GameStateManager
   m_TagString: GameStateManager
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 224381673929867118}
   - component: {fileID: 222951378485797514}
   - component: {fileID: 114550280958116932}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 224608708444190200}
   - component: {fileID: 222971918527465066}
   - component: {fileID: 114000036517632602}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 222783227862742116}
   - component: {fileID: 114507678253644258}
   - component: {fileID: 114135241516415710}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: InputKeyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 224529085714695404}
   - component: {fileID: 222527530211488900}
   - component: {fileID: 114354100209178616}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,7 +579,7 @@ GameObject:
   - component: {fileID: 224037767792979718}
   - component: {fileID: 222952441222081978}
   - component: {fileID: 114196848699512042}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 224155455591815228}
   - component: {fileID: 222756694470385760}
   - component: {fileID: 114900264994795088}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 114946849826441200}
   - component: {fileID: 114997078854700774}
   - component: {fileID: 114534929275076542}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: SelectableElementsList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -633,7 +633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224563196541044622}
   - component: {fileID: 114316474227686446}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +650,7 @@ GameObject:
   - component: {fileID: 224142241123816744}
   - component: {fileID: 222949707228557976}
   - component: {fileID: 114728063771728846}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 114471449110486416}
   - component: {fileID: 114929238283486298}
   - component: {fileID: 114098449839067140}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Button (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,7 +685,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4436143143648970}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -701,7 +701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224850020861602264}
   - component: {fileID: 114199146380434934}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 114963449592005964}
   - component: {fileID: 114290171651678014}
   - component: {fileID: 114885868487440038}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Button (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -758,7 +758,7 @@ GameObject:
   - component: {fileID: 114113379523823898}
   - component: {fileID: 114728654454696798}
   - component: {fileID: 114476693957238320}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: SkillList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 224225598034958202}
   - component: {fileID: 222214123518778922}
   - component: {fileID: 114769582022843922}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +792,7 @@ GameObject:
   - component: {fileID: 224547817067133986}
   - component: {fileID: 222832596863596144}
   - component: {fileID: 114876759699967346}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -808,7 +808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224067508331188956}
   - component: {fileID: 114597533549857290}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -825,7 +825,7 @@ GameObject:
   - component: {fileID: 224246068885753300}
   - component: {fileID: 222637512858532990}
   - component: {fileID: 114466599160117610}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 224423058024970164}
   - component: {fileID: 222591188336536026}
   - component: {fileID: 114323414129210658}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -858,7 +858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224266454332886954}
   - component: {fileID: 114723560268690704}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,7 +875,7 @@ GameObject:
   - component: {fileID: 224816289025110756}
   - component: {fileID: 222821296411213354}
   - component: {fileID: 114562891147108566}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CooldownText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,7 +892,7 @@ GameObject:
   - component: {fileID: 224785634902143360}
   - component: {fileID: 222410894089488010}
   - component: {fileID: 114414107406042028}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -910,7 +910,7 @@ GameObject:
   - component: {fileID: 222479636096339202}
   - component: {fileID: 114883554307988774}
   - component: {fileID: 114833275501519840}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: InputKeyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -928,7 +928,7 @@ GameObject:
   - component: {fileID: 222453011425681898}
   - component: {fileID: 114026539799645062}
   - component: {fileID: 114000198017898364}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: InputKeyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1050,6 +1050,7 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
@@ -1064,6 +1065,7 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
@@ -1078,9 +1080,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2, y: 0.2}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
+  m_EdgeRadius: 0
 --- !u!114 &114000036517632602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2293,7 +2306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0baa12016c9214789375e679fbf3bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theTraitHolder: {fileID: 114171314731814816}
 --- !u!114 &114550280958116932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3148,11 +3160,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!212 &212626204446637014
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -3183,11 +3200,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!212 &212789734375888504
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -3218,11 +3240,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.5882353}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!212 &212939844183454836
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -3253,11 +3280,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!222 &222108979442789226
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -3481,7 +3513,7 @@ Canvas:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426537421558194}
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
@@ -3490,6 +3522,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

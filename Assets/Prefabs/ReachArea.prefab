@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4165163228645134}
   - component: {fileID: 212933034901790488}
-  - component: {fileID: 61989391481913398}
   - component: {fileID: 114013251898821824}
+  - component: {fileID: 61989391481913398}
   m_Layer: 0
   m_Name: ReachArea
   m_TagString: Untagged
@@ -73,6 +73,8 @@ MonoBehaviour:
   remainingTime: 0
   timeBar: {fileID: 0}
   timeBarWidth: 0
+  numCompleted: 0
+  numRequired: 1
   stayTimer: 3
   stayTimerRemain: 0
 --- !u!212 &212933034901790488

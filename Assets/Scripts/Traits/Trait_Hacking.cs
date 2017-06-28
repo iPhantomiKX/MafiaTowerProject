@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trait_Hacking : TraitBaseClass {
+public class Trait_Hacking : ObstacleTrait {
 
 	// Use this for initialization
 	void Start () {
@@ -13,18 +13,8 @@ public class Trait_Hacking : TraitBaseClass {
 
 	}
 
-    public override bool Check(GameObject checkObject)
-    {
-		if (checkObject.name == ConditionObject.name)
-        {
-            return true;
-        }
-        else
-            return false;
-    }
-
     public override void DoEffect()
     {
-        checkObject.GetComponent<Console>().OpenDoor();
+        //checkObject.GetComponent<Console>().OpenDoor();
     }
 }

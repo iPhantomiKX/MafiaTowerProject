@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trait_Dash : TraitBaseClass
+public class Trait_Dash : AbilityTrait
 {
     [Header("Dash Trait Values")]
     public float DashDistance;
@@ -13,16 +13,6 @@ public class Trait_Dash : TraitBaseClass
 
     // Update is called once per frame
     void Update() {
-    }
-
-    public override bool Check(GameObject checkObject)
-    {
-        if (checkObject.name == ConditionObject.name)
-        {
-            return true;
-        }
-        else
-            return false;
     }
 
     public override void DoEffect()
@@ -41,7 +31,5 @@ public class Trait_Dash : TraitBaseClass
         //playerObject.rb.velocity = (dir * DashDistance );
 
         playerObject.SetDash(dir, DashDistance);
-
-        CooldownTimer = CooldownTime;
     }
 }

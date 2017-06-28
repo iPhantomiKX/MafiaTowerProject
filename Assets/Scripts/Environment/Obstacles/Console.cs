@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Console : MonoBehaviour {
+public class Console : TraitObstacle {
 
     public GameObject AttachedDoor;
 
@@ -30,7 +30,6 @@ public class Console : MonoBehaviour {
 
             Debug.Log("console enter");
 
-            col.transform.GetComponent<TraitHolder>().SetCheckObjects(this.gameObject);
             col.transform.GetComponent<TraitHolder>().SetInTrigger(true);
         }
     }
@@ -41,7 +40,6 @@ public class Console : MonoBehaviour {
         {
             Debug.Log("console leave");
 
-            col.transform.GetComponent<TraitHolder>().SetCheckObjects(null);
             col.transform.GetComponent<TraitHolder>().SetInTrigger(false);
         }
     }

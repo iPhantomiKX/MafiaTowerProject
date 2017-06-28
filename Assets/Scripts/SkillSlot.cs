@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SkillSlot : MonoBehaviour {
     
     public KeyCode InputKey;
-    public TraitBaseClass AttachedTrait;
+    public AbilityTrait AttachedTrait;
     Text AttachedText;
 
     // Use this for initialization
