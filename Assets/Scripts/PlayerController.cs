@@ -125,7 +125,6 @@ public class PlayerController : MonoBehaviour {
                 
             //}
             Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
-            Debug.Log(obj.Length);
             
             foreach (Collider2D col in obj)
             {
