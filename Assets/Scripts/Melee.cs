@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class Melee : MonoBehaviour {
 
-	private float cooldown;
+	SliderJoint2D sliderJoint;
+	JointMotor2D jointMotor;
+
+	void Awake(){
+		sliderJoint = this.gameObject.GetComponent<SliderJoint2D>();
+		jointMotor = sliderJoint.motor;
+	}
 
 	void Start () {
-		cooldown = 0.0f;
 	}
 
 	void Update () {
-
-		if (PlayerController.meleeButton && cooldown == 0) {
-			Attack ();
+		if (PlayerController.meleeButton) {
+			SetSpeedSlider (2f);
+			this.transform.rotation = Quaternion.Euler(0,0, -90);
 		} else {
-			if (cooldown <= 0) {
-				cooldown = 0.0f;
-				SetAppear (false);
-			} else {
-				cooldown -= Time.deltaTime;
+			if (sliderJoint.jointTranslation >= sliderJoint.limits.max) {
+				SetSpeedSlider (-2f);
 			}
-
 		}
-
 	}
 
-	void SetAppear(bool boolean){
-		this.gameObject.GetComponent<CircleCollider2D>().enabled = boolean;
-		this.gameObject.GetComponent<SpriteRenderer>().enabled = boolean;
+	void SetSpeedSlider(float speed){
+		jointMotor.motorSpeed = speed;
+		sliderJoint.motor = jointMotor;
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
@@ -36,11 +36,6 @@ public class Melee : MonoBehaviour {
 			EnemySM enem = col.gameObject.GetComponent<EnemySM> ();
 			enem.HP -= 2;
 		}
-	}
-
-	void Attack(){
-		SetAppear (true);
-		cooldown = 0.01f;
 	}
 
 }

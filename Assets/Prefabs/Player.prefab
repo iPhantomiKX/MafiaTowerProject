@@ -739,6 +739,8 @@ GameObject:
   - component: {fileID: 212370522604037802}
   - component: {fileID: 58292272732067408}
   - component: {fileID: 114480843945152298}
+  - component: {fileID: 50177396886536346}
+  - component: {fileID: 234351617246021498}
   m_Layer: 0
   m_Name: Melee
   m_TagString: Untagged
@@ -942,7 +944,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1807046670142056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.16, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4787985614362166}
@@ -1019,6 +1021,26 @@ Transform:
   m_Father: {fileID: 4787985614362166}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50177396886536346
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1807046670142056}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!50 &50314794004968368
 Rigidbody2D:
   serializedVersion: 4
@@ -1135,6 +1157,7 @@ MonoBehaviour:
   bulletGO: {fileID: 1612506347180762, guid: aa03ad560cd1f304e96a52f319213839, type: 2}
   fireRate: 10
   ammo: 20
+  max: 0
 --- !u!114 &114017551440701768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4384,3 +4407,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 640, y: 75.6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!234 &234351617246021498
+SliderJoint2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1807046670142056}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 50314794004968368}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureAngle: 0
+  m_Angle: 180
+  m_UseMotor: 0
+  m_Motor:
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 1
+  m_TranslationLimits:
+    m_LowerTranslation: 0
+    m_UpperTranslation: 0.3
