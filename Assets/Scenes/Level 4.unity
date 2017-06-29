@@ -485,6 +485,16 @@ Prefab:
       propertyPath: closed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114323041612480066, guid: 062af825b8920a149b35a8b3e2f5226b,
+        type: 2}
+      propertyPath: locked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114323041612480066, guid: 062af825b8920a149b35a8b3e2f5226b,
+        type: 2}
+      propertyPath: keyID
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 062af825b8920a149b35a8b3e2f5226b, type: 2}
   m_IsPrefabParent: 0

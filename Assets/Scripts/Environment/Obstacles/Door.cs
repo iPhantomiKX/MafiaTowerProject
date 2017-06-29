@@ -38,6 +38,7 @@ public class Door : MonoBehaviour {
     bool PlayerHasKey()
     {
         //Check if the player has the key or not
+        
         return false;
     }
 }
