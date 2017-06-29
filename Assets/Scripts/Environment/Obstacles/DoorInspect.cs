@@ -7,6 +7,8 @@ public class DoorInspect : Inspect
 {
     public override void inspect()
     {
-        GetComponent<Door>().Open();
+        Door door = GetComponent<Door>();
+        if (door.closed) door.Open();
+        else door.Close();
     }
 }
