@@ -8,6 +8,7 @@ public class Gun : MonoBehaviour {
 	public GameObject bulletGO;
 	public float fireRate;
 	public int ammo;
+	public int max;
 
 	private GameObject newBulletGO;
 	private float fireRateCountdown;
@@ -15,6 +16,7 @@ public class Gun : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		max = 20;
 		ammo = 20;
 		isShot = false;
 	}
@@ -47,4 +49,11 @@ public class Gun : MonoBehaviour {
 		Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - GunObject.transform.position;
 		newBulletGO.GetComponent<Bullet> ().SetDirection (direction);
 	}
+
+	public void CollectedAmmo(int collected){
+		ammo += collected;
+		if (ammo > max)
+			ammo = max;
+	}
+
 }
