@@ -23,7 +23,10 @@ public class PlayerSpawn : MonoBehaviour {
 
         if (Enemy)
 		    Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
-		
+
+        if (!ObjectiveManager)
+            ObjectiveManager = GameObject.FindObjectOfType<ObjectiveManager>().gameObject;
+
         ObjectiveManager.GetComponent<ObjectiveManager> ().PlayerRef = go;
 
         Inspect[] Obstacles = GameObject.FindObjectsOfType<Inspect>();
