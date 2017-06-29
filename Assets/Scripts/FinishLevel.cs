@@ -10,6 +10,8 @@ public class FinishLevel : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        if (!ObjectiveManager)
+            ObjectiveManager = GameObject.FindObjectOfType<ObjectiveManager>().gameObject;
 	}
 
 	// Update is called once per frame

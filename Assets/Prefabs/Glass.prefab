@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114389569109218038}
   - component: {fileID: 114577458681623126}
   - component: {fileID: 114982067121961042}
+  - component: {fileID: 114830831443086238}
   m_Layer: 0
   m_Name: Glass
   m_TagString: Untagged
@@ -90,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b64b0f315c228048b77057bdbde7bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TraitHolderRef: {fileID: 0}
 --- !u!114 &114577458681623126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +103,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a7d8f85a3b83d549a5cfa4bfa123017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114830831443086238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353206106811042}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63f3e9e05a98fc4dbd13f5d5241b221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114982067121961042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,7 +145,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7763cf91494b86b468508dc79121aedd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
