@@ -1157,7 +1157,7 @@ MonoBehaviour:
   bulletGO: {fileID: 1612506347180762, guid: aa03ad560cd1f304e96a52f319213839, type: 2}
   fireRate: 10
   ammo: 20
-  max: 0
+  max: 20
 --- !u!114 &114017551440701768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4424,10 +4424,10 @@ SliderJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureAngle: 0
   m_Angle: 180
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
+    m_MaximumMotorForce: 10
   m_UseLimits: 1
   m_TranslationLimits:
     m_LowerTranslation: 0

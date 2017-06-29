@@ -16,8 +16,6 @@ public class Gun : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		max = 20;
-		ammo = 20;
 		isShot = false;
 	}
 	
