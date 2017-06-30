@@ -53,6 +53,9 @@ public class Bullet : MonoBehaviour {
 	{
 		if (otherCollider.gameObject.tag != "Player") 
 		{
+			if (otherCollider.gameObject.tag == "Enemy") {
+				otherCollider.gameObject.GetComponent<EnemySM> ().TakeDamage (1f);
+			}
 			Destroy (this.gameObject);
 		}
 	}

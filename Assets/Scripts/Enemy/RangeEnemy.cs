@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeEnemy : EnemySM {
+public class RangeEnemy : EnemySM {
+
+	public GameObject bulletPrefab;
 
 	public enum ENEMY_STATE
 	{
@@ -20,10 +22,10 @@ public class MeleeEnemy : EnemySM {
 	// Use this for initialization
 	public override void Start () {
 		base.Start ();
-		AttackDamage = 3f;
-		AttackSpeed = 1.3f;
+		AttackDamage = 5f;
+		AttackSpeed = 1.9f;
 		MoveSpeed = 1f;
-		HP = 10f;
+		HP = 8f;
 		attackAble = true;
 	}
 
@@ -40,7 +42,7 @@ public class MeleeEnemy : EnemySM {
 		//print (CurrentState);
 		switch (CurrentState)
 		{                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-			//IDLE -> PATROL,SUS,ATTACK,DEAD
+		//IDLE -> PATROL,SUS,ATTACK,DEAD
 		case ENEMY_STATE.IDLE:
 			if (IsDead ())
 				return (int)ENEMY_STATE.DEAD;
@@ -104,7 +106,7 @@ public class MeleeEnemy : EnemySM {
 			return -1;
 		}
 	}
-		
+
 	public override void Act(int value){
 		switch (value)
 		{
@@ -141,6 +143,8 @@ public class MeleeEnemy : EnemySM {
 			}
 			break;
 
+
+		//Currently best in 2 point
 		case (int)ENEMY_STATE.PATROLLING:
 			CurrentState = ENEMY_STATE.PATROLLING;
 			if (PatrolPoints.Count <= 0 || PatrolPosition == Vector3.forward) {
@@ -190,11 +194,18 @@ public class MeleeEnemy : EnemySM {
 				alert = true;
 			StopSuspicious ();
 			LastPLayerPosition = player.transform.position;
-			WalkTowardPoint (player.transform.position);
+			if (Vector2.Distance (this.transform.position, player.transform.position) > 0.7f)
+				WalkTowardPoint (player.transform.position);
+			else
+				FaceTowardPoint (player.transform.position, 0.33f);
 			if (attackAble) {
-				if (Vector2.Distance (this.transform.position, player.transform.position) < 0.4f) {
+				if (Vector2.Distance (this.transform.position, player.transform.position) <= 1f) {
+					GameObject go = Instantiate (bulletPrefab, this.transform.position + (transform.up * 0.3f), this.transform.rotation);
+					go.GetComponent<EnemyBullet> ().Damage = AttackDamage;
+					Physics2D.IgnoreCollision(go.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
+					go.GetComponent<Rigidbody2D> ().AddForce (this.transform.up*400f);
 					//player.GetComponent<HealthComponent> ().health -= (int)AttackDamage;
-					player.GetComponent<HealthComponent>().TakeDmg((int) AttackDamage);
+
 					attackAble = false;
 					Invoke ("ResetAttack", AttackSpeed);
 				}
@@ -203,10 +214,11 @@ public class MeleeEnemy : EnemySM {
 
 			break;
 
+		//WIP
 		case (int)ENEMY_STATE.SEARCHING:
 			CurrentState = ENEMY_STATE.SEARCHING;
 			if (this.transform.position == LastPLayerPosition) {
-//				FaceTowardAngle (Time.time*100 % 360, 0.1f);
+				//				FaceTowardAngle (Time.time*100 % 360, 0.1f);
 				this.transform.Rotate (0,0,300	*Time.deltaTime);
 				rb.velocity = Vector3.zero;
 				rb.angularVelocity = 0;
@@ -222,5 +234,4 @@ public class MeleeEnemy : EnemySM {
 			break;
 		}
 	}
-
 }
