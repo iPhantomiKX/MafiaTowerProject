@@ -41,7 +41,6 @@ public class TraitHolder : MonoBehaviour {
 
     public void OnDeath()
     {
-        PersistentData.m_Instance.CurrentLevel = 0;
         SceneManager.LoadScene("DeathScene");
     }
 
