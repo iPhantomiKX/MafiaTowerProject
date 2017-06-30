@@ -14,7 +14,7 @@ public class PlayerAnimationController : MonoBehaviour {
 	}
 
 	void Update () {
-		print (this.GetComponent<PlayerController> ().rb.velocity.magnitude);
+		
 		animator.SetFloat ("speed", this.GetComponent<PlayerController> ().rb.velocity.magnitude);
 
 		if (PlayerController.shootButton && this.GetComponentInChildren<Gun>().ammo > 0) {
