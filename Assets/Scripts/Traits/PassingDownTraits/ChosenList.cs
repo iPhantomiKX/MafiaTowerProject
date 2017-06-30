@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChosenList : MonoBehaviour {
 
     public GameObject ButtonPrefab;
+    public FillList FillListRef;
 
 	// Use this for initialization
 	void Start () {
@@ -36,5 +37,14 @@ public class ChosenList : MonoBehaviour {
                 break;
             }
         }
+    }
+
+    public void TransferToOtherList(GameObject toTransfer)
+    {
+        // Remove from current list
+        RemoveFromList(toTransfer);
+
+        // Add to other list
+        FillListRef.AddToList(toTransfer);
     }
 }

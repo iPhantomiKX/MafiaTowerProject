@@ -5,6 +5,7 @@ using UnityEngine;
 public class FillList : MonoBehaviour {
 
     public GameObject ButtonPrefab;
+    public ChosenList ChosenListRef;
 
 	// Use this for initialization
 	void Start () {
@@ -43,5 +44,29 @@ public class FillList : MonoBehaviour {
                 break;
             }
         }
+    }
+
+    public void TransferToOtherList(GameObject toTransfer)
+    {
+        // Check if can transfer
+        int count = 0;
+
+        Transform[] TransformList = ChosenListRef.GetComponentsInChildren<Transform>();
+        foreach (Transform aTransform in TransformList)
+        {
+            if (aTransform.gameObject.name.Contains("Button"))
+            {
+                ++count;
+            }
+        }
+
+        if (count >= PersistentData.m_Instance.NumTraitsPassDown)
+            return;
+
+        // Remove from current list
+        RemoveFromList(toTransfer);
+
+        // Add to other list
+        ChosenListRef.AddToList(toTransfer);
     }
 }

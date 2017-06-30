@@ -10,8 +10,12 @@ public class GetTraitCount : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //AttachedText.text = "You can pass down ( " + PersistentData.m_Instance.CurrentLevel + " ) traits.";
-		AttachedText.text = "You can pass down all traits.";
+
+        // Calculate number of traits to pass down
+        PersistentData.m_Instance.NumTraitsPassDown = PersistentData.m_Instance.CurrentLevel;
+
+        AttachedText.text = "You can pass down ( " + PersistentData.m_Instance.NumTraitsPassDown + " ) traits.";
+		//AttachedText.text = "You can pass down all traits.";
 	}
 	
 	// Update is called once per frame
