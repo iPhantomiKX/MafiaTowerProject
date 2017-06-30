@@ -19,6 +19,7 @@ public class PersistentData : MonoBehaviour {
     public List<TraitBaseClass> PlayerTraits = new List<TraitBaseClass>();
     public List<string> PlayerTraitNames = new List<string>();
     public int CurrentLevel;
+    public int NumTraitsPassDown;
 
 	public bool InitialLoad = false;
 	public bool LoadFailed = false;

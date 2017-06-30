@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 50202662147934736}
   - component: {fileID: 114323041612480066}
   - component: {fileID: 114540867746974134}
+  - component: {fileID: 114886870315270270}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -91,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: 0
   keyID: 0
+  closed: 0
 --- !u!114 &114540867746974134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,6 +105,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TraitHolderRef: {fileID: 0}
+--- !u!114 &114886870315270270
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1020234821988456}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63f3e9e05a98fc4dbd13f5d5241b221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &212386697538267638
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -116,7 +130,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7763cf91494b86b468508dc79121aedd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

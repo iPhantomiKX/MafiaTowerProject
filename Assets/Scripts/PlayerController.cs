@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour {
     private Vector2 DashDir;
     private float DashSpeed;
 
+    List<Collider2D> nearObj = new List<Collider2D>();
+
 	// Use this for initialization
 	void Start () {
 
@@ -52,6 +54,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         GetKeyInputs();
+        CheckSurroundings();
 
 		Camera.main.gameObject.transform.position = new Vector3 (rb.position.x, rb.position.y, -10);
 		Camera.main.orthographicSize = 2;
@@ -139,6 +142,44 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
+    void CheckSurroundings()
+    {
+        // Get objs nearby
+        Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
+
+        List<Collider2D> temp = new List<Collider2D>();
+        foreach (Collider2D col in obj)
+        {
+            temp.Add(col);
+        }
+
+        // Check if any objects in nearObj are not near anymore
+        foreach (Collider2D col in nearObj)
+        {
+            if (!temp.Contains(col))
+            {
+                if (col != null && col.GetComponent<Inspect>() != null)
+                    col.GetComponent<Inspect>().outline(false);
+            }
+        }
+
+        nearObj.Clear();
+        nearObj = temp;
+
+        // Find inspectable objects
+        foreach (Collider2D col in obj)
+        {
+            if (!nearObj.Contains(col))
+                nearObj.Add(col);
+
+            if (col != null && col.GetComponent<Inspect>() != null)
+            {
+                col.GetComponent<Inspect>().outline(true);
+            }
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
