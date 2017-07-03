@@ -5,6 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
 	public float speed;
+    public float mod_speed = 1;
+
 	Vector2 _direction;
 	bool isReady;
 	Rigidbody2D bullet;
@@ -33,7 +35,7 @@ public class Bullet : MonoBehaviour {
 			//position += new Vector2 (velocity.x, velocity.y);
 			//
 			//transform.position = position;
-			Vector2 velocity = _direction * speed;
+			Vector2 velocity = _direction * (speed * mod_speed);
 			bullet.velocity = new Vector2(velocity.x, velocity.y);
 
 			Vector2 min = Camera.main.ViewportToWorldPoint (new Vector2 (0, 0));

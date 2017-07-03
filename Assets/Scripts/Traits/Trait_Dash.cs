@@ -30,6 +30,6 @@ public class Trait_Dash : AbilityTrait
 
         //playerObject.rb.velocity = (dir * DashDistance );
 
-        playerObject.SetDash(dir, DashDistance);
+        playerObject.SetDash(dir, DashDistance * GetLevelMultiplier());
     }
 }

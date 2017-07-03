@@ -27,7 +27,7 @@ public class Trait_HeavyBreathing : PassiveTrait
         if (d_timer <= 0.0)
         {
             playerObject.GetComponentInChildren<StealthScript>().ExpandRing();
-            d_timer = BreathInterval;
+            d_timer = BreathInterval * GetLevelMultiplier();
         }
         else
             d_timer -= Time.deltaTime;

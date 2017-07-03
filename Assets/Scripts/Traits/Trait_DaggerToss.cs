@@ -31,5 +31,6 @@ public class Trait_DaggerToss : AbilityTrait {
         go.transform.position = playerObject.transform.position;
 
         go.GetComponent<Bullet>().SetDirection(dir);
+        go.GetComponent<Bullet>().mod_speed = GetLevelMultiplier();
     }
 }
