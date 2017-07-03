@@ -89,7 +89,7 @@ public class PersistentData : MonoBehaviour {
         PlayerTraitNames.Clear();
         foreach (TraitBaseClass aTrait in PlayerTraits)
         {
-            PlayerTraitNames.Add(aTrait.DisplayName);
+            PlayerTraitNames.Add(aTrait.GetName());
         }
 
 		PlayerData returnData = new PlayerData();
@@ -115,6 +115,13 @@ public class PersistentData : MonoBehaviour {
                 if (TraitName.Contains(AllTraits[i].DisplayName))
                 {
                     PlayerTraits.Add(AllTraits[i]);
+                
+                    // Get level of trait
+                    string[] parts;
+                    parts = TraitName.Split('_');
+
+                    int level = int.Parse(parts[1]);
+                    PlayerTraits[PlayerTraits.Count - 1].SetLevel(level);
                 }
             }
         }

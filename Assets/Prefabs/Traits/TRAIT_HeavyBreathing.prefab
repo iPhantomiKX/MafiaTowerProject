@@ -51,9 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351fa2c6c2becef4d8032cb325b1e351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConditionObject: {fileID: 0}
-  traitType: 0
-  CooldownTime: 0
   DisplayName: Heavy Breathing
   DisplayDescription: You are breathing too loudly.
+  LevelMultiplier: 0.25
   BreathInterval: 1

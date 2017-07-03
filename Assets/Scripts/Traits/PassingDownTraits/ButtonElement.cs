@@ -15,7 +15,7 @@ public class ButtonElement : MonoBehaviour {
         AttachedText = GetComponentInChildren<Text>();
 
         if (AttachedTrait != null)
-            AttachedText.text = AttachedTrait.DisplayName;
+            AttachedText.text = AttachedTrait.GetName();
 	}
 	
 	// Update is called once per frame

@@ -22,6 +22,6 @@ public class ChosenTrait : MonoBehaviour {
     public void SetChosenTrait(GameObject toSet)
     {
         AttachedTrait = toSet.GetComponent<ButtonElement>().AttachedTrait;
-        AttachedText.text = AttachedTrait.DisplayName;
+        AttachedText.text = AttachedTrait.GetName();
     }
 }

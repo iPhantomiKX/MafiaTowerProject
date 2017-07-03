@@ -51,9 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84460cd3901d89343814c48ae753f15b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConditionObject: {fileID: 0}
-  traitType: 2
-  CooldownTime: 3
   DisplayName: Dash
   DisplayDescription: Ability to dash in a straight line
+  LevelMultiplier: 0.25
+  CooldownTime: 3
   DashDistance: 10

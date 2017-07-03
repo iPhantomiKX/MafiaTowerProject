@@ -51,8 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53684cc8dd6187d41b6b55d3f06c1b08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConditionObject: {fileID: 0}
-  traitType: 0
-  CooldownTime: 0
   DisplayName: Persuasion
   DisplayDescription: Persuade people with your words.
+  LevelMultiplier: 0.25

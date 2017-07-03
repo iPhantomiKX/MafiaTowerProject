@@ -51,10 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73d32e45e2147d340856a9a6805ac521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConditionObject: {fileID: 0}
-  traitType: 2
-  CooldownTime: 2
   DisplayName: Dagger Toss
   DisplayDescription: Throws a dagger
+  LevelMultiplier: 0.5
+  CooldownTime: 2
   DaggerPrefab: {fileID: 1124633053473318, guid: 86af2907ca680d743bff78c05a1cf5a8,
     type: 2}
