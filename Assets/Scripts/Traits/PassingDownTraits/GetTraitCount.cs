@@ -12,7 +12,7 @@ public class GetTraitCount : MonoBehaviour {
 	void Start () {
 
         // Calculate number of traits to pass down
-        PersistentData.m_Instance.NumTraitsPassDown = PersistentData.m_Instance.CurrentLevel;
+        PersistentData.m_Instance.NumTraitsPassDown = PersistentData.m_Instance.CurrentLevel + 999;
 
         AttachedText.text = "You can pass down ( " + PersistentData.m_Instance.NumTraitsPassDown + " ) traits.";
 		//AttachedText.text = "You can pass down all traits.";

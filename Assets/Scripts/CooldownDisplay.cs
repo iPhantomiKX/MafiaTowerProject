@@ -8,14 +8,11 @@ public class CooldownDisplay : MonoBehaviour {
 
     public GameObject AttachedButton;
 
-    Image AttachedImage;
-    Text AttachedText;
+    public Image AttachedImage;
+    public Text AttachedText;
 
 	// Use this for initialization
 	void Start () {
-        AttachedImage = GetComponentInChildren<Image>();
-        AttachedText = GetComponentInChildren<Text>();
-
         AttachedImage.gameObject.SetActive(false);
         AttachedText.gameObject.SetActive(false);
 	}

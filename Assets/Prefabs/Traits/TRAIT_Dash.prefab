@@ -54,5 +54,6 @@ MonoBehaviour:
   DisplayName: Dash
   DisplayDescription: Ability to dash in a straight line
   LevelMultiplier: 0.25
+  i_TraitLevel: 1
   CooldownTime: 3
   DashDistance: 10

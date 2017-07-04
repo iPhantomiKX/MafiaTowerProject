@@ -1593,6 +1593,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttachedButton: {fileID: 1122839713086282}
+  AttachedImage: {fileID: 114466599160117610}
+  AttachedText: {fileID: 114925556964170392}
 --- !u!114 &114196848699512042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1665,6 +1667,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttachedButton: {fileID: 1704452744324980}
+  AttachedImage: {fileID: 114953883528821580}
+  AttachedText: {fileID: 114196848699512042}
 --- !u!114 &114210922809160280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1839,6 +1843,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttachedButton: {fileID: 1212198055517318}
+  AttachedImage: {fileID: 114136433095033916}
+  AttachedText: {fileID: 114402195914431216}
 --- !u!114 &114323414129210658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2426,6 +2432,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttachedButton: {fileID: 1805211847658444}
+  AttachedImage: {fileID: 114900264994795088}
+  AttachedText: {fileID: 114562891147108566}
 --- !u!114 &114605435350371124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2572,6 +2580,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttachedButton: {fileID: 1226060467316056}
+  AttachedImage: {fileID: 114876759699967346}
+  AttachedText: {fileID: 114354100209178616}
 --- !u!114 &114641836540803846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2692,6 +2702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttachedButton: {fileID: 1454876462600300}
+  AttachedImage: {fileID: 114550280958116932}
+  AttachedText: {fileID: 114323414129210658}
 --- !u!114 &114728063771728846
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -19,7 +19,7 @@ public abstract class TraitBaseClass : MonoBehaviour {
 
     protected string LevelStr = "_1";
     protected PlayerController playerObject;
-    protected int i_TraitLevel = 1;
+    public int i_TraitLevel = 1;
 
     // Use this for initialization
     void Start()
@@ -45,11 +45,15 @@ public abstract class TraitBaseClass : MonoBehaviour {
 
     public void SetLevel(int level)
     {
+        Debug.Log("Level Set");
+
         i_TraitLevel = level;
     }
 
     public void LevelTrait()
     {
+        Debug.Log("Level Up");
+
         i_TraitLevel++;
         LevelStr = "_" + i_TraitLevel.ToString();
     }
@@ -64,7 +68,7 @@ public abstract class TraitBaseClass : MonoBehaviour {
         if (i_TraitLevel == 1)
             return 1;
 
-        return i_TraitLevel * LevelMultiplier;
+        return 1 + (i_TraitLevel * LevelMultiplier);
     }
 
     public virtual void DoTrait() { }

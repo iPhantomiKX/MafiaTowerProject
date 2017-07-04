@@ -54,3 +54,4 @@ MonoBehaviour:
   DisplayName: Hackerman
   DisplayDescription: Ability to hack certain doors
   LevelMultiplier: 0.25
+  i_TraitLevel: 1

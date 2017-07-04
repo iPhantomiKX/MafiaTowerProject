@@ -55,12 +55,6 @@ public class PersistentData : MonoBehaviour {
 		{
 			// Load whatever numbers here
 		}
-
-        if (Input.GetKeyUp(KeyCode.Alpha0))
-        {
-            PlayerTraits = AllTraits;
-        }
-
 	}
 
 	#if UNITY_ANDROID
@@ -114,11 +108,13 @@ public class PersistentData : MonoBehaviour {
             {
                 if (TraitName.Contains(AllTraits[i].DisplayName))
                 {
-                    PlayerTraits.Add(AllTraits[i]);
+                    PlayerTraits.Add(Instantiate(AllTraits[i]));
                 
                     // Get level of trait
                     string[] parts;
                     parts = TraitName.Split('_');
+
+                    Debug.Log(parts[1]);
 
                     int level = int.Parse(parts[1]);
                     PlayerTraits[PlayerTraits.Count - 1].SetLevel(level);

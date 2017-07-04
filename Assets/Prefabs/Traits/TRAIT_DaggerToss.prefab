@@ -54,6 +54,7 @@ MonoBehaviour:
   DisplayName: Dagger Toss
   DisplayDescription: Throws a dagger
   LevelMultiplier: 0.5
+  i_TraitLevel: 1
   CooldownTime: 2
   DaggerPrefab: {fileID: 1124633053473318, guid: 86af2907ca680d743bff78c05a1cf5a8,
     type: 2}

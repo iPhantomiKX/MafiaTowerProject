@@ -54,4 +54,5 @@ MonoBehaviour:
   DisplayName: Heavy Breathing
   DisplayDescription: You are breathing too loudly.
   LevelMultiplier: 0.25
+  i_TraitLevel: 1
   BreathInterval: 1

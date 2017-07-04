@@ -29,14 +29,20 @@ public class TraitHolder : MonoBehaviour {
                 (aTrait as AbilityTrait).DoCooldown();
         }
 
-        //if (Input.GetKeyDown(KeyCode.E) && b_InTrigger)
-        
-        //if (Input.anyKeyDown)
-            //SetInputReceived(FetchKey());
-
         // Debug
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Alpha9))
             SceneManager.LoadScene("LoseTraitScene");
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            SceneManager.LoadScene("NextLevelScene");
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            foreach (TraitBaseClass tr in TraitList)
+            {
+                tr.LevelTrait();
+            }
+        }
 	}
 
     public void OnDeath()
