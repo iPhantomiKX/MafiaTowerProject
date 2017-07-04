@@ -33,6 +33,18 @@ public class Restart : MonoBehaviour {
         if (ChosenTraitList != null)
         {
             // Restarting to start
+            // Reset traits that are being removed from player traits
+            foreach (TraitBaseClass aTrait in PersistentData.m_Instance.PlayerTraits)
+            {
+                foreach (TraitBaseClass anotherTrait in PersistentData.m_Instance.AllTraits)
+                {
+                    if (aTrait != anotherTrait)
+                    {
+                        anotherTrait.SetLevel(1);
+                    }
+                }
+            }
+
             PersistentData.m_Instance.PlayerTraits.Clear();
 
             Transform[] TransformList = ChosenTraitList.gameObject.GetComponentsInChildren<Transform>();
@@ -46,7 +58,7 @@ public class Restart : MonoBehaviour {
         else if (ChosenTraitPanel != null)
         {
             // Restarting back one level
-
+            ChosenTraitPanel.GetComponent<ChosenTrait>().AttachedTrait.SetLevel(1);
             PersistentData.m_Instance.PlayerTraits.Remove(ChosenTraitPanel.GetComponent<ChosenTrait>().AttachedTrait);
 
             PersistentData.m_Instance.CurrentLevel = Mathf.Max(0, PersistentData.m_Instance.CurrentLevel - 1);

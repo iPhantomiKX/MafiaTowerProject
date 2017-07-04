@@ -21,8 +21,8 @@ public class MeleeEnemy : EnemySM {
 	public override void Start () {
 		base.Start ();
 		AttackDamage = 3f;
-		AttackSpeed = 1.9f;
-		MoveSpeed = 0.5f;
+		AttackSpeed = 1.3f;
+		MoveSpeed = 1f;
 		HP = 10f;
 		attackAble = true;
 	}
@@ -37,7 +37,7 @@ public class MeleeEnemy : EnemySM {
 	}
 
 	public override int Think(){
-		print (CurrentState);
+		//print (CurrentState);
 		switch (CurrentState)
 		{                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 			//IDLE -> PATROL,SUS,ATTACK,DEAD
@@ -86,12 +86,14 @@ public class MeleeEnemy : EnemySM {
 
 			//SEARCHING -> SUS, ATTACK, IDLE,DEAD
 		case ENEMY_STATE.SEARCHING:
-			if (IsDead())
+			if (IsDead ())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen())
+			if (IsPlayerSeen ())
 				return (int)ENEMY_STATE.ATTACKING;
-			if (IsSuspicuous())
+			if (IsSuspicuous ())
 				return(int)ENEMY_STATE.SUSPICIOUS;
+			if (LastPLayerPosition == Vector3.forward)
+				return(int)ENEMY_STATE.IDLE;
 			return (int)ENEMY_STATE.SEARCHING;
 
 			//Dead
@@ -102,7 +104,7 @@ public class MeleeEnemy : EnemySM {
 			return -1;
 		}
 	}
-
+		
 	public override void Act(int value){
 		switch (value)
 		{
@@ -187,11 +189,12 @@ public class MeleeEnemy : EnemySM {
 			if (!alert)
 				alert = true;
 			StopSuspicious ();
+			LastPLayerPosition = player.transform.position;
 			WalkTowardPoint (player.transform.position);
 			if (attackAble) {
 				if (Vector2.Distance (this.transform.position, player.transform.position) < 0.4f) {
-					player.GetComponent<HealthComponent> ().health -= 1;
-
+					//player.GetComponent<HealthComponent> ().health -= (int)AttackDamage;
+					player.GetComponent<HealthComponent>().TakeDmg((int) AttackDamage);
 					attackAble = false;
 					Invoke ("ResetAttack", AttackSpeed);
 				}
@@ -201,13 +204,21 @@ public class MeleeEnemy : EnemySM {
 			break;
 
 		case (int)ENEMY_STATE.SEARCHING:
-			CurrentState = ENEMY_STATE.IDLE;
+			CurrentState = ENEMY_STATE.SEARCHING;
+			if (this.transform.position == LastPLayerPosition) {
+//				FaceTowardAngle (Time.time*100 % 360, 0.1f);
+				this.transform.Rotate (0,0,300	*Time.deltaTime);
+				rb.velocity = Vector3.zero;
+				rb.angularVelocity = 0;
+			} else {
+				WalkTowardPoint (LastPLayerPosition);
+			}
 			break;
 
 		case (int)ENEMY_STATE.DEAD:
 			CurrentState = ENEMY_STATE.DEAD;
 			this.GetComponent<CircleCollider2D> ().enabled = false;
-			Destroy (this.gameObject);
+			Destroy (this.transform.parent.gameObject,1);
 			break;
 		}
 	}

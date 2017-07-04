@@ -1,11 +1,12 @@
-﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ObjectiveManager.cs">
+﻿<Properties StartupItem="MafiaTowerProject.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Enemy\MeleeEnemy.cs">
     <Files>
       <File FileName="Assets\Scripts\HealthComponent.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Gun.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PlayerUIScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ObjectiveManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy\MeleeEnemy.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

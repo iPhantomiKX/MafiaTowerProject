@@ -34,7 +34,7 @@ public class Melee : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.tag == "Enemy") {
 			EnemySM enem = col.gameObject.GetComponent<EnemySM> ();
-			enem.HP -= 2;
+			enem.TakeDamage (2f);
 		}
 	}
 

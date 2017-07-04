@@ -51,9 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ed779224d3b7c47abcdd4a7829bcb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConditionObject: {fileID: 0}
-  IfRequireInput: 0
-  traitType: 0
   DisplayName: Speed Feet
   DisplayDescription: Ability to move faster
-  speed: 2
+  LevelMultiplier: 0.25
+  i_TraitLevel: 1
+  speed: 1.5

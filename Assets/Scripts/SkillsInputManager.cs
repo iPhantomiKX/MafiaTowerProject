@@ -71,8 +71,6 @@ public class SkillsInputManager : MonoBehaviour {
 
     public void AssignATrait(int slotNum, AbilityTrait aTrait)
     {
-        Debug.Log(slotNum + " " + aTrait.DisplayName);
-
         int slotIdx = slotNum - 1;
 
         // Check if need to add a new trait or move existing trait

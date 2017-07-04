@@ -19,6 +19,6 @@ public class Trait_Speed : PassiveTrait {
 
     public override void DoEffect()
     {
-        playerObject.mod_speed = speed;
+        playerObject.mod_speed = speed * GetLevelMultiplier();
     }
 }

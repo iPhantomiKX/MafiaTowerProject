@@ -24,14 +24,22 @@ public class RandomTrait : MonoBehaviour {
 	{
 		int rand = Random.Range (0, TraitList.Count);
 
-		GetComponentInChildren<Text> ().text = TraitList [rand].DisplayName;
+		GetComponentInChildren<Text> ().text = TraitList [rand].GetName();
 
-		if (PersistentData.m_Instance.PlayerTraits.Count == 0) {
-            PersistentData.m_Instance.PlayerTraits.Add(TraitList[rand]);
-		}
-        else if (!PersistentData.m_Instance.PlayerTraits.Contains(TraitList[rand]))
-            PersistentData.m_Instance.PlayerTraits.Add(TraitList[rand]);
+        //if (PersistentData.m_Instance.PlayerTraits.Count == 0) {
+        //    PersistentData.m_Instance.PlayerTraits.Add(TraitList[rand]);
+        //}
 
+        if (!PersistentData.m_Instance.PlayerTraits.Contains(TraitList[rand]))
+        {
+            PersistentData.m_Instance.PlayerTraits.Add(TraitList[rand]);
+        }
+        else
+        {
+            int idx = PersistentData.m_Instance.PlayerTraits.IndexOf(TraitList[rand]);
+            PersistentData.m_Instance.PlayerTraits[idx].LevelTrait();
+        }
+        
         GetComponent<Button>().interactable = false;
         ButtonToTurnOn.interactable = true;
 	}

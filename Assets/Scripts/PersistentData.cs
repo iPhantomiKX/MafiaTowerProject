@@ -19,6 +19,7 @@ public class PersistentData : MonoBehaviour {
     public List<TraitBaseClass> PlayerTraits = new List<TraitBaseClass>();
     public List<string> PlayerTraitNames = new List<string>();
     public int CurrentLevel;
+    public int NumTraitsPassDown;
 
 	public bool InitialLoad = false;
 	public bool LoadFailed = false;
@@ -38,6 +39,13 @@ public class PersistentData : MonoBehaviour {
 		{
 			Destroy(gameObject);
 		}
+
+        // Reaet levels for traits
+        foreach (TraitBaseClass aTrait in AllTraits)
+        {
+            aTrait.SetLevel(1);
+        }
+
         LoadData();
     }
 
@@ -54,12 +62,6 @@ public class PersistentData : MonoBehaviour {
 		{
 			// Load whatever numbers here
 		}
-
-        if (Input.GetKeyUp(KeyCode.Alpha0))
-        {
-            PlayerTraits = AllTraits;
-        }
-
 	}
 
 	#if UNITY_ANDROID
@@ -88,7 +90,8 @@ public class PersistentData : MonoBehaviour {
         PlayerTraitNames.Clear();
         foreach (TraitBaseClass aTrait in PlayerTraits)
         {
-            PlayerTraitNames.Add(aTrait.DisplayName);
+            PlayerTraitNames.Add(aTrait.GetName());
+            aTrait.SetLevel(1);
         }
 
 		PlayerData returnData = new PlayerData();
@@ -114,6 +117,15 @@ public class PersistentData : MonoBehaviour {
                 if (TraitName.Contains(AllTraits[i].DisplayName))
                 {
                     PlayerTraits.Add(AllTraits[i]);
+                
+                    // Get level of trait
+                    string[] parts;
+                    parts = TraitName.Split('_');
+
+                    Debug.Log(parts[1]);
+
+                    int level = int.Parse(parts[1]);
+                    PlayerTraits[PlayerTraits.Count - 1].SetLevel(level);
                 }
             }
         }

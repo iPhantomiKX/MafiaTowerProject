@@ -53,3 +53,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: Wire Defusal
   DisplayDescription: Switch off laser wires.
+  LevelMultiplier: 0.25
+  i_TraitLevel: 1

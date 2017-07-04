@@ -48,12 +48,16 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AI\BaseFSM.cs" />
      <Compile Include="Assets\Scripts\AI\MeleeExample.cs" />
+     <Compile Include="Assets\Scripts\AmmoInspect.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CooldownDisplay.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyBullet.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemySM.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyUI.cs" />
      <Compile Include="Assets\Scripts\Enemy\MeleeEnemy.cs" />
      <Compile Include="Assets\Scripts\Enemy\Message.cs" />
      <Compile Include="Assets\Scripts\Enemy\MessageBoard.cs" />
+     <Compile Include="Assets\Scripts\Enemy\RangeEnemy.cs" />
      <Compile Include="Assets\Scripts\EnemyController.cs" />
      <Compile Include="Assets\Scripts\Environment\EmitSound.cs" />
      <Compile Include="Assets\Scripts\Environment\Inspect.cs" />
@@ -67,9 +71,13 @@
      <Compile Include="Assets\Scripts\Environment\Objective\RescueObjtInspect.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\Console.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\ConsoleInspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\Door.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\DoorInspect.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\Glass.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\GlassInspect.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\LaserAlarm.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\LaserAlarmInspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\SecurityCameraArea.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\TraitObstacle.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\WaitTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\SoundCircleController.cs" />
@@ -94,12 +102,14 @@
      <Compile Include="Assets\Scripts\Pause\TabElement.cs" />
      <Compile Include="Assets\Scripts\Pause\TraitSelectMenu.cs" />
      <Compile Include="Assets\Scripts\PersistentData.cs" />
+     <Compile Include="Assets\Scripts\PlayerAnimationController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PlayerSpawn.cs" />
      <Compile Include="Assets\Scripts\PlayerUIScript.cs" />
      <Compile Include="Assets\Scripts\SkillNumber.cs" />
      <Compile Include="Assets\Scripts\SkillSlot.cs" />
      <Compile Include="Assets\Scripts\SkillsInputManager.cs" />
+     <Compile Include="Assets\Scripts\SpriteOutline.cs" />
      <Compile Include="Assets\Scripts\StealthScript.cs" />
      <Compile Include="Assets\Scripts\TraitHolder.cs" />
      <Compile Include="Assets\Scripts\Traits\AbilityTrait.cs" />
@@ -120,11 +130,15 @@
      <Compile Include="Assets\Scripts\Traits\Trait_HeavyBreathing.cs" />
      <Compile Include="Assets\Scripts\Traits\Trait_Persuasion.cs" />
      <Compile Include="Assets\Scripts\Traits\Trait_Speed.cs" />
+     <Compile Include="Assets\Scripts\Traits\Trait_WireDefusal.cs" />
+     <Compile Include="Assets\Scripts\Utility\PauseInterface.cs" />
+     <Compile Include="Assets\Scripts\Utility\PauseUtilities.cs" />
      <None Include="Assets\Resources\Sprites\AddSpritesHere.txt" />
      <None Include="Assets\Scenes\AddScenesHere.txt" />
      <None Include="Assets\Prefabs\AddPrefabsHere.txt" />
      <None Include="Assets\Fonts\AddFontsHere.txt" />
      <None Include="Assets\Scripts\AddScriptsHere.txt" />
+     <None Include="Assets\Shaders\Sprite-Outline.shader" />
      <None Include="Assets\Animation\AddAnimationHere.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

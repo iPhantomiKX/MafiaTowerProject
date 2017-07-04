@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 
     public Rigidbody2D rb;
     public float speed;
-    public float mod_speed = 0; // speed added on by traits
+    public float mod_speed = 1; // speed added on by traits
 
 	public static bool shootButton;
 	public static bool meleeButton;
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour {
     void Move()
     {
         Vector2 MoveDirectionLR = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        velocity = MoveDirectionLR * (speed + mod_speed);
+        velocity = MoveDirectionLR * (speed * mod_speed);
         rb.velocity = new Vector2(velocity.x, velocity.y);
 
         if (IsDashing)

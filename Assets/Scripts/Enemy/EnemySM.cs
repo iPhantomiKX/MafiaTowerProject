@@ -14,10 +14,12 @@ public abstract class EnemySM : MonoBehaviour {
 	public bool attackAble;
 
 	public GameObject player;
-	private Rigidbody2D rb;
+	protected Rigidbody2D rb;
 
 	public float angleFOV;
 	public float visionRange;
+
+
 
 	public Vector3 SuspiciousPosition;
 	public Vector3 LastPLayerPosition;
@@ -109,7 +111,6 @@ public abstract class EnemySM : MonoBehaviour {
 			//check if player behind any obstacle
 			int layerMask = (1 << 8 | 1 << 11);
 			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, playerDir,Mathf.Infinity,layerMask);
-			print (hit.collider.gameObject);
 			if (hit.collider != null) {
 				if (hit.collider.gameObject.tag == "Player") {
 					return true;
@@ -182,6 +183,10 @@ public abstract class EnemySM : MonoBehaviour {
 	public void FaceTowardAngle(float angle,float percenDelta){
 		Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, q, percenDelta);
+	}
+
+	public void TakeDamage(float damage){
+		HP -= damage;
 	}
 
 	public bool IsDead(){
