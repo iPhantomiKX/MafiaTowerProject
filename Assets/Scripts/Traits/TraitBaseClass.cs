@@ -13,13 +13,14 @@ public abstract class TraitBaseClass : MonoBehaviour {
     }
 
     [Header("Base Trait Values")]
-    public string DisplayName;
-    public string DisplayDescription;
-    public float LevelMultiplier;
+    public string displayName;
+    public string displayDescription;
+    public float levelMultiplier;
+    public int maxLevel = 5;
 
-    protected string LevelStr = "_1";
+    protected string levelStr = "_1";
     protected PlayerController playerObject;
-    public int i_TraitLevel = 1;
+    protected int i_TraitLevel = 1;
 
     // Use this for initialization
     void Start()
@@ -45,22 +46,23 @@ public abstract class TraitBaseClass : MonoBehaviour {
 
     public void SetLevel(int level)
     {
-        Debug.Log("Level Set");
+        Debug.Log(displayName + " Level Set");
 
-        i_TraitLevel = level;
+        i_TraitLevel = Mathf.Min(level, maxLevel);
+        levelStr = "_" + i_TraitLevel.ToString();
     }
 
     public void LevelTrait()
     {
-        Debug.Log("Level Up");
+        Debug.Log(displayName + " Level Up");
 
-        i_TraitLevel++;
-        LevelStr = "_" + i_TraitLevel.ToString();
+        i_TraitLevel = Mathf.Min(i_TraitLevel + 1, maxLevel);
+        levelStr = "_" + i_TraitLevel.ToString();
     }
 
     public string GetName()
     {
-        return DisplayName + LevelStr;
+        return displayName + levelStr;
     }
 
     protected float GetLevelMultiplier()
@@ -68,7 +70,7 @@ public abstract class TraitBaseClass : MonoBehaviour {
         if (i_TraitLevel == 1)
             return 1;
 
-        return 1 + (i_TraitLevel * LevelMultiplier);
+        return 1 + (i_TraitLevel * levelMultiplier);
     }
 
     public virtual void DoTrait() { }

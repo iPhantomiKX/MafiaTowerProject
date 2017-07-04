@@ -17,7 +17,7 @@ public class Trait_Dash : AbilityTrait
 
     public override void DoEffect()
     {
-        Debug.Log("Dash");
+        Debug.Log("Dash " + i_TraitLevel);
         //playerObject.transform.Translate((Quaternion.Euler(0, 0, playerObject.transform.rotation.z) * new Vector2(1, 0)).normalized * Force);
 
         Vector3 worldMouse = Input.mousePosition;

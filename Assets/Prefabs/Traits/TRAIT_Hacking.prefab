@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c321d31ed8e9194498d8ec7b0c557950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: Hackerman
-  DisplayDescription: Ability to hack certain doors
-  LevelMultiplier: 0.25
-  i_TraitLevel: 1
+  displayName: Hackerman
+  displayDescription: Ability to hack certain objects
+  levelMultiplier: 0
+  maxLevel: 5

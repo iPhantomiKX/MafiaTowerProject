@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e003a32b71323e4b81b44f6fd9d0298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: Wire Defusal
-  DisplayDescription: Switch off laser wires.
-  LevelMultiplier: 0.25
-  i_TraitLevel: 1
+  displayName: Wire Defusal
+  displayDescription: Ability to defuse laser wires
+  levelMultiplier: 0
+  maxLevel: 5

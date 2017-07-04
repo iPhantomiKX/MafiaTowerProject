@@ -51,9 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84460cd3901d89343814c48ae753f15b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayName: Dash
-  DisplayDescription: Ability to dash in a straight line
-  LevelMultiplier: 0.25
-  i_TraitLevel: 1
+  displayName: Dash
+  displayDescription: Dashes a short distance
+  levelMultiplier: 0.25
+  maxLevel: 5
   CooldownTime: 3
   DashDistance: 10
