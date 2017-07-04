@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TraitHolderRef: {fileID: 0}
+  actionName: Get
   collectedAmmo: 2
 --- !u!114 &114517630338714830
 MonoBehaviour:

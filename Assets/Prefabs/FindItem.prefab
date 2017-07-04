@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TraitHolderRef: {fileID: 0}
+  actionName: Get item
 --- !u!114 &114884512298562058
 MonoBehaviour:
   m_ObjectHideFlags: 1

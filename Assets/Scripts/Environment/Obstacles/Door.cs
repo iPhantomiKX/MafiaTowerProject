@@ -23,6 +23,7 @@ public class Door : MonoBehaviour {
             GetComponent<Collider2D>().isTrigger = true;
             GetComponent<EmitSound>().emitSound();
             GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.5f);
+            GetComponent<DoorInspect>().actionName = "Close";
             closed = false;
         }
 
@@ -32,12 +33,14 @@ public class Door : MonoBehaviour {
         GetComponent<EmitSound>().emitSound();
         GetComponent<SpriteRenderer>().color = color;
         GetComponent<Collider2D>().isTrigger = false;
+        GetComponent<DoorInspect>().actionName = "Open";
         closed = true;
     }
 
     bool PlayerHasKey()
     {
         //Check if the player has the key or not
+        
         return false;
     }
 }
