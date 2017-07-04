@@ -56,8 +56,8 @@ MonoBehaviour:
   GunObject: {fileID: 0}
   bulletGO: {fileID: 1612506347180762, guid: aa03ad560cd1f304e96a52f319213839, type: 2}
   fireRate: 5
-  ammo: 0
-  max: 0
+  ammo: 20
+  max: 20
 --- !u!114 &114838542961830342
 MonoBehaviour:
   m_ObjectHideFlags: 1
