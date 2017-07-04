@@ -60,20 +60,6 @@ public class TraitHolder : MonoBehaviour {
         }
     }
 
-    KeyCode FetchKey()
-    {
-        int e = System.Enum.GetNames(typeof(KeyCode)).Length;
-        for (int i = 0; i < e; i++)
-        {
-            if (Input.GetKey((KeyCode)i))
-            {
-                return (KeyCode)i;
-            }
-        }
-
-        return KeyCode.None;
-    }
-
     public bool CheckForTrait(TraitBaseClass checkTrait)
     {
         return TraitList.Contains(checkTrait);

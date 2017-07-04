@@ -39,6 +39,13 @@ public class PersistentData : MonoBehaviour {
 		{
 			Destroy(gameObject);
 		}
+
+        // Reaet levels for traits
+        foreach (TraitBaseClass aTrait in AllTraits)
+        {
+            aTrait.SetLevel(1);
+        }
+
         LoadData();
     }
 
@@ -84,6 +91,7 @@ public class PersistentData : MonoBehaviour {
         foreach (TraitBaseClass aTrait in PlayerTraits)
         {
             PlayerTraitNames.Add(aTrait.GetName());
+            aTrait.SetLevel(1);
         }
 
 		PlayerData returnData = new PlayerData();
@@ -108,7 +116,7 @@ public class PersistentData : MonoBehaviour {
             {
                 if (TraitName.Contains(AllTraits[i].DisplayName))
                 {
-                    PlayerTraits.Add(Instantiate(AllTraits[i]));
+                    PlayerTraits.Add(AllTraits[i]);
                 
                     // Get level of trait
                     string[] parts;
