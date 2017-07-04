@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4012887525754650}
   - component: {fileID: 212564550791019968}
   - component: {fileID: 114071971140775262}
+  - component: {fileID: 114838542961830342}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -55,6 +56,25 @@ MonoBehaviour:
   GunObject: {fileID: 0}
   bulletGO: {fileID: 1612506347180762, guid: aa03ad560cd1f304e96a52f319213839, type: 2}
   fireRate: 5
+  ammo: 0
+  max: 0
+--- !u!114 &114838542961830342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1009102235335932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9601a6fad1eaabd4395788a96ed76238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxInitialRadius: 20
+  expandSpeed: 0.75
+  stayExpandSpeed: 0.15
+  maxRadius: 25
+  fadeSpeed: 0.02
+  sc: {fileID: 114821803060620018, guid: f09d552dff7a86444a0fad6c845a325a, type: 2}
 --- !u!212 &212564550791019968
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -43,7 +43,8 @@ public class Gun : MonoBehaviour {
 
 	void Shoot()
 	{
-		ammo--;
+        GetComponent<EmitSound>().emitSound();
+        ammo--;
 		newBulletGO = (GameObject)Instantiate (bulletGO);
 		newBulletGO.transform.position = GunObject.transform.position;
 		Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - GunObject.transform.position;

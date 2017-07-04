@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour {
 
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour {
     private bool IsDashing = false;
     private Vector2 DashDir;
     private float DashSpeed;
+    Image currentInspectionPanel;
+    public bool inspecting;
 
     List<Collider2D> nearObj = new List<Collider2D>();
 
@@ -88,7 +92,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool Shootbutton()
 	{
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) && !inspecting) {
 			shootButton = true;
 		} 
 		else
@@ -99,7 +103,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool Meleebutton()
 	{
-		if (Input.GetKeyDown(KeyCode.C)) {
+		if (Input.GetKeyDown(KeyCode.C) && !inspecting) {
 			meleeButton = true;
 		} 
 		else
@@ -134,7 +138,12 @@ public class PlayerController : MonoBehaviour {
                 if (col != null && col.GetComponent<Inspect>() != null)
                 {
                     Debug.Log("Inspect " + col);
-                    col.GetComponent<Inspect>().inspect();
+                    //col.GetComponent<Inspect>().inspect();
+                    GameObject em = GameObject.Find("EnvironmentManager");
+                    inspecting = true;
+                    currentInspectionPanel = em.GetComponent<InspectionManager>().CreateInspectionMenu(col.gameObject);
+
+
                     break;
                 }
             
@@ -196,5 +205,15 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter()
     {
         IsDashing = false;
+
+    }
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if(currentInspectionPanel != null && other.gameObject.GetComponent<Inspect>() != null)
+        {
+            Destroy(currentInspectionPanel.gameObject);
+            currentInspectionPanel = null;
+            inspecting = false;
+        }
     }
 }
