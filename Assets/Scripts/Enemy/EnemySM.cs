@@ -30,6 +30,7 @@ public abstract class EnemySM : MonoBehaviour {
 	public bool alert;
 	public float idleTime;
 	public float idleAngle;
+	public bool knowPlayerPosition;
 
 	public List<Vector3> PatrolPoints = new List<Vector3>();
 
@@ -42,7 +43,9 @@ public abstract class EnemySM : MonoBehaviour {
 		SuspiciousPosition = Vector3.forward;
 		PatrolPosition = Vector3.forward;
 		SuspiciousTime = 0f;
+		AlertTime = 0f;
 		idleTime = 2.0f;
+		knowPlayerPosition = false;
 	}
 
 	// Update is called once per frame
@@ -85,6 +88,7 @@ public abstract class EnemySM : MonoBehaviour {
 	public abstract void Sense();           // get/receive updates from the world
 	public abstract int Think();            // process the updates
 	public abstract void Act(int value);    // act upon any change in behaviour
+	public abstract void ProcessMessage();
 
 	public Message ReadFromMessageBoard()
 	{

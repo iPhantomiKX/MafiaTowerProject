@@ -36,6 +36,8 @@ public class RangeEnemy : EnemySM {
 		{
 			CurrentMessage = temp;	
 		}
+
+		ProcessMessage ();
 	}
 
 	public override int Think(){
@@ -46,7 +48,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.IDLE:
 			if (IsDead ())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen ())
+			if (IsPlayerSeen () || knowPlayerPosition)
 				return (int)ENEMY_STATE.ATTACKING;
 			if (IsSuspicuous ())
 				return (int)ENEMY_STATE.SUSPICIOUS;
@@ -58,7 +60,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.PATROLLING:
 			if (IsDead ())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen ())
+			if (IsPlayerSeen () || knowPlayerPosition)
 				return (int)ENEMY_STATE.ATTACKING;
 			if (IsSuspicuous ())
 				return(int)ENEMY_STATE.SUSPICIOUS;
@@ -70,7 +72,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.SUSPICIOUS:
 			if (IsDead())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen())
+			if (IsPlayerSeen() || knowPlayerPosition)
 				return (int)ENEMY_STATE.ATTACKING;
 			if (!IsSuspicuous() && !alert)		
 				return(int)ENEMY_STATE.IDLE;
@@ -82,7 +84,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.ATTACKING:
 			if (IsDead())
 				return (int)ENEMY_STATE.DEAD;
-			if(!IsPlayerSeen())
+			if(!IsPlayerSeen() && !knowPlayerPosition)
 				return (int)ENEMY_STATE.SEARCHING;
 			return (int)ENEMY_STATE.ATTACKING;
 
@@ -90,7 +92,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.SEARCHING:
 			if (IsDead ())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen ())
+			if (IsPlayerSeen () || knowPlayerPosition)
 				return (int)ENEMY_STATE.ATTACKING;
 			if (IsSuspicuous ())
 				return(int)ENEMY_STATE.SUSPICIOUS;
@@ -113,125 +115,190 @@ public class RangeEnemy : EnemySM {
 
 		case (int)ENEMY_STATE.IDLE:
 			CurrentState = ENEMY_STATE.IDLE;
-			idleTime -= Time.deltaTime;
-
-			FaceTowardAngle (idleAngle, 0.03f);
-
-			if (idleTime <= 0) {
-				float rand = Random.Range (0f, 100f);
-				if (rand <= 25 && PatrolPoints.Count > 0) {
-					idleTime = 0;
-					float nearest = 9999f;
-					float tempF;
-					int indexT = -1;
-					for (int i = 0; i < PatrolPoints.Count; i++) {
-						tempF = Vector2.Distance (this.transform.position, PatrolPoints [i]);
-						if (tempF < 0.2)
-							continue;
-						if (tempF < nearest) {
-							nearest = tempF;
-							indexT = i;
-						}
-					}
-					if(indexT>=0)
-						PatrolPosition = PatrolPoints [indexT];
-				} else {
-					idleTime = rand / 25;
-					float r_angle = Random.Range (0f, 360f);
-					idleAngle = r_angle;
-				}
-			}
+			DoIdle ();
 			break;
 
 
 		//Currently best in 2 point
 		case (int)ENEMY_STATE.PATROLLING:
 			CurrentState = ENEMY_STATE.PATROLLING;
-			if (PatrolPoints.Count <= 0 || PatrolPosition == Vector3.forward) {
-				idleTime = 1f;
-				break;
-			}
-			if (Vector2.Distance (this.transform.position, PatrolPosition) > 0.2f) {
-				WalkTowardPoint (PatrolPosition);
-			} else {
-				idleTime = 1f;
-				PatrolPosition = Vector3.forward;
-			}
-
+			DoPatrol ();
 			break;
 
 		case (int)ENEMY_STATE.SUSPICIOUS:
 			CurrentState = ENEMY_STATE.SUSPICIOUS;
-			if (Vector2.Distance (this.transform.position, SuspiciousPosition) < 0.3f) {
-				SuspiciousTime -= Time.deltaTime;
-				float angle;
-				float delayAct = SuspiciousMax / 5;
-				if (SuspiciousTime > SuspiciousMax * 8/10) {
-				} else if (SuspiciousTime > SuspiciousMax *6/10) {
-					angle = 0;
-					FaceTowardAngle (angle, 0.1f);
-				} else if (SuspiciousTime > SuspiciousMax *4/10) {
-					angle = 180;
-					FaceTowardAngle (angle, 0.1f);
-				} else if (SuspiciousTime > SuspiciousMax * 2/10) {
-					angle = 90;
-					FaceTowardAngle (angle, 0.1f);
-				} else if (SuspiciousTime > 0) {
-					angle = 270;
-					FaceTowardAngle (angle, 0.1f);
-				} else {
-					SuspiciousTime = 0;
-					StopSuspicious ();
-					idleTime = 1f;
-				}
-			} else
-				WalkTowardPoint (SuspiciousPosition);
+			DoSuspicious ();
 			break;
 
 		case (int)ENEMY_STATE.ATTACKING:
 			CurrentState = ENEMY_STATE.ATTACKING;
-			if (!alert)
-				alert = true;
-			StopSuspicious ();
-			LastPLayerPosition = player.transform.position;
-			if (Vector2.Distance (this.transform.position, player.transform.position) > 0.7f)
-				WalkTowardPoint (player.transform.position);
-			else
-				FaceTowardPoint (player.transform.position, 0.33f);
-			if (attackAble) {
-				if (Vector2.Distance (this.transform.position, player.transform.position) <= 1f) {
-					GameObject go = Instantiate (bulletPrefab, this.transform.position + (transform.up * 0.3f), this.transform.rotation);
-					go.GetComponent<EnemyBullet> ().Damage = AttackDamage;
-					Physics2D.IgnoreCollision(go.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
-					go.GetComponent<Rigidbody2D> ().AddForce (this.transform.up*400f);
-					//player.GetComponent<HealthComponent> ().health -= (int)AttackDamage;
-
-					attackAble = false;
-					Invoke ("ResetAttack", AttackSpeed);
-				}
-
-			}
-
+			DoAttacking ();
 			break;
 
 		//WIP
 		case (int)ENEMY_STATE.SEARCHING:
 			CurrentState = ENEMY_STATE.SEARCHING;
-			if (this.transform.position == LastPLayerPosition) {
-				//				FaceTowardAngle (Time.time*100 % 360, 0.1f);
-				this.transform.Rotate (0,0,300	*Time.deltaTime);
-				rb.velocity = Vector3.zero;
-				rb.angularVelocity = 0;
-			} else {
-				WalkTowardPoint (LastPLayerPosition);
-			}
+			DoSearching ();
 			break;
 
 		case (int)ENEMY_STATE.DEAD:
 			CurrentState = ENEMY_STATE.DEAD;
-			this.GetComponent<CircleCollider2D> ().enabled = false;
-			Destroy (this.transform.parent.gameObject,1);
+			DoDead ();
 			break;
 		}
+	}
+
+	private void DoIdle(){
+		idleTime -= Time.deltaTime;
+
+		FaceTowardAngle (idleAngle, 0.03f);
+
+		if (idleTime <= 0) {
+			float rand = Random.Range (0f, 100f);
+			if (rand <= 25 && PatrolPoints.Count > 0) {
+				idleTime = 0;
+				float nearest = 9999f;
+				float tempF;
+				int indexT = -1;
+				for (int i = 0; i < PatrolPoints.Count; i++) {
+					tempF = Vector2.Distance (this.transform.position, PatrolPoints [i]);
+					if (tempF < 0.2)
+						continue;
+					if (tempF < nearest) {
+						nearest = tempF;
+						indexT = i;
+					}
+				}
+				if(indexT>=0)
+					PatrolPosition = PatrolPoints [indexT];
+			} else {
+				idleTime = rand / 25;
+				float r_angle = Random.Range (0f, 360f);
+				idleAngle = r_angle;
+			}
+		}
+	}
+
+	private void DoPatrol(){
+		if (PatrolPoints.Count <= 0 || PatrolPosition == Vector3.forward) {
+			idleTime = 1f;
+			return;
+		}
+		if (Vector2.Distance (this.transform.position, PatrolPosition) > 0.2f) {
+			WalkTowardPoint (PatrolPosition);
+		} else {
+			idleTime = 1f;
+			PatrolPosition = Vector3.forward;
+		}
+
+	}
+
+	private void DoSuspicious(){
+		if (Vector2.Distance (this.transform.position, SuspiciousPosition) < 0.3f) {
+			SuspiciousTime -= Time.deltaTime;
+			float angle;
+			float delayAct = SuspiciousMax / 5;
+			if (SuspiciousTime > SuspiciousMax * 8/10) {
+			} else if (SuspiciousTime > SuspiciousMax *6/10) {
+				angle = 0;
+				FaceTowardAngle (angle, 0.1f);
+			} else if (SuspiciousTime > SuspiciousMax *4/10) {
+				angle = 180;
+				FaceTowardAngle (angle, 0.1f);
+			} else if (SuspiciousTime > SuspiciousMax * 2/10) {
+				angle = 90;
+				FaceTowardAngle (angle, 0.1f);
+			} else if (SuspiciousTime > 0) {
+				angle = 270;
+				FaceTowardAngle (angle, 0.1f);
+			} else {
+				SuspiciousTime = 0;
+				StopSuspicious ();
+				idleTime = 1f;
+			}
+		} else
+			WalkTowardPoint (SuspiciousPosition);
+	}
+
+	private void DoAttacking(){
+		if (!alert)
+			alert = true;
+		StopSuspicious ();
+		LastPLayerPosition = player.transform.position;
+		knowPlayerPosition = false;
+		if (Vector2.Distance (this.transform.position, player.transform.position) > 0.7f)
+			WalkTowardPoint (player.transform.position);
+		else
+			FaceTowardPoint (player.transform.position, 0.33f);
+		if (attackAble) {
+			if (Vector2.Distance (this.transform.position, player.transform.position) <= 1f) {
+				GameObject go = Instantiate (bulletPrefab, this.transform.position + (transform.up * 0.3f), this.transform.rotation);
+				go.GetComponent<EnemyBullet> ().Damage = AttackDamage;
+				Physics2D.IgnoreCollision(go.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
+				go.GetComponent<Rigidbody2D> ().AddForce (this.transform.up*400f);
+				//player.GetComponent<HealthComponent> ().health -= (int)AttackDamage;
+
+				attackAble = false;
+				Invoke ("ResetAttack", AttackSpeed);
+			}
+
+		}
+
+		AlertTime += Time.deltaTime;
+		if (AlertTime >= 3) {
+			//Push Message in MessageBoard
+			List<EnemySM> enems = theBoard.getEnemyList();
+			foreach (EnemySM enem in enems)
+			{
+				if (enem == this.GetComponent<EnemySM> ())
+					continue;
+				Message aMessage = new Message();
+				aMessage.theMessageType = Message.MESSAGE_TYPE.ENEMY_SPOTPLAYER;
+				aMessage.theSender = this.gameObject;
+				aMessage.theReceiver = enem.gameObject;
+				aMessage.theTarget = null;
+				aMessage.theDestination = LastPLayerPosition;
+
+				theBoard.AddMessage (aMessage);
+			}
+			AlertTime = 0f;
+		}
+	}
+
+	private void DoSearching(){
+		if (this.transform.position == LastPLayerPosition) {
+			//				FaceTowardAngle (Time.time*100 % 360, 0.1f);
+			this.transform.Rotate (0,0,300	*Time.deltaTime);
+			rb.velocity = Vector3.zero;
+			rb.angularVelocity = 0;
+		} else {
+			WalkTowardPoint (LastPLayerPosition);
+		}
+	}
+
+	private void DoDead(){
+		this.GetComponent<CircleCollider2D> ().enabled = false;
+		Destroy (this.transform.parent.gameObject,1);
+	}
+
+	public override void ProcessMessage ()
+	{
+		if (CurrentMessage == null)
+		{
+			
+			return;
+
+		}
+
+		switch (CurrentMessage.theMessageType)
+		{
+
+		case Message.MESSAGE_TYPE.ENEMY_SPOTPLAYER:
+			knowPlayerPosition = true;
+			LastPLayerPosition = CurrentMessage.theDestination;
+			break;
+
+		}
+		CurrentMessage = null;
 	}
 }
