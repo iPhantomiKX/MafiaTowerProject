@@ -54,6 +54,9 @@ public abstract class EnemySM : MonoBehaviour {
 			GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
 		if (!player)
 			player = GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<PlayerController>().gameObject;
+		if (!theBoard)
+			theBoard = GameObject.Find("MessageBoard").GetComponent<MessageBoard>();
+		
 		
 
 		if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
