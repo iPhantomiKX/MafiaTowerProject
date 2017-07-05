@@ -65,6 +65,13 @@ public abstract class TraitBaseClass : MonoBehaviour {
         return displayName + levelStr;
     }
 
+    public bool GetIfMaxLevel()
+    {
+        if (i_TraitLevel == maxLevel)
+            return true;
+        return false;
+    }
+
     protected float GetLevelMultiplier()
     {
         if (i_TraitLevel == 1)

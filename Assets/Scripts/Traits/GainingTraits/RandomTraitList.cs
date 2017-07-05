@@ -12,31 +12,48 @@ public class RandomTraitList : MonoBehaviour {
 
     private List<TraitBaseClass> TraitList;
     private ButtonElement selectedButton;
-    private List<TraitBaseClass> randList = new List<TraitBaseClass>();
 
 	// Use this for initialization
-	void Start () {
+    void Start()
+    {
         TraitList = PersistentData.m_Instance.AllTraits;
 
-        for (int count = 0; count < numRandomTraits; ++count)
+        // Get eligible traits
+        List<TraitBaseClass> eligibleList = new List<TraitBaseClass>();
+        foreach (TraitBaseClass aTrait in TraitList)
         {
-            int rand = Random.Range(0, TraitList.Count);
-
-            if (randList.Contains(TraitList[rand]))
-            {
-                --count;
-                continue;
-            }
-
-            GameObject go = Instantiate(buttonPrefab) as GameObject;
-            go.transform.SetParent(transform);
-            go.GetComponent<ButtonElement>().AttachedTrait = TraitList[rand];
-
-            go.SetActive(true);
-
-            randList.Add(TraitList[rand]);
+            if (!aTrait.GetIfMaxLevel())
+                eligibleList.Add(aTrait);
         }
-	}
+
+        if (eligibleList.Count > 0)
+        {
+            List<TraitBaseClass> randList = new List<TraitBaseClass>();
+            for (int count = 0; count < numRandomTraits; ++count)
+            {
+                int rand = Random.Range(0, eligibleList.Count);
+
+                if (randList.Contains(eligibleList[rand]))
+                {
+                    if (randList.Count != eligibleList.Count)
+                        --count;
+                    continue;
+                }
+
+                GameObject go = Instantiate(buttonPrefab) as GameObject;
+                go.transform.SetParent(transform);
+                go.GetComponent<ButtonElement>().AttachedTrait = eligibleList[rand];
+
+                go.SetActive(true);
+
+                randList.Add(eligibleList[rand]);
+            }
+        }
+        else
+        {
+            buttonToTurnOn.interactable = true;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
