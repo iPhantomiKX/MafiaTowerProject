@@ -24,7 +24,7 @@ public class RandomTrait : MonoBehaviour {
 	{
 		int rand = Random.Range (0, TraitList.Count);
 
-		GetComponentInChildren<Text> ().text = TraitList [rand].GetName();
+		GetComponentInChildren<Text> ().text = TraitList [rand].displayName;
 
         //if (PersistentData.m_Instance.PlayerTraits.Count == 0) {
         //    PersistentData.m_Instance.PlayerTraits.Add(TraitList[rand]);

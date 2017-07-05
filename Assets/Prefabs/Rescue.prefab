@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TraitHolderRef: {fileID: 0}
+  actionName: Help
 --- !u!114 &114667835411162536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   om: {fileID: 0}
-  isTimed: 0
-  time: 0
+  isTimed: 1
+  time: 15
   remainingTime: 0
   timeBar: {fileID: 0}
   timeBarWidth: 0

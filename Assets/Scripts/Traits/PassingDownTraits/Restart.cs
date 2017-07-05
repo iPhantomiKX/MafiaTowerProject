@@ -34,14 +34,11 @@ public class Restart : MonoBehaviour {
         {
             // Restarting to start
             // Reset traits that are being removed from player traits
-            foreach (TraitBaseClass aTrait in PersistentData.m_Instance.PlayerTraits)
+            foreach (TraitBaseClass aTrait in PersistentData.m_Instance.AllTraits)
             {
-                foreach (TraitBaseClass anotherTrait in PersistentData.m_Instance.AllTraits)
+                if (!PersistentData.m_Instance.PlayerTraits.Contains(aTrait))
                 {
-                    if (aTrait != anotherTrait)
-                    {
-                        anotherTrait.SetLevel(1);
-                    }
+                    aTrait.SetLevel(1);
                 }
             }
 
@@ -53,6 +50,8 @@ public class Restart : MonoBehaviour {
                 if (aTransform.gameObject.name.Contains("Button"))
                     PersistentData.m_Instance.PlayerTraits.Add(aTransform.gameObject.GetComponent<ButtonElement>().AttachedTrait);
             }
+
+            Debug.Log("...restarted... playertrait size " + PersistentData.m_Instance.PlayerTraits.Count);
             PersistentData.m_Instance.CurrentLevel = 0;
         }
         else if (ChosenTraitPanel != null)

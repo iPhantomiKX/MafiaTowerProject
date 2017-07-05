@@ -40,12 +40,6 @@ public class PersistentData : MonoBehaviour {
 			Destroy(gameObject);
 		}
 
-        // Reaet levels for traits
-        foreach (TraitBaseClass aTrait in AllTraits)
-        {
-            aTrait.SetLevel(1);
-        }
-
         LoadData();
     }
 
@@ -87,11 +81,13 @@ public class PersistentData : MonoBehaviour {
 
 	PlayerData CopyData()
 	{
-        PlayerTraitNames.Clear();
-        foreach (TraitBaseClass aTrait in PlayerTraits)
+        PersistentData.m_Instance.PlayerTraitNames.Clear();
+
+        foreach (TraitBaseClass aTrait in PersistentData.m_Instance.PlayerTraits)
         {
-            PlayerTraitNames.Add(aTrait.GetName());
-            aTrait.SetLevel(1);
+            PersistentData.m_Instance.PlayerTraitNames.Add(aTrait.GetName());
+
+            Debug.Log("...saving trait.... " + aTrait.GetName());
         }
 
 		PlayerData returnData = new PlayerData();
@@ -104,28 +100,27 @@ public class PersistentData : MonoBehaviour {
 
 	void LoadData(PlayerData theData)
 	{
-        Debug.Log("Load Called");
-
         this.PlayerTraitNames = theData.PlayerTraitNames;
         this.CurrentLevel = theData.CurrentLevel;
 
         // Load PlayerTraits
+        PersistentData.m_Instance.PlayerTraits.Clear();
         for (int i = 0; i < AllTraits.Count; ++i)
         {
             foreach (string TraitName in PersistentData.m_Instance.PlayerTraitNames)
             {
-                if (TraitName.Contains(AllTraits[i].DisplayName))
+                if (TraitName.Contains(AllTraits[i].displayName))
                 {
-                    PlayerTraits.Add(AllTraits[i]);
+                    PersistentData.m_Instance.PlayerTraits.Add(AllTraits[i]);
                 
                     // Get level of trait
                     string[] parts;
                     parts = TraitName.Split('_');
 
-                    Debug.Log(parts[1]);
-
                     int level = int.Parse(parts[1]);
-                    PlayerTraits[PlayerTraits.Count - 1].SetLevel(level);
+                    PersistentData.m_Instance.PlayerTraits[PersistentData.m_Instance.PlayerTraits.Count - 1].SetLevel(level);
+
+                    Debug.Log(AllTraits[i].GetName() + " loaded.");
                 }
             }
         }
@@ -133,7 +128,7 @@ public class PersistentData : MonoBehaviour {
 
 	public void SaveDate()
 	{
-        Debug.Log("Save Called");
+        //Debug.Log("Save Called");
 
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/PersistentData.dat");
@@ -145,7 +140,9 @@ public class PersistentData : MonoBehaviour {
 	}
 
 	public void LoadData()
-	{
+    {        
+        //Debug.Log("Load Called");
+
         if (File.Exists(Application.persistentDataPath + "/PersistentData.dat"))
 		{
 			BinaryFormatter bf = new BinaryFormatter();

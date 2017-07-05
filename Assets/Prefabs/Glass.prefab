@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TraitHolderRef: {fileID: 0}
+  actionName: Break
 --- !u!114 &114577458681623126
 MonoBehaviour:
   m_ObjectHideFlags: 1
