@@ -5,7 +5,7 @@ using UnityEngine;
 public class MessageBoard : MonoBehaviour {
 
 	List<Message> MessageList = new List<Message>();
-
+	public List<EnemySM> EnemyList = new List<EnemySM>();
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +14,23 @@ public class MessageBoard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (EnemyList.Count <= 0) {
+			GameObject[] goList = GameObject.FindGameObjectsWithTag ("Enemy");
+
+			foreach (GameObject go in goList) {
+
+
+				if (EnemyList.Contains (go.GetComponent<EnemySM> ())) {
+					continue;
+				}
+				EnemyList.Add (go.GetComponent<EnemySM> ());
+			}
+		}
+		for (int i = 0; i < EnemyList.Count; i++) {
+			if (EnemyList [i] == null) {
+				EnemyList.RemoveAt (i);
+			}
+		}
 	}
 
 	public void AddMessage(Message aMessage)
@@ -38,5 +54,9 @@ public class MessageBoard : MonoBehaviour {
 			}
 		}
 		return null;
+	}
+
+	public List<EnemySM> getEnemyList(){
+		return EnemyList;
 	}
 }

@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TraitHolderRef: {fileID: 0}
+  actionName: Switch off
 --- !u!114 &114505512383454472
 MonoBehaviour:
   m_ObjectHideFlags: 1

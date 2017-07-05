@@ -18,6 +18,6 @@ public class GetTraitDescription : MonoBehaviour {
 
     public void SetTraitDescription(GameObject go)
     {
-        GetComponent<Text>().text = go.GetComponent<ButtonElement>().AttachedTrait.DisplayDescription;
+        GetComponent<Text>().text = go.GetComponent<ButtonElement>().AttachedTrait.displayDescription;
     }
 }

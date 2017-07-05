@@ -33,7 +33,6 @@ public class SoundCircleController : MonoBehaviour {
 	}
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name + " noticed the sound!");
         if (other.gameObject.tag == "Enemy")
         {
 			other.GetComponent<EnemySM>().StartSuspicious(this.transform.position,5f);

@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Inspect : MonoBehaviour, Inspectable {
     
     public TraitHolder TraitHolderRef;
-
+    public string actionName;
     public abstract void inspect();
     public virtual void outline(bool on)
     {
