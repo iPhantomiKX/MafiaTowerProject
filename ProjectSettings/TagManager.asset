@@ -11,6 +11,7 @@ TagManager:
   - GameStateManager
   - PauseMenu
   - Sound
+  - SecurityCamera
   layers:
   - Default
   - TransparentFX
