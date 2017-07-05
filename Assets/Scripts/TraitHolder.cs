@@ -45,9 +45,16 @@ public class TraitHolder : MonoBehaviour {
         }
 	}
 
+	IEnumerator DelayDeathScene()
+	{
+		yield return new WaitForSeconds(0.7f);
+		SceneManager.LoadScene("DeathScene");
+	}
+
     public void OnDeath()
     {
-        SceneManager.LoadScene("DeathScene");
+		StartCoroutine (DelayDeathScene ());
+        //SceneManager.LoadScene("DeathScene");
     }
 
     public void SetTraits(List<TraitBaseClass> aTraitList)
