@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool Shootbutton()
 	{
-		if (Input.GetMouseButtonDown (0) && inspectingObject != null) {
+		if (Input.GetMouseButtonDown (0) && inspectingObject == null) {
 			shootButton = true;
 		} 
 		else
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool Meleebutton()
 	{
-		if (Input.GetKeyDown(KeyCode.C) && inspectingObject != null) {
+		if (Input.GetKeyDown(KeyCode.C) && inspectingObject == null) {
 			meleeButton = true;
 		} 
 		else
