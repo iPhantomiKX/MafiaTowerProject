@@ -25,7 +25,6 @@ public class RangeEnemy : EnemySM {
 		AttackDamage = 5f;
 		AttackSpeed = 1.9f;
 		MoveSpeed = 1f;
-		HP = 8f;
 		attackAble = true;
 	}
 

@@ -23,7 +23,6 @@ public class MeleeEnemy : EnemySM {
 		AttackDamage = 3f;
 		AttackSpeed = 1.3f;
 		MoveSpeed = 1f;
-		HP = 10f;
 		attackAble = true;
 	}
 
