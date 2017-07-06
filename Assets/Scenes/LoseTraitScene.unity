@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dacb7db20b1ea6c468e234bb663baa86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttachedTrait: {fileID: 0}
   AttachedText: {fileID: 1397448610}
 --- !u!1 &49507022
 GameObject:
@@ -371,7 +372,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: a6ddd98660596414e9a5218219b51c13, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1286,6 +1287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonPrefab: {fileID: 2100783750}
+  ChosenListRef: {fileID: 0}
 --- !u!224 &1873842657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1587,8 +1589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d06ccc71c32e643b68b1201ac05e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttachedTrait: 
-  AttachedText: {fileID: 484489698}
+  AttachedTrait: {fileID: 0}
 --- !u!114 &2100783753
 MonoBehaviour:
   m_ObjectHideFlags: 0

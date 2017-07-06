@@ -16,7 +16,7 @@ public class SkillSlot : MonoBehaviour {
         AttachedText = GetComponentInChildren<Text>();
 
         if (AttachedTrait != null)
-            AttachedText.text = AttachedTrait.GetName();
+            AttachedText.text = AttachedTrait.GetName(true);
     }
 
     // Update is called once per frame

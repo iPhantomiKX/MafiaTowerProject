@@ -2,24 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemySM : MonoBehaviour {
-
-	public MessageBoard theBoard;
-	public Message CurrentMessage = null;     // Handle to message
+public abstract class EnemySM : BaseSM {
 
 	public float AttackDamage{ get; set; }
 	public float AttackSpeed{ get; set; }
-	public float MoveSpeed{ get; set; }
-	public float HP{ get; set; }
 	public bool attackAble;
-
-	public GameObject player;
-	protected Rigidbody2D rb;
 
 	public float angleFOV;
 	public float visionRange;
-
-
 
 	public Vector3 SuspiciousPosition;
 	public Vector3 LastPLayerPosition;
@@ -30,13 +20,12 @@ public abstract class EnemySM : MonoBehaviour {
 	public bool alert;
 	public float idleTime;
 	public float idleAngle;
+
+	public float searchTime;
+	public int searchIndex;
+	public List<Vector3> SearchingRoute = new List<Vector3> ();
+
 	public bool knowPlayerPosition;
-
-	public List<Vector3> PatrolPoints = new List<Vector3>();
-
-	private GameStateManager GameStateRef;
-
-
 
 	// Use this for initialization
 	public virtual void Start() {
@@ -44,6 +33,8 @@ public abstract class EnemySM : MonoBehaviour {
 		PatrolPosition = Vector3.forward;
 		SuspiciousTime = 0f;
 		AlertTime = 0f;
+		searchTime = 0f;
+		searchIndex = -1;
 		idleTime = 2.0f;
 		knowPlayerPosition = false;
 	}
@@ -70,35 +61,6 @@ public abstract class EnemySM : MonoBehaviour {
 		{
 			rb.Sleep();
 		}
-	}
-
-	protected void Awake(){
-		rb = GetComponent<Rigidbody2D>();
-	}
-
-	public void FSM(){
-
-
-		Sense();
-
-		int actValue = Think();
-		if (actValue != -1)
-		{
-			Act(actValue);
-		}
-	}
-
-	public abstract void Sense();           // get/receive updates from the world
-	public abstract int Think();            // process the updates
-	public abstract void Act(int value);    // act upon any change in behaviour
-	public abstract void ProcessMessage();
-
-	public Message ReadFromMessageBoard()
-	{
-		if (theBoard != null)
-			return theBoard.GetMessage(this.gameObject.GetInstanceID());
-		else
-			return null;
 	}
 
 	protected void OnDrawGizmosSelected(){
@@ -163,6 +125,14 @@ public abstract class EnemySM : MonoBehaviour {
 		SuspiciousTime = t;
 	}
 
+
+	public void StopSearching(){
+		searchTime = 0f;
+		searchIndex = -1;
+		SearchingRoute.Clear ();
+		LastPLayerPosition = Vector3.forward;
+	}
+
 	protected void WalkForward(){
 		rb.velocity = transform.up * 0.5f;
 	}
@@ -171,33 +141,6 @@ public abstract class EnemySM : MonoBehaviour {
 		//angle is counter clockwise ,saveup for later
 		float angle = Random.Range(0f, 360f);
 		FaceTowardAngle (angle, 0.33f);
-	}
-
-	//need path finding
-	protected void WalkTowardPoint(Vector3 point){
-		this.transform.position = Vector2.MoveTowards (this.transform.position, point, MoveSpeed * Time.deltaTime);
-		FaceTowardPoint (point,0.33f);
-	}
-
-	public void FaceTowardPoint(Vector3 point,float percenDelta){
-		Vector3 toTarget = point - this.transform.position;
-		float angle = (Mathf.Atan2 (toTarget.y, toTarget.x) * Mathf.Rad2Deg)-90;
-		Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
-		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, q, percenDelta);
-	}
-
-	//Counter Clockwise
-	public void FaceTowardAngle(float angle,float percenDelta){
-		Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, q, percenDelta);
-	}
-
-	public void TakeDamage(float damage){
-		HP -= damage;
-	}
-
-	public bool IsDead(){
-		return HP <= 0;
 	}
 
 	public void ResetAttack(){
@@ -211,6 +154,7 @@ public abstract class EnemySM : MonoBehaviour {
 	public void ClearPatrolPoint(){
 		PatrolPoints.Clear ();
 	}
+
 }
 
 

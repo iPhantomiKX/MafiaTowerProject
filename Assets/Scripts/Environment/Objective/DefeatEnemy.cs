@@ -24,7 +24,7 @@ public class DefeatEnemy : Objective
         int killed = 0;
         foreach(EnemySM enemy in enemies)
         {
-            if (enemy.HP <= 0) killed++;
+            if (!enemy || enemy.GetComponent<HealthComponent>().health <= 0) killed++;
         }
         numCompleted = killed;
         base.Update();

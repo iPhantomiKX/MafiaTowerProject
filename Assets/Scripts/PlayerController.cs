@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
     private Vector2 DashDir;
     private float DashSpeed;
     Image currentInspectionPanel;
-    public bool inspecting;
+    public GameObject inspectingObject;
 
     List<Collider2D> nearObj = new List<Collider2D>();
 
@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool Shootbutton()
 	{
-		if (Input.GetMouseButtonDown (0) && !inspecting) {
+		if (Input.GetMouseButtonDown (0) && inspectingObject == null) {
 			shootButton = true;
 		} 
 		else
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool Meleebutton()
 	{
-		if (Input.GetKeyDown(KeyCode.C) && !inspecting) {
+		if (Input.GetKeyDown(KeyCode.C) && inspectingObject == null) {
 			meleeButton = true;
 		} 
 		else
@@ -131,28 +131,30 @@ public class PlayerController : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            //Inspect[] objects = FindObjectsOfType<Inspect>();
-            //foreach(Inspect ins in objects)
-            //{
-            //    GameObject obj = ins.gameObject;
-                
-            //}
-            Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
-            
-            foreach (Collider2D col in obj)
+            if (inspectingObject == null)
             {
-                if (col != null && col.GetComponent<Inspect>() != null)
+                Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
+
+                foreach (Collider2D col in obj)
                 {
-                    Debug.Log("Inspect " + col);
-                    //col.GetComponent<Inspect>().inspect();
-                    GameObject em = GameObject.Find("EnvironmentManager");
-                    inspecting = true;
-                    currentInspectionPanel = em.GetComponent<InspectionManager>().CreateInspectionMenu(col.gameObject);
+                    if (col != null && col.GetComponent<Inspect>() != null)
+                    {
+                        Debug.Log("Inspect " + col);
+                        //col.GetComponent<Inspect>().inspect();
+                        GameObject em = GameObject.Find("EnvironmentManager");
+                        inspectingObject = col.gameObject;
+                        currentInspectionPanel = em.GetComponent<InspectionManager>().CreateInspectionMenu(col.gameObject);
 
+                        break;
+                    }
 
-                    break;
                 }
-            
+            }
+            else if(currentInspectionPanel != null)
+            {
+                Destroy(currentInspectionPanel.gameObject);
+                currentInspectionPanel = null;
+                inspectingObject = null;
             }
         }
     }
@@ -161,13 +163,18 @@ public class PlayerController : MonoBehaviour {
     {
         // Get objs nearby
         Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
-
+        
         List<Collider2D> temp = new List<Collider2D>();
         foreach (Collider2D col in obj)
         {
             temp.Add(col);
         }
-
+        if(inspectingObject != null && !temp.Contains(inspectingObject.GetComponent<Collider2D>()))
+        {
+            Destroy(currentInspectionPanel.gameObject);
+            currentInspectionPanel = null;
+            inspectingObject = null;
+        }
         // Check if any objects in nearObj are not near anymore
         foreach (Collider2D col in nearObj)
         {
@@ -175,6 +182,7 @@ public class PlayerController : MonoBehaviour {
             {
                 if (col != null && col.GetComponent<Inspect>() != null)
                     col.GetComponent<Inspect>().outline(false);
+                
             }
         }
 
@@ -219,7 +227,7 @@ public class PlayerController : MonoBehaviour {
         {
             Destroy(currentInspectionPanel.gameObject);
             currentInspectionPanel = null;
-            inspecting = false;
+            inspectingObject = null;
         }
     }
 }

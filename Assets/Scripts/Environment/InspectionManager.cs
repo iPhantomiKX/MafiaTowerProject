@@ -32,7 +32,7 @@ public class InspectionManager : MonoBehaviour {
             button.onClick.AddListener(() => {
                 option.inspect(); panel.enabled = false;
                 Destroy(panel.gameObject);
-                FindObjectOfType<PlayerController>().inspecting = false;
+                FindObjectOfType<PlayerController>().inspectingObject = null;
             });
         }
         Button cancelButton = Instantiate(inspectMenuButton);
@@ -41,7 +41,7 @@ public class InspectionManager : MonoBehaviour {
         cancelButton.onClick.AddListener(() => {
             panel.enabled = false;
             Destroy(panel.gameObject);
-            FindObjectOfType<PlayerController>().inspecting = false;
+            FindObjectOfType<PlayerController>().inspectingObject = null;
         });
         return panel;
     }
