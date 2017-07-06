@@ -194,6 +194,7 @@ public class RangeEnemy : EnemySM {
 	}
 
 	private void DoSuspicious(){
+		StopSearching ();
 		if (Vector2.Distance (this.transform.position, SuspiciousPosition) < 0.3f) {
 			SuspiciousTime -= Time.deltaTime;
 			float angle;
@@ -224,6 +225,7 @@ public class RangeEnemy : EnemySM {
 		if (!alert)
 			alert = true;
 		StopSuspicious ();
+		StopSearching ();
 		LastPLayerPosition = player.transform.position;
 		knowPlayerPosition = false;
 		if (Vector2.Distance (this.transform.position, player.transform.position) > 0.7f)
@@ -266,14 +268,107 @@ public class RangeEnemy : EnemySM {
 	}
 
 	private void DoSearching(){
-		if (this.transform.position == LastPLayerPosition) {
-			//				FaceTowardAngle (Time.time*100 % 360, 0.1f);
-			this.transform.Rotate (0,0,300	*Time.deltaTime);
-			rb.velocity = Vector3.zero;
-			rb.angularVelocity = 0;
+		AlertTime = 0f;
+		print (searchIndex + "  " + searchTime);
+		if (SearchingRoute.Count <= 0) {
+			if (this.transform.position == LastPLayerPosition) {
+				rb.velocity = Vector3.zero;
+				rb.angularVelocity = 0;
+				int layerMask = 1 << 8;
+				RaycastHit2D hit1 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis (this.transform.up.z, Vector3.forward) * this.transform.up, 2f, layerMask);
+				RaycastHit2D hit2 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis (this.transform.up.z + 45f, Vector3.forward) * this.transform.up, 2f, layerMask);
+				RaycastHit2D hit3 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis (this.transform.up.z + 90f, Vector3.forward) * this.transform.up, 2f, layerMask);
+				RaycastHit2D hit4 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis (this.transform.up.z - 45f, Vector3.forward) * this.transform.up, 2f, layerMask);
+				RaycastHit2D hit5 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis (this.transform.up.z - 90f, Vector3.forward) * this.transform.up, 2f, layerMask);
+				//Raycast Check 5 way and walk to
+				Vector3 pos = Vector3.forward;
+
+				if (hit1.collider != null) {
+					if (!(Vector2.Distance (this.transform.position, hit1.collider.transform.position) < 0.4)) {
+						pos = ((hit1.collider.transform.position - this.transform.position) * 7 / 10) + this.transform.position;
+					} else {
+						pos = Vector3.forward;
+					}
+				} else {
+					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z, Vector3.forward) * this.transform.up * 1.7f);
+				}
+				if (pos != Vector3.forward) {
+					SearchingRoute.Add (pos);
+				}
+				if (hit2.collider != null) {
+					if (!(Vector2.Distance (this.transform.position, hit2.collider.transform.position) < 0.4)) {
+						pos = ((hit2.collider.transform.position - this.transform.position) * 7 / 10) + this.transform.position;
+					} else {
+						pos = Vector3.forward;
+					}
+				} else {
+					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z + 45f, Vector3.forward) * this.transform.up * 1.7f);
+				}
+				if (pos != Vector3.forward) {
+					SearchingRoute.Add (pos);
+				}
+				if (hit3.collider != null) {
+					if (!(Vector2.Distance (this.transform.position, hit3.collider.transform.position) < 0.4)) {
+						pos = ((hit3.collider.transform.position - this.transform.position) * 7 / 10) + this.transform.position;
+					} else {
+						pos = Vector3.forward;
+					}
+				} else {
+					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z +90f, Vector3.forward) * this.transform.up * 1.7f);
+				}
+				if (pos != Vector3.forward) {
+					SearchingRoute.Add (pos);
+				}
+				if (hit4.collider != null) {
+					if (!(Vector2.Distance (this.transform.position, hit4.collider.transform.position) < 0.4)) {
+						pos = ((hit4.collider.transform.position - this.transform.position) * 7 / 10) + this.transform.position;
+					} else {
+						pos = Vector3.forward;
+					}
+				} else {
+					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z -45f, Vector3.forward) * this.transform.up * 1.7f);
+				}
+				if (pos != Vector3.forward) {
+					SearchingRoute.Add (pos);
+				}
+				if (hit5.collider != null) {
+					if (!(Vector2.Distance (this.transform.position, hit5.collider.transform.position) < 0.4)) {
+						pos = ((hit5.collider.transform.position - this.transform.position) * 7 / 10) + this.transform.position;
+					} else {
+						pos = Vector3.forward;
+					}
+				} else {
+					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z -90f, Vector3.forward) * this.transform.up * 1.7f);
+				}
+				if (pos != Vector3.forward) {
+					SearchingRoute.Add (pos);
+				}
+				if (SearchingRoute.Count <= 0) {
+					StopSearching ();
+				} else {
+					searchTime = 2f;
+					searchIndex = 0;
+				}
+			} else {
+				WalkTowardPoint (LastPLayerPosition);
+			}
 		} else {
-			WalkTowardPoint (LastPLayerPosition);
+			if (Vector2.Distance (this.transform.position, SearchingRoute [searchIndex]) < 0.3) {
+				searchTime -= Time.deltaTime;
+				if (searchTime <= 0) {
+					searchIndex += 1;
+					if (SearchingRoute.Count > searchIndex) {
+						searchTime = 2f;
+					} else {
+						StopSearching();
+					}
+				}
+			} else {
+				WalkTowardPoint (SearchingRoute [searchIndex]);
+			}
+
 		}
+
 	}
 
 	private void DoDead(){

@@ -30,6 +30,11 @@ public abstract class EnemySM : MonoBehaviour {
 	public bool alert;
 	public float idleTime;
 	public float idleAngle;
+
+	public float searchTime;
+	public int searchIndex;
+	public List<Vector3> SearchingRoute = new List<Vector3> ();
+
 	public bool knowPlayerPosition;
 
 	public List<Vector3> PatrolPoints = new List<Vector3>();
@@ -44,6 +49,8 @@ public abstract class EnemySM : MonoBehaviour {
 		PatrolPosition = Vector3.forward;
 		SuspiciousTime = 0f;
 		AlertTime = 0f;
+		searchTime = 0f;
+		searchIndex = -1;
 		idleTime = 2.0f;
 		knowPlayerPosition = false;
 	}
@@ -163,6 +170,14 @@ public abstract class EnemySM : MonoBehaviour {
 		SuspiciousTime = t;
 	}
 
+
+	public void StopSearching(){
+		searchTime = 0f;
+		searchIndex = -1;
+		SearchingRoute.Clear ();
+		LastPLayerPosition = Vector3.forward;
+	}
+
 	protected void WalkForward(){
 		rb.velocity = transform.up * 0.5f;
 	}
@@ -194,6 +209,7 @@ public abstract class EnemySM : MonoBehaviour {
 
 	public void TakeDamage(float damage){
 		HP -= damage;
+		knowPlayerPosition = true;
 	}
 
 	public bool IsDead(){
@@ -211,6 +227,7 @@ public abstract class EnemySM : MonoBehaviour {
 	public void ClearPatrolPoint(){
 		PatrolPoints.Clear ();
 	}
+
 }
 
 
