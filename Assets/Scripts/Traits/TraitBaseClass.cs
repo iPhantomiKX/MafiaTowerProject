@@ -60,9 +60,31 @@ public abstract class TraitBaseClass : MonoBehaviour {
         levelStr = "_" + i_TraitLevel.ToString();
     }
 
-    public string GetName()
+    public string GetName(bool ForUI = false)
     {
-        return displayName + levelStr;
+        if (!ForUI)
+        {
+            return displayName + levelStr;
+        }
+        else
+        {
+            string romanNum = " ";
+
+            switch (i_TraitLevel)
+            {
+                case 1: romanNum = " I"; break;
+                case 2: romanNum = " II"; break;
+                case 3: romanNum = " III"; break;
+                case 4: romanNum = " IV"; break;
+                case 5: romanNum = " V"; break;
+                case 6: romanNum = " VI"; break;
+                case 7: romanNum = " VII"; break;
+                case 8: romanNum = " VIII"; break;
+                case 9: romanNum = " XI"; break;
+            }
+
+            return displayName + romanNum;
+        }
     }
 
     public bool GetIfMaxLevel()

@@ -11,15 +11,17 @@ public class PlayerSpawn : MonoBehaviour {
     private GameObject PlayerReference;
     private List<TraitBaseClass> TraitsList;
 	
+    void Awake()
+    {
+        // Spawn player at the start
+        GameObject go = Instantiate(PlayerPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+        PlayerReference = go;
+    }
+
     // Use this for initialization
 	void Start () {
 
-        // Spawn player at the start
-        GameObject go = Instantiate(PlayerPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
-
-        go.GetComponentInChildren<TraitHolder>().SetTraits(PersistentData.m_Instance.PlayerTraits);
-
-		PlayerReference = go;
+        PlayerReference.GetComponentInChildren<TraitHolder>().SetTraits(PersistentData.m_Instance.PlayerTraits);
 
         if (Enemy)
 		    Enemy.GetComponent<EnemyController> ().player = PlayerReference.GetComponentInChildren<PlayerController>().gameObject;
@@ -27,7 +29,7 @@ public class PlayerSpawn : MonoBehaviour {
         if (!ObjectiveManager)
             ObjectiveManager = GameObject.FindObjectOfType<ObjectiveManager>().gameObject;
 
-        ObjectiveManager.GetComponent<ObjectiveManager> ().PlayerRef = go;
+        ObjectiveManager.GetComponent<ObjectiveManager>().PlayerRef = PlayerReference;
 
         Inspect[] Obstacles = GameObject.FindObjectsOfType<Inspect>();
         foreach (Inspect anObject in Obstacles)
