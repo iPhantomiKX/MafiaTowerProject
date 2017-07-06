@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour {
 
     List<Collider2D> nearObj = new List<Collider2D>();
 
+    public bool freeze = false; //Quick bool to freeze player controller
+
 	// Use this for initialization
 	void Start () {
 
@@ -40,6 +42,9 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (freeze)
+            return;
+
         //Move player
 
         if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
@@ -60,8 +65,9 @@ public class PlayerController : MonoBehaviour {
         GetKeyInputs();
         CheckSurroundings();
 
-		Camera.main.gameObject.transform.position = new Vector3 (rb.position.x, rb.position.y, -10);
-		Camera.main.orthographicSize = 2;
+        //Moved Camera follow player to an independent script in the camera object
+		/*Camera.main.gameObject.transform.position = new Vector3 (rb.position.x, rb.position.y, -10);
+		Camera.main.orthographicSize = 2;*/
 		
 	}
 

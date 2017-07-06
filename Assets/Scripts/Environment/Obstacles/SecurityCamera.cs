@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class SecurityCamera : MonoBehaviour {
 
+    enum STATE
+    {
+        ON,
+        OFF,
+        ALERT,
+        DESTROYED,
+        NUM_STATES
+    }
+
     public float detectionAngle;
     public float detectionDistance;
 
     public float rotationAngle;
     public float rotationSpeed;
 
-    public bool isActive = true;
-
     private GameObject player;
 
     public float soundInterval = 1.0f;
     private float sound_counter;
 
+    private STATE current_state = STATE.ON;
+
     // Use this for initialization
     void Start()
     {
+        current_state = STATE.ON;
         sound_counter = soundInterval;
         //GetComponent<LineRenderer>().SetPosition(1, new Vector3(0, detectionAngle / 360.0f, 0));
     }
@@ -27,17 +37,33 @@ public class SecurityCamera : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!isActive)
-            return;
+        switch(current_state)
+        {
+            case STATE.ON:
 
-        if (IsPlayerSeen())
-            EmitSound();
-        else
-            Rotate();
+                if (IsPlayerSeen())
+                    current_state = STATE.ALERT;
+                else
+                    Rotate();
+
+                break;
+
+            case STATE.OFF:
+            case STATE.DESTROYED:   //Can probably make some sparks particle effects
+                //Do nothing LOL
+                break;
+
+            case STATE.ALERT:
+                EmitSound();
+                if (!IsPlayerSeen())
+                    current_state = STATE.ON;
+                break;
+        }
     }
 
     protected bool IsPlayerSeen()
     {
+        //Move this out -> place it into the start instead (once player spawner spawns player on AWAKE instead)
         if(!player)
             player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>().gameObject;
 
@@ -91,25 +117,33 @@ public class SecurityCamera : MonoBehaviour {
 
     void Rotate()
     {
-        transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + rotationSpeed * Time.deltaTime);
+        //IDK Why the below line does not work
+        //transform.localEulerAngles.Set(0, 0, transform.localEulerAngles.z + rotationSpeed * Time.deltaTime);
 
-        if (transform.rotation.eulerAngles.z > rotationAngle * 0.5 || transform.rotation.eulerAngles.z < (-rotationAngle * 0.5))
+        transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z + rotationSpeed * Time.deltaTime);
+
+        if (transform.localEulerAngles.z > rotationAngle)
             rotationSpeed = -rotationSpeed;
     }
 
     public void CameraOff()
     {
-        isActive = false;
+        current_state = STATE.OFF;
         GetComponent<LineRenderer>().enabled = false;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
     }
 
     public void CameraOn()
     {
-        isActive = true;
+        current_state = STATE.ON;
         GetComponent<LineRenderer>().enabled = true;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
     }
+
+    //Getters
+    public bool IsDestroyed() { return current_state == STATE.DESTROYED; }
+    public bool IsOn() { return current_state == STATE.ON; }
+    public bool IsOff() { return current_state == STATE.OFF; }
 
     void EmitSound()
     {
@@ -119,5 +153,14 @@ public class SecurityCamera : MonoBehaviour {
             sound_counter = 0.0f;
         }
         sound_counter += Time.deltaTime;
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        //Check that coll is a projectile or melee attack or something - by tag or something
+
+        current_state = STATE.DESTROYED;
+
+        //Remember to despawn projectile
     }
 }
