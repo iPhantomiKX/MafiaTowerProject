@@ -143,7 +143,6 @@ public abstract class EnemySM : BaseSM {
 		FaceTowardAngle (angle, 0.33f);
 	}
 
-		knowPlayerPosition = true;
 	public void ResetAttack(){
 		attackAble = true;
 	}
