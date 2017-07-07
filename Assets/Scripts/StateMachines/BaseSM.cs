@@ -7,7 +7,10 @@ public abstract class BaseSM : MonoBehaviour {
     public MessageBoard theBoard;
     public Message CurrentMessage = null;     // Handle to message
 
-    public float MoveSpeed { get; set; }
+    public float MoveSpeed = 1f;
+    public Vector3 PatrolPosition;
+    public float idleTime;
+    public float idleAngle;
 
     public GameObject player;
     protected Rigidbody2D rb;
@@ -28,7 +31,25 @@ public abstract class BaseSM : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        if (!GameStateRef)
+            GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
+        if (!player)
+            player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>().gameObject;
+        if (!theBoard)
+            theBoard = GameObject.Find("MessageBoard").GetComponent<MessageBoard>();
+        
+        if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+        {
+            if (rb.IsSleeping())
+                rb.WakeUp();
+
+            FSM();
+        }
+        else
+        {
+            rb.Sleep();
+        }
 	}
     public void FSM()
     {
@@ -74,7 +95,7 @@ public abstract class BaseSM : MonoBehaviour {
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, q, percenDelta);
     }
 
-    public void TakeDamage(float damage)
+	public virtual void TakeDamage(float damage)
     {
        GetComponent<HealthComponent>().TakeDmg((int)damage);
     }
