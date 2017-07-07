@@ -171,6 +171,7 @@ public class PlayerController : MonoBehaviour {
         }
         if(inspectingObject != null && !temp.Contains(inspectingObject.GetComponent<Collider2D>()))
         {
+            Debug.Log("Object is longer in player's range");
             Destroy(currentInspectionPanel.gameObject);
             currentInspectionPanel = null;
             inspectingObject = null;
@@ -223,11 +224,11 @@ public class PlayerController : MonoBehaviour {
     }
     void OnCollisionExit2D(Collision2D other)
     {
-        if(currentInspectionPanel != null && other.gameObject.GetComponent<Inspect>() != null)
-        {
-            Destroy(currentInspectionPanel.gameObject);
-            currentInspectionPanel = null;
-            inspectingObject = null;
-        }
+        //if(currentInspectionPanel != null && other.gameObject.GetComponent<Inspect>() != null)
+        //{
+        //    Destroy(currentInspectionPanel.gameObject);
+        //    currentInspectionPanel = null;
+        //    inspectingObject = null;
+        //}
     }
 }
