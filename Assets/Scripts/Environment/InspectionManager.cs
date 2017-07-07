@@ -7,6 +7,7 @@ public class InspectionManager : MonoBehaviour {
     public Canvas canvas;
     public Image inspectMenuPanel;
     public Button inspectMenuButton;
+    Image activePanel;
 	// Use this for initialization
 	void Start () {
 		
@@ -14,8 +15,20 @@ public class InspectionManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        InspectMenuButton[] buttons = FindObjectsOfType<InspectMenuButton>();
+        if (FindObjectOfType<PlayerController>().inspectingObject == null && buttons.Length > 0)
+        {
+            Debug.Log("Player is no longer inspecting");
+            foreach(InspectMenuButton button in buttons)
+            {
+                if(button.action != null)
+                button.action.interrupt();
+            }
+            Destroy(activePanel.gameObject);
+            activePanel = null;
+        }
+        
+    }
     public Image CreateInspectionMenu(GameObject target) {
         Inspect[] options = target.GetComponents<Inspect>();
         Image panel = Instantiate(inspectMenuPanel, target.transform.position, Quaternion.identity);
@@ -29,10 +42,21 @@ public class InspectionManager : MonoBehaviour {
             Text optionText = button.GetComponentInChildren<Text>();
             optionText.text = option.actionName;
             button.transform.SetParent(panel.transform);
+            button.GetComponent<InspectMenuButton>().action = option;
             button.onClick.AddListener(() => {
-                option.inspect(); panel.enabled = false;
-                Destroy(panel.gameObject);
-                FindObjectOfType<PlayerController>().inspectingObject = null;
+                if (!option.takesTime)
+                {
+                    option.inspect();
+                    panel.enabled = false;
+                    Destroy(panel.gameObject);
+                    FindObjectOfType<PlayerController>().inspectingObject = null;
+                    
+                }
+                else
+                {
+                    option.startTimer();
+                }
+                
             });
         }
         Button cancelButton = Instantiate(inspectMenuButton);
@@ -43,6 +67,7 @@ public class InspectionManager : MonoBehaviour {
             Destroy(panel.gameObject);
             FindObjectOfType<PlayerController>().inspectingObject = null;
         });
+        activePanel = panel;
         return panel;
     }
 
