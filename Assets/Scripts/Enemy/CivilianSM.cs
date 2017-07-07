@@ -85,7 +85,7 @@ public class CivilianSM : NeutralSM {
         if (idleTime <= 0)
         {
             float rand = Random.Range(0f, 100f);
-            if (rand <= 25 && PatrolPoints.Count > 0)
+            if (rand <= 50 && PatrolPoints.Count > 0)
             {
                 idleTime = 0;
                 float nearest = 9999f;
