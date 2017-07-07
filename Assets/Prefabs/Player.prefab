@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 114215312794144514}
   - component: {fileID: 95098137933431686}
   - component: {fileID: 114605435350371124}
+  - component: {fileID: 114897012381887416}
   m_Layer: 11
   m_Name: PlayerObject
   m_TagString: Player
@@ -1632,13 +1633,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdca2aea1169a24fb2ea65d387062c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 50314794004968368}
   speed: 1
   mod_speed: 1
-  inspectionRange: 0.3
   PauseCanvasTemplate: {fileID: 223070812105744754, guid: 8f8bd4c18a2c8a34984a30120cc5cf19,
     type: 2}
+  inspectionRange: 0.3
   inspectingObject: {fileID: 0}
+  freeze: 0
+  rb: {fileID: 50314794004968368}
 --- !u!114 &114215312794144514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2930,6 +2932,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputKey: 51
   AttachedTrait: {fileID: 0}
+--- !u!114 &114897012381887416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1484258923702130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6eb6ed1a2b73544b99278d721d60c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114899551173442298
 MonoBehaviour:
   m_ObjectHideFlags: 1

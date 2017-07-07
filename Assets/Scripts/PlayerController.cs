@@ -6,39 +6,50 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-    public Rigidbody2D rb;
+    //Player Mods
     public float speed;
     public float mod_speed = 1; // speed added on by traits
 
+    //Button stuff
 	public static bool shootButton;
 	public static bool meleeButton;
-    public float inspectionRange;
 
+    //Canvas UI stuff
     public Canvas PauseCanvasTemplate;
-
-    private Vector2 velocity;
     private Canvas PauseCanvasRef;
+
+    //Game State
     private GameStateManager GameStateRef;
 
-    private bool IsDashing = false;
-    private Vector2 DashDir;
-    private float DashSpeed;
+    //Inspection stuff
+    public float inspectionRange;
     Image currentInspectionPanel;
     public GameObject inspectingObject;
-
     List<Collider2D> nearObj = new List<Collider2D>();
 
-    public bool freeze = false; //Quick bool to freeze player controller
+    //Player movement
+    private MovementScript Movement;
 
-	// Use this for initialization
-	void Start () {
+    //Quick bool to freeze update
+    public bool freeze = false;
+
+    /*I have to leave this here cause of PlayerAnimationController class 
+        - I think I'll integrate the animation controller stuff into here
+        - Either that or I just make a "GetRigidbody" function
+    */
+    public Rigidbody2D rb;
+
+    // Use this for initialization
+    void Start () {
 
         Canvas cv = Instantiate(PauseCanvasTemplate) as Canvas;
         cv.gameObject.SetActive(false);
         PauseCanvasRef = cv;
 
         GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
-	}
+
+        Movement = GetComponent<MovementScript>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -46,45 +57,37 @@ public class PlayerController : MonoBehaviour {
             return;
 
         //Move player
-
         if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
         {
-            if (rb.IsSleeping())
-                rb.WakeUp();
-
             Move();
             FaceMousePos();
             Shootbutton();
 			Meleebutton();
         }
-        else
-        {
-            rb.Sleep();
-        }
 
         GetKeyInputs();
         CheckSurroundings();
-
-        //Moved Camera follow player to an independent script in the camera object
-		/*Camera.main.gameObject.transform.position = new Vector3 (rb.position.x, rb.position.y, -10);
-		Camera.main.orthographicSize = 2;*/
 		
 	}
 
     void Move()
     {
-        Vector2 MoveDirectionLR = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        velocity = MoveDirectionLR * (speed * mod_speed);
-        rb.velocity = new Vector2(velocity.x, velocity.y);
+        //Movement
+        Movement.Move
+            (
+            new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), //Direction
+            (speed * mod_speed)                                                  //Speed
+            );
 
-        if (IsDashing)
+        //Dash Prototype
+        if (Input.GetKeyDown("e"))
         {
-            Vector2 newForce = DashDir * DashSpeed;
-            rb.velocity = newForce;
-            DashSpeed -= Time.deltaTime * 25;
-
-            if (DashSpeed <= 0)
-                IsDashing = false;
+            Movement.SetToDash
+                (
+                transform.right,    //Direction
+                1.0f,               //Distance
+                1.0f                //Duration
+                );
         }
     }
 
@@ -208,19 +211,6 @@ public class PlayerController : MonoBehaviour {
         Gizmos.DrawWireSphere(this.transform.position, inspectionRange);
     }
 
-    public void SetDash(Vector2 dir, float force)
-    {
-        IsDashing = true;
-
-        DashDir = dir;
-        DashSpeed = force;
-    }
-
-    void OnCollisionEnter()
-    {
-        IsDashing = false;
-
-    }
     void OnCollisionExit2D(Collision2D other)
     {
         if(currentInspectionPanel != null && other.gameObject.GetComponent<Inspect>() != null)
@@ -229,5 +219,11 @@ public class PlayerController : MonoBehaviour {
             currentInspectionPanel = null;
             inspectingObject = null;
         }
+    }
+
+    //Trait_Dash requires this
+    public void SetDash(Vector2 something, float otherthing)
+    {
+        //Sorry, working on this right now. Don't want conflicts from Version Control.
     }
 }
