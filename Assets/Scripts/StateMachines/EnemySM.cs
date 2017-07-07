@@ -13,13 +13,10 @@ public abstract class EnemySM : BaseSM {
 
 	public Vector3 SuspiciousPosition;
 	public Vector3 LastPLayerPosition;
-	public Vector3 PatrolPosition;
 	public float SuspiciousTime;
 	public float SuspiciousMax;
 	public float AlertTime;
 	public bool alert;
-	public float idleTime;
-	public float idleAngle;
 
 	public float searchTime;
 	public int searchIndex;
@@ -37,30 +34,6 @@ public abstract class EnemySM : BaseSM {
 		searchIndex = -1;
 		idleTime = 2.0f;
 		knowPlayerPosition = false;
-	}
-
-	// Update is called once per frame
-	void Update () {
-		if (!GameStateRef)
-			GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
-		if (!player)
-			player = GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<PlayerController>().gameObject;
-		if (!theBoard)
-			theBoard = GameObject.Find("MessageBoard").GetComponent<MessageBoard>();
-		
-		
-
-		if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
-		{
-			if (rb.IsSleeping())
-				rb.WakeUp();
-
-			FSM ();
-		}
-		else
-		{
-			rb.Sleep();
-		}
 	}
 
 	protected void OnDrawGizmosSelected(){
@@ -155,6 +128,11 @@ public abstract class EnemySM : BaseSM {
 		PatrolPoints.Clear ();
 	}
 
+	public override void TakeDamage (float damage)
+	{
+		base.TakeDamage (damage);
+		knowPlayerPosition = true;
+	}
 }
 
 

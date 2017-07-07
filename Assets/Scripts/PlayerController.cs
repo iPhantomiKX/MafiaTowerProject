@@ -128,9 +128,10 @@ public class PlayerController : MonoBehaviour {
             PauseCanvasRef.gameObject.SetActive(!PauseCanvasRef.gameObject.activeInHierarchy);
 
             if (PauseCanvasRef.gameObject.activeInHierarchy)
-                GameStateRef.CurrentState = GameStateManager.GAME_STATE.PAUSED;
-            else
-                GameStateRef.CurrentState = GameStateManager.GAME_STATE.RUNNING;
+                GameStateRef.SetState(GameStateManager.GAME_STATE.PAUSED);
+            else 
+                GameStateRef.SetState(GameStateManager.GAME_STATE.RUNNING);
+
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
@@ -174,6 +175,7 @@ public class PlayerController : MonoBehaviour {
         }
         if(inspectingObject != null && !temp.Contains(inspectingObject.GetComponent<Collider2D>()))
         {
+            Debug.Log("Object is longer in player's range");
             Destroy(currentInspectionPanel.gameObject);
             currentInspectionPanel = null;
             inspectingObject = null;
@@ -213,12 +215,12 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionExit2D(Collision2D other)
     {
-        if(currentInspectionPanel != null && other.gameObject.GetComponent<Inspect>() != null)
-        {
-            Destroy(currentInspectionPanel.gameObject);
-            currentInspectionPanel = null;
-            inspectingObject = null;
-        }
+        //if(currentInspectionPanel != null && other.gameObject.GetComponent<Inspect>() != null)
+        //{
+        //    Destroy(currentInspectionPanel.gameObject);
+        //    currentInspectionPanel = null;
+        //    inspectingObject = null;
+        //}
     }
 
     //Trait_Dash requires this
