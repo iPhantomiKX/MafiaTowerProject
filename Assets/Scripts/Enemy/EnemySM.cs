@@ -128,6 +128,11 @@ public abstract class EnemySM : BaseSM {
 		PatrolPoints.Clear ();
 	}
 
+	public override void TakeDamage (float damage)
+	{
+		base.TakeDamage (damage);
+		knowPlayerPosition = true;
+	}
 }
 
 
