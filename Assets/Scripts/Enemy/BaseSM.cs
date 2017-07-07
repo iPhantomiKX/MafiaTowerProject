@@ -74,7 +74,7 @@ public abstract class BaseSM : MonoBehaviour {
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, q, percenDelta);
     }
 
-    public void TakeDamage(float damage)
+	public virtual void TakeDamage(float damage)
     {
        GetComponent<HealthComponent>().TakeDmg((int)damage);
     }
