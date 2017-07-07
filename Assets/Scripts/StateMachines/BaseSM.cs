@@ -41,14 +41,7 @@ public abstract class BaseSM : MonoBehaviour {
         
         if (GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
         {
-            if (rb.IsSleeping())
-                rb.WakeUp();
-
             FSM();
-        }
-        else
-        {
-            rb.Sleep();
         }
 	}
     public void FSM()

@@ -23,15 +23,17 @@ public class GameStateManager : MonoBehaviour {
 
     public void SetState(GAME_STATE newState)
     {
+        CurrentState = newState;
+
         Rigidbody2D[] allRb = GameObject.FindObjectsOfType<Rigidbody2D>();
         foreach (Rigidbody2D rb in allRb)
         {
-            if (newState == GAME_STATE.PAUSED)
+            if (CurrentState == GAME_STATE.PAUSED)
             {
                 // Sleep all rb
                 rb.Sleep();
             }
-            else
+            else if (CurrentState == GAME_STATE.RUNNING)
             {
                 // Wake all rb
                 if (rb.IsSleeping())
