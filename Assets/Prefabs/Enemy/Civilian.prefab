@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 114987406501685770}
   m_Layer: 9
   m_Name: CivilianObject
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,7 +154,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1450524761547108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.206, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4709914374611520}
@@ -168,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1331038616227058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.03, y: -0.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4054108773871318}
@@ -423,13 +423,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theBoard: {fileID: 0}
+  MoveSpeed: 1
   PatrolPosition: {x: 0, y: 0, z: 0}
   idleTime: 2
   idleAngle: 0
   player: {fileID: 0}
   PatrolPoints:
-  - {x: -2, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: -1, y: 0, z: 0}
+  - {x: 1, y: 0, z: 0}
   ExitPoint: {fileID: 0}
   CurrentState: 0
 --- !u!212 &212796954926620938

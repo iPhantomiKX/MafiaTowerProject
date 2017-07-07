@@ -10,6 +10,6 @@ public abstract class NeutralSM : BaseSM {
 	// Use this for initialization
     public virtual void Start()
     {
-		
+        ExitPoint = GameObject.Find("PlayerSpawn");
 	}
 }
