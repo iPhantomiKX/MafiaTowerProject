@@ -13,10 +13,13 @@ public abstract class EnemySM : BaseSM {
 
 	public Vector3 SuspiciousPosition;
 	public Vector3 LastPLayerPosition;
+	public Vector3 PatrolPosition;
 	public float SuspiciousTime;
 	public float SuspiciousMax;
 	public float AlertTime;
 	public bool alert;
+	public float idleTime;
+	public float idleAngle;
 
 	public float searchTime;
 	public int searchIndex;
@@ -34,6 +37,30 @@ public abstract class EnemySM : BaseSM {
 		searchIndex = -1;
 		idleTime = 2.0f;
 		knowPlayerPosition = false;
+	}
+
+	// Update is called once per frame
+	void Update () {
+		if (!GameStateRef)
+			GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
+		if (!player)
+			player = GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<PlayerController>().gameObject;
+		if (!theBoard)
+			theBoard = GameObject.Find("MessageBoard").GetComponent<MessageBoard>();
+		
+		
+
+		if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+		{
+			if (rb.IsSleeping())
+				rb.WakeUp();
+
+			FSM ();
+		}
+		else
+		{
+			rb.Sleep();
+		}
 	}
 
 	protected void OnDrawGizmosSelected(){
@@ -116,6 +143,37 @@ public abstract class EnemySM : BaseSM {
 		FaceTowardAngle (angle, 0.33f);
 	}
 
+<<<<<<< HEAD
+=======
+	//need path finding
+	protected void WalkTowardPoint(Vector3 point){
+		this.transform.position = Vector2.MoveTowards (this.transform.position, point, MoveSpeed * Time.deltaTime);
+		FaceTowardPoint (point,0.33f);
+	}
+
+	public void FaceTowardPoint(Vector3 point,float percenDelta){
+		Vector3 toTarget = point - this.transform.position;
+		float angle = (Mathf.Atan2 (toTarget.y, toTarget.x) * Mathf.Rad2Deg)-90;
+		Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
+		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, q, percenDelta);
+	}
+
+	//Counter Clockwise
+	public void FaceTowardAngle(float angle,float percenDelta){
+		Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, q, percenDelta);
+	}
+
+	public void TakeDamage(float damage){
+		HP -= damage;
+		knowPlayerPosition = true;
+	}
+
+	public bool IsDead(){
+		return HP <= 0;
+	}
+
+>>>>>>> 8922e1803fcb82c1a9f91fc975f66ebbdc7fa53a
 	public void ResetAttack(){
 		attackAble = true;
 	}
