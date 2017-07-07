@@ -34,7 +34,7 @@ public abstract class Objective : MonoBehaviour {
         GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
         if (this.isTimed && timeBar != null)
         {
-            if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+            if (GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
             {
                 remainingTime -= Time.deltaTime;
 

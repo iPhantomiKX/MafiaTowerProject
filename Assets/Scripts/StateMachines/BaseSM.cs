@@ -39,7 +39,7 @@ public abstract class BaseSM : MonoBehaviour {
         if (!theBoard)
             theBoard = GameObject.Find("MessageBoard").GetComponent<MessageBoard>();
         
-        if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+        if (GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
         {
             if (rb.IsSleeping())
                 rb.WakeUp();

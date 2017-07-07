@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour {
         if (!GameStateRef)
             GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
 
-        if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+        if (GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
         {
             if (rb.IsSleeping())
                 rb.WakeUp();

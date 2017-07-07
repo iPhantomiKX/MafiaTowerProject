@@ -94,7 +94,7 @@ public class RescueSM : NeutralSM {
     void DoFollow()
     {
         // Follow the player
-        if (rb.IsSleeping() && GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+        if (rb.IsSleeping() && GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
             rb.WakeUp();
 
         WalkTowardPoint(player.transform.position);

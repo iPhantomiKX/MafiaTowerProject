@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour {
 
         //Move player
 
-        if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+        if (GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
         {
             if (rb.IsSleeping())
                 rb.WakeUp();
@@ -125,9 +125,10 @@ public class PlayerController : MonoBehaviour {
             PauseCanvasRef.gameObject.SetActive(!PauseCanvasRef.gameObject.activeInHierarchy);
 
             if (PauseCanvasRef.gameObject.activeInHierarchy)
-                GameStateRef.CurrentState = GameStateManager.GAME_STATE.PAUSED;
-            else
-                GameStateRef.CurrentState = GameStateManager.GAME_STATE.RUNNING;
+                GameStateRef.SetState(GameStateManager.GAME_STATE.PAUSED);
+            else 
+                GameStateRef.SetState(GameStateManager.GAME_STATE.RUNNING);
+
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
