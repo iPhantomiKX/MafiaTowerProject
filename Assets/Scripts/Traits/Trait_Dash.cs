@@ -29,7 +29,7 @@ public class Trait_Dash : AbilityTrait
         Vector2 dir = (vec2MousePos - vec2PlayerPos).normalized;
 
         //playerObject.rb.velocity = (dir * DashDistance );
-
-        playerObject.SetDash(dir, DashDistance * GetLevelMultiplier());
+       
+        playerObject.GetComponent<MovementScript>().SetToDash(dir, DashDistance);    
     }
 }

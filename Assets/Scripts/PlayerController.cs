@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
             return;
 
         //Move player
-        if (GameStateRef.CurrentState == GameStateManager.GAME_STATE.RUNNING)
+        if (GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
         {
             Move();
             FaceMousePos();
