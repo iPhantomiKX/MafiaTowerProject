@@ -42,7 +42,8 @@ public class ObjectiveManager : MonoBehaviour {
 	}
 
 	public void GenerateObjtUI(){
-		GameObject panel =  canvas.transform.GetChild (1).GetChild (1).GetChild (0).gameObject;
+		GameObject panel =  canvas.transform.GetChild (0).GetChild (1).GetChild (0).gameObject;
+        //GameObject panel = canvas.transform.GetChild(0).gameObject;
 		Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
 		for(int i = 0;i<=objectives.Length-1;i++) {
 			GameObject newText = new GameObject ("Objective " + i);
