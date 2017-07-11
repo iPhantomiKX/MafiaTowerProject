@@ -18,8 +18,6 @@ public class RescueSM : NeutralSM {
     public float followDistPercent;
     public float startFollowDist;
 
-    float offset = 0.05f;
-
 	// Use this for initialization
     public override void Start()
     {
@@ -92,6 +90,12 @@ public class RescueSM : NeutralSM {
     public void SetState(RESCUE_STATE newState)
     {
         CurrentState = newState;
+
+        if (CurrentState != RESCUE_STATE.WAITING)
+        {
+            gameObject.tag = "VIP";
+            gameObject.layer = LayerMask.NameToLayer("VIP");
+        }
     }
 
     void DoWait()
