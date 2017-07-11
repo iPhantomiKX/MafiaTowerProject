@@ -47,7 +47,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.IDLE:
 			if (IsDead ())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen () || knowPlayerPosition)
+			if (IsPlayerSeen () || knowPlayerPosition || IsVIPSeen())
 				return (int)ENEMY_STATE.ATTACKING;
 			if (IsSuspicuous ())
 				return (int)ENEMY_STATE.SUSPICIOUS;
@@ -59,7 +59,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.PATROLLING:
 			if (IsDead ())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen () || knowPlayerPosition)
+			if (IsPlayerSeen () || knowPlayerPosition || IsVIPSeen())
 				return (int)ENEMY_STATE.ATTACKING;
 			if (IsSuspicuous ())
 				return(int)ENEMY_STATE.SUSPICIOUS;
@@ -71,7 +71,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.SUSPICIOUS:
 			if (IsDead())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen() || knowPlayerPosition)
+			if (IsPlayerSeen() || knowPlayerPosition || IsVIPSeen())
 				return (int)ENEMY_STATE.ATTACKING;
 			if (!IsSuspicuous() && !alert)		
 				return(int)ENEMY_STATE.IDLE;
@@ -83,7 +83,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.ATTACKING:
 			if (IsDead())
 				return (int)ENEMY_STATE.DEAD;
-			if(!IsPlayerSeen() && !knowPlayerPosition)
+			if(!IsPlayerSeen() && !knowPlayerPosition && !IsVIPSeen())
 				return (int)ENEMY_STATE.SEARCHING;
 			return (int)ENEMY_STATE.ATTACKING;
 
@@ -91,7 +91,7 @@ public class RangeEnemy : EnemySM {
 		case ENEMY_STATE.SEARCHING:
 			if (IsDead ())
 				return (int)ENEMY_STATE.DEAD;
-			if (IsPlayerSeen () || knowPlayerPosition)
+			if (IsPlayerSeen () || knowPlayerPosition || IsVIPSeen())
 				return (int)ENEMY_STATE.ATTACKING;
 			if (IsSuspicuous ())
 				return(int)ENEMY_STATE.SUSPICIOUS;
@@ -221,54 +221,63 @@ public class RangeEnemy : EnemySM {
 	}
 
 	private void DoAttacking(){
-		if (!alert)
-			alert = true;
-		StopSuspicious ();
-		StopSearching ();
-		LastPLayerPosition = player.transform.position;
 		knowPlayerPosition = false;
-		if (Vector2.Distance (this.transform.position, player.transform.position) > 0.7f)
-			WalkTowardPoint (player.transform.position);
-		else
-			FaceTowardPoint (player.transform.position, 0.33f);
-		if (attackAble) {
-			if (Vector2.Distance (this.transform.position, player.transform.position) <= 1f) {
-				GameObject go = Instantiate (bulletPrefab, this.transform.position + (transform.up * 0.3f), this.transform.rotation);
-				go.GetComponent<EnemyBullet> ().Damage = AttackDamage;
-				Physics2D.IgnoreCollision(go.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
-				go.GetComponent<Rigidbody2D> ().AddForce (this.transform.up*400f);
-				//player.GetComponent<HealthComponent> ().health -= (int)AttackDamage;
+		if (CurrentTarget) {
+			if (CurrentTarget == player) {
+				if (!alert)
+					alert = true;
+				StopSuspicious ();
+				StopSearching ();
+				LastPLayerPosition = player.transform.position;
 
-				attackAble = false;
-				Invoke ("ResetAttack", AttackSpeed);
+				AlertTime += Time.deltaTime;
+				if (AlertTime >= 3) {
+					//Push Message in MessageBoard
+					List<EnemySM> enems = theBoard.getEnemyList ();
+					foreach (EnemySM enem in enems) {
+						if (enem == this.GetComponent<EnemySM> ())
+							continue;
+						Message aMessage = new Message ();
+						aMessage.theMessageType = Message.MESSAGE_TYPE.ENEMY_SPOTPLAYER;
+						aMessage.theSender = this.gameObject;
+						aMessage.theReceiver = enem.gameObject;
+						aMessage.theTarget = null;
+						aMessage.theDestination = LastPLayerPosition;
+
+						theBoard.AddMessage (aMessage);
+					}
+					AlertTime = 0f;
+				}
+			} else if (CurrentTarget.tag == "VIP") {
+				StopSuspicious ();
+				StopSearching ();
+				LastPLayerPosition = Vector3.forward;
 			}
 
-		}
+			if (Vector2.Distance (this.transform.position, CurrentTarget.transform.position) > 0.7f)
+				WalkTowardPoint (CurrentTarget.transform.position);
+			else
+				FaceTowardPoint (CurrentTarget.transform.position, 0.33f);
+			if (attackAble) {
+				if (Vector2.Distance (this.transform.position, CurrentTarget.transform.position) <= 1f) {
+					GameObject go = Instantiate (bulletPrefab, this.transform.position + (transform.up * 0.3f), this.transform.rotation);
+					go.GetComponent<EnemyBullet> ().Damage = AttackDamage;
+					Physics2D.IgnoreCollision (go.GetComponent<Collider2D> (), this.GetComponent<Collider2D> ());
+					go.GetComponent<Rigidbody2D> ().AddForce (this.transform.up * 400f);
+					//player.GetComponent<HealthComponent> ().health -= (int)AttackDamage;
 
-		AlertTime += Time.deltaTime;
-		if (AlertTime >= 3) {
-			//Push Message in MessageBoard
-			List<EnemySM> enems = theBoard.getEnemyList();
-			foreach (EnemySM enem in enems)
-			{
-				if (enem == this.GetComponent<EnemySM> ())
-					continue;
-				Message aMessage = new Message();
-				aMessage.theMessageType = Message.MESSAGE_TYPE.ENEMY_SPOTPLAYER;
-				aMessage.theSender = this.gameObject;
-				aMessage.theReceiver = enem.gameObject;
-				aMessage.theTarget = null;
-				aMessage.theDestination = LastPLayerPosition;
+					attackAble = false;
+					Invoke ("ResetAttack", AttackSpeed);
+				}
 
-				theBoard.AddMessage (aMessage);
 			}
-			AlertTime = 0f;
 		}
 	}
 
 	private void DoSearching(){
 		AlertTime = 0f;
-		print (searchIndex + "  " + searchTime);
+		if (LastPLayerPosition == Vector3.forward)
+			return;
 		if (SearchingRoute.Count <= 0) {
 			if (this.transform.position == LastPLayerPosition) {
 				rb.velocity = Vector3.zero;

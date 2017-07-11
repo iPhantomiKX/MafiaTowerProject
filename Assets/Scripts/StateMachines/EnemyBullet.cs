@@ -17,9 +17,11 @@ public class EnemyBullet : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		print (coll.gameObject.tag);
-		if (coll.gameObject.tag == "Player") {
+		if (coll.gameObject.tag == "Player" || coll.gameObject.tag == "VIP") {
 			coll.gameObject.GetComponent<HealthComponent> ().TakeDmg ((int)Damage);
 		} 
+
+
 		Destroy (this.gameObject);
 	}
 

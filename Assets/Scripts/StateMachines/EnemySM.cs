@@ -24,6 +24,10 @@ public abstract class EnemySM : BaseSM {
 
 	public bool knowPlayerPosition;
 
+
+	public List<GameObject> VIPs = new List<GameObject> ();
+	public GameObject CurrentTarget;
+
 	// Use this for initialization
 	public virtual void Start() {
 		SuspiciousPosition = Vector3.forward;
@@ -41,36 +45,36 @@ public abstract class EnemySM : BaseSM {
 		Gizmos.DrawWireSphere (this.transform.position, visionRange);
 	}
 
-	protected bool IsPlayerSeen(){
-		
+	protected bool IsTargetSeen(GameObject target){
 		//check player in cone and in range
-		Vector3 playerDir = player.transform.position - this.transform.position;
+		Vector3 targetDir = target.transform.position - this.transform.position;
 		Vector3 forward = this.transform.up;
-		float angle = Vector3.Angle (playerDir, forward);
-		float distance = Vector3.Distance (player.transform.position, this.transform.position);
+		float angle = Vector3.Angle (targetDir, forward);
+		float distance = Vector3.Distance (target.transform.position, this.transform.position);
+		Debug.DrawRay (this.transform.position, targetDir);
 		if (angle < angleFOV && distance < visionRange) {
 
 			//check if player behind any obstacle
 			int layerMask = (1 << 8 | 1 << 11 | 1 << 12);
-			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, playerDir,Mathf.Infinity,layerMask);
+			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, targetDir,Mathf.Infinity,layerMask);
 			if (hit.collider != null) {
-				if (CheckValidTarget(hit.collider.gameObject.tag)) 
-                {
+				if (CheckValidTarget(hit.collider.gameObject.tag,target)) 
+				{
 					return true;
 				}
 			} else {
 				//In case part of the body is seen
-				RaycastHit2D hit2 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(playerDir.z + 10f, Vector3.forward) * playerDir,Mathf.Infinity,layerMask);
+				RaycastHit2D hit2 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(targetDir.z + 10f, Vector3.forward) * targetDir,Mathf.Infinity,layerMask);
 				if (hit2.collider != null) {
-					if (CheckValidTarget(hit2.collider.gameObject.tag)) 
-                    {
+					if (CheckValidTarget(hit2.collider.gameObject.tag,target)) 
+					{
 						return true;
 					}
 				} else {
-					RaycastHit2D hit3 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(playerDir.z - 10f, Vector3.forward) * playerDir,Mathf.Infinity,layerMask);
+					RaycastHit2D hit3 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(targetDir.z - 10f, Vector3.forward) * targetDir,Mathf.Infinity,layerMask);
 					if (hit3.collider != null) {
-                        if (CheckValidTarget(hit3.collider.gameObject.tag))
-                        {
+						if (CheckValidTarget(hit3.collider.gameObject.tag,target))
+						{
 							return true;
 						}
 					} 
@@ -82,14 +86,52 @@ public abstract class EnemySM : BaseSM {
 			return false;
 	}
 
-    bool CheckValidTarget(string tag)
+	protected bool IsPlayerSeen(){
+		return IsTargetSeen (player);
+	}
+
+	protected bool IsVIPSeen(){
+		if (VIPs.Count <= 0) {
+			GameObject[] goList = GameObject.FindGameObjectsWithTag ("VIP");
+
+			foreach (GameObject go in goList) {
+
+
+				if (VIPs.Contains (go)) {
+					continue;
+				}
+				VIPs.Add (go);
+			}
+		}
+		for (int i = 0; i < VIPs.Count; i++) {
+			if (VIPs [i] == null) {
+				VIPs.RemoveAt (i);
+			}
+		}
+		if (VIPs.Count > 0) {
+			foreach (GameObject vip in VIPs) {
+				if(IsTargetSeen(vip)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	bool CheckValidTarget(string tag,GameObject target)
     {
         switch (tag)
         {
-            case "Player": return true;
-            case "VIP": return true;
+		case "Player": 
+			CurrentTarget = player;
+			return true;
+		case "VIP":
+			CurrentTarget = target;
+			return true;
 
-            default: return false;
+		default: 
+			CurrentTarget = null;
+			return false;
         }
     }
 
@@ -146,6 +188,7 @@ public abstract class EnemySM : BaseSM {
 	{
 		base.TakeDamage (damage);
 		knowPlayerPosition = true;
+		CurrentTarget = player;
 	}
 }
 
