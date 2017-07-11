@@ -24,7 +24,7 @@ public class PlayerAnimationController : MonoBehaviour {
 	}
 
 	void Alive(){
-		animator.SetFloat ("speed", this.GetComponent<PlayerController> ().rb.velocity.magnitude);
+		animator.SetFloat ("speed", GetComponent<Rigidbody2D>().velocity.magnitude);
 
 		if (PlayerController.shootButton && this.GetComponentInChildren<Gun> ().ammo > 0) {
 			animator.Play ("PlayerShooting");

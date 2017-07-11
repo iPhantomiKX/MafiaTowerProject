@@ -9,15 +9,16 @@ public class PlayerUIScript : MonoBehaviour {
 	private Gun gun;
 	public Slider ammoSlider;
 	public Slider healthSlider;
-
-	void Awake(){
-		gun = this.gameObject.GetComponentInChildren<Gun>();
-		hc = this.gameObject.GetComponent<HealthComponent>();
-	}
+    public GameObject player;
 
 	// Use this for initialization
-	void Start () {
-		ammoSlider.maxValue = gun.ammo;
+	void Start ()
+    {
+        player = GameObject.Find("PlayerObject");
+        gun = player.GetComponentInChildren<Gun>();
+        hc = player.GetComponent<HealthComponent>();
+
+        ammoSlider.maxValue = gun.ammo;
 		healthSlider.maxValue = hc.health;
 	}
 	

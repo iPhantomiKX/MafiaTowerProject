@@ -10,7 +10,7 @@ public class InspectionManager : MonoBehaviour {
     Image activePanel;
 	// Use this for initialization
 	void Start () {
-		
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();  //Added by Randall - A quick search to reference the main canvas.
 	}
 	
 	// Update is called once per frame

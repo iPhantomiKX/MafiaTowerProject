@@ -128,6 +128,9 @@ public class SecurityCamera : MonoBehaviour {
 
     public void CameraOff()
     {
+        if (current_state == STATE.DESTROYED)
+            return;
+
         current_state = STATE.OFF;
         GetComponent<LineRenderer>().enabled = false;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
@@ -135,9 +138,19 @@ public class SecurityCamera : MonoBehaviour {
 
     public void CameraOn()
     {
+        if (current_state == STATE.DESTROYED)
+            return;
+
         current_state = STATE.ON;
         GetComponent<LineRenderer>().enabled = true;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
+    }
+
+    public void ToggleAlert()
+    {
+        if(current_state != STATE.DESTROYED)
+            current_state = STATE.ALERT;
+
     }
 
     //Getters
@@ -157,8 +170,10 @@ public class SecurityCamera : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
+        //RANDALL - TODO
         //Check that coll is a projectile or melee attack or something - by tag or something
 
+        CameraOff();
         current_state = STATE.DESTROYED;
 
         //Remember to despawn projectile
