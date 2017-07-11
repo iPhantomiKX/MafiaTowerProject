@@ -51,23 +51,26 @@ public abstract class EnemySM : BaseSM {
 		if (angle < angleFOV && distance < visionRange) {
 
 			//check if player behind any obstacle
-			int layerMask = (1 << 8 | 1 << 11);
+			int layerMask = (1 << 8 | 1 << 11 | 1 << 12);
 			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, playerDir,Mathf.Infinity,layerMask);
 			if (hit.collider != null) {
-				if (hit.collider.gameObject.tag == "Player") {
+				if (CheckValidTarget(hit.collider.gameObject.tag)) 
+                {
 					return true;
 				}
 			} else {
 				//In case part of the body is seen
 				RaycastHit2D hit2 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(playerDir.z + 10f, Vector3.forward) * playerDir,Mathf.Infinity,layerMask);
 				if (hit2.collider != null) {
-					if (hit2.collider.gameObject.tag == "Player") {
+					if (CheckValidTarget(hit2.collider.gameObject.tag)) 
+                    {
 						return true;
 					}
 				} else {
 					RaycastHit2D hit3 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(playerDir.z - 10f, Vector3.forward) * playerDir,Mathf.Infinity,layerMask);
 					if (hit3.collider != null) {
-						if (hit3.collider.gameObject.tag == "Player") {
+                        if (CheckValidTarget(hit3.collider.gameObject.tag))
+                        {
 							return true;
 						}
 					} 
@@ -78,6 +81,17 @@ public abstract class EnemySM : BaseSM {
 		} else
 			return false;
 	}
+
+    bool CheckValidTarget(string tag)
+    {
+        switch (tag)
+        {
+            case "Player": return true;
+            case "VIP": return true;
+
+            default: return false;
+        }
+    }
 
 	protected bool IsSuspicuous(){
 		if (SuspiciousPosition != Vector3.forward) {

@@ -740,26 +740,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114814704481172936, guid: 51bc2345ee651eb49b6e458e6447172f,
-        type: 2}
-      propertyPath: ObjectiveManager
-      value: 
-      objectReference: {fileID: 1886598874}
-    - target: {fileID: 114814704481172936, guid: 51bc2345ee651eb49b6e458e6447172f,
-        type: 2}
-      propertyPath: isTimed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114814704481172936, guid: 51bc2345ee651eb49b6e458e6447172f,
-        type: 2}
-      propertyPath: time
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 61470144880425142, guid: 51bc2345ee651eb49b6e458e6447172f,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51bc2345ee651eb49b6e458e6447172f, type: 2}
   m_IsPrefabParent: 0
@@ -981,50 +961,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dcd2bac4a2dd71f4db01f235658e1dc6, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &303171989 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1797228185905298, guid: 51bc2345ee651eb49b6e458e6447172f,
-    type: 2}
-  m_PrefabInternal: {fileID: 175478484}
---- !u!114 &303171995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 303171989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7523aa6177849e244b0a2515edf4ce10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  theBoard: {fileID: 0}
-  MoveSpeed: 1
-  PatrolPosition: {x: 0, y: 0, z: 0}
-  idleTime: 0
-  idleAngle: 0
-  player: {fileID: 0}
-  PatrolPoints: []
-  ExitPoint: {fileID: 0}
---- !u!50 &303171996
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 303171989}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!4 &325918740 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4170535245778516, guid: dcd2bac4a2dd71f4db01f235658e1dc6,
@@ -5980,11 +5916,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dcd2bac4a2dd71f4db01f235658e1dc6, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1886598874 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1211391345353874, guid: 68c4c7004f86efb42b50a088cc33ee08,
-    type: 2}
-  m_PrefabInternal: {fileID: 646957674}
 --- !u!1001 &1895564262
 Prefab:
   m_ObjectHideFlags: 0

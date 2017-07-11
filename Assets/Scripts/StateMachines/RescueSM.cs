@@ -14,6 +14,10 @@ public class RescueSM : NeutralSM {
 
     RESCUE_STATE CurrentState = RESCUE_STATE.WAITING;
 
+    [Tooltip("To be capped between 1 and 100")]
+    public float followDistPercent;
+    public float startFollowDist;
+
 	// Use this for initialization
     public override void Start()
     {
@@ -21,6 +25,8 @@ public class RescueSM : NeutralSM {
 
         rb.mass = 9999;
         rb.Sleep();
+
+        followDistPercent = Mathf.Clamp(followDistPercent, 1, 100f);
     }
 
     public override void Sense()
@@ -84,6 +90,12 @@ public class RescueSM : NeutralSM {
     public void SetState(RESCUE_STATE newState)
     {
         CurrentState = newState;
+
+        if (CurrentState != RESCUE_STATE.WAITING)
+        {
+            gameObject.tag = "VIP";
+            gameObject.layer = LayerMask.NameToLayer("VIP");
+        }
     }
 
     void DoWait()
@@ -97,7 +109,14 @@ public class RescueSM : NeutralSM {
         if (rb.IsSleeping() && GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
             rb.WakeUp();
 
-        WalkTowardPoint(player.transform.position);
+        Vector3 dir = (player.transform.position - transform.position);
+
+        if (dir.magnitude > startFollowDist)
+        {
+            Vector3 point = player.transform.position + (dir * followDistPercent);
+
+            WalkTowardPoint(point);
+        }
     }
 
     void DoExit()

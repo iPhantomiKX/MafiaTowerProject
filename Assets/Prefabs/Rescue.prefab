@@ -24,6 +24,9 @@ GameObject:
   - component: {fileID: 61470144880425142}
   - component: {fileID: 114119973686641524}
   - component: {fileID: 114667835411162536}
+  - component: {fileID: 50320392228840714}
+  - component: {fileID: 114641141650273164}
+  - component: {fileID: 114654402089833726}
   m_Layer: 0
   m_Name: Rescue
   m_TagString: Untagged
@@ -39,11 +42,31 @@ Transform:
   m_GameObject: {fileID: 1797228185905298}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.7329999, y: 0.11400008, z: 0}
-  m_LocalScale: {x: 2.9960945, y: 2.9999998, z: 1}
+  m_LocalScale: {x: 1.7976568, y: 1.8, z: 0.6}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50320392228840714
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797228185905298}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &61470144880425142
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -71,6 +94,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TraitHolderRef: {fileID: 0}
   actionName: Help
+  takesTime: 0
+  time: 0
+  remainingTime: 0
+--- !u!114 &114641141650273164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797228185905298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7523aa6177849e244b0a2515edf4ce10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theBoard: {fileID: 0}
+  MoveSpeed: 1
+  PatrolPosition: {x: 0, y: 0, z: 0}
+  idleTime: 0
+  idleAngle: 0
+  player: {fileID: 0}
+  PatrolPoints: []
+  ExitPoint: {fileID: 0}
+  followDistPercent: 1.05
+  startFollowDist: 0.5
+--- !u!114 &114654402089833726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797228185905298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37efa602cb6f3544ea2c6d0761dd38b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GO: {fileID: 1797228185905298}
+  health: 5
+  death:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114667835411162536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   om: {fileID: 0}
   isTimed: 1
-  time: 15
+  time: 90
   remainingTime: 0
   timeBar: {fileID: 0}
   timeBarWidth: 0
