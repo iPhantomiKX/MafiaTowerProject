@@ -12,8 +12,14 @@ public class ObjectiveManager : MonoBehaviour {
     public float timeBarWidth;
     public float timeBarHeight;
 
+    void Awake()
+    {
+    }
+
 	// Use this for initialization
 	void Start () {
+        canvas = GameObject.Find("Canvas").GetComponent<PanelManager>().GetPanel("ObjectiveUI"); //Added by Randall - To reference the UIObject
+
         objectives = FindObjectsOfType<Objective>();
 		Invoke ("GenerateObjtUI" , 0.5f);
 	}

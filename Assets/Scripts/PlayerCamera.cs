@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour {
 
     public GameObject playerObject;
+    public float lerpSpeed = 0.5f;
     public Vector3 offset = new Vector3(0,0, -1.0f);
 
     public bool free = false;   //defines if the camera is locked to player or free
@@ -23,6 +24,7 @@ public class PlayerCamera : MonoBehaviour {
             playerObject = GameObject.Find("PlayerObject");
 
         if (!free)
-            transform.position = (playerObject.transform.position + Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f))) * 0.5f + offset;
+            //transform.position = (playerObject.transform.position + Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f))) * 0.5f + offset;
+            transform.position = Vector3.Lerp(playerObject.transform.position, (playerObject.transform.position + Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f))) * 0.5f + offset, lerpSpeed); 
     }
 }

@@ -10,13 +10,16 @@ public class CameraConsole : MonoBehaviour {
 
     private int camera_index = 0;
     private GameObject camera_offline_screen;
+    private PlayerController player;
+    private PanelManager pm;
 
     // Use this for initialization
     void Awake()
     {
+        pm = GameObject.Find("Canvas").GetComponent<PanelManager>();
+        player = GameObject.Find("PlayerObject").GetComponent<PlayerController>();
         securityCameraList = GameObject.FindGameObjectsWithTag("SecurityCamera");
         camera_offline_screen = transform.GetChild(0).gameObject; //A bit hardcoded but uh should be fine as long as the first child is the offline screen
-        camera_offline_screen.SetActive(false);
     }
 
     void MoveToCamera(int indexInArray)
@@ -58,14 +61,13 @@ public class CameraConsole : MonoBehaviour {
     public void TurnOnCurrentCamera()
     {
         securityCameraList[camera_index].GetComponent<SecurityCamera>().CameraOn();
-        camera_offline_screen.SetActive(false);
+        camera_offline_screen.SetActive(securityCameraList[camera_index].GetComponent<SecurityCamera>().IsDestroyed());
     }
 
     public void TurnOffAllCameras()
     {
         foreach (GameObject sc in securityCameraList)
-            if(!sc.GetComponent<SecurityCamera>().IsDestroyed())
-                sc.GetComponent<SecurityCamera>().CameraOff();
+            sc.GetComponent<SecurityCamera>().CameraOff();
 
         camera_offline_screen.SetActive(true);
     }
@@ -73,22 +75,25 @@ public class CameraConsole : MonoBehaviour {
     public void TurnOnAllCameras()
     {
         foreach (GameObject sc in securityCameraList)
-            if (!sc.GetComponent<SecurityCamera>().IsDestroyed())
-                sc.GetComponent<SecurityCamera>().CameraOn();
+            sc.GetComponent<SecurityCamera>().CameraOn();
 
-        camera_offline_screen.SetActive(false);
+        camera_offline_screen.SetActive(securityCameraList[camera_index].GetComponent<SecurityCamera>().IsDestroyed());
     }
 
     public void ClosePanel()
     {
         Camera.main.GetComponent<PlayerCamera>().free = false;
-        GameObject.Find("PlayerObject").GetComponent<PlayerController>().freeze = true;
+        player.freeze = false;
+
+        pm.ActivatePanels(new[] { "PlayerUI", "ObjectiveUI" });
+
         gameObject.SetActive(false);
     }
 
     public void OpenPanel()
     {
         Camera.main.GetComponent<PlayerCamera>().free = true;
+        player.freeze = true;
         MoveToCamera(camera_index);
     }
 }

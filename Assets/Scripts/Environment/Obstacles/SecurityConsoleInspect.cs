@@ -2,17 +2,18 @@
 
 public class SecurityConsoleInspect : Inspect
 {
-    private GameObject securityConsolePanel;
+    public string panelName = "SecurityConsole";
+    private PanelManager pm;
 
-    void Awake()
+    void Start()
     {
-        securityConsolePanel = GameObject.Find("SecurityConsolePanel");
-        securityConsolePanel.SetActive(false);
+        pm = GameObject.Find("Canvas").GetComponent<PanelManager>();
     }
 
     public override void inspect()
     {
-        securityConsolePanel.SetActive(true);
-        securityConsolePanel.GetComponent<CameraConsole>().OpenPanel();
+        pm.DeactivateAllPanels();
+        pm.ActivatePanel(panelName);
+        pm.GetPanel(panelName).GetComponent<CameraConsole>().OpenPanel();
     }
 }
