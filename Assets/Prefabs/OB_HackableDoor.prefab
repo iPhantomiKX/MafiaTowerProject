@@ -282,6 +282,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TraitHolderRef: {fileID: 0}
   actionName: Hack
+  takesTime: 1
+  time: 2
+  remainingTime: 0
 --- !u!114 &114719199112731572
 MonoBehaviour:
   m_ObjectHideFlags: 1
