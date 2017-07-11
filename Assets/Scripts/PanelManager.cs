@@ -50,7 +50,6 @@ public class PanelManager : MonoBehaviour {
         PanelList.Add(panel_prefab.name, new_panel);
 
         new_panel.GetComponent<RectTransform>().localPosition = Vector2.zero;
-
         new_panel.SetActive(active_on_init);
 
         Debug.Log(panel_prefab.name + " added to panel list");
@@ -71,13 +70,6 @@ public class PanelManager : MonoBehaviour {
         PanelList.Add(panel_name, new_panel);
 
         new_panel.GetComponent<RectTransform>().localPosition = Vector2.zero;
-
-        RectTransform panelRectTransform = new_panel.GetComponent<RectTransform>();
-
-        panelRectTransform.anchorMin = new Vector2(0, 0);
-        panelRectTransform.anchorMax = new Vector2(1, 1);
-        panelRectTransform.pivot = new Vector2(0.5f, 0.5f);
-
         new_panel.SetActive(active_on_init);
 
         Debug.Log(panel_name + " added to panel list");
