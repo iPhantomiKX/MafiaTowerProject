@@ -43,6 +43,14 @@ public class LevelManager : MonoBehaviour {
     [Header("Player Spawn Platform")]
     public GameObject PlayerSpawnerPlatform;
 
+    [Space]
+    [Header("Exit Platform")]
+    public GameObject NextLevelPlatform;
+
+    [Space]
+    [Header("Enemy Object")]
+    public GameObject EnemyObject;
+
     private TileType[][] maptiles;
     private TileType[][] venttiles;
     private RoomScript[] rooms;
@@ -71,6 +79,8 @@ public class LevelManager : MonoBehaviour {
         InstantiateOuterWalls();
 
         SetPlayerPosition();
+        SetNextLevelPlatformPosition();
+        SetEnemyPosition();
 	}
 
     void SetupTilesArray()
@@ -177,7 +187,7 @@ public class LevelManager : MonoBehaviour {
                             break;
                         case RoomScript.RoomType.EXIT:
                             {
-                                maptiles[xCoord][yCoord] = TileType.WALL;
+                                maptiles[xCoord][yCoord] = TileType.ROOM;
                             }
                             break;
                         case RoomScript.RoomType.HOSTAGE:
@@ -320,6 +330,23 @@ public class LevelManager : MonoBehaviour {
 
         Vector3 playerPos = new Vector3(tilespacing * PlayerXPos, tilespacing * PlayerYPos, -1f);
         Instantiate(PlayerSpawnerPlatform, playerPos, Quaternion.identity);
+    }
+
+    void SetEnemyPosition()
+    {
+        int randomTile = Random.Range(0, existingRooms.Count);
+        Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), -1f);
+        GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
+        enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    void SetNextLevelPlatformPosition()
+    {
+        int NextLevelPlatformXPos = Mathf.RoundToInt(exitRoom.xpos + (exitRoom.roomWidth / 2));
+        int NextLevelPlatformYPos = Mathf.RoundToInt(exitRoom.ypos + (exitRoom.roomHeight / 2));
+
+        Vector3 NextLevelPlatformPos = new Vector3(tilespacing * NextLevelPlatformXPos, tilespacing * NextLevelPlatformYPos, -1f);
+        Instantiate(NextLevelPlatform, NextLevelPlatformPos, Quaternion.identity);
     }
 
     void InstantiateTiles()
