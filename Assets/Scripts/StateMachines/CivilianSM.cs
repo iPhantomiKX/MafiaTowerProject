@@ -43,17 +43,8 @@ public class CivilianSM : NeutralSM {
             case CIVILIAN_STATE.IDLE:
                 if (idleTime <= 0)
                 {
-                    if (waypointIdx == PatrolPoints.Count - 1)
-                    {
-                        PatrolPoints.Reverse();
-                        waypointIdx = 0;
-                    }
-                    else
-                    {
-                        waypointIdx++;
-                    }
-
-                    PatrolPosition = PatrolPoints[waypointIdx];
+                    // Random a new position to walk to 
+                    PatrolPosition = PathfinderRef.RandomPos(3);
                     return (int)CIVILIAN_STATE.PATROLLING;
                 }
                 return (int)CIVILIAN_STATE.IDLE;
@@ -115,7 +106,14 @@ public class CivilianSM : NeutralSM {
             return;
         }
 
-        Debug.DrawLine(transform.position, PatrolPosition);
+        if (PathfinderRef.GetPathFound())
+        {
+            PathfinderRef.FollowPath();
+        }
+        else
+        {
+            PathfinderRef.FindPath(PatrolPosition);
+        }
 
         WalkTowardPoint(PatrolPosition);
     }

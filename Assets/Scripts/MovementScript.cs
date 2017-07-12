@@ -25,6 +25,7 @@ public class MovementScript : MonoBehaviour {
         { 
             rb.velocity = dash_dir * dash_speed;
             dash_distance -= Time.deltaTime * dash_speed;
+            dash_speed -= Time.deltaTime * 25;
 
             if (dash_distance <= 0)
                 is_dashing = false;

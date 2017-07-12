@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Pathfinder))]
 public abstract class BaseSM : MonoBehaviour {
 
     public MessageBoard theBoard;
@@ -19,10 +21,13 @@ public abstract class BaseSM : MonoBehaviour {
 
     protected GameStateManager GameStateRef;
 
+    protected Pathfinder PathfinderRef;
+
 	// Use this for initialization
     protected void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        PathfinderRef = GetComponent<Pathfinder>();
     }
 
 	void Start () {
@@ -76,7 +81,7 @@ public abstract class BaseSM : MonoBehaviour {
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, q, percenDelta);
     }
 
-    protected void WalkTowardPoint(Vector3 point)
+    public void WalkTowardPoint(Vector3 point)
     {
         this.transform.position = Vector2.MoveTowards(this.transform.position, point, MoveSpeed * Time.deltaTime);
         FaceTowardPoint(point, 0.33f);

@@ -412,4 +412,45 @@ public class LevelManager : MonoBehaviour {
 
         return tileInstance;
     }
+
+    // Gets the cost of a tile/grid based on the TileType
+    public int GetGridCost(int x, int y)
+    {
+        switch(tiles[x][y])
+        {
+            case TileType.FLOOR: return 1;
+            case TileType.WALL: return -1;
+
+            default: return 1; 
+        }
+    }
+
+    // Gets vector3 position using x and y as indexes
+    public Vector3 GetVec3Pos(int x, int y)
+    {
+        return new Vector3(x * tilespacing, y * tilespacing, 0);
+    }
+
+    // Gets the grid position of a tile based on a vector3 position
+    public Vector2 GetGridPos(Vector3 checkPos)
+    {
+        for (int x = 0; x < columns; ++x)
+        {
+            for (int y = 0; y < rows; ++y)
+            {
+                double offset = 0.5 * tilespacing;
+                Vector3 tempVec3 = GetVec3Pos(x, y);
+
+                if (checkPos.x < tempVec3.x + offset &&
+                    checkPos.x > tempVec3.x - offset &&
+                    checkPos.y < tempVec3.x + offset &&
+                    checkPos.y > tempVec3.x - offset)
+                {
+                    return new Vector2(x, y);
+                }
+            }
+        }
+
+        return new Vector2(-1, -1);
+    }
 }
