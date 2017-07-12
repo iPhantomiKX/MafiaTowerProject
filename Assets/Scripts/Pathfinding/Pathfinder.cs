@@ -112,18 +112,61 @@ public class Pathfinder : MonoBehaviour {
             if (CurrentGridPosY != SizeY - 1)
             {
                 CheckY = CurrentGridPosY + 1;
+             
+                // Top Middle
+                CheckX = CurrentGridPosX;
 
                 if (ValidateNode(NodeList[CheckX][CheckY]))
                 {
                     OpenList.Add(NodeList[CheckX][CheckY]);
                     NeighbourList.Add(NodeList[CheckX][CheckY]);
                 }
+
+                // Top Left
+                CheckX = CurrentGridPosX - 1;
+
+                if (ValidateNode(NodeList[CheckX][CheckY]))
+                {
+                    OpenList.Add(NodeList[CheckX][CheckY]);
+                    NeighbourList.Add(NodeList[CheckX][CheckY]);
+                }
+
+                // Top Right
+                CheckX = CurrentGridPosX + 1;
+
+                if (ValidateNode(NodeList[CheckX][CheckY]))
+                {
+                    OpenList.Add(NodeList[CheckX][CheckY]);
+                    NeighbourList.Add(NodeList[CheckX][CheckY]);
+                }
+
             }
 
             // Bottom
             if (CurrentGridPosY != 0)
             {
                 CheckY = CurrentGridPosY - 1;
+
+                // Bottom Middle
+                CheckX = CurrentGridPosX;
+
+                if (ValidateNode(NodeList[CheckX][CheckY]))
+                {
+                    OpenList.Add(NodeList[CheckX][CheckY]);
+                    NeighbourList.Add(NodeList[CheckX][CheckY]);
+                }
+
+                // Bottom Left
+                CheckX = CurrentGridPosX - 1;
+
+                if (ValidateNode(NodeList[CheckX][CheckY]))
+                {
+                    OpenList.Add(NodeList[CheckX][CheckY]);
+                    NeighbourList.Add(NodeList[CheckX][CheckY]);
+                }
+
+                // Bottom Right
+                CheckX = CurrentGridPosX + 1;
 
                 if (ValidateNode(NodeList[CheckX][CheckY]))
                 {
