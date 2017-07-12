@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\EnemyController.cs" />
      <Compile Include="Assets\Scripts\Environment\EmitSound.cs" />
      <Compile Include="Assets\Scripts\Environment\Inspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\InspectMenuButton.cs" />
      <Compile Include="Assets\Scripts\Environment\Inspectable.cs" />
      <Compile Include="Assets\Scripts\Environment\InspectionManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Objective\DefeatEnemy.cs" />
@@ -90,8 +91,13 @@
      <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
      <Compile Include="Assets\Scripts\Inventory\Slot.cs" />
      <Compile Include="Assets\Scripts\Inventory\Tooltip.cs" />
+     <Compile Include="Assets\Scripts\Level Generation\IntRange.cs" />
+     <Compile Include="Assets\Scripts\Level Generation\LevelManager.cs" />
+     <Compile Include="Assets\Scripts\Level Generation\RoomScript.cs" />
      <Compile Include="Assets\Scripts\Melee.cs" />
+     <Compile Include="Assets\Scripts\MovementScript.cs" />
      <Compile Include="Assets\Scripts\ObjectiveManager.cs" />
+     <Compile Include="Assets\Scripts\PanelManager.cs" />
      <Compile Include="Assets\Scripts\Pause\AssignTrait.cs" />
      <Compile Include="Assets\Scripts\Pause\CurrentTabDisplay.cs" />
      <Compile Include="Assets\Scripts\Pause\GetTraitDescription.cs" />
@@ -119,6 +125,7 @@
      <Compile Include="Assets\Scripts\StateMachines\MessageBoard.cs" />
      <Compile Include="Assets\Scripts\StateMachines\NeutralSM.cs" />
      <Compile Include="Assets\Scripts\StateMachines\RangeEnemy.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\RescueSM.cs" />
      <Compile Include="Assets\Scripts\StealthScript.cs" />
      <Compile Include="Assets\Scripts\TraitHolder.cs" />
      <Compile Include="Assets\Scripts\Traits\AbilityTrait.cs" />
@@ -141,6 +148,7 @@
      <Compile Include="Assets\Scripts\Traits\Trait_Persuasion.cs" />
      <Compile Include="Assets\Scripts\Traits\Trait_Speed.cs" />
      <Compile Include="Assets\Scripts\Traits\Trait_WireDefusal.cs" />
+     <Compile Include="Assets\Scripts\Utility\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Utility\PauseInterface.cs" />
      <Compile Include="Assets\Scripts\Utility\PauseUtilities.cs" />
      <None Include="Assets\Resources\Sprites\AddSpritesHere.txt" />
@@ -169,19 +177,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/DonovanSim/Desktop/MafiaTowerProject/Assets/UnityPackages/JsonNet-Lite/Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="Mono.Cecil">
- <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Common">
- <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+ <HintPath>C:/Users/iPhantomiKX/NYP/ITP Project/MafiaTowerProject/Assets/UnityPackages/JsonNet-Lite/Newtonsoft.Json.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

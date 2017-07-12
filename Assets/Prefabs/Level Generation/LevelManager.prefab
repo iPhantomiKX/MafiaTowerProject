@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1395671459646178}
+  m_IsPrefabParent: 1
+--- !u!1 &1395671459646178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4097038652156218}
+  - component: {fileID: 114191362558410994}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4097038652156218
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1395671459646178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114191362558410994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1395671459646178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a26b763f493f6d4fba439716cb653e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  columns: 100
+  rows: 100
+  numberOfObjectiveRooms: 1
+  numberOfMiscRooms: 4
+  roomWidth:
+    m_Min: 5
+    m_Max: 10
+  roomHeight:
+    m_Min: 5
+    m_Max: 10
+  floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
+  wallTile: {fileID: 1495201102341864, guid: 8fb33cfb98d66a441b339a49f68cbe29, type: 2}
+  roomTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
+  objectiveRoomTile: {fileID: 1085909745408438, guid: a817c7fd7adb5d5488739b00e5b49260,
+    type: 2}
+  doorTile: {fileID: 1596223912260268, guid: 646692166073e184383a5dbd87641e1e, type: 2}
+  ventTile:
+  - {fileID: 1583924877841102, guid: e4fafc9d2b3ad014baeda7b48f497399, type: 2}
+  - {fileID: 1372722756605472, guid: 83c1c80b99275b34a9c8c2b57f015a9d, type: 2}
+  PlayerObject: {fileID: 1754182232926060, guid: 20000c9467437c241bc5301e26dc56ad,
+    type: 2}
