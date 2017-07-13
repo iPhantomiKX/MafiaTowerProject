@@ -337,7 +337,9 @@ public class LevelManager : MonoBehaviour {
         int randomTile = Random.Range(0, existingRooms.Count);
         Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), -1f);
         GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
-        enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");
+        //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player"); // I dont think this class is being used anymore - Don
+        
+        enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
     }
 
     void SetNextLevelPlatformPosition()
@@ -444,7 +446,7 @@ public class LevelManager : MonoBehaviour {
     // Gets the cost of a tile/grid based on the TileType
     public int GetGridCost(int x, int y)
     {
-        switch(tiles[x][y])
+        switch(maptiles[x][y])
         {
             case TileType.FLOOR: return 1;
             case TileType.WALL: return -1;
