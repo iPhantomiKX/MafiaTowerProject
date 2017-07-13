@@ -73,7 +73,7 @@ MonoBehaviour:
   - {fileID: 1372722756605472, guid: 83c1c80b99275b34a9c8c2b57f015a9d, type: 2}
   PlayerSpawnerPlatform: {fileID: 1124095657477202, guid: 385597dcd9a766c428699d418b79a160,
     type: 2}
-  NextLevelPlatform: {fileID: 1207619104619502, guid: 68c4c7004f86efb42b50a088cc33ee08,
+  NextLevelPlatform: {fileID: 1801789307318984, guid: 549d4e2c0ae270e4384aba2e58cddd1a,
     type: 2}
-  EnemyObject: {fileID: 1138766245915732, guid: ae3afb1aaebb996488432a88d0983c7b,
+  EnemyObject: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
     type: 2}

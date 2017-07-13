@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 58118246898521948}
   - component: {fileID: 114766847318242540}
   - component: {fileID: 114987406501685770}
+  - component: {fileID: 114242966662513348}
   m_Layer: 9
   m_Name: CivilianObject
   m_TagString: Untagged
@@ -240,6 +241,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114242966662513348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450524761547108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e86c9bcfe2ac7a479376b2e5b1c4c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theLevelManager: {fileID: 0}
+  mapRefreshRate: 0
 --- !u!114 &114342282444142754
 MonoBehaviour:
   m_ObjectHideFlags: 1
