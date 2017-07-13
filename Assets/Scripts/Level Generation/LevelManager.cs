@@ -39,10 +39,20 @@ public class LevelManager : MonoBehaviour {
     public GameObject doorTile;
     public GameObject[] ventTile;
 
-    public GameObject PlayerObject;
+    [Space]
+    [Header("Player Spawn Platform")]
+    public GameObject PlayerSpawnerPlatform;
 
-    private TileType[][] tiles;
-    private TileType[][] groundtiles;
+    [Space]
+    [Header("Exit Platform")]
+    public GameObject NextLevelPlatform;
+
+    [Space]
+    [Header("Enemy Object")]
+    public GameObject EnemyObject;
+
+    private TileType[][] maptiles;
+    private TileType[][] venttiles;
     private RoomScript[] rooms;
 
     private List<RoomScript> existingRooms;
@@ -50,7 +60,6 @@ public class LevelManager : MonoBehaviour {
     private RoomScript exitRoom;
     private RoomScript[] objectiveRooms;
     private RoomScript[] miscRooms;
-    //privaet Corridor[] corridors;
     private GameObject LevelLayout;
 
     private bool areaIsIntersecting;
@@ -66,20 +75,22 @@ public class LevelManager : MonoBehaviour {
         SetTilesValueForRooms();
         CreateCorridors();
 
-        SetPlayerPosition();
-
         InstantiateTiles();
         InstantiateOuterWalls();
+
+        SetPlayerPosition();
+        SetNextLevelPlatformPosition();
+        SetEnemyPosition();
 	}
 
     void SetupTilesArray()
     {
-        tiles = new TileType[columns][];
-        groundtiles = new TileType[columns][];
-        for(int i = 0; i < tiles.Length; i++)
+        maptiles = new TileType[columns][];
+        venttiles = new TileType[columns][];
+        for (int i = 0; i < maptiles.Length; i++)
         {
-            tiles[i] = new TileType[rows];
-            groundtiles[i] = new TileType[rows];
+            maptiles[i] = new TileType[rows];
+            venttiles[i] = new TileType[rows];
         }
     }
 
@@ -171,38 +182,38 @@ public class LevelManager : MonoBehaviour {
                     {
                         case RoomScript.RoomType.SPAWN:
                             {
-                                tiles[xCoord][yCoord] = TileType.ROOM;
+                                maptiles[xCoord][yCoord] = TileType.ROOM;
                             }
                             break;
                         case RoomScript.RoomType.EXIT:
                             {
-                                tiles[xCoord][yCoord] = TileType.WALL;
+                                maptiles[xCoord][yCoord] = TileType.ROOM;
                             }
                             break;
                         case RoomScript.RoomType.HOSTAGE:
                             {
-                                tiles[xCoord][yCoord] = TileType.OBJECTIVE_ROOM;
+                                maptiles[xCoord][yCoord] = TileType.OBJECTIVE_ROOM;
                             }
                             break;
                         case RoomScript.RoomType.ITEM:
                             {
-                                tiles[xCoord][yCoord] = TileType.OBJECTIVE_ROOM;
+                                maptiles[xCoord][yCoord] = TileType.OBJECTIVE_ROOM;
                             }
                             break;
                         case RoomScript.RoomType.MISC:
                             {
-                                tiles[xCoord][yCoord] = TileType.FLOOR;
+                                maptiles[xCoord][yCoord] = TileType.FLOOR;
                             }
                             break;
                     }
                     //left wall
-                    tiles[currentRoom.xpos][yCoord] = TileType.WALL;
+                    maptiles[currentRoom.xpos][yCoord] = TileType.WALL;
                     //right wall
-                    tiles[currentRoom.xpos + currentRoom.roomWidth - 1][yCoord] = TileType.WALL;
+                    maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][yCoord] = TileType.WALL;
                     //bottom wall
-                    tiles[xCoord][currentRoom.ypos] = TileType.WALL;
+                    maptiles[xCoord][currentRoom.ypos] = TileType.WALL;
                     //top wall
-                    tiles[xCoord][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL;
+                    maptiles[xCoord][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL;
                 }
             }
             IntRange randdoorXPos = new IntRange(currentRoom.xpos + 2, currentRoom.xpos + currentRoom.roomWidth - 2);
@@ -215,28 +226,28 @@ public class LevelManager : MonoBehaviour {
             {
                 case RoomScript.DoorDirection.NORTH:
                     {
-                        tiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.DOOR;
-                        tiles[doorXpos + 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.DOOR;
+                        maptiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.DOOR;
+                        maptiles[doorXpos + 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.DOOR;
                     }
                     break;
                 case RoomScript.DoorDirection.SOUTH:
                     {
-                        tiles[doorXpos][currentRoom.ypos] = TileType.DOOR;
-                        tiles[doorXpos + 1][currentRoom.ypos] = TileType.DOOR;
+                        maptiles[doorXpos][currentRoom.ypos] = TileType.DOOR;
+                        maptiles[doorXpos + 1][currentRoom.ypos] = TileType.DOOR;
                     }
                     break;
                 case RoomScript.DoorDirection.WEST:
                     {
                         //Door on Left Side
-                        tiles[currentRoom.xpos][doorYPos] = TileType.DOOR;
-                        tiles[currentRoom.xpos][doorYPos + 1] = TileType.DOOR;
+                        maptiles[currentRoom.xpos][doorYPos] = TileType.DOOR;
+                        maptiles[currentRoom.xpos][doorYPos + 1] = TileType.DOOR;
                     }
                     break;
                 case RoomScript.DoorDirection.EAST:
                     {
                         //Door on Right Side
-                        tiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.DOOR;
-                        tiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos + 1] = TileType.DOOR;
+                        maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.DOOR;
+                        maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos + 1] = TileType.DOOR;
                     }
                     break;
             }
@@ -264,9 +275,9 @@ public class LevelManager : MonoBehaviour {
             while (x != ResultantXVector)
             {
                 int xCoord = room1.xpos + x;
-                groundtiles[xCoord][room1CenterYVector] = TileType.VENT;
-                groundtiles[room1.xpos][room1CenterYVector] = TileType.VENT_E;
-                groundtiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
+                venttiles[xCoord][room1CenterYVector] = TileType.VENT;
+                venttiles[room1.xpos][room1CenterYVector] = TileType.VENT_E;
+                venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
                 x--;
             }
         }
@@ -277,9 +288,9 @@ public class LevelManager : MonoBehaviour {
             while (x != ResultantXVector)
             {
                 int xCoord = (room1.xpos + room1.roomWidth - 2) + x;
-                groundtiles[xCoord][room1CenterYVector] = TileType.VENT;
-                groundtiles[(room1.xpos + room1.roomWidth - 2)][room1CenterYVector] = TileType.VENT_E;
-                groundtiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
+                venttiles[xCoord][room1CenterYVector] = TileType.VENT;
+                venttiles[(room1.xpos + room1.roomWidth - 2)][room1CenterYVector] = TileType.VENT_E;
+                venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
                 x++;
             }
         }
@@ -291,9 +302,9 @@ public class LevelManager : MonoBehaviour {
             while(y != ResultantYVector)
             {
                 int yCoord = room1CenterYVector + y;
-                groundtiles[room2CenterXVector][yCoord] = TileType.VENT;
-                groundtiles[room2CenterXVector][(room2.ypos + room2.roomHeight - 2)] = TileType.VENT_E;
-                groundtiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
+                venttiles[room2CenterXVector][yCoord] = TileType.VENT;
+                venttiles[room2CenterXVector][(room2.ypos + room2.roomHeight - 2)] = TileType.VENT_E;
+                venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
                 y--;
             }
         }
@@ -304,9 +315,9 @@ public class LevelManager : MonoBehaviour {
             while (y != ResultantYVector)
             {
                 int yCoord = room1CenterYVector + y;
-                groundtiles[room2CenterXVector][yCoord] = TileType.VENT;
-                groundtiles[room2CenterXVector][(room2.ypos + 2)] = TileType.VENT_E;
-                groundtiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
+                venttiles[room2CenterXVector][yCoord] = TileType.VENT;
+                venttiles[room2CenterXVector][(room2.ypos + 2)] = TileType.VENT_E;
+                venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
                 y++;
             }
         }
@@ -314,20 +325,37 @@ public class LevelManager : MonoBehaviour {
 
     void SetPlayerPosition()
     {
-        int PlayerXPos = Random.Range(spawnRoom.xpos + 1, spawnRoom.xpos + spawnRoom.roomWidth - 1);
-        int PlayerYPos = Random.Range(spawnRoom.ypos + 1, spawnRoom.ypos + spawnRoom.roomHeight - 1);
+        int PlayerXPos = Mathf.RoundToInt(spawnRoom.xpos + (spawnRoom.roomWidth / 2));
+        int PlayerYPos = Mathf.RoundToInt(spawnRoom.ypos + (spawnRoom.roomHeight / 2));
 
-        Vector3 playerPos = new Vector3(tilespacing * PlayerXPos, tilespacing * PlayerYPos, -1);
-        Instantiate(PlayerObject, playerPos, Quaternion.identity);
+        Vector3 playerPos = new Vector3(tilespacing * PlayerXPos, tilespacing * PlayerYPos, -1f);
+        Instantiate(PlayerSpawnerPlatform, playerPos, Quaternion.identity);
+    }
+
+    void SetEnemyPosition()
+    {
+        int randomTile = Random.Range(0, existingRooms.Count);
+        Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), -1f);
+        GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
+        enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    void SetNextLevelPlatformPosition()
+    {
+        int NextLevelPlatformXPos = Mathf.RoundToInt(exitRoom.xpos + (exitRoom.roomWidth / 2));
+        int NextLevelPlatformYPos = Mathf.RoundToInt(exitRoom.ypos + (exitRoom.roomHeight / 2));
+
+        Vector3 NextLevelPlatformPos = new Vector3(tilespacing * NextLevelPlatformXPos, tilespacing * NextLevelPlatformYPos, -1f);
+        Instantiate(NextLevelPlatform, NextLevelPlatformPos, Quaternion.identity);
     }
 
     void InstantiateTiles()
     {
-        for (int i = 0; i < groundtiles.Length; i++)
+        for (int i = 0; i < venttiles.Length; i++)
         {
-            for (int j = 0; j < groundtiles[i].Length; j++)
+            for (int j = 0; j < venttiles[i].Length; j++)
             {
-                switch (groundtiles[i][j])
+                switch (venttiles[i][j])
                 {
                     case TileType.VENT:
                         InstantiateFromArray(ventTile[0], tilespacing * i, tilespacing * j, 0f);
@@ -338,11 +366,11 @@ public class LevelManager : MonoBehaviour {
                 }
             }
         }
-        for(int i = 0; i < tiles.Length; i++)
+        for(int i = 0; i < maptiles.Length; i++)
         {
-            for(int j = 0; j < tiles[i].Length; j++)
+            for (int j = 0; j < maptiles[i].Length; j++)
             {
-                switch (tiles[i][j])
+                switch (maptiles[i][j])
                 {
                     case TileType.ROOM:
                         InstantiateFromArray(roomTile, tilespacing * i, tilespacing * j, 0f);
