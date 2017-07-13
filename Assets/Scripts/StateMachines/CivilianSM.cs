@@ -13,7 +13,6 @@ public class CivilianSM : NeutralSM {
 
     public CIVILIAN_STATE CurrentState = CIVILIAN_STATE.IDLE;
 
-    int waypointIdx;
     float origIdleTime;
 
 	// Use this for initialization
@@ -21,7 +20,6 @@ public class CivilianSM : NeutralSM {
     {
         base.Start();
 
-        waypointIdx = 0;
         origIdleTime = idleTime;
     }
 
@@ -43,24 +41,21 @@ public class CivilianSM : NeutralSM {
             case CIVILIAN_STATE.IDLE:
                 if (idleTime <= 0)
                 {
-                    if (waypointIdx == PatrolPoints.Count - 1)
-                    {
-                        PatrolPoints.Reverse();
-                        waypointIdx = 0;
-                    }
-                    else
-                    {
-                        waypointIdx++;
-                    }
+                    // Random a new position to walk to 
+                    PatrolPosition = PathfinderRef.RandomPos(2);
+                    Debug.DrawLine(transform.position, PatrolPosition, Color.black, 9999);
 
-                    PatrolPosition = PatrolPoints[waypointIdx];
                     return (int)CIVILIAN_STATE.PATROLLING;
                 }
                 return (int)CIVILIAN_STATE.IDLE;
 
             case CIVILIAN_STATE.PATROLLING:
-                if (Vector2.Distance(this.transform.position, PatrolPosition) < 0.2f)
+                if (PathfinderRef.GetPathComplete())
+                {
+                    Debug.Log("Going back to idle");
+                    idleTime = origIdleTime;
                     return (int)CIVILIAN_STATE.IDLE;
+                }
 
                 return (int)CIVILIAN_STATE.PATROLLING;
 
@@ -109,15 +104,14 @@ public class CivilianSM : NeutralSM {
 
     private void DoPatrol()
     {
-        if (PatrolPoints.Count <= 0)
+        if (PathfinderRef.GetPathFound())
         {
-            idleTime = origIdleTime;
-            return;
+            PathfinderRef.FollowPath();
         }
-
-        Debug.DrawLine(transform.position, PatrolPosition);
-
-        WalkTowardPoint(PatrolPosition);
+        else
+        {
+            PathfinderRef.FindPath(PatrolPosition);
+        }
     }
 
     private void DoRun()

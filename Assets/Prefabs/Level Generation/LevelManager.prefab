@@ -71,5 +71,9 @@ MonoBehaviour:
   ventTile:
   - {fileID: 1583924877841102, guid: e4fafc9d2b3ad014baeda7b48f497399, type: 2}
   - {fileID: 1372722756605472, guid: 83c1c80b99275b34a9c8c2b57f015a9d, type: 2}
-  PlayerSpawnerPlatform: {fileID: 1754182232926060, guid: 20000c9467437c241bc5301e26dc56ad,
+  PlayerSpawnerPlatform: {fileID: 1124095657477202, guid: 385597dcd9a766c428699d418b79a160,
+    type: 2}
+  NextLevelPlatform: {fileID: 1801789307318984, guid: 549d4e2c0ae270e4384aba2e58cddd1a,
+    type: 2}
+  EnemyObject: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
     type: 2}

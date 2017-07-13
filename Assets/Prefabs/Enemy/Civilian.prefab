@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 58118246898521948}
   - component: {fileID: 114766847318242540}
   - component: {fileID: 114987406501685770}
+  - component: {fileID: 114242966662513348}
   m_Layer: 9
   m_Name: CivilianObject
   m_TagString: Untagged
@@ -155,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 1450524761547108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4709914374611520}
   m_Father: {fileID: 4493181652790058}
@@ -240,6 +241,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114242966662513348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450524761547108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e86c9bcfe2ac7a479376b2e5b1c4c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theLevelManager: {fileID: 0}
+  mapRefreshRate: 0
 --- !u!114 &114342282444142754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -464,7 +478,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -499,7 +513,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 1, b: 0.6275861, a: 1}
   m_FlipX: 0
