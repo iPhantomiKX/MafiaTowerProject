@@ -13,6 +13,7 @@ TagManager:
   - Sound
   - SecurityCamera
   - VIP
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX
