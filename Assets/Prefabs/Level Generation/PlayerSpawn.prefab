@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 212719333478996712}
   m_Layer: 0
   m_Name: PlayerSpawn
-  m_TagString: Untagged
+  m_TagString: PlayerSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,7 +70,8 @@ MonoBehaviour:
   Enemy: {fileID: 0}
   PlayerPrefab: {fileID: 1754182232926060, guid: 20000c9467437c241bc5301e26dc56ad,
     type: 2}
-  ObjectiveManager: {fileID: 0}
+  ObjectiveManager: {fileID: 1671743668936126, guid: 1de9a4e2ed02bc74ab59fc4b63686e82,
+    type: 2}
 --- !u!212 &212719333478996712
 SpriteRenderer:
   m_ObjectHideFlags: 1

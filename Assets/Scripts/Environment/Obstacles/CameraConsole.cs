@@ -17,9 +17,13 @@ public class CameraConsole : MonoBehaviour {
     void Awake()
     {
         pm = GameObject.Find("Canvas").GetComponent<PanelManager>();
-        player = GameObject.Find("PlayerObject").GetComponent<PlayerController>();
         securityCameraList = GameObject.FindGameObjectsWithTag("SecurityCamera");
         camera_offline_screen = transform.GetChild(0).gameObject; //A bit hardcoded but uh should be fine as long as the first child is the offline screen
+    }
+
+    void Start()
+    {
+        player = GameObject.Find("PlayerObject").GetComponent<PlayerController>();
     }
 
     void MoveToCamera(int indexInArray)

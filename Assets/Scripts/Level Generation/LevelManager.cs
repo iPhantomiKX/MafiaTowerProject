@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
 
-    enum TileType
+    public enum TileType
     {
         FLOOR,
         WALL,
@@ -70,6 +70,7 @@ public class LevelManager : MonoBehaviour
     private RoomScript[] objectiveRooms;
     private RoomScript[] miscRooms;
     private GameObject LevelLayout;
+    private GameObject VentsLayout;
 
     private bool areaIsIntersecting;
 
@@ -77,6 +78,7 @@ public class LevelManager : MonoBehaviour
     void Awake()
     {
         LevelLayout = new GameObject("LevelLayout");
+        VentsLayout = new GameObject("VentsLayout");
 
         SetupTilesArray();
 
@@ -480,6 +482,11 @@ public class LevelManager : MonoBehaviour
         GameObject tileInstance = Instantiate(prefabs, position, Quaternion.identity) as GameObject;
 
         tileInstance.transform.parent = LevelLayout.transform;
+        if (prefabs == ventTile[0])
+        {
+            tileInstance.transform.parent = VentsLayout.transform;
+            VentsLayout.transform.parent = LevelLayout.transform;
+        }
 
         return tileInstance;
     }
