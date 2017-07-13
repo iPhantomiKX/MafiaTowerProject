@@ -48,7 +48,7 @@ public class Pathfinder : MonoBehaviour {
                 toAdd.Init(theLevelManager.GetGridCost(i, j), theLevelManager.GetVec3Pos(i, j), i, j);
                 NodeList[i].Add(toAdd);
             }
-        }
+        } 
 	}
 	
 	// Update is called once per frame
