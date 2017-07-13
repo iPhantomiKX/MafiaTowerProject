@@ -14,6 +14,7 @@ public class PlayerUIScript : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        Debug.Log("test");
         player = GameObject.Find("PlayerObject");
         gun = player.GetComponentInChildren<Gun>();
         hc = player.GetComponent<HealthComponent>();

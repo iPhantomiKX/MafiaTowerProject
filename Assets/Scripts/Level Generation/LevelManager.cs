@@ -48,6 +48,14 @@ public class LevelManager : MonoBehaviour {
     public GameObject NextLevelPlatform;
 
     [Space]
+    [Header("Hostage Object")]
+    public GameObject HostageObject;
+
+    [Space]
+    [Header("Find Item Object")]
+    public GameObject FindItemObject;
+
+    [Space]
     [Header("Enemy Object")]
     public GameObject EnemyObject;
 
@@ -65,7 +73,8 @@ public class LevelManager : MonoBehaviour {
     private bool areaIsIntersecting;
 
 	// Use this for initialization
-	void Start () {
+    void Awake()
+    {
         LevelLayout = new GameObject("LevelLayout");
 
         SetupTilesArray();
@@ -78,10 +87,11 @@ public class LevelManager : MonoBehaviour {
         InstantiateTiles();
         InstantiateOuterWalls();
 
-        SetPlayerPosition();
-        SetNextLevelPlatformPosition();
-        SetEnemyPosition();
-	}
+        InstantiatePlayerPosition();
+        InstantiateNextLevelPlatformPosition();
+        InstantiateEnemyPosition();
+        InstantiateObjective();
+    }
 
     void SetupTilesArray()
     {
@@ -323,7 +333,7 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    void SetPlayerPosition()
+    void InstantiatePlayerPosition()
     {
         int PlayerXPos = Mathf.RoundToInt(spawnRoom.xpos + (spawnRoom.roomWidth / 2));
         int PlayerYPos = Mathf.RoundToInt(spawnRoom.ypos + (spawnRoom.roomHeight / 2));
@@ -332,21 +342,52 @@ public class LevelManager : MonoBehaviour {
         Instantiate(PlayerSpawnerPlatform, playerPos, Quaternion.identity);
     }
 
-    void SetEnemyPosition()
+    void InstantiateEnemyPosition()
     {
         int randomTile = Random.Range(0, existingRooms.Count);
-        Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), -1f);
-        GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
-        enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");
+        if(existingRooms[randomTile].roomType == RoomScript.RoomType.SPAWN || existingRooms[randomTile].roomType == RoomScript.RoomType.EXIT)
+        {
+            randomTile = Random.Range(0, existingRooms.Count);
+        }
+        else
+        {
+            Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), -1f);
+            GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
+            enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
-    void SetNextLevelPlatformPosition()
+    void InstantiateNextLevelPlatformPosition()
     {
         int NextLevelPlatformXPos = Mathf.RoundToInt(exitRoom.xpos + (exitRoom.roomWidth / 2));
         int NextLevelPlatformYPos = Mathf.RoundToInt(exitRoom.ypos + (exitRoom.roomHeight / 2));
 
         Vector3 NextLevelPlatformPos = new Vector3(tilespacing * NextLevelPlatformXPos, tilespacing * NextLevelPlatformYPos, -1f);
         Instantiate(NextLevelPlatform, NextLevelPlatformPos, Quaternion.identity);
+    }
+
+    void InstantiateObjective()
+    {
+        for(int i = 0; i < existingRooms.Count; i++)
+        {
+            if(existingRooms[i].roomType == RoomScript.RoomType.HOSTAGE)
+            {
+                int ObjectiveXPos = Mathf.RoundToInt(existingRooms[i].xpos + (existingRooms[i].roomWidth / 2));
+                int ObjectiveYPos = Mathf.RoundToInt(existingRooms[i].ypos + (existingRooms[i].roomHeight / 2));
+
+                Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
+                Instantiate(HostageObject, ObjectivePos, Quaternion.identity);
+            }
+
+            else if (existingRooms[i].roomType == RoomScript.RoomType.ITEM)
+            {
+                int ObjectiveXPos = Mathf.RoundToInt(existingRooms[i].xpos + (existingRooms[i].roomWidth / 2));
+                int ObjectiveYPos = Mathf.RoundToInt(existingRooms[i].ypos + (existingRooms[i].roomHeight / 2));
+
+                Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
+                Instantiate(FindItemObject, ObjectivePos, Quaternion.identity);
+            }
+        }
     }
 
     void InstantiateTiles()
@@ -390,7 +431,6 @@ public class LevelManager : MonoBehaviour {
                 }
             }
         }
-       
     }
 
     void InstantiateOuterWalls()
