@@ -13,16 +13,17 @@ public class PlayerCamera : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		playerObject = GameObject.Find("PlayerObject"); 
+		playerObject = GameObject.Find("PlayerObject");
+        if (playerObject == null)
+        {
+            enabled = false;
+            Debug.Log("Can't find Player, please make sure it is present in the current scene upon Start(). Disabling PlayerCamera script...");
+        }
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        //TODO: Once player spawner is changed to spawn player on awake, can remove this
-        if (!playerObject)
-            playerObject = GameObject.Find("PlayerObject");
-
         if (!free)
             //transform.position = (playerObject.transform.position + Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f))) * 0.5f + offset;
             transform.position = Vector3.Lerp(playerObject.transform.position, (playerObject.transform.position + Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f))) * 0.5f + offset, lerpSpeed); 

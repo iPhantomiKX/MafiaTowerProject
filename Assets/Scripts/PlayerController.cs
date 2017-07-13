@@ -49,10 +49,11 @@ public class PlayerController : MonoBehaviour {
         GameStateRef = GameObject.FindGameObjectWithTag("GameStateManager").GetComponent<GameStateManager>();
 
         Movement = GetComponent<MovementScript>();
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         if (freeze)
             return;
 
@@ -88,6 +89,13 @@ public class PlayerController : MonoBehaviour {
                 1.0f,               //Distance
                 1.0f                //Duration
                 );
+        }
+        else if(Input.GetKeyDown("q"))
+        {
+            if (gameObject.layer == LayerMask.NameToLayer("Vent"))
+                gameObject.layer = LayerMask.NameToLayer("Player");
+            else
+                gameObject.layer = LayerMask.NameToLayer("Vent");
         }
     }
 
