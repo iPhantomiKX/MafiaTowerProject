@@ -352,9 +352,11 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), -1f);
+            Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), 1f);
             GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
-            enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");
+            //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");    // Not used anymore - Don
+
+            enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
         }
     }
 
@@ -512,8 +514,8 @@ public class LevelManager : MonoBehaviour
 
                 if (checkPos.x < tempVec3.x + offset &&
                     checkPos.x > tempVec3.x - offset &&
-                    checkPos.y < tempVec3.x + offset &&
-                    checkPos.y > tempVec3.x - offset)
+                    checkPos.y < tempVec3.y + offset &&
+                    checkPos.y > tempVec3.y - offset)
                 {
                     return new Vector2(x, y);
                 }

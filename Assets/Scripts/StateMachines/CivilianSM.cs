@@ -13,7 +13,6 @@ public class CivilianSM : NeutralSM {
 
     public CIVILIAN_STATE CurrentState = CIVILIAN_STATE.IDLE;
 
-    int waypointIdx;
     float origIdleTime;
 
 	// Use this for initialization
@@ -21,7 +20,6 @@ public class CivilianSM : NeutralSM {
     {
         base.Start();
 
-        waypointIdx = 0;
         origIdleTime = idleTime;
     }
 
@@ -44,14 +42,20 @@ public class CivilianSM : NeutralSM {
                 if (idleTime <= 0)
                 {
                     // Random a new position to walk to 
-                    PatrolPosition = PathfinderRef.RandomPos(3);
+                    PatrolPosition = PathfinderRef.RandomPos(2);
+                    Debug.DrawLine(transform.position, PatrolPosition, Color.black, 9999);
+
                     return (int)CIVILIAN_STATE.PATROLLING;
                 }
                 return (int)CIVILIAN_STATE.IDLE;
 
             case CIVILIAN_STATE.PATROLLING:
-                if (Vector2.Distance(this.transform.position, PatrolPosition) < 0.2f)
+                if (PathfinderRef.GetPathComplete())
+                {
+                    Debug.Log("Going back to idle");
+                    idleTime = origIdleTime;
                     return (int)CIVILIAN_STATE.IDLE;
+                }
 
                 return (int)CIVILIAN_STATE.PATROLLING;
 
@@ -100,12 +104,6 @@ public class CivilianSM : NeutralSM {
 
     private void DoPatrol()
     {
-        if (PatrolPoints.Count <= 0)
-        {
-            idleTime = origIdleTime;
-            return;
-        }
-
         if (PathfinderRef.GetPathFound())
         {
             PathfinderRef.FollowPath();
@@ -114,8 +112,6 @@ public class CivilianSM : NeutralSM {
         {
             PathfinderRef.FindPath(PatrolPosition);
         }
-
-        WalkTowardPoint(PatrolPosition);
     }
 
     private void DoRun()

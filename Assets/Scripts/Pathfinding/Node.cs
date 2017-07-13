@@ -10,12 +10,14 @@ public class Node
     public Vector2 m_GridPos;
 
     public Node ParentNode = null;
+    public bool IsInClosedList = false;
 
     public void Init(int cost, Vector3 pos, float x, float y)
     {
         ParentNode = null;
         TileCost = cost;
         m_pos = pos;
+        IsInClosedList = false;
 
         m_GridPos.x = x;
         m_GridPos.y = y;
@@ -35,4 +37,10 @@ public class Node
         }
     }
 
+    public void Reset()
+    {
+        AccCost = 0;
+        ParentNode = null;
+        IsInClosedList = false;
+    }
 }

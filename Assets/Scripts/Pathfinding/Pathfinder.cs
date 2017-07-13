@@ -10,10 +10,12 @@ public class Pathfinder : MonoBehaviour {
     Vector3 m_Destination;
     bool b_PathFound;
     bool b_PathComplete;
+    bool b_FollowPathCreated;
 
     List<List<Node>> NodeList;
     List<Node> OpenList;
     List<Node> ClosedList;
+    List<Node> Path;
 
     double d_Timer;
     int i_CurrentIdx;
@@ -23,9 +25,11 @@ public class Pathfinder : MonoBehaviour {
 
         b_PathFound = false;
         b_PathComplete = false;
+        b_FollowPathCreated = false;
         NodeList = new List<List<Node>>();
         OpenList = new List<Node>();
         ClosedList = new List<Node>();
+        Path = new List<Node>();
 
         d_Timer = 0.0;
         i_CurrentIdx = 0;
@@ -46,6 +50,7 @@ public class Pathfinder : MonoBehaviour {
             {
                 Node toAdd = new Node();
                 toAdd.Init(theLevelManager.GetGridCost(i, j), theLevelManager.GetVec3Pos(i, j), i, j);
+
                 NodeList[i].Add(toAdd);
             }
         } 
@@ -79,10 +84,8 @@ public class Pathfinder : MonoBehaviour {
         {
             for (int j = 0; j < SizeY; j++)
             {
-                NodeList[i][j].ParentNode = null;
-                NodeList[i][j].AccCost = 0;
+                NodeList[i][j].Reset();
             }
-
         }
 
         m_Destination = dest;
@@ -92,13 +95,17 @@ public class Pathfinder : MonoBehaviour {
 
         while (!b_PathFound)
         {
+            //Debug.Log("Finding Path to " + m_Destination.ToString());
+
             // Add Current Node to closed list
             ClosedList.Add(CurrentNode);
+            ClosedList[ClosedList.Count - 1].IsInClosedList = true;
 
             // Check if reached target
             if (CurrentNode.m_pos == TargetNode.m_pos)
             {
                 b_PathFound = true;
+                Debug.Log("Path Found");
             }
 
             // Get Neighbours of curr node, compute F-values and add to openlist
@@ -123,23 +130,28 @@ public class Pathfinder : MonoBehaviour {
                 }
 
                 // Top Left
-                CheckX = CurrentGridPosX - 1;
-
-                if (ValidateNode(NodeList[CheckX][CheckY]))
+                if (CurrentGridPosX != 0)
                 {
-                    OpenList.Add(NodeList[CheckX][CheckY]);
-                    NeighbourList.Add(NodeList[CheckX][CheckY]);
+                    CheckX = CurrentGridPosX - 1;
+
+                    if (ValidateNode(NodeList[CheckX][CheckY]))
+                    {
+                        OpenList.Add(NodeList[CheckX][CheckY]);
+                        NeighbourList.Add(NodeList[CheckX][CheckY]);
+                    }
                 }
 
                 // Top Right
-                CheckX = CurrentGridPosX + 1;
-
-                if (ValidateNode(NodeList[CheckX][CheckY]))
+                if (CurrentGridPosX != SizeX - 1)
                 {
-                    OpenList.Add(NodeList[CheckX][CheckY]);
-                    NeighbourList.Add(NodeList[CheckX][CheckY]);
+                    CheckX = CurrentGridPosX + 1;
+   
+                    if (ValidateNode(NodeList[CheckX][CheckY]))
+                    {
+                        OpenList.Add(NodeList[CheckX][CheckY]);
+                        NeighbourList.Add(NodeList[CheckX][CheckY]);
+                    }
                 }
-
             }
 
             // Bottom
@@ -157,21 +169,27 @@ public class Pathfinder : MonoBehaviour {
                 }
 
                 // Bottom Left
-                CheckX = CurrentGridPosX - 1;
-
-                if (ValidateNode(NodeList[CheckX][CheckY]))
+                if (CurrentGridPosX != 0)
                 {
-                    OpenList.Add(NodeList[CheckX][CheckY]);
-                    NeighbourList.Add(NodeList[CheckX][CheckY]);
+                    CheckX = CurrentGridPosX - 1;
+
+                    if (ValidateNode(NodeList[CheckX][CheckY]))
+                    {
+                        OpenList.Add(NodeList[CheckX][CheckY]);
+                        NeighbourList.Add(NodeList[CheckX][CheckY]);
+                    }
                 }
 
                 // Bottom Right
-                CheckX = CurrentGridPosX + 1;
-
-                if (ValidateNode(NodeList[CheckX][CheckY]))
+                if (CurrentGridPosX != SizeX - 1)
                 {
-                    OpenList.Add(NodeList[CheckX][CheckY]);
-                    NeighbourList.Add(NodeList[CheckX][CheckY]);
+                    CheckX = CurrentGridPosX + 1;
+
+                    if (ValidateNode(NodeList[CheckX][CheckY]))
+                    {
+                        OpenList.Add(NodeList[CheckX][CheckY]);
+                        NeighbourList.Add(NodeList[CheckX][CheckY]);
+                    }
                 }
             }
 
@@ -204,11 +222,9 @@ public class Pathfinder : MonoBehaviour {
             // Set all neghbours parent to current node
             foreach (Node aNode in NeighbourList)
             {
+                if (aNode.ParentNode == null)
                 aNode.ParentNode = CurrentNode;
             }
-
-            if (NeighbourList.Count <= 0)
-                return;
 
             // Get neighbour with lowest F value ()
             Node TempLowest = GetLowestF(OpenList);
@@ -222,13 +238,10 @@ public class Pathfinder : MonoBehaviour {
 
     public void FollowPath()
     {
-        if (!b_PathComplete)
+        if (!b_FollowPathCreated)
         {
             Node endNode = ClosedList[ClosedList.Count - 1];
 
-            List<Node> Path = new List<Node>();
-
-            Path.Add(GetNode(m_Destination));
             Path.Add(endNode);
 
             while (endNode.ParentNode != null)
@@ -239,11 +252,30 @@ public class Pathfinder : MonoBehaviour {
 
             Path.Reverse();
 
+            b_FollowPathCreated = true;
+        }
+
+        if (!b_PathComplete)
+        {
+            //Debug.Log("Following Path");
+
+            // Check if reached point
+            if (Vector3.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= 0.001f) // Should change to a var
+            {
+                ++i_CurrentIdx;
+            }
+
+            // Check if complete
             if (i_CurrentIdx >= Path.Count)
             {
                 b_PathComplete = true;
-                
+                b_PathFound = false;
+                b_FollowPathCreated = false;
+                Path.Clear();
+
                 i_CurrentIdx = 0;
+
+                Debug.Log("Path Complete");
                 return;
             }
 
@@ -259,7 +291,7 @@ public class Pathfinder : MonoBehaviour {
 
     float GetManhattenDistance(Node aNode)
     {
-        return (Mathf.Abs(m_Destination.x - aNode.m_pos.x) + Mathf.Abs(m_Destination.z - aNode.m_pos.z));
+        return (Mathf.Abs(m_Destination.x - aNode.m_pos.x) + Mathf.Abs(m_Destination.y - aNode.m_pos.y));
     }
 
     Node GetNode(Vector3 pos)
@@ -268,9 +300,9 @@ public class Pathfinder : MonoBehaviour {
 
         int SizeX = theLevelManager.columns;
         int SizeY = theLevelManager.rows;
-        for (int i = 0; i < SizeX; i++)
+        for (int i = 0; i < SizeX; ++i)
         {
-            for (int j = 0; j < SizeY; j++)
+            for (int j = 0; j < SizeY; ++j)
             {
                 if (i == check.x && j == check.y)
                     return NodeList[i][j];
@@ -293,7 +325,7 @@ public class Pathfinder : MonoBehaviour {
             return false;
         }
 
-        if (CheckIfInClosedList(checkNode))
+        if (checkNode.IsInClosedList)
         {
             return false;
         }
@@ -350,6 +382,11 @@ public class Pathfinder : MonoBehaviour {
         return b_PathFound;
     }
 
+    public bool GetPathComplete()
+    {
+        return b_PathComplete;
+    }
+
     public Vector3 RandomPos(int range)
     {
         Node CurrentNode = GetNode(transform.position);
@@ -364,8 +401,35 @@ public class Pathfinder : MonoBehaviour {
             RandomY = Mathf.Clamp(RandomY, 0, theLevelManager.rows);
 
             Node RandomNode = NodeList[RandomX][RandomY];
-            if (ValidateNode(RandomNode))
-                return RandomNode.m_pos;
+
+            if (ValidateNode(RandomNode) && CurrentNode != RandomNode)
+            {
+                // Check if random node behind a wall 
+                int diffX = (int)Mathf.Abs(RandomNode.m_GridPos.x - CurrentNode.m_GridPos.x);
+                int diffY = (int)Mathf.Abs(RandomNode.m_GridPos.y - CurrentNode.m_GridPos.y);
+
+                bool ValidNode = true;
+                for (int i = diffX; i > 0; --i)
+                {
+                    for (int j = diffY; j > 0; --j)
+                    {
+                        int checkX = Mathf.Clamp(RandomX - diffX, 0, theLevelManager.columns);
+                        int checkY = Mathf.Clamp(RandomY - diffY, 0, theLevelManager.rows);
+
+                        if (!ValidateNode(NodeList[checkX][checkY]))
+                        {
+                            ValidNode = false;
+                            break;
+                        }
+                    }
+
+                    if (!ValidNode)
+                        break;
+                }
+
+                if (ValidNode)
+                    return RandomNode.m_pos;
+            }
         }
     }
 }
