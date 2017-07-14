@@ -70,7 +70,13 @@ public class LevelManager : MonoBehaviour
     private RoomScript[] objectiveRooms;
     private RoomScript[] miscRooms;
     private GameObject LevelLayout;
+
     private GameObject VentsLayout;
+    private GameObject FloorsLayout;
+    private GameObject WallsLayout;
+    private GameObject VentsEntranceLayout;
+    private GameObject ObjectivesRoomTileLayout;
+    private GameObject DoorsTileLayout;
 
     private bool areaIsIntersecting;
 
@@ -79,6 +85,11 @@ public class LevelManager : MonoBehaviour
     {
         LevelLayout = new GameObject("LevelLayout");
         VentsLayout = new GameObject("VentsLayout");
+        FloorsLayout = new GameObject("FloorsLayout");
+        WallsLayout = new GameObject("WallsLayout");
+        VentsEntranceLayout = new GameObject("VentsEntranceLayout");
+        ObjectivesRoomTileLayout = new GameObject("ObjectivesRoomTileLayout");
+        DoorsTileLayout = new GameObject("DoorsTileLayout");
 
         SetupTilesArray();
 
@@ -480,12 +491,40 @@ public class LevelManager : MonoBehaviour
     {
         Vector3 position = new Vector3(xCoord, yCoord, zCoord);
         GameObject tileInstance = Instantiate(prefabs, position, Quaternion.identity) as GameObject;
-
-        tileInstance.transform.parent = LevelLayout.transform;
+        
         if (prefabs == ventTile[0])
         {
             tileInstance.transform.parent = VentsLayout.transform;
             VentsLayout.transform.parent = LevelLayout.transform;
+        }
+        else if(prefabs == floorTile)
+        {
+            tileInstance.transform.parent = FloorsLayout.transform;
+            FloorsLayout.transform.parent = LevelLayout.transform;
+        }
+        else if (prefabs == wallTile)
+        {
+            tileInstance.transform.parent = WallsLayout.transform;
+            WallsLayout.transform.parent = LevelLayout.transform;
+        }
+        else if (prefabs == ventTile[1])
+        {
+            tileInstance.transform.parent = VentsEntranceLayout.transform;
+            VentsEntranceLayout.transform.parent = LevelLayout.transform;
+        }
+        else if (prefabs == objectiveRoomTile)
+        {
+            tileInstance.transform.parent = ObjectivesRoomTileLayout.transform;
+            ObjectivesRoomTileLayout.transform.parent = LevelLayout.transform;
+        }
+        else if (prefabs == doorTile)
+        {
+            tileInstance.transform.parent = DoorsTileLayout.transform;
+            DoorsTileLayout.transform.parent = LevelLayout.transform;
+        }
+        else
+        {
+            tileInstance.transform.parent = LevelLayout.transform;
         }
 
         return tileInstance;
