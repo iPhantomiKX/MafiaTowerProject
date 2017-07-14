@@ -140,30 +140,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
-        type: 2}
-      propertyPath: NextLevelPlatform
-      value: 
-      objectReference: {fileID: 1801789307318984, guid: 549d4e2c0ae270e4384aba2e58cddd1a,
-        type: 2}
-    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
-        type: 2}
-      propertyPath: FindItemObject
-      value: 
-      objectReference: {fileID: 1174211081820102, guid: a99b064725221c742ab2ad48f0485d86,
-        type: 2}
-    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
-        type: 2}
-      propertyPath: HostageObject
-      value: 
-      objectReference: {fileID: 1797228185905298, guid: 51bc2345ee651eb49b6e458e6447172f,
-        type: 2}
-    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
-        type: 2}
-      propertyPath: EnemyObject
-      value: 
-      objectReference: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
   m_IsPrefabParent: 0
