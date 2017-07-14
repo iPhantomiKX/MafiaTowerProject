@@ -80,9 +80,22 @@ public class LevelManager : MonoBehaviour
 
     private bool areaIsIntersecting;
 
+    private short counter = 0;
+
     // Use this for initialization
     void Awake()
     {
+        //Added by Randall 
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Vent"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Vent"));
+
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent_Player"));
+        //Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Vent_Player"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Vent_Player"));
+
+        //
+
         LevelLayout = new GameObject("LevelLayout");
         VentsLayout = new GameObject("VentsLayout");
         FloorsLayout = new GameObject("FloorsLayout");
@@ -105,6 +118,17 @@ public class LevelManager : MonoBehaviour
         InstantiateNextLevelPlatformPosition();
         InstantiateEnemyPosition();
         InstantiateObjective();
+    }
+
+    void Update()
+    {
+        //HOTFIX Added by Randall - THIS IS QUITE BAD BUT UH IDK 
+        if(counter++ == 1)
+        {
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Vent"), LayerMask.NameToLayer("Vent"));
+            VentsLayout.SetActive(false);
+            gameObject.SetActive(false);
+        }
     }
 
     void SetupTilesArray()

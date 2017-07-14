@@ -431,8 +431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ca88e0e4f9c9b4dabb8cb7b112fa31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ToLayer: Vent
+  ToLayer: Vent_Player
   HideTilesOnExit: 0
+  StartingPosition: {fileID: 1697940001762354}
 --- !u!114 &114572641932069082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -446,6 +447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ToLayer: Player
   HideTilesOnExit: 1
+  StartingPosition: {fileID: 1635518906690806}
 --- !u!114 &114680394750491402
 MonoBehaviour:
   m_ObjectHideFlags: 1

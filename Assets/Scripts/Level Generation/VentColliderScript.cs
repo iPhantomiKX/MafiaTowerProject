@@ -23,17 +23,6 @@ public class VentColliderScript : MonoBehaviour {
     public bool HorizontalPiece;
     public float Incremental = 0.05f;
 
-    // Use this for initialization
-    void Awake()
-    {
-        //RANDALL - TODO
-        //Ignore ALL other layers 
-        //*Technically the Vent layer should ignore itself
-        //Put this somewhere else - This should only be called once
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent"));
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Vent"));
-    }
-
     void Update()
     {
         //Change the Rigidbody to Static so they no longer collide with each other
@@ -46,15 +35,12 @@ public class VentColliderScript : MonoBehaviour {
             GetComponent<BoxCollider2D>().size += new Vector2(0, Incremental);
 
         //The script then no longer updates - Read Summary for more info on why I did this
-        enabled = false;
+        Destroy(this);
     }
 
     //This is turned off as the script is disabled so that Players are not Despawned.
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (enabled == false)
-            return;
-
         Destroy(gameObject);
         Destroy(coll.gameObject);
     }

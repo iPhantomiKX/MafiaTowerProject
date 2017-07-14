@@ -9,11 +9,13 @@ public class VentEntranceScript : MonoBehaviour {
     private Collider2D ptr = null;
     private GameObject vent_tiles;
 
+    public GameObject StartingPosition;
+
     void Awake()
     {
         //RANDALL - TODO: 
         //Change this to whatever the levelgenerator named the parent object
-        vent_tiles = GameObject.Find("VentParent");
+        vent_tiles = GameObject.Find("VentsLayout");
     }
 
     void Start()
@@ -28,6 +30,7 @@ public class VentEntranceScript : MonoBehaviour {
         {
             vent_tiles.SetActive(!HideTilesOnExit);
             ptr.gameObject.layer = LayerMask.NameToLayer(ToLayer);
+            ptr.transform.position = StartingPosition.transform.position;
         }
     }
 	
