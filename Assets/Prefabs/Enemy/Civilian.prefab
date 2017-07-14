@@ -201,7 +201,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -439,7 +439,7 @@ MonoBehaviour:
   theBoard: {fileID: 0}
   MoveSpeed: 0.5
   PatrolPosition: {x: 0, y: 0, z: 0}
-  idleTime: 0.5
+  idleTime: 0
   idleAngle: 0
   player: {fileID: 0}
   PatrolPoints:
