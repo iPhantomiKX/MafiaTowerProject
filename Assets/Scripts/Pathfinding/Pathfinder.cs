@@ -20,6 +20,9 @@ public class Pathfinder : MonoBehaviour {
     double d_Timer;
     int i_CurrentIdx;
 
+    // Debug
+    int BreakInfiniteLoopAmount = 500;
+
 	// Use this for initialization
 	void Start () {
 
@@ -59,14 +62,14 @@ public class Pathfinder : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (d_Timer > mapRefreshRate)
-        {
-            //RefreshNodeList();
-        }
-        else
-        {
-            d_Timer += Time.deltaTime;
-        }
+        //if (d_Timer > mapRefreshRate)
+        //{
+        //    RefreshNodeList();
+        //}
+        //else
+        //{
+        //    d_Timer += Time.deltaTime;
+        //}
 	}
 
     public void FindPath(Vector3 dest)
@@ -93,9 +96,20 @@ public class Pathfinder : MonoBehaviour {
         Node TargetNode = GetNode(m_Destination);
         List<Node> NeighbourList = new List<Node>();
 
-        while (!b_PathFound)
+        bool BreakLoop = false;
+        int LoopCount = 0;
+
+        while (!b_PathFound && !BreakLoop)
         {
             //Debug.Log("Finding Path to " + m_Destination.ToString());
+
+            BreakLoop = LoopCount >= BreakInfiniteLoopAmount;
+            if (BreakLoop)
+            {
+                b_PathFound = true;
+
+                Debug.Log("Pathfind took too long. Loops: " + LoopCount);
+            }
 
             // Add Current Node to closed list
             ClosedList.Add(CurrentNode);
@@ -105,7 +119,8 @@ public class Pathfinder : MonoBehaviour {
             if (CurrentNode.m_pos == TargetNode.m_pos)
             {
                 b_PathFound = true;
-                Debug.Log("Path Found");
+
+                Debug.Log("Path Found. Loops: " + LoopCount);
             }
 
             // Get Neighbours of curr node, compute F-values and add to openlist
@@ -232,6 +247,8 @@ public class Pathfinder : MonoBehaviour {
             CurrentNode = TempLowest;
 
             NeighbourList.Clear();
+
+            LoopCount++;
         }
 
     }
@@ -390,8 +407,9 @@ public class Pathfinder : MonoBehaviour {
     public Vector3 RandomPos(int range)
     {
         Node CurrentNode = GetNode(transform.position);
+        int maxRetries = 5;
 
-        while (true)
+        while (maxRetries > 0)
         {
             // Random a node
             int RandomX = (int)CurrentNode.m_GridPos.x + Random.Range(-range, range);
@@ -401,6 +419,8 @@ public class Pathfinder : MonoBehaviour {
             RandomY = Mathf.Clamp(RandomY, 0, theLevelManager.rows);
 
             Node RandomNode = NodeList[RandomX][RandomY];
+            RandomNode.Reset();
+            Debug.Log("Random Node Found: " + theLevelManager.GetTileType(RandomX, RandomY));
 
             if (ValidateNode(RandomNode) && CurrentNode != RandomNode)
             {
@@ -409,12 +429,13 @@ public class Pathfinder : MonoBehaviour {
                 int diffY = (int)Mathf.Abs(RandomNode.m_GridPos.y - CurrentNode.m_GridPos.y);
 
                 bool ValidNode = true;
-                for (int i = diffX; i > 0; --i)
+                for (int i = diffX; i >= 0; --i)
                 {
-                    for (int j = diffY; j > 0; --j)
+                    for (int j = diffY; j >= 0; --j)
                     {
                         int checkX = Mathf.Clamp(RandomX - diffX, 0, theLevelManager.columns);
                         int checkY = Mathf.Clamp(RandomY - diffY, 0, theLevelManager.rows);
+                        NodeList[checkX][checkY].Reset();
 
                         if (!ValidateNode(NodeList[checkX][checkY]))
                         {
@@ -430,6 +451,12 @@ public class Pathfinder : MonoBehaviour {
                 if (ValidNode)
                     return RandomNode.m_pos;
             }
+
+            Debug.Log("Invalid Node");
+            --maxRetries;
         }
+
+        Debug.Log("MAX RETRY REACHED");
+        return transform.position;
     }
 }

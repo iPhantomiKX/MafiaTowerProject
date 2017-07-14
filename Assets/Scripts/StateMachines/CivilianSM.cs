@@ -42,7 +42,7 @@ public class CivilianSM : NeutralSM {
                 if (idleTime <= 0)
                 {
                     // Random a new position to walk to 
-                    PatrolPosition = PathfinderRef.RandomPos(2);
+                    PatrolPosition = PathfinderRef.RandomPos(5);
                     Debug.DrawLine(transform.position, PatrolPosition, Color.black, 9999);
 
                     return (int)CIVILIAN_STATE.PATROLLING;
