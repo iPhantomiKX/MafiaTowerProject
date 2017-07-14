@@ -561,6 +561,7 @@ public class LevelManager : MonoBehaviour
         {
             case TileType.FLOOR: return 1;
             case TileType.WALL: return -1;
+            case TileType.VENT_E: return -1;
 
             default: return 1;
         }
@@ -593,5 +594,10 @@ public class LevelManager : MonoBehaviour
         }
 
         return new Vector2(-1, -1);
+    }
+
+    public TileType GetTileType(int x, int y)
+    {
+        return maptiles[x][y];
     }
 }

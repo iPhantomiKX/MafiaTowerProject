@@ -22,6 +22,9 @@ public abstract class EnemySM : BaseSM {
 	public int searchIndex;
 	public List<Vector3> SearchingRoute = new List<Vector3> ();
 
+
+	public float detectGauge;
+
 	public bool knowPlayerPosition;
 
 
@@ -37,6 +40,7 @@ public abstract class EnemySM : BaseSM {
 		searchTime = 0f;
 		searchIndex = -1;
 		idleTime = 2.0f;
+		detectGauge = 0f;
 		knowPlayerPosition = false;
 	}
 
@@ -51,7 +55,6 @@ public abstract class EnemySM : BaseSM {
 		Vector3 forward = this.transform.up;
 		float angle = Vector3.Angle (targetDir, forward);
 		float distance = Vector3.Distance (target.transform.position, this.transform.position);
-		Debug.DrawRay (this.transform.position, targetDir);
 		if (angle < angleFOV && distance < visionRange) {
 
 			//check if player behind any obstacle
@@ -90,6 +93,13 @@ public abstract class EnemySM : BaseSM {
 		return IsTargetSeen (player);
 	}
 
+	protected void ReduceDetectGauge(){
+		detectGauge -= Time.deltaTime / 5f;
+		if (detectGauge <= 0) {
+			detectGauge = 0;
+		}
+	}
+
 	protected bool IsVIPSeen(){
 		if (VIPs.Count <= 0) {
 			GameObject[] goList = GameObject.FindGameObjectsWithTag ("VIP");
@@ -123,8 +133,19 @@ public abstract class EnemySM : BaseSM {
         switch (tag)
         {
 		case "Player": 
-			CurrentTarget = player;
-			return true;
+			if (alert) {
+				CurrentTarget = player;
+				return true;
+			} else {
+				//Last float value will be depend on player action.
+				detectGauge += (Time.deltaTime / Vector2.Distance (this.transform.position, player.transform.position)) * 0.3f;
+				if (detectGauge >= 1f) {
+					CurrentTarget = player;
+					return true;
+				} else {
+					return false;
+				}
+			}
 		case "VIP":
 			CurrentTarget = target;
 			return true;

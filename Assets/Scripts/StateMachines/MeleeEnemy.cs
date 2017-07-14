@@ -28,7 +28,6 @@ public class MeleeEnemy : EnemySM {
 
 	public override void Sense ()
 	{
-		print (CurrentState + "  " + CurrentTarget);
 		Message temp = ReadFromMessageBoard();
 		if (temp != null)
 		{
