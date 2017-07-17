@@ -108,11 +108,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
-        type: 2}
-      propertyPath: doorTile.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4097038652156218, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -144,23 +139,6 @@ Prefab:
     - target: {fileID: 4097038652156218, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
-        type: 2}
-      propertyPath: doorTile.Array.data[0]
-      value: 
-      objectReference: {fileID: 1596223912260268, guid: 646692166073e184383a5dbd87641e1e,
-        type: 2}
-    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
-        type: 2}
-      propertyPath: doorTile.Array.data[1]
-      value: 
-      objectReference: {fileID: 1522745637041514, guid: acdee79f0e0fb1c44a6851429c9764a6,
-        type: 2}
-    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
-        type: 2}
-      propertyPath: numberOfObjectiveRooms
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}

@@ -187,7 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RequiredTrait: {fileID: 114060698452245596, guid: 141f7322e51d8a44d8a6baf5e62b9264,
     type: 2}
-  AttachedDoor: {fileID: 0}
+  AttachedDoor: {fileID: 1495934330789952}
 --- !u!114 &114109126189380464
 MonoBehaviour:
   m_ObjectHideFlags: 1
