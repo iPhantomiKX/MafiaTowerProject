@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class LaserAlarm : TraitObstacle {
 
+	private AudioSource source;
+	public AudioClip alarmSound;
+
+	void Awake(){
+		source = GetComponent<AudioSource> ();
+	}
+
 	// Use this for initialization
 	void Start () {
 		
@@ -18,6 +25,7 @@ public class LaserAlarm : TraitObstacle {
     {
         if(col.gameObject.tag == "Player")
         {
+			source.PlayOneShot (alarmSound , alarmSound.length);
             GetComponent<EmitSound>().emitSound();
         }
     }
