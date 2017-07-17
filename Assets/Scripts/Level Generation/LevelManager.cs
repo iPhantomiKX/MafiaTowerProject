@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
     public int columns = 100;
     public int rows = 100;
     public float tilespacing = 0.275f;
+    public bool hackableDoorLevel = false;
 
     [Space]
     [Header("Room Modifications")]
@@ -156,7 +157,10 @@ public class LevelManager : MonoBehaviour
         {
             miscRooms[i] = new RoomScript();
             RecursiveFindEmptyPos(miscRooms[i], existingRooms, RoomScript.RoomType.MISC);
-            miscRooms[i].doorType = Random.Range(0, 2);
+            if (hackableDoorLevel)
+            {
+                miscRooms[i].doorType = Random.Range(0, 2);
+            }
             existingRooms.Add(miscRooms[i]);
         }
 
@@ -165,12 +169,18 @@ public class LevelManager : MonoBehaviour
             objectiveRooms[i] = new RoomScript();
             IntRange objectiveType = new IntRange((int)RoomScript.RoomType.HOSTAGE, (int)RoomScript.RoomType.MAX_ROOMS);
             RecursiveFindEmptyPos(objectiveRooms[i], existingRooms, (RoomScript.RoomType)objectiveType.Random);
-            objectiveRooms[i].doorType = Random.Range(0, 2);
+            if(hackableDoorLevel)
+            {
+                objectiveRooms[i].doorType = Random.Range(0, 2);
+            }
             existingRooms.Add(objectiveRooms[i]);
         }
 
         RecursiveFindEmptyPos(exitRoom, existingRooms, RoomScript.RoomType.EXIT);
-        exitRoom.doorType = Random.Range(0, 2);
+        if(hackableDoorLevel)
+        {
+            exitRoom.doorType = Random.Range(0, 2);
+        }
         existingRooms.Add(exitRoom);
 
         foreach (var r in existingRooms)
