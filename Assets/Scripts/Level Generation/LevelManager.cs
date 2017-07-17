@@ -602,6 +602,7 @@ public class LevelManager : MonoBehaviour
         switch (maptiles[x][y])
         {
             case TileType.FLOOR: return 1;
+            case TileType.HACKABLE_DOOR: return 5;
             case TileType.WALL: return -1;
             case TileType.VENT_E: return -1;
 
