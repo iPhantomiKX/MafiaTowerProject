@@ -27,11 +27,12 @@ public class RoomScript{
 
     public DoorDirection doorDirection;
 
-
     public int xpos;
     public int ypos;
     public int roomWidth;
     public int roomHeight;
+
+    public int doorType;
 
     public bool isIntersecting = true;
 
@@ -42,8 +43,8 @@ public class RoomScript{
         roomWidth = widthRange.Random;
         roomHeight = heightRange.Random;
 
-        xpos = Random.Range(0, Mathf.RoundToInt(columns - roomWidth));
-        ypos = Random.Range(0, Mathf.RoundToInt(rows - roomHeight));
+        xpos = Random.Range(1, Mathf.RoundToInt(columns - roomWidth) - 1);
+        ypos = Random.Range(1, Mathf.RoundToInt(rows - roomHeight) - 1);
 
         roomType = type;
 
