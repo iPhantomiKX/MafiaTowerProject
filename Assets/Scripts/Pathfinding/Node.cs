@@ -10,7 +10,8 @@ public class Node
     public Vector2 m_GridPos;
 
     public Node ParentNode = null;
-    public bool IsInClosedList = false;
+	public bool IsInClosedList = false;
+    public bool IsInOpenList = false;
 
     public void Init(int cost, Vector3 pos, float x, float y)
     {
@@ -18,6 +19,7 @@ public class Node
         TileCost = cost;
         m_pos = pos;
         IsInClosedList = false;
+		IsInOpenList = false;
 
         m_GridPos.x = x;
         m_GridPos.y = y;
@@ -42,5 +44,6 @@ public class Node
         AccCost = 0;
         ParentNode = null;
         IsInClosedList = false;
+		IsInOpenList = false;
     }
 }

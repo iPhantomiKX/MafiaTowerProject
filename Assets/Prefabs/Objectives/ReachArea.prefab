@@ -75,6 +75,7 @@ MonoBehaviour:
   timeBarWidth: 0
   numCompleted: 0
   numRequired: 1
+  mandatory: 0
   stayTimer: 3
   stayTimerRemain: 0
 --- !u!212 &212933034901790488
