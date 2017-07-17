@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SecurityCameraArea : LaserAlarm {
+public class BlinkingTrap : LaserAlarm {
     public float stayDuration;
     float stayDurationRemaining;
     public float hideDuration;

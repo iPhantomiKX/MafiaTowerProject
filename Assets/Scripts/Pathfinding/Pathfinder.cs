@@ -25,7 +25,7 @@ public class Pathfinder : MonoBehaviour {
     int i_CurrentIdx;
 
     // Debug
-    int BreakInfiniteLoopAmount = 1;
+    int BreakInfiniteLoopAmount = 500;
 
 	// Use this for initialization
 	void Start () {

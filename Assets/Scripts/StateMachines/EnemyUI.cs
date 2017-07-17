@@ -7,6 +7,7 @@ public class EnemyUI : MonoBehaviour {
 
 	public GameObject enemy;
 	public Slider healthBar;
+	public Image detectGauge;
 	public Animator anim;
 
 	bool inital = true;
@@ -46,6 +47,18 @@ public class EnemyUI : MonoBehaviour {
 					show = false;
 				}
 			}
+		}
+		updateDetectGauge ();
+	}
+
+	public void updateDetectGauge(){
+		float dg = enemy.GetComponent<EnemySM> ().detectGauge;
+		if (dg <= 0 || dg >= 1 || enemy.GetComponent<EnemySM> ().alert) {
+			detectGauge.gameObject.SetActive (false);
+		} else if (dg > 0 && dg < 1) {
+			detectGauge.gameObject.SetActive (true);
+			detectGauge.color = new Color (1,1-dg,0); 
+			detectGauge.rectTransform.sizeDelta = new Vector2 ((dg*0.1f)+0.1f,(dg*0.1f)+0.1f);
 		}
 	}
 

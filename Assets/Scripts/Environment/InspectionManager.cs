@@ -38,6 +38,14 @@ public class InspectionManager : MonoBehaviour {
 
         foreach(Inspect option in options)
         {
+            if(option.gameObject.GetComponent<TraitObstacle>() != null)
+            {
+                if(!option.TraitHolderRef.CheckForTrait(option.gameObject.GetComponent<TraitObstacle>().RequiredTrait))
+                {
+                    Debug.Log("Require trait. Unable to interact.");
+                    break;
+                }
+            }
             Button button = Instantiate(inspectMenuButton);
             Text optionText = button.GetComponentInChildren<Text>();
             optionText.text = option.actionName;
