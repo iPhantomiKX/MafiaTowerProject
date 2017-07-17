@@ -24,6 +24,7 @@ public abstract class EnemySM : BaseSM {
 
 
 	public float detectGauge;
+	public float detectValue;
 
 	public bool knowPlayerPosition;
 
@@ -41,6 +42,7 @@ public abstract class EnemySM : BaseSM {
 		searchIndex = -1;
 		idleTime = 2.0f;
 		detectGauge = 0f;
+		detectValue = 0f;
 		knowPlayerPosition = false;
 	}
 
@@ -85,11 +87,18 @@ public abstract class EnemySM : BaseSM {
 			}
 
 			return false;
-		} else
-			return false;
+		}
+		return false;
 	}
 
 	protected bool IsPlayerSeen(){
+		if (!alert) {
+			if (detectValue > 0f) {
+				detectValue = 0f;
+			} else {
+				ReduceDetectGauge ();
+			}
+		}
 		return IsTargetSeen (player);
 	}
 
@@ -138,7 +147,18 @@ public abstract class EnemySM : BaseSM {
 				return true;
 			} else {
 				//Last float value will be depend on player action.
-				detectGauge += (Time.deltaTime / Vector2.Distance (this.transform.position, player.transform.position)) * 0.3f;
+				detectValue = 0.3f;
+				Animator anim = player.GetComponent<Animator> ();
+				if (anim.GetCurrentAnimatorStateInfo (0).IsName ("PlayerShooting")) {
+					detectValue = 2f;
+				} else if (anim.GetCurrentAnimatorStateInfo (0).IsName ("PlayerStabbing")) {
+					detectValue = 1.2f;
+				} else if (player.GetComponent<PlayerController>().inspectingObject != null) {
+					detectValue = 0.4f;
+				} else {
+					detectValue = 0.1f;
+				}
+				detectGauge += (Time.deltaTime / Vector2.Distance (this.transform.position, player.transform.position)) * detectValue;
 				if (detectGauge >= 1f) {
 					CurrentTarget = player;
 					return true;
