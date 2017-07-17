@@ -67,6 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b256a8bc51aa58488e423c5324d0930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stabEnemySound: {fileID: 8300000, guid: 3f04ff060e29bd84e9796994e1f7c192, type: 3}
+  stabAirSound: {fileID: 8300000, guid: 5bd50f2a3972a114cab066b23e98163f, type: 3}
 --- !u!212 &212871023238030546
 SpriteRenderer:
   m_ObjectHideFlags: 1

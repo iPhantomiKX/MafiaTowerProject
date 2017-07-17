@@ -50,7 +50,6 @@ public class PlayerAnimationController : MonoBehaviour {
 		// Melee part
 		if (PlayerController.meleeButton) {
 			animator.Play ("PlayerStabbing");
-			source.PlayOneShot (meleeSound,meleeSound.length);
 		}
 	}
 

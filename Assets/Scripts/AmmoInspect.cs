@@ -17,7 +17,6 @@ public class AmmoInspect : Inspect {
 		GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<Gun>().CollectedAmmo(collectedAmmo);
 		GetComponent<CircleCollider2D> ().enabled = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
-		//Destroy (this.gameObject);
 	}
 
 }
