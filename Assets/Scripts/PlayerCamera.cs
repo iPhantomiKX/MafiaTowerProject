@@ -11,7 +11,7 @@ public class PlayerCamera : MonoBehaviour {
     public bool free = false;   //defines if the camera is locked to player or free
 
     // Use this for initialization
-    void Start ()
+    protected void Start ()
     {
 		playerObject = GameObject.Find("PlayerObject");
         if (playerObject == null)
