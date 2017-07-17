@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theLevelManager: {fileID: 0}
   mapRefreshRate: 0
+  WalkDiagonal: 0
 --- !u!114 &114342282444142754
 MonoBehaviour:
   m_ObjectHideFlags: 1

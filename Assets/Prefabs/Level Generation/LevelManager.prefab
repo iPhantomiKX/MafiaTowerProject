@@ -67,7 +67,9 @@ MonoBehaviour:
   roomTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   objectiveRoomTile: {fileID: 1085909745408438, guid: a817c7fd7adb5d5488739b00e5b49260,
     type: 2}
-  doorTile: {fileID: 1596223912260268, guid: 646692166073e184383a5dbd87641e1e, type: 2}
+  doorTile:
+  - {fileID: 1596223912260268, guid: 646692166073e184383a5dbd87641e1e, type: 2}
+  - {fileID: 1522745637041514, guid: acdee79f0e0fb1c44a6851429c9764a6, type: 2}
   ventTile:
   - {fileID: 1439695560465644, guid: 9e589c8ddfbaa404c92e970ca8ea1b8a, type: 2}
   - {fileID: 1372722756605472, guid: 83c1c80b99275b34a9c8c2b57f015a9d, type: 2}

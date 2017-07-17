@@ -83,13 +83,14 @@ public class PlayerController : MonoBehaviour {
         //Dash Prototype
         if (Input.GetKeyDown("e"))
         {
-            Movement.SetToDash
-                (
-                transform.right,    //Direction
-                1.0f,               //Distance
-                1.0f                //Duration
-                );
+            //Movement.SetToDash
+            //    (
+            //    transform.right,    //Direction
+            //    1.0f,               //Distance
+            //    1.0f                //Duration
+            //    );
         }
+
         else if(Input.GetKeyDown("q"))
         {
             if (gameObject.layer == LayerMask.NameToLayer("Vent"))

@@ -15,6 +15,7 @@ public abstract class Objective : MonoBehaviour {
     public float timeBarWidth;
     public int numCompleted = 0;
     public int numRequired = 1;
+    public bool mandatory;
 
     private GameStateManager GameStateRef;
 
