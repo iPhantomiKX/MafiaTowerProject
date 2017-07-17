@@ -399,6 +399,7 @@ public class RangeEnemy : EnemySM {
 		case Message.MESSAGE_TYPE.ENEMY_SPOTPLAYER:
 			knowPlayerPosition = true;
 			LastPLayerPosition = CurrentMessage.theDestination;
+			CurrentTarget = player;
 			break;
 
 		}
