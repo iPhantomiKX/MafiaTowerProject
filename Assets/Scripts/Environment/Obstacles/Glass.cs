@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Glass : MonoBehaviour {
+	
+	private AudioSource source;
+	public AudioClip brokenSound;
+
+	void Awake(){
+		source = GetComponent<AudioSource>();
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +23,7 @@ public class Glass : MonoBehaviour {
     public void glassBreak() {
         if (GetComponent<Collider2D>().enabled)
         {
+			source.PlayOneShot (brokenSound , brokenSound.length);
             GetComponent<EmitSound>().emitSound();
             GetComponent<Collider2D>().enabled = false;
             Debug.Log("Glass broken!");
