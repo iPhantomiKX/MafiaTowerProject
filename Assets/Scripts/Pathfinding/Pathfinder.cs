@@ -6,11 +6,15 @@ public class Pathfinder : MonoBehaviour {
 
     public LevelManager theLevelManager;
     public float mapRefreshRate;
+    public bool WalkDiagonal = true;
+
+	Node CurrentNode;
 
     Vector3 m_Destination;
     bool b_PathFound;
     bool b_PathComplete;
     bool b_FollowPathCreated;
+    bool b_ContinueNextFrame;
 
     List<List<Node>> NodeList;
     List<Node> OpenList;
@@ -21,7 +25,7 @@ public class Pathfinder : MonoBehaviour {
     int i_CurrentIdx;
 
     // Debug
-    int BreakInfiniteLoopAmount = 500;
+    int BreakInfiniteLoopAmount = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +33,8 @@ public class Pathfinder : MonoBehaviour {
         b_PathFound = false;
         b_PathComplete = false;
         b_FollowPathCreated = false;
+        b_ContinueNextFrame = false;
+
         NodeList = new List<List<Node>>();
         OpenList = new List<Node>();
         ClosedList = new List<Node>();
@@ -74,25 +80,32 @@ public class Pathfinder : MonoBehaviour {
 
     public void FindPath(Vector3 dest)
     {
-        // Reset variables
-        OpenList.Clear();
-        ClosedList.Clear();
-
-        b_PathComplete = false;
-        b_PathFound = false;
-
         int SizeX = theLevelManager.columns;
         int SizeY = theLevelManager.rows;
-        for (int i = 0; i < SizeX; i++)
+
+        if (!b_ContinueNextFrame)
         {
-            for (int j = 0; j < SizeY; j++)
+            // Reset variables
+            OpenList.Clear();
+            ClosedList.Clear();
+
+            b_PathComplete = false;
+            b_PathFound = false;
+
+            SizeX = theLevelManager.columns;
+            SizeY = theLevelManager.rows;
+            for (int i = 0; i < SizeX; i++)
             {
-                NodeList[i][j].Reset();
+                for (int j = 0; j < SizeY; j++)
+                {
+                    NodeList[i][j].Reset();
+                }
             }
+
+            m_Destination = dest;
+			CurrentNode = GetNode(transform.position);
         }
 
-        m_Destination = dest;
-        Node CurrentNode = GetNode(transform.position);
         Node TargetNode = GetNode(m_Destination);
         List<Node> NeighbourList = new List<Node>();
 
@@ -106,19 +119,24 @@ public class Pathfinder : MonoBehaviour {
             BreakLoop = LoopCount >= BreakInfiniteLoopAmount;
             if (BreakLoop)
             {
-                b_PathFound = true;
-
+                b_ContinueNextFrame = true;
                 Debug.Log("Pathfind took too long. Loops: " + LoopCount);
+
+                return;
             }
 
             // Add Current Node to closed list
-            ClosedList.Add(CurrentNode);
-            ClosedList[ClosedList.Count - 1].IsInClosedList = true;
+			if (ValidateNode (CurrentNode)) {
+				CurrentNode.IsInOpenList = false;
+				CurrentNode.IsInClosedList = true;
+				ClosedList.Add (CurrentNode);
+			}
 
             // Check if reached target
-            if (CurrentNode.m_pos == TargetNode.m_pos)
+			if (ClosedList.Contains(TargetNode))
             {
                 b_PathFound = true;
+                b_ContinueNextFrame = false;
 
                 Debug.Log("Path Found. Loops: " + LoopCount);
             }
@@ -134,37 +152,46 @@ public class Pathfinder : MonoBehaviour {
             if (CurrentGridPosY != SizeY - 1)
             {
                 CheckY = CurrentGridPosY + 1;
-             
+
                 // Top Middle
                 CheckX = CurrentGridPosX;
 
-                if (ValidateNode(NodeList[CheckX][CheckY]))
+                if (ValidateNode(NodeList[CheckX][CheckY], true))
                 {
+                    NodeList[CheckX][CheckY].IsInOpenList = true;
+
                     OpenList.Add(NodeList[CheckX][CheckY]);
                     NeighbourList.Add(NodeList[CheckX][CheckY]);
                 }
 
-                // Top Left
-                if (CurrentGridPosX != 0)
+                if (WalkDiagonal)
                 {
-                    CheckX = CurrentGridPosX - 1;
-
-                    if (ValidateNode(NodeList[CheckX][CheckY]))
+                    // Top Left
+                    if (CurrentGridPosX != 0)
                     {
-                        OpenList.Add(NodeList[CheckX][CheckY]);
-                        NeighbourList.Add(NodeList[CheckX][CheckY]);
+                        CheckX = CurrentGridPosX - 1;
+
+                        if (ValidateNode(NodeList[CheckX][CheckY], true))
+                        {
+                            NodeList[CheckX][CheckY].IsInOpenList = true;
+
+                            OpenList.Add(NodeList[CheckX][CheckY]);
+                            NeighbourList.Add(NodeList[CheckX][CheckY]);
+                        }
                     }
-                }
 
-                // Top Right
-                if (CurrentGridPosX != SizeX - 1)
-                {
-                    CheckX = CurrentGridPosX + 1;
-   
-                    if (ValidateNode(NodeList[CheckX][CheckY]))
+                    // Top Right
+                    if (CurrentGridPosX != SizeX - 1)
                     {
-                        OpenList.Add(NodeList[CheckX][CheckY]);
-                        NeighbourList.Add(NodeList[CheckX][CheckY]);
+                        CheckX = CurrentGridPosX + 1;
+
+                        if (ValidateNode(NodeList[CheckX][CheckY], true))
+                        {
+                            NodeList[CheckX][CheckY].IsInOpenList = true;
+
+                            OpenList.Add(NodeList[CheckX][CheckY]);
+                            NeighbourList.Add(NodeList[CheckX][CheckY]);
+                        }
                     }
                 }
             }
@@ -177,33 +204,42 @@ public class Pathfinder : MonoBehaviour {
                 // Bottom Middle
                 CheckX = CurrentGridPosX;
 
-                if (ValidateNode(NodeList[CheckX][CheckY]))
+				if (ValidateNode(NodeList[CheckX][CheckY], true))
                 {
-                    OpenList.Add(NodeList[CheckX][CheckY]);
+					NodeList [CheckX] [CheckY].IsInOpenList = true;
+                    
+					OpenList.Add(NodeList[CheckX][CheckY]);
                     NeighbourList.Add(NodeList[CheckX][CheckY]);
                 }
 
-                // Bottom Left
-                if (CurrentGridPosX != 0)
+                if (WalkDiagonal)
                 {
-                    CheckX = CurrentGridPosX - 1;
-
-                    if (ValidateNode(NodeList[CheckX][CheckY]))
+                    // Bottom Left
+                    if (CurrentGridPosX != 0)
                     {
-                        OpenList.Add(NodeList[CheckX][CheckY]);
-                        NeighbourList.Add(NodeList[CheckX][CheckY]);
+                        CheckX = CurrentGridPosX - 1;
+
+                        if (ValidateNode(NodeList[CheckX][CheckY], true))
+                        {
+                            NodeList[CheckX][CheckY].IsInOpenList = true;
+
+                            OpenList.Add(NodeList[CheckX][CheckY]);
+                            NeighbourList.Add(NodeList[CheckX][CheckY]);
+                        }
                     }
-                }
 
-                // Bottom Right
-                if (CurrentGridPosX != SizeX - 1)
-                {
-                    CheckX = CurrentGridPosX + 1;
-
-                    if (ValidateNode(NodeList[CheckX][CheckY]))
+                    // Bottom Right
+                    if (CurrentGridPosX != SizeX - 1)
                     {
-                        OpenList.Add(NodeList[CheckX][CheckY]);
-                        NeighbourList.Add(NodeList[CheckX][CheckY]);
+                        CheckX = CurrentGridPosX + 1;
+
+                        if (ValidateNode(NodeList[CheckX][CheckY], true))
+                        {
+                            NodeList[CheckX][CheckY].IsInOpenList = true;
+
+                            OpenList.Add(NodeList[CheckX][CheckY]);
+                            NeighbourList.Add(NodeList[CheckX][CheckY]);
+                        }
                     }
                 }
             }
@@ -215,9 +251,11 @@ public class Pathfinder : MonoBehaviour {
             {
                 CheckX = CurrentGridPosX - 1;
 
-                if (ValidateNode(NodeList[CheckX][CheckY]))
+				if (ValidateNode(NodeList[CheckX][CheckY], true))
                 {
-                    OpenList.Add(NodeList[CheckX][CheckY]);
+					NodeList [CheckX] [CheckY].IsInOpenList = true;
+                    
+					OpenList.Add(NodeList[CheckX][CheckY]);
                     NeighbourList.Add(NodeList[CheckX][CheckY]);
                 }
             }
@@ -227,9 +265,11 @@ public class Pathfinder : MonoBehaviour {
             {
                 CheckX = CurrentGridPosX + 1;
 
-                if (ValidateNode(NodeList[CheckX][CheckY]))
+				if (ValidateNode(NodeList[CheckX][CheckY], true))
                 {
-                    OpenList.Add(NodeList[CheckX][CheckY]);
+					NodeList [CheckX] [CheckY].IsInOpenList = true;
+                   
+					OpenList.Add(NodeList[CheckX][CheckY]);
                     NeighbourList.Add(NodeList[CheckX][CheckY]);
                 }
             }
@@ -238,17 +278,22 @@ public class Pathfinder : MonoBehaviour {
             foreach (Node aNode in NeighbourList)
             {
                 if (aNode.ParentNode == null)
-                aNode.ParentNode = CurrentNode;
+                	aNode.ParentNode = CurrentNode;
             }
 
-            // Get neighbour with lowest F value ()
-            Node TempLowest = GetLowestF(OpenList);
-            OpenList.Remove(TempLowest);
-            CurrentNode = TempLowest;
+			if (NeighbourList.Count > 0)
+			{
 
-            NeighbourList.Clear();
+			}
 
-            LoopCount++;
+			// Get neighbour with lowest F value ()
+			Node TempLowest = GetLowestF (OpenList);
+			OpenList.Remove (TempLowest);
+			CurrentNode = TempLowest;
+
+			NeighbourList.Clear ();
+            
+			LoopCount++;
         }
 
     }
@@ -325,11 +370,10 @@ public class Pathfinder : MonoBehaviour {
                     return NodeList[i][j];
             }
         }
-
         return null;
     }
 
-    bool ValidateNode(Node checkNode)
+	bool ValidateNode(Node checkNode, bool CheckForOpenList = false)
     {
         // Do various checks if node is valid
         if (checkNode == null)
@@ -342,10 +386,17 @@ public class Pathfinder : MonoBehaviour {
             return false;
         }
 
-        if (checkNode.IsInClosedList)
-        {
-            return false;
-        }
+		if (checkNode.IsInClosedList) 
+		{
+				return false;
+		}
+
+		if (CheckForOpenList)  
+		{
+			if (checkNode.IsInOpenList) {
+				return false;
+			}
+		}
 
         return true;
     }
@@ -429,24 +480,24 @@ public class Pathfinder : MonoBehaviour {
                 int diffY = (int)Mathf.Abs(RandomNode.m_GridPos.y - CurrentNode.m_GridPos.y);
 
                 bool ValidNode = true;
-                for (int i = diffX; i >= 0; --i)
-                {
-                    for (int j = diffY; j >= 0; --j)
-                    {
-                        int checkX = Mathf.Clamp(RandomX - diffX, 0, theLevelManager.columns);
-                        int checkY = Mathf.Clamp(RandomY - diffY, 0, theLevelManager.rows);
-                        NodeList[checkX][checkY].Reset();
+                //for (int i = diffX; i >= 0; --i)
+                //{
+                //    for (int j = diffY; j >= 0; --j)
+                //    {
+                //        int checkX = Mathf.Clamp(RandomX - diffX, 0, theLevelManager.columns);
+                //        int checkY = Mathf.Clamp(RandomY - diffY, 0, theLevelManager.rows);
+                //        NodeList[checkX][checkY].Reset();
 
-                        if (!ValidateNode(NodeList[checkX][checkY]))
-                        {
-                            ValidNode = false;
-                            break;
-                        }
-                    }
+                //        if (!ValidateNode(NodeList[checkX][checkY]))
+                //        {
+                //            ValidNode = false;
+                //            break;
+                //        }
+                //    }
 
-                    if (!ValidNode)
-                        break;
-                }
+                //    if (!ValidNode)
+                //        break;
+                //}
 
                 if (ValidNode)
                     return RandomNode.m_pos;
@@ -459,4 +510,25 @@ public class Pathfinder : MonoBehaviour {
         Debug.Log("MAX RETRY REACHED");
         return transform.position;
     }
+
+	void OnDrawGizmos()
+	{
+		foreach (Node aNode in ClosedList)
+		{
+			Gizmos.color = Color.red;
+			Gizmos.DrawSphere (aNode.m_pos, 0.075f);
+		}
+
+		foreach (Node aNode in OpenList) 
+		{
+			Gizmos.color = Color.blue;
+			Gizmos.DrawSphere (aNode.m_pos, 0.05f);
+		}
+
+		if (CurrentNode != null)
+		{
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawSphere (CurrentNode.m_pos, 0.1f);
+		}	
+	}
 }

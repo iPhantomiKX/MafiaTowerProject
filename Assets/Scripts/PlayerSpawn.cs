@@ -14,7 +14,6 @@ public class PlayerSpawn : MonoBehaviour {
     void Awake()
     {
         // Spawn player at the start
-        Debug.Log("test 2");
         GameObject go = Instantiate(PlayerPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
         PlayerReference = go;
     }

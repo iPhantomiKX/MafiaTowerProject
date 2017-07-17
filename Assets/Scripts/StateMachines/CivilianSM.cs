@@ -14,6 +14,7 @@ public class CivilianSM : NeutralSM {
     public CIVILIAN_STATE CurrentState = CIVILIAN_STATE.IDLE;
 
     float origIdleTime;
+    float DebugTime = 9999999.0f;
 
 	// Use this for initialization
     public override void Start()
@@ -32,6 +33,8 @@ public class CivilianSM : NeutralSM {
 		}
 
 		ProcessMessage ();
+
+        DebugTime -= Time.deltaTime;
 	}
 
     public override int Think()
@@ -42,11 +45,15 @@ public class CivilianSM : NeutralSM {
                 if (idleTime <= 0)
                 {
                     // Random a new position to walk to 
-                    PatrolPosition = PathfinderRef.RandomPos(5);
+                    PatrolPosition = PathfinderRef.RandomPos(15);
                     Debug.DrawLine(transform.position, PatrolPosition, Color.black, 9999);
 
                     return (int)CIVILIAN_STATE.PATROLLING;
                 }
+
+                if (DebugTime <= 0)
+                    return (int)CIVILIAN_STATE.RUNNING;
+
                 return (int)CIVILIAN_STATE.IDLE;
 
             case CIVILIAN_STATE.PATROLLING:
@@ -56,7 +63,9 @@ public class CivilianSM : NeutralSM {
                     idleTime = origIdleTime;
                     return (int)CIVILIAN_STATE.IDLE;
                 }
-
+                if (DebugTime <= 0)
+                    return (int)CIVILIAN_STATE.RUNNING;
+                
                 return (int)CIVILIAN_STATE.PATROLLING;
 
             case CIVILIAN_STATE.RUNNING:
@@ -116,6 +125,13 @@ public class CivilianSM : NeutralSM {
 
     private void DoRun()
     {
-
+        if (PathfinderRef.GetPathFound())
+        {
+            PathfinderRef.FollowPath();
+        }
+        else
+        {
+            PathfinderRef.FindPath(ExitPoint.transform.position);
+        }
     }
 }
