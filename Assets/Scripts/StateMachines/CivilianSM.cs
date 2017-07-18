@@ -14,7 +14,7 @@ public class CivilianSM : NeutralSM {
     public CIVILIAN_STATE CurrentState = CIVILIAN_STATE.IDLE;
 
     float origIdleTime;
-    float DebugTime = 9999999.0f;
+    float DebugTime = 99999999;
 
 	// Use this for initialization
     public override void Start()

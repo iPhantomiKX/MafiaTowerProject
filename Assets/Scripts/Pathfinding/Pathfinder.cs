@@ -40,7 +40,7 @@ public class Pathfinder : MonoBehaviour {
         ClosedList = new List<Node>();
         Path = new List<Node>();
 
-        d_Timer = 0.0;
+        d_Timer = 99999.0;
         i_CurrentIdx = 0;
 
         // Init List
@@ -68,14 +68,14 @@ public class Pathfinder : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //if (d_Timer > mapRefreshRate)
-        //{
-        //    RefreshNodeList();
-        //}
-        //else
-        //{
-        //    d_Timer += Time.deltaTime;
-        //}
+        if (d_Timer > mapRefreshRate)
+        {
+            RefreshNodeList();
+        }
+        else
+        {
+            d_Timer += Time.deltaTime;
+        }
 	}
 
     public void FindPath(Vector3 dest)
@@ -388,7 +388,7 @@ public class Pathfinder : MonoBehaviour {
 
 		if (checkNode.IsInClosedList) 
 		{
-				return false;
+			return false;
 		}
 
 		if (CheckForOpenList)  
@@ -443,6 +443,32 @@ public class Pathfinder : MonoBehaviour {
         }
 
         return false;
+    }
+
+    void RefreshNodeList()
+    {
+        NodeList.Clear();
+
+        // Init List
+        int SizeX = theLevelManager.columns;
+        int SizeY = theLevelManager.rows;
+
+        for (int i = 0; i < SizeX; i++)
+        {
+            NodeList.Add(new List<Node>());
+        }
+
+        // Fill up NodeList
+        for (int i = 0; i < SizeX; i++)
+        {
+            for (int j = 0; j < SizeY; j++)
+            {
+                Node toAdd = new Node();
+                toAdd.Init(theLevelManager.GetGridCost(i, j), theLevelManager.GetVec3Pos(i, j), i, j);
+
+                NodeList[i].Add(toAdd);
+            }
+        } 
     }
 
     public bool GetPathFound()

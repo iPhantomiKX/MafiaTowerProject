@@ -54,7 +54,11 @@ MonoBehaviour:
   columns: 30
   rows: 30
   tilespacing: 0.3
+<<<<<<< HEAD
   hackableDoorLevel: 0
+=======
+  hackableDoorLevel: 1
+>>>>>>> 5c22a076ce4ea2dc14c5df656e87edce2e90e142
   numberOfObjectiveRooms: 2
   numberOfMiscRooms: 4
   roomWidth:

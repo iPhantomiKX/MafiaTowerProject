@@ -102,6 +102,9 @@ MonoBehaviour:
   - name: SecurityConsole
     activeOnStart: 0
     UIPrefab: {fileID: 1774952312910412, guid: d47bf2597d81bce4ba3862e4e15b782a, type: 2}
+  - name: Minimap
+    activeOnStart: 1
+    UIPrefab: {fileID: 1199774378179456, guid: cdc0ca2ceca9bdd4b9fc023798b60f16, type: 2}
 --- !u!114 &114343453719431342
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
         DOOR,
         HACKABLE_DOOR,
         OBJECTIVE_ROOM,
+        OBJECTIVE,
     };
 
     [Header("Level Dimension")]
@@ -91,6 +92,7 @@ public class LevelManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Vent"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Vent"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("VIP"), LayerMask.NameToLayer("Vent"));
 
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent_Player"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("VIP"), LayerMask.NameToLayer("Vent_Player"));
@@ -117,8 +119,10 @@ public class LevelManager : MonoBehaviour
 
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
-        InstantiateEnemyPosition();
         InstantiateObjective();
+        InstantiateEnemyPosition();
+
+        Debug.Log("Level Spawned");
     }
 
     void Update()
@@ -183,16 +187,6 @@ public class LevelManager : MonoBehaviour
             exitRoom.doorType = Random.Range(0, 2);
         }
         existingRooms.Add(exitRoom);
-
-        int numberofObjectiveRooms = 0;
-        foreach(var r in existingRooms)
-        {
-            if(r.roomType == RoomScript.RoomType.HOSTAGE || r.roomType == RoomScript.RoomType.ITEM)
-            {
-                numberofObjectiveRooms++;
-            }
-        }
-        Debug.Log(numberOfObjectiveRooms);
     }
 
     void CreateCorridors()
@@ -374,6 +368,7 @@ public class LevelManager : MonoBehaviour
         int ResultantXVector = 0;
         int ResultantYVector = 0;
 
+        ////Check if Otherroom is on left side of room1
         if (room2CenterXVector < room1.xpos)
         {
             ResultantXVector = room2CenterXVector - room1.xpos;
@@ -450,17 +445,10 @@ public class LevelManager : MonoBehaviour
             Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].xpos + (existingRooms[randomRoom].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].ypos + (existingRooms[randomRoom].roomHeight / 2)), 1f);
             GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
             //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");    // Not used anymore - Don
+
             enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
             Debug.Log(existingRooms[randomRoom].roomType);
         }
-        //else
-        //{
-        //    Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), 1f);
-        //    GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
-        //    //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");    // Not used anymore - Don
-        //    enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
-        //    Debug.Log(existingRooms[randomTile].roomType);
-        //}
     }
 
     void InstantiateNextLevelPlatformPosition()
@@ -483,6 +471,8 @@ public class LevelManager : MonoBehaviour
 
                 Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
                 Instantiate(HostageObject, ObjectivePos, Quaternion.identity);
+
+                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
             }
 
             else if (existingRooms[i].roomType == RoomScript.RoomType.ITEM)
@@ -492,6 +482,8 @@ public class LevelManager : MonoBehaviour
 
                 Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
                 Instantiate(FindItemObject, ObjectivePos, Quaternion.identity);
+
+                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
             }
         }
     }
@@ -630,6 +622,7 @@ public class LevelManager : MonoBehaviour
             case TileType.HACKABLE_DOOR: return 5;
             case TileType.WALL: return -1;
             case TileType.VENT_E: return -1;
+            case TileType.OBJECTIVE: return -1;
 
             default: return 1;
         }
