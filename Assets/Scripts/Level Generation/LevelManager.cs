@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
         DOOR,
         HACKABLE_DOOR,
         OBJECTIVE_ROOM,
+        OBJECTIVE,
     };
 
     [Header("Level Dimension")]
@@ -117,8 +118,8 @@ public class LevelManager : MonoBehaviour
 
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
-        InstantiateEnemyPosition();
         InstantiateObjective();
+        InstantiateEnemyPosition();
 
         Debug.Log("Level Spawned");
     }
@@ -472,6 +473,8 @@ public class LevelManager : MonoBehaviour
 
                 Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
                 Instantiate(HostageObject, ObjectivePos, Quaternion.identity);
+
+                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
             }
 
             else if (existingRooms[i].roomType == RoomScript.RoomType.ITEM)
@@ -481,6 +484,8 @@ public class LevelManager : MonoBehaviour
 
                 Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
                 Instantiate(FindItemObject, ObjectivePos, Quaternion.identity);
+
+                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
             }
         }
     }
@@ -618,7 +623,7 @@ public class LevelManager : MonoBehaviour
             case TileType.HACKABLE_DOOR: return 5;
             case TileType.WALL: return -1;
             case TileType.VENT_E: return -1;
-            case TileType.OBJECTIVE_ROOM: return -1;
+            case TileType.OBJECTIVE: return -1;
 
             default: return 1;
         }
