@@ -13,10 +13,12 @@ public class RescueSM : NeutralSM {
     }
 
     RESCUE_STATE CurrentState = RESCUE_STATE.WAITING;
+    bool b_UsePathfinder;
 
     [Tooltip("To be capped between 1 and 100")]
-    public float followDistPercent;
+    public float followDist;
     public float startFollowDist;
+    public float startPathfindDist;
 
 	// Use this for initialization
     public override void Start()
@@ -26,7 +28,9 @@ public class RescueSM : NeutralSM {
         rb.mass = 9999;
         rb.Sleep();
 
-        followDistPercent = Mathf.Clamp(followDistPercent, 1, 100f);
+        b_UsePathfinder = false;
+
+        followDist = Mathf.Clamp(followDist, 1, 100f);
     }
 
     public override void Sense()
@@ -109,20 +113,54 @@ public class RescueSM : NeutralSM {
         if (rb.IsSleeping() && GameStateRef.GetState() == GameStateManager.GAME_STATE.RUNNING)
             rb.WakeUp();
 
-        Vector3 dir = (player.transform.position - transform.position);
+        Vector3 dir = (transform.position - player.transform.position);
 
         if (dir.magnitude > startFollowDist)
         {
-            Vector3 point = player.transform.position + (dir * followDistPercent);
+            Vector3 point = player.transform.position + (dir.normalized * followDist);
 
-            WalkTowardPoint(point);
+            if (dir.magnitude > startPathfindDist && !b_UsePathfinder)
+            {
+                b_UsePathfinder = true;
+            }
+            else
+            {
+                b_UsePathfinder = false;
+            }
+
+            if (!b_UsePathfinder)
+            {
+                WalkTowardPoint(point);
+            }
+            else
+            {
+                if (PathfinderRef.GetPathFound())
+                {
+                    PathfinderRef.FollowPath();
+                }
+                else
+                {
+                    PathfinderRef.FindPath(player.transform.position);
+                }
+            }
         }
+        else 
+        {
+            b_UsePathfinder = false;
+        }
+
     }
 
     void DoExit()
     {
-        // Walk towards exit
-        WalkTowardPoint(ExitPoint.transform.position);
+        if (PathfinderRef.GetPathFound())
+        {
+            PathfinderRef.FollowPath();
+        }
+        else
+        {
+            PathfinderRef.FindPath(ExitPoint.transform.position);
+        }
     }
 
     void DoRescue()
@@ -139,10 +177,8 @@ public class RescueSM : NeutralSM {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("triggered");
         if (col.name.Contains("PlayerSpawn") && CurrentState == RESCUE_STATE.EXITING)
         {
-            Debug.Log("resucue triggered");
             CurrentState = RESCUE_STATE.RESCUED;
         }
     }
