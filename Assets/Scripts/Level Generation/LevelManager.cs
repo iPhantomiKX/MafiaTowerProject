@@ -470,8 +470,9 @@ public class LevelManager : MonoBehaviour
                 int ObjectiveYPos = Mathf.RoundToInt(existingRooms[i].ypos + (existingRooms[i].roomHeight / 2));
 
                 Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
-                Instantiate(HostageObject, ObjectivePos, Quaternion.identity);
+                GameObject go = Instantiate(HostageObject, ObjectivePos, Quaternion.identity) as GameObject;
 
+                go.GetComponent<Pathfinder>().theLevelManager = this;
                 maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
             }
 

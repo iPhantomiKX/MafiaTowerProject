@@ -91,6 +91,8 @@ GameObject:
   - component: {fileID: 114987406501685770}
   - component: {fileID: 114242966662513348}
   - component: {fileID: 114750845283449246}
+  - component: {fileID: 114561275964572100}
+  - component: {fileID: 114040974622537006}
   m_Layer: 9
   m_Name: CivilianObject
   m_TagString: Untagged
@@ -242,6 +244,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114040974622537006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450524761547108}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63f3e9e05a98fc4dbd13f5d5241b221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114242966662513348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -341,6 +355,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114561275964572100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450524761547108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b62762c64911841a52f626b8dd58a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RequiredTrait: {fileID: 114992174500758622, guid: efef5167c51f16945a10ee0655066ece,
+    type: 2}
 --- !u!114 &114733262249000036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -515,7 +542,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7763cf91494b86b468508dc79121aedd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

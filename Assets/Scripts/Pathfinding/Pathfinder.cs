@@ -63,7 +63,12 @@ public class Pathfinder : MonoBehaviour {
                 NodeList[i].Add(toAdd);
             }
         } 
-	}
+
+        if (theLevelManager == null)
+        {
+            theLevelManager = GameObject.FindObjectOfType<LevelManager>().GetComponent<LevelManager>();
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {

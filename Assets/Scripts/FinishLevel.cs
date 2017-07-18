@@ -29,7 +29,6 @@ public class FinishLevel : MonoBehaviour {
             if (ObjectiveManager.GetComponent<ObjectiveManager>().IsComplete())
             {
                 SceneManager.LoadScene("NextLevelScene");
-                PersistentData.m_Instance.CurrentLevel = SceneManager.GetActiveScene().buildIndex;
             }
         }
 	}
