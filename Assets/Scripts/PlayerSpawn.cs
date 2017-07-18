@@ -16,6 +16,8 @@ public class PlayerSpawn : MonoBehaviour {
         // Spawn player at the start
         GameObject go = Instantiate(PlayerPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
         PlayerReference = go;
+
+        Debug.Log("Player Spawned");
     }
 
     // Use this for initialization

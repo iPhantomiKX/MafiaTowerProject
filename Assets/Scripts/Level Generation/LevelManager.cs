@@ -119,6 +119,8 @@ public class LevelManager : MonoBehaviour
         InstantiateNextLevelPlatformPosition();
         InstantiateEnemyPosition();
         InstantiateObjective();
+
+        Debug.Log("Level Spawned");
     }
 
     void Update()
