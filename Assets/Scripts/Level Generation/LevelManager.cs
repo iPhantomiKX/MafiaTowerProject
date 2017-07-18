@@ -168,7 +168,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < numberOfObjectiveRooms; i++)
         {
             objectiveRooms[i] = new RoomScript();
-            IntRange objectiveType = new IntRange((int)RoomScript.RoomType.HOSTAGE, (int)RoomScript.RoomType.MAX_ROOMS);
+            IntRange objectiveType = new IntRange((int)RoomScript.RoomType.HOSTAGE, (int)RoomScript.RoomType.MISC);
             RecursiveFindEmptyPos(objectiveRooms[i], existingRooms, (RoomScript.RoomType)objectiveType.Random);
             if(hackableDoorLevel)
             {
@@ -184,10 +184,15 @@ public class LevelManager : MonoBehaviour
         }
         existingRooms.Add(exitRoom);
 
-        foreach (var r in existingRooms)
+        int numberofObjectiveRooms = 0;
+        foreach(var r in existingRooms)
         {
-            Debug.Log(r.doorDirection);
+            if(r.roomType == RoomScript.RoomType.HOSTAGE || r.roomType == RoomScript.RoomType.ITEM)
+            {
+                numberofObjectiveRooms++;
+            }
         }
+        Debug.Log(numberOfObjectiveRooms);
     }
 
     void CreateCorridors()
@@ -369,7 +374,6 @@ public class LevelManager : MonoBehaviour
         int ResultantXVector = 0;
         int ResultantYVector = 0;
 
-        ////Check if Otherroom is on left side of room1
         if (room2CenterXVector < room1.xpos)
         {
             ResultantXVector = room2CenterXVector - room1.xpos;
@@ -435,19 +439,28 @@ public class LevelManager : MonoBehaviour
 
     void InstantiateEnemyPosition()
     {
-        int randomTile = Random.Range(0, existingRooms.Count);
-        if (existingRooms[randomTile].roomType == RoomScript.RoomType.SPAWN || existingRooms[randomTile].roomType == RoomScript.RoomType.EXIT)
+        int randomRoom = Random.Range(0, existingRooms.Count);
+        while (existingRooms[randomRoom].roomType != RoomScript.RoomType.MISC)
         {
-            randomTile = Random.Range(0, existingRooms.Count);
+            randomRoom = Random.Range(0, existingRooms.Count);
         }
-        else
+    
+        if (existingRooms[randomRoom].roomType == RoomScript.RoomType.MISC)
         {
-            Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), 1f);
+            Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].xpos + (existingRooms[randomRoom].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].ypos + (existingRooms[randomRoom].roomHeight / 2)), 1f);
             GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
             //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");    // Not used anymore - Don
-
             enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+            Debug.Log(existingRooms[randomRoom].roomType);
         }
+        //else
+        //{
+        //    Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomTile].xpos + (existingRooms[randomTile].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomTile].ypos + (existingRooms[randomTile].roomHeight / 2)), 1f);
+        //    GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
+        //    //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");    // Not used anymore - Don
+        //    enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+        //    Debug.Log(existingRooms[randomTile].roomType);
+        //}
     }
 
     void InstantiateNextLevelPlatformPosition()
@@ -574,6 +587,11 @@ public class LevelManager : MonoBehaviour
             tileInstance.transform.parent = VentsLayout.transform;
             VentsLayout.transform.parent = LevelLayout.transform;
         }
+        else if (prefabs == ventTile[1])
+        {
+            tileInstance.transform.parent = VentsEntranceLayout.transform;
+            VentsEntranceLayout.transform.parent = LevelLayout.transform;
+        }
         else if(prefabs == floorTile)
         {
             tileInstance.transform.parent = FloorsLayout.transform;
@@ -584,11 +602,7 @@ public class LevelManager : MonoBehaviour
             tileInstance.transform.parent = WallsLayout.transform;
             WallsLayout.transform.parent = LevelLayout.transform;
         }
-        else if (prefabs == ventTile[1])
-        {
-            tileInstance.transform.parent = VentsEntranceLayout.transform;
-            VentsEntranceLayout.transform.parent = LevelLayout.transform;
-        }
+
         else if (prefabs == objectiveRoomTile)
         {
             tileInstance.transform.parent = ObjectivesRoomTileLayout.transform;
