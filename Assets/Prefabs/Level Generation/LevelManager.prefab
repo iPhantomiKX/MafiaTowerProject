@@ -59,10 +59,10 @@ MonoBehaviour:
   numberOfMiscRooms: 4
   roomWidth:
     m_Min: 5
-    m_Max: 10
+    m_Max: 8
   roomHeight:
     m_Min: 5
-    m_Max: 10
+    m_Max: 8
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   wallTile: {fileID: 1495201102341864, guid: 8fb33cfb98d66a441b339a49f68cbe29, type: 2}
   roomTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
