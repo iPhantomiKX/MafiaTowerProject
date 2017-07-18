@@ -170,7 +170,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < numberOfObjectiveRooms; i++)
         {
             objectiveRooms[i] = new RoomScript();
-            IntRange objectiveType = new IntRange((int)RoomScript.RoomType.HOSTAGE, (int)RoomScript.RoomType.MAX_ROOMS);
+            IntRange objectiveType = new IntRange((int)RoomScript.RoomType.HOSTAGE, (int)RoomScript.RoomType.MISC);
             RecursiveFindEmptyPos(objectiveRooms[i], existingRooms, (RoomScript.RoomType)objectiveType.Random);
             if(hackableDoorLevel)
             {
@@ -618,6 +618,7 @@ public class LevelManager : MonoBehaviour
             case TileType.HACKABLE_DOOR: return 5;
             case TileType.WALL: return -1;
             case TileType.VENT_E: return -1;
+            case TileType.OBJECTIVE_ROOM: return -1;
 
             default: return 1;
         }
