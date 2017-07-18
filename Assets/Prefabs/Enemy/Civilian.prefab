@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 114766847318242540}
   - component: {fileID: 114987406501685770}
   - component: {fileID: 114242966662513348}
+  - component: {fileID: 114750845283449246}
   m_Layer: 9
   m_Name: CivilianObject
   m_TagString: Untagged
@@ -367,6 +368,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114750845283449246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450524761547108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d14861c5f86c844289629f3a1df409a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TraitHolderRef: {fileID: 0}
+  actionName: Persuade
+  takesTime: 1
+  time: 1.5
+  remainingTime: 0
 --- !u!114 &114766847318242540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -398,6 +415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1450524761547108}
   healthBar: {fileID: 114342282444142754}
+  detectGauge: {fileID: 0}
   anim: {fileID: 95749607694147520}
 --- !u!114 &114938496357086652
 MonoBehaviour:

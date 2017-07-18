@@ -138,7 +138,7 @@ public class Pathfinder : MonoBehaviour {
                 b_PathFound = true;
                 b_ContinueNextFrame = false;
 
-                Debug.Log("Path Found. Loops: " + LoopCount);
+                //Debug.Log("Path Found. Loops: " + LoopCount);
             }
 
             // Get Neighbours of curr node, compute F-values and add to openlist
@@ -337,7 +337,7 @@ public class Pathfinder : MonoBehaviour {
 
                 i_CurrentIdx = 0;
 
-                Debug.Log("Path Complete");
+                //Debug.Log("Path Complete");
                 return;
             }
 
@@ -497,7 +497,7 @@ public class Pathfinder : MonoBehaviour {
 
             Node RandomNode = NodeList[RandomX][RandomY];
             RandomNode.Reset();
-            Debug.Log("Random Node Found: " + theLevelManager.GetTileType(RandomX, RandomY));
+            //Debug.Log("Random Node Found: " + theLevelManager.GetTileType(RandomX, RandomY));
 
             if (ValidateNode(RandomNode) && CurrentNode != RandomNode)
             {

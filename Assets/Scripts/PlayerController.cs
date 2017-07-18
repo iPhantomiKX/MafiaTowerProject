@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour {
         if (inVent)
             obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange, 1 << LayerMask.NameToLayer("Vent_Player"));
         else
-            obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange, 1 << LayerMask.NameToLayer("Default"));
+            obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange, 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("Enemy"));
 
         List<Collider2D> temp = new List<Collider2D>();
         foreach (Collider2D col in obj)
@@ -219,6 +219,9 @@ public class PlayerController : MonoBehaviour {
 
             if (col != null && col.GetComponent<Inspect>() != null)
             {
+                if (col.gameObject.name == "Civilian")
+                    Debug.Log("found");
+
                 col.GetComponent<Inspect>().outline(true);
             }
         }
