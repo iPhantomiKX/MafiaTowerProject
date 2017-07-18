@@ -13,9 +13,9 @@ public class MeleeEnemy : EnemySM {
 		SEARCHING,
 		DEAD
 	}
-
-
+		
 	public ENEMY_STATE CurrentState = ENEMY_STATE.IDLE;
+	public Animator animator;
 
 	// Use this for initialization
 	public override void Start () {
@@ -111,32 +111,37 @@ public class MeleeEnemy : EnemySM {
 		{
 
 		case (int)ENEMY_STATE.IDLE:
+			animator.SetBool ("isSuspicious", false);
 			CurrentState = ENEMY_STATE.IDLE;
 			DoIdle ();
 			break;
 
 		case (int)ENEMY_STATE.PATROLLING:
+			animator.SetBool ("isSuspicious", false);
 			CurrentState = ENEMY_STATE.PATROLLING;
 			DoPatrol ();
 			break;
 
 		case (int)ENEMY_STATE.SUSPICIOUS:
+			animator.SetBool ("isSuspicious" , true);
 			CurrentState = ENEMY_STATE.SUSPICIOUS;
 			DoSuspicious();
 			break;
 
 		case (int)ENEMY_STATE.ATTACKING:
+			animator.SetBool ("isSuspicious" , true);
 			CurrentState = ENEMY_STATE.ATTACKING;
 			DoAttacking ();
-
 			break;
 
 		case (int)ENEMY_STATE.SEARCHING:
+			animator.SetBool ("isSuspicious" , true);
 			CurrentState = ENEMY_STATE.SEARCHING;
 			DoSearching ();
 			break;
 
 		case (int)ENEMY_STATE.DEAD:
+			animator.SetBool ("isDead", true);
 			CurrentState = ENEMY_STATE.DEAD;
 			DoDead ();
 			break;
@@ -252,6 +257,7 @@ public class MeleeEnemy : EnemySM {
 			WalkTowardPoint (CurrentTarget.transform.position);
 			if (attackAble) {
 				if (Vector2.Distance (this.transform.position, CurrentTarget.transform.position) < 0.4f) {
+					animator.Play ("EnemyMeleeAttack");
 					CurrentTarget.GetComponent<HealthComponent> ().TakeDmg ((int)AttackDamage);
 					attackAble = false;
 					Invoke ("ResetAttack", AttackSpeed);

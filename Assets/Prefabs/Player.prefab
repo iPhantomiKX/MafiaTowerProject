@@ -480,6 +480,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  source: {fileID: 82546078572859174}
   takeDamageSound: {fileID: 8300000, guid: 6f289c55383fabe4680f51a39de50b5e, type: 3}
 --- !u!114 &114456858354432972
 MonoBehaviour:
@@ -522,7 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a129a302b194a81429a33eac51cfd264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bkPeacefulSound: {fileID: 8300000, guid: 412ec19024322ed488bf1e707db19b75, type: 3}
+  source: {fileID: 82546078572859174}
   shootingSound: {fileID: 8300000, guid: 7dd1e64d5675aba49a6693bf3898a2fd, type: 3}
   outOfAmmoSound: {fileID: 8300000, guid: a006093ac79c84740b86d85a553110ec, type: 3}
   meleeSound: {fileID: 8300000, guid: 3f04ff060e29bd84e9796994e1f7c192, type: 3}
