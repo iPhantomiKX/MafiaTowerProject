@@ -131,9 +131,9 @@ MonoBehaviour:
   player: {fileID: 0}
   PatrolPoints: []
   ExitPoint: {fileID: 0}
-  followDist: 1.25
+  followDist: 1.1
   startFollowDist: 0.5
-  startPathfindDist: 3
+  startPathfindDist: 2
 --- !u!114 &114654402089833726
 MonoBehaviour:
   m_ObjectHideFlags: 1
