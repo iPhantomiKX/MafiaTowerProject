@@ -440,7 +440,7 @@ public class LevelManager : MonoBehaviour
     void InstantiateEnemyPosition()
     {
         int randomTile = Random.Range(0, existingRooms.Count);
-        if (existingRooms[randomTile].roomType == RoomScript.RoomType.SPAWN || existingRooms[randomTile].roomType == RoomScript.RoomType.EXIT)
+        if (existingRooms[randomTile].roomType == RoomScript.RoomType.SPAWN || existingRooms[randomTile].roomType == RoomScript.RoomType.EXIT || existingRooms[randomTile].roomType == RoomScript.RoomType.HOSTAGE || existingRooms[randomTile].roomType == RoomScript.RoomType.ITEM)
         {
             randomTile = Random.Range(0, existingRooms.Count);
         }
