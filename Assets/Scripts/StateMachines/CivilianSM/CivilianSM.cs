@@ -64,7 +64,6 @@ public class CivilianSM : NeutralSM {
                 {
                     if (PathfinderRef.GetPathComplete())
                     {
-                        Debug.Log("Going back to idle");
                         idleTime = origIdleTime;
                         return (int)CIVILIAN_STATE.IDLE;
                     }

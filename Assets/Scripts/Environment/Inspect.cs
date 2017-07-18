@@ -53,6 +53,7 @@ public abstract class Inspect : MonoBehaviour, Inspectable {
     public void startTimer()
     {
         inspecting = true;
+        OnInspectStart();
     }
 
     // Function to handle anything that should be done when inspecting timer starts
