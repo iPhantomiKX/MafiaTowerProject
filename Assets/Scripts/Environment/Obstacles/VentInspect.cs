@@ -28,12 +28,14 @@ public class VentInspect : Inspect
     {
         if(player_object.layer == LayerMask.NameToLayer("Player"))
         {
+            player_object.GetComponent<PlayerController>().inVent = true;
             player_object.layer = LayerMask.NameToLayer("Vent_Player");
             ChangeActionName("Exit Vents");
             vents_layout.SetActive(true);
         }
         else
         {
+            player_object.GetComponent<PlayerController>().inVent = false;
             player_object.layer = LayerMask.NameToLayer("Player");
             ChangeActionName("Enter Vents");
             vents_layout.SetActive(false);
@@ -45,6 +47,13 @@ public class VentInspect : Inspect
     void ChangeActionName(string name)
     {
         foreach (var comp in vent_entrances.GetComponentsInChildren<VentInspect>())
+        {
+            if (player_object.GetComponent<PlayerController>().inVent)
+                comp.gameObject.layer = LayerMask.NameToLayer("Vent_Player");
+            else
+                comp.gameObject.layer = LayerMask.NameToLayer("Default");
+
             comp.actionName = name;
+        }
     }
 }

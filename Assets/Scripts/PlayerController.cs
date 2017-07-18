@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour {
 
     //Quick bool to freeze update
     public bool freeze = false;
+    public bool inVent = false;
 
     /*I have to leave this here cause of PlayerAnimationController class 
         - I think I'll integrate the animation controller stuff into here
@@ -174,9 +175,15 @@ public class PlayerController : MonoBehaviour {
 
     void CheckSurroundings()
     {
+        //Added by RANDALL - If checks are added by meeeee. Mwahahahaa. 
+        //Quick checks to only take objects with colliders that are on the same layer as the player
         // Get objs nearby
-        Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
-        
+        Collider2D[] obj;
+        if (inVent)
+            obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange, 1 << LayerMask.NameToLayer("Vent_Player"));
+        else
+            obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange, 1 << LayerMask.NameToLayer("Default"));
+
         List<Collider2D> temp = new List<Collider2D>();
         foreach (Collider2D col in obj)
         {
