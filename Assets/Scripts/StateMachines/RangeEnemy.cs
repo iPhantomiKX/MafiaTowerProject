@@ -18,6 +18,7 @@ public class RangeEnemy : EnemySM {
 
 
 	public ENEMY_STATE CurrentState = ENEMY_STATE.IDLE;
+	public Animator animator;
 
 	// Use this for initialization
 	public override void Start () {
@@ -113,6 +114,7 @@ public class RangeEnemy : EnemySM {
 		{
 
 		case (int)ENEMY_STATE.IDLE:
+			animator.SetBool ("isSuspicious", false);
 			CurrentState = ENEMY_STATE.IDLE;
 			DoIdle ();
 			break;
@@ -120,27 +122,32 @@ public class RangeEnemy : EnemySM {
 
 		//Currently best in 2 point
 		case (int)ENEMY_STATE.PATROLLING:
+			animator.SetBool ("isSuspicious", false);
 			CurrentState = ENEMY_STATE.PATROLLING;
 			DoPatrol ();
 			break;
 
 		case (int)ENEMY_STATE.SUSPICIOUS:
+			animator.SetBool ("isSuspicious", true);
 			CurrentState = ENEMY_STATE.SUSPICIOUS;
 			DoSuspicious ();
 			break;
 
 		case (int)ENEMY_STATE.ATTACKING:
+			animator.SetBool ("isSuspicious", true);
 			CurrentState = ENEMY_STATE.ATTACKING;
 			DoAttacking ();
 			break;
 
 		//WIP
 		case (int)ENEMY_STATE.SEARCHING:
+			animator.SetBool ("isSuspicious", true);
 			CurrentState = ENEMY_STATE.SEARCHING;
 			DoSearching ();
 			break;
 
 		case (int)ENEMY_STATE.DEAD:
+			animator.SetBool ("isDead", true);
 			CurrentState = ENEMY_STATE.DEAD;
 			DoDead ();
 			break;
@@ -260,6 +267,7 @@ public class RangeEnemy : EnemySM {
 				FaceTowardPoint (CurrentTarget.transform.position, 0.33f);
 			if (attackAble) {
 				if (Vector2.Distance (this.transform.position, CurrentTarget.transform.position) <= 1f) {
+					animator.Play ("EnemyRangeAttack");
 					GameObject go = Instantiate (bulletPrefab, this.transform.position + (transform.up * 0.3f), this.transform.rotation);
 					go.GetComponent<EnemyBullet> ().Damage = AttackDamage;
 					Physics2D.IgnoreCollision (go.GetComponent<Collider2D> (), this.GetComponent<Collider2D> ());
