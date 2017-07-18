@@ -10,12 +10,8 @@ public class HealthComponent : MonoBehaviour {
 	public int health;
 	public UnityEvent death;
 
-	private AudioSource source;
+	public AudioSource source;
 	public AudioClip takeDamageSound;
-
-	void Awake(){
-		//source = this.GetComponent<AudioSource> ();
-	}
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +27,7 @@ public class HealthComponent : MonoBehaviour {
 
 	public void TakeDmg(int dmg)
 	{
-		this.GetComponent<AudioSource> ().PlayOneShot (takeDamageSound , takeDamageSound.length);
+		source.PlayOneShot (takeDamageSound , takeDamageSound.length);
 		health -= dmg;
 		if (health <= 0) 
 		{

@@ -7,12 +7,12 @@ public class PlayerAnimationController : MonoBehaviour {
 	private Animator animator;
 
 	// Background Sound
-	private AudioSource bkSource;
-	public AudioClip bkPeacefulSound;
+	//public AudioSource bkSource;
+	//public AudioClip bkPeacefulSound;
 	//public AudioClip bkBattleSound;
 
 	// Sound Effect
-	private AudioSource source;
+	public AudioSource source;
 	public AudioClip shootingSound;
 	public AudioClip outOfAmmoSound;
 	public AudioClip meleeSound;
@@ -21,8 +21,6 @@ public class PlayerAnimationController : MonoBehaviour {
 
 	void Awake(){
 		animator = this.GetComponent<Animator> ();
-		source = GetComponent<AudioSource> ();
-		bkSource = this.gameObject.transform.parent.GetComponent<AudioSource> ();
 	}
 
 	void Start () {
