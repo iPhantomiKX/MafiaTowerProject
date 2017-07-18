@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour {
 
     //Quick bool to freeze update
     public bool freeze = false;
+    public bool inVent = false;
 
     /*I have to leave this here cause of PlayerAnimationController class 
         - I think I'll integrate the animation controller stuff into here
@@ -147,18 +148,25 @@ public class PlayerController : MonoBehaviour {
             if (inspectingObject == null)
             {
                 Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
+                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //RaycastHit hit;
+                //Debug.Log(ray);
+                //Debug.Log(Physics.Raycast(ray, out hit));
 
+                //Debug.Log("Inspect Mouse on " + hit.transform.gameObject);
+                Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Collider2D mouseOver = Physics2D.OverlapPoint(mouse);
+                Debug.Log("Mouse pos = " + mouse);
                 foreach (Collider2D col in obj)
                 {
-                    if (col != null && col.GetComponent<Inspect>() != null)
-                    {
+                    if (col != null && col.GetComponent<Inspect>() != null && mouseOver != null && col.gameObject == mouseOver.gameObject)
+                    {                     
                         Debug.Log("Inspect " + col);
                         //col.GetComponent<Inspect>().inspect();
                         GameObject em = GameObject.Find("EnvironmentManager");
                         inspectingObject = col.gameObject;
                         currentInspectionPanel = em.GetComponent<InspectionManager>().CreateInspectionMenu(col.gameObject);
-
-                        break;
+                        break;                        
                     }
 
                 }
@@ -174,9 +182,15 @@ public class PlayerController : MonoBehaviour {
 
     void CheckSurroundings()
     {
+        //Added by RANDALL - If checks are added by meeeee. Mwahahahaa. 
+        //Quick checks to only take objects with colliders that are on the same layer as the player
         // Get objs nearby
-        Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
-        
+        Collider2D[] obj;
+        if (inVent)
+            obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange, 1 << LayerMask.NameToLayer("Vent_Player"));
+        else
+            obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange, 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("Enemy"));
+
         List<Collider2D> temp = new List<Collider2D>();
         foreach (Collider2D col in obj)
         {
@@ -211,6 +225,9 @@ public class PlayerController : MonoBehaviour {
 
             if (col != null && col.GetComponent<Inspect>() != null)
             {
+                if (col.gameObject.name == "Civilian")
+                    Debug.Log("found");
+
                 col.GetComponent<Inspect>().outline(true);
             }
         }

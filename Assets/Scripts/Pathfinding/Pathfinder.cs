@@ -40,7 +40,7 @@ public class Pathfinder : MonoBehaviour {
         ClosedList = new List<Node>();
         Path = new List<Node>();
 
-        d_Timer = 0.0;
+        d_Timer = 99999.0;
         i_CurrentIdx = 0;
 
         // Init List
@@ -63,19 +63,24 @@ public class Pathfinder : MonoBehaviour {
                 NodeList[i].Add(toAdd);
             }
         } 
-	}
+
+        if (theLevelManager == null)
+        {
+            theLevelManager = GameObject.FindObjectOfType<LevelManager>().GetComponent<LevelManager>();
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
-        //if (d_Timer > mapRefreshRate)
-        //{
-        //    RefreshNodeList();
-        //}
-        //else
-        //{
-        //    d_Timer += Time.deltaTime;
-        //}
+        if (d_Timer > mapRefreshRate)
+        {
+            RefreshNodeList();
+        }
+        else
+        {
+            d_Timer += Time.deltaTime;
+        }
 	}
 
     public void FindPath(Vector3 dest)
@@ -138,7 +143,7 @@ public class Pathfinder : MonoBehaviour {
                 b_PathFound = true;
                 b_ContinueNextFrame = false;
 
-                Debug.Log("Path Found. Loops: " + LoopCount);
+                //Debug.Log("Path Found. Loops: " + LoopCount);
             }
 
             // Get Neighbours of curr node, compute F-values and add to openlist
@@ -337,7 +342,7 @@ public class Pathfinder : MonoBehaviour {
 
                 i_CurrentIdx = 0;
 
-                Debug.Log("Path Complete");
+                //Debug.Log("Path Complete");
                 return;
             }
 
@@ -388,7 +393,7 @@ public class Pathfinder : MonoBehaviour {
 
 		if (checkNode.IsInClosedList) 
 		{
-				return false;
+			return false;
 		}
 
 		if (CheckForOpenList)  
@@ -445,6 +450,32 @@ public class Pathfinder : MonoBehaviour {
         return false;
     }
 
+    void RefreshNodeList()
+    {
+        NodeList.Clear();
+
+        // Init List
+        int SizeX = theLevelManager.columns;
+        int SizeY = theLevelManager.rows;
+
+        for (int i = 0; i < SizeX; i++)
+        {
+            NodeList.Add(new List<Node>());
+        }
+
+        // Fill up NodeList
+        for (int i = 0; i < SizeX; i++)
+        {
+            for (int j = 0; j < SizeY; j++)
+            {
+                Node toAdd = new Node();
+                toAdd.Init(theLevelManager.GetGridCost(i, j), theLevelManager.GetVec3Pos(i, j), i, j);
+
+                NodeList[i].Add(toAdd);
+            }
+        } 
+    }
+
     public bool GetPathFound()
     {
         return b_PathFound;
@@ -471,7 +502,7 @@ public class Pathfinder : MonoBehaviour {
 
             Node RandomNode = NodeList[RandomX][RandomY];
             RandomNode.Reset();
-            Debug.Log("Random Node Found: " + theLevelManager.GetTileType(RandomX, RandomY));
+            //Debug.Log("Random Node Found: " + theLevelManager.GetTileType(RandomX, RandomY));
 
             if (ValidateNode(RandomNode) && CurrentNode != RandomNode)
             {

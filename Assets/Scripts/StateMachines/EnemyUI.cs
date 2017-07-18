@@ -48,7 +48,10 @@ public class EnemyUI : MonoBehaviour {
 				}
 			}
 		}
-		updateDetectGauge ();
+
+        // Hotfix cause civilian uses this script as well but doesn't have EnemySM or detect guage - Don
+        if (gameObject.name.Contains("Enemy"))
+		    updateDetectGauge ();
 	}
 
 	public void updateDetectGauge(){

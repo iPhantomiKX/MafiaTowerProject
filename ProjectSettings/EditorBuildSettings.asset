@@ -6,18 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
+    path: Assets/Scenes/Game Scenes/DeathScene.unity
   - enabled: 1
-    path: Assets/Scenes/Level 2.unity
+    path: Assets/Scenes/Game Scenes/GameScene.unity
   - enabled: 1
-    path: Assets/Scenes/Level 3.unity
+    path: Assets/Scenes/Game Scenes/LoseTraitScene.unity
   - enabled: 1
-    path: Assets/Scenes/DeathScene.unity
-  - enabled: 1
-    path: Assets/Scenes/NextLevelScene.unity
-  - enabled: 1
-    path: Assets/Scenes/LoseTraitScene.unity
-  - enabled: 0
-    path: Assets/Scenes/DonTest.unity
-  - enabled: 1
-    path: Assets/Scenes/PauseScene.unity
+    path: Assets/Scenes/Game Scenes/NextLevelScene.unity

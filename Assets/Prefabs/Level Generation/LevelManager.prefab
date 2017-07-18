@@ -54,14 +54,15 @@ MonoBehaviour:
   columns: 30
   rows: 30
   tilespacing: 0.3
-  numberOfObjectiveRooms: 1
+  hackableDoorLevel: 0
+  numberOfObjectiveRooms: 2
   numberOfMiscRooms: 4
   roomWidth:
     m_Min: 5
-    m_Max: 10
+    m_Max: 8
   roomHeight:
     m_Min: 5
-    m_Max: 10
+    m_Max: 8
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   wallTile: {fileID: 1495201102341864, guid: 8fb33cfb98d66a441b339a49f68cbe29, type: 2}
   roomTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
@@ -72,7 +73,7 @@ MonoBehaviour:
   - {fileID: 1522745637041514, guid: acdee79f0e0fb1c44a6851429c9764a6, type: 2}
   ventTile:
   - {fileID: 1439695560465644, guid: 9e589c8ddfbaa404c92e970ca8ea1b8a, type: 2}
-  - {fileID: 1372722756605472, guid: 83c1c80b99275b34a9c8c2b57f015a9d, type: 2}
+  - {fileID: 1931024645608510, guid: 83c1c80b99275b34a9c8c2b57f015a9d, type: 2}
   PlayerSpawnerPlatform: {fileID: 1124095657477202, guid: 385597dcd9a766c428699d418b79a160,
     type: 2}
   NextLevelPlatform: {fileID: 1801789307318984, guid: 549d4e2c0ae270e4384aba2e58cddd1a,

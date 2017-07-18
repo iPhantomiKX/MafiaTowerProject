@@ -29,7 +29,7 @@ public class TraitHolder : MonoBehaviour {
                 (aTrait as AbilityTrait).DoCooldown();
         }
 
-        // Debug
+        // CHEAT
         if (Input.GetKeyDown(KeyCode.Alpha9))
             SceneManager.LoadScene("LoseTraitScene");
 

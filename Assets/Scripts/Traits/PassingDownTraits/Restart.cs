@@ -64,7 +64,7 @@ public class Restart : MonoBehaviour {
         }
 
 
-        SceneManager.LoadScene(PersistentData.m_Instance.CurrentLevel);
+        SceneManager.LoadScene("GameScene");
     }
 
 }

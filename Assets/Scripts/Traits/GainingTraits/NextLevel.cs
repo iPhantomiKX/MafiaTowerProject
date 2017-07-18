@@ -35,11 +35,10 @@ public class NextLevel : MonoBehaviour {
             }
         }
 
-		int NextLevelIdx = PersistentData.m_Instance.CurrentLevel + 1;
-        PersistentData.m_Instance.CurrentLevel = NextLevelIdx;
+        PersistentData.m_Instance.CurrentLevel++;
 
 		Debug.Log("...entering next level... playertrait size " + PersistentData.m_Instance.PlayerTraits.Count);
 
-		SceneManager.LoadScene(NextLevelIdx);
+		SceneManager.LoadScene("GameScene");
 	}
 }
