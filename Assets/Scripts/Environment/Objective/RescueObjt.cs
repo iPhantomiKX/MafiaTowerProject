@@ -30,4 +30,9 @@ public class RescueObjt : Objective {
         this.enabled = false;
         om.OnFail(this.gameObject);
     }
+
+    public override bool check()
+    {
+        return complete;
+    }
 }

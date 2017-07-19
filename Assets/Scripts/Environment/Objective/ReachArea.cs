@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,4 +50,8 @@ public class ReachArea : Objective
         om.OnFail(this.gameObject);
     }
 
+    public override bool check()
+    {
+        return complete;
+    }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Objective : MonoBehaviour {
 
 	public ObjectiveManager om;
-	public string objtname{ get; set; }
+    public string objtname;
 	public bool complete{ get; set;}
 	public bool isTimed;
     public float time;
@@ -58,4 +58,5 @@ public abstract class Objective : MonoBehaviour {
 	}
 
     public abstract void onFail();
+    public abstract bool check();
 }

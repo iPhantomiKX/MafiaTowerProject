@@ -31,7 +31,7 @@ public class ObjectiveManager : MonoBehaviour {
 
 	public bool IsComplete(){
 		foreach (Objective objt in objectives) {
-			if (!objt.complete)
+			if (objt.mandatory && !objt.check())
 				return false;
 		}
 		return true;
