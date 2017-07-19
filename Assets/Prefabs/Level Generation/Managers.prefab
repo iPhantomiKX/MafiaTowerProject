@@ -43,6 +43,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1508198595969038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4959265190095600}
+  - component: {fileID: 114407975356413026}
+  m_Layer: 0
+  m_Name: SpeechDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1738017761185484
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +116,7 @@ Transform:
   - {fileID: 4594417416721522}
   - {fileID: 4063839819186872}
   - {fileID: 4711046811447422}
+  - {fileID: 4959265190095600}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -128,6 +145,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4195831804625866}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4959265190095600
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508198595969038}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.4533129, y: 0.43478125, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4195831804625866}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114116586776702690
 MonoBehaviour:
@@ -174,3 +204,23 @@ MonoBehaviour:
   objtTexts: []
   timeBarWidth: 100
   timeBarHeight: 20
+--- !u!114 &114407975356413026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508198595969038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd728e131a54e842b5074364a24d33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeechTextFiles:
+  - speechFiles:
+    - {fileID: 4900000, guid: 55e8fe2ea47a6ea4b876ac81f7345d57, type: 3}
+    - {fileID: 4900000, guid: 74e5e541f94cf994ba52a8f6114b839a, type: 3}
+    - {fileID: 4900000, guid: 78091204d3592a94db34dcd62ffe64f6, type: 3}
+  - speechFiles:
+    - {fileID: 4900000, guid: 3278211a9006b4845a6387bd928a447d, type: 3}
+    - {fileID: 4900000, guid: 067c0dcc7f80e964b91c2075d11400c8, type: 3}
+    - {fileID: 4900000, guid: cc5f95955dc58c74098cfc06dc360b36, type: 3}

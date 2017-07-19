@@ -148,12 +148,6 @@ public class PlayerController : MonoBehaviour {
             if (inspectingObject == null)
             {
                 Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange);
-                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                //RaycastHit hit;
-                //Debug.Log(ray);
-                //Debug.Log(Physics.Raycast(ray, out hit));
-
-                //Debug.Log("Inspect Mouse on " + hit.transform.gameObject);
                 Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Collider2D mouseOver = Physics2D.OverlapPoint(mouse);
                 Debug.Log("Mouse pos = " + mouse);
