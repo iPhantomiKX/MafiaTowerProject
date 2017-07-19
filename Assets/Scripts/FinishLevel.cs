@@ -23,7 +23,6 @@ public class FinishLevel : MonoBehaviour {
 	{
         if (col.gameObject.name.Contains("Player"))
         {
-            ObjectiveManager.GetComponent<ObjectiveManager>().OnFinishLevel();
             if (ObjectiveManager.GetComponent<ObjectiveManager>().IsComplete())
             {
                 SceneManager.LoadScene("NextLevelScene");

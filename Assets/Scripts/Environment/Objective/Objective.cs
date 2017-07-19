@@ -58,4 +58,5 @@ public abstract class Objective : MonoBehaviour {
 	}
 
     public abstract void onFail();
+    public abstract bool check();
 }

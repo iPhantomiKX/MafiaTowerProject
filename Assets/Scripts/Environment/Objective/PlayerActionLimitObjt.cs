@@ -38,4 +38,9 @@ public class PlayerActionLimitObjt : Objective {
             onFail();
         }
     }
+
+    public override bool check()
+    {
+        return !failed;
+    }
 }

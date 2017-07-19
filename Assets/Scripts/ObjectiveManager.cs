@@ -31,7 +31,7 @@ public class ObjectiveManager : MonoBehaviour {
 
 	public bool IsComplete(){
 		foreach (Objective objt in objectives) {
-			if (objt.mandatory && !objt.complete)
+			if (objt.mandatory && !objt.check())
 				return false;
 		}
 		return true;
@@ -105,20 +105,5 @@ public class ObjectiveManager : MonoBehaviour {
 
 		}
 	}
-    public void OnFinishLevel()
-    {
-        FinishLevelInTime[] finishLvObjts = FindObjectsOfType<FinishLevelInTime>();
-        if (finishLvObjts.Length > 0)
-            foreach (FinishLevelInTime objt in finishLvObjts)
-            {
-                if(!objt.failed) objt.complete = true;
-            }
-        PlayerActionLimitObjt[] playerLimitObjts = FindObjectsOfType<PlayerActionLimitObjt>();
-        if (playerLimitObjts.Length > 0)
-            foreach (PlayerActionLimitObjt objt in playerLimitObjts)
-            {
-                if(!objt.failed) objt.complete = true;
-            }
-    }
 
 }
