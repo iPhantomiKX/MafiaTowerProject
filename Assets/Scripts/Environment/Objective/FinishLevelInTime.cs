@@ -4,8 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FinishLevelInTime : Objective {
+    public bool failed;
+
+    public override bool check()
+    {
+        return !failed;
+    }
+
     public override void onFail()
     {
+        failed = true;
         this.enabled = false;
         om.OnFail(this.gameObject);
 
