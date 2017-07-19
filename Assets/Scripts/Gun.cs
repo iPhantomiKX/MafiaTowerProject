@@ -41,7 +41,8 @@ public class Gun : MonoBehaviour {
 
 	void Shoot()
 	{
-        FindObjectOfType<PlayerActionLimitObjt>().NotifyGun();
+        if(FindObjectOfType<PlayerActionLimitObjt>() != null)
+            FindObjectOfType<PlayerActionLimitObjt>().NotifyGun();
         GetComponent<EmitSound>().emitSound();
         ammo--;
 		newBulletGO = (GameObject)Instantiate (bulletGO);

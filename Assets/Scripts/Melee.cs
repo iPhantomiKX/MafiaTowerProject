@@ -25,7 +25,8 @@ public class Melee : MonoBehaviour {
 		if (PlayerController.meleeButton) {
 			source.PlayOneShot (stabAirSound , stabAirSound.length);
 			collider.enabled = true;
-            FindObjectOfType<PlayerActionLimitObjt>().NotifyMelee();
+            if(FindObjectOfType<PlayerActionLimitObjt>() != null)
+                 FindObjectOfType<PlayerActionLimitObjt>().NotifyMelee();
             collider.enabled = true;
 			SetSpeedSlider (2f);
 			this.transform.rotation = Quaternion.Euler(0,0, -90);
