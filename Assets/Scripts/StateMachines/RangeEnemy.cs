@@ -232,6 +232,7 @@ public class RangeEnemy : EnemySM {
 	}
 
 	private void DoAttacking(){
+		PathfinderRef.Reset ();
 		knowPlayerPosition = false;
 		if (CurrentTarget) {
 			if (CurrentTarget == player) {
@@ -370,7 +371,8 @@ public class RangeEnemy : EnemySM {
 					searchIndex = 0;
 				}
 			} else {
-				WalkTowardPoint (LastPLayerPosition);
+				//WalkTowardPoint (LastPLayerPosition);
+				WalkPathFinder(LastPLayerPosition);
 			}
 		} else {
 			if (Vector2.Distance (this.transform.position, SearchingRoute [searchIndex]) < 0.3) {
