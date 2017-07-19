@@ -23,9 +23,7 @@ public class FinishLevel : MonoBehaviour {
 	{
         if (col.gameObject.name.Contains("Player"))
         {
-            FinishLevelInTime[] finishLvObjts = FindObjectsOfType<FinishLevelInTime>();
-            if (finishLvObjts.Length > 0)
-            foreach (FinishLevelInTime objt in finishLvObjts) objt.complete = true;
+            ObjectiveManager.GetComponent<ObjectiveManager>().OnFinishLevel();
             if (ObjectiveManager.GetComponent<ObjectiveManager>().IsComplete())
             {
                 SceneManager.LoadScene("NextLevelScene");

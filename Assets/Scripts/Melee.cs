@@ -19,7 +19,8 @@ public class Melee : MonoBehaviour {
 
 	void Update () {
 		if (PlayerController.meleeButton) {
-			collider.enabled = true;
+            FindObjectOfType<PlayerActionLimitObjt>().NotifyMelee();
+            collider.enabled = true;
 			SetSpeedSlider (2f);
 			this.transform.rotation = Quaternion.Euler(0,0, -90);
 		} else {
