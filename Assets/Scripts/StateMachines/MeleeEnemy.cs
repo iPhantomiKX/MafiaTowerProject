@@ -185,10 +185,12 @@ public class MeleeEnemy : EnemySM {
 			return;
 		}
 		if (Vector2.Distance (this.transform.position, PatrolPosition) > 0.2f) {
-			WalkTowardPoint (PatrolPosition);
+			//WalkTowardPoint (PatrolPosition);
+			WalkPathFinder(PatrolPosition);
 		} else {
 			idleTime = 1f;
 			PatrolPosition = Vector3.forward;
+			PathfinderRef.Reset ();
 		}
 
 	}
@@ -216,9 +218,11 @@ public class MeleeEnemy : EnemySM {
 				SuspiciousTime = 0;
 				StopSuspicious ();
 				idleTime = 1f;
+				PathfinderRef.Reset ();
 			}
 		} else
-			WalkTowardPoint (SuspiciousPosition);
+			//WalkTowardPoint (SuspiciousPosition);
+			WalkPathFinder(SuspiciousPosition);
 	}
 
 	private void DoAttacking(){

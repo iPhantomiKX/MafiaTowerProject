@@ -88,6 +88,17 @@ public abstract class BaseSM : MonoBehaviour {
         FaceTowardPoint(point, 0.33f);
     }
 
+	public void WalkPathFinder(Vector3 point){
+		if (PathfinderRef.GetPathFound())
+		{
+			PathfinderRef.FollowPath();
+		}
+		else
+		{
+			PathfinderRef.FindPath(point);
+		}
+	}
+
     public void FaceTowardAngle(float angle, float percenDelta)
     {
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
