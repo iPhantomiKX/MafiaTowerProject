@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 114750845283449246}
   - component: {fileID: 114561275964572100}
   - component: {fileID: 114040974622537006}
+  - component: {fileID: 114913536825297148}
   m_Layer: 9
   m_Name: CivilianObject
   m_TagString: Untagged
@@ -269,6 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theLevelManager: {fileID: 0}
   mapRefreshRate: 0
+  reachedNodeDist: 0.001
   WalkDiagonal: 0
 --- !u!114 &114342282444142754
 MonoBehaviour:
@@ -429,6 +431,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  source: {fileID: 0}
+  takeDamageSound: {fileID: 0}
 --- !u!114 &114842795971540188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -444,6 +448,23 @@ MonoBehaviour:
   healthBar: {fileID: 114342282444142754}
   detectGauge: {fileID: 0}
   anim: {fileID: 95749607694147520}
+--- !u!114 &114913536825297148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450524761547108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9601a6fad1eaabd4395788a96ed76238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxInitialRadius: 10
+  expandSpeed: 0.75
+  stayExpandSpeed: 0.1
+  maxRadius: 15
+  fadeSpeed: 0.02
+  sc: {fileID: 114821803060620018, guid: f09d552dff7a86444a0fad6c845a325a, type: 2}
 --- !u!114 &114938496357086652
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -494,6 +515,8 @@ MonoBehaviour:
   - {x: -2, y: -0.3, z: 0}
   ExitPoint: {fileID: 0}
   CurrentState: 0
+  PersuadeActionTime: 5
+  emitSoundInterval: 2
 --- !u!212 &212796954926620938
 SpriteRenderer:
   m_ObjectHideFlags: 1

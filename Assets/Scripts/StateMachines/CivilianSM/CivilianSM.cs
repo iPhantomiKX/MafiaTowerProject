@@ -14,9 +14,15 @@ public class CivilianSM : NeutralSM {
     }
 
     public CIVILIAN_STATE CurrentState = CIVILIAN_STATE.IDLE;
+    public double PersuadeActionTime = 5.0;
+    public float emitSoundInterval = 2f;
+    public float increasedSpeed = 1f;
 
     float origIdleTime;
     float DebugTime = 99999999;
+    float origMoveSpeed;
+    double d_Timer = 0.0;
+    double d_RepeatTimer = 0.0;
 
 	// Use this for initialization
     public override void Start()
@@ -24,6 +30,7 @@ public class CivilianSM : NeutralSM {
         base.Start();
 
         origIdleTime = idleTime;
+        origMoveSpeed = MoveSpeed;
     }
 
     public override void Sense ()
@@ -49,7 +56,6 @@ public class CivilianSM : NeutralSM {
                     {
                         // Random a new position to walk to 
                         PatrolPosition = PathfinderRef.RandomPos(15);
-                        Debug.DrawLine(transform.position, PatrolPosition, Color.black, 9999);
 
                         return (int)CIVILIAN_STATE.PATROLLING;
                     }
@@ -57,7 +63,7 @@ public class CivilianSM : NeutralSM {
                     if (DebugTime <= 0)
                         return (int)CIVILIAN_STATE.RUNNING;
 
-                    return (int)CIVILIAN_STATE.IDLE;
+                    return (int)CurrentState;
                 }
 
             case CIVILIAN_STATE.PATROLLING:
@@ -80,6 +86,14 @@ public class CivilianSM : NeutralSM {
 
             case CIVILIAN_STATE.PERSUADED:
                 {
+                    if (d_Timer <= 0)
+                    {
+                        d_RepeatTimer = 0.0;
+                        MoveSpeed = origMoveSpeed;
+
+                        return (int)CIVILIAN_STATE.IDLE;
+                    }
+
                     return (int)CurrentState;
                 }
 
@@ -148,7 +162,26 @@ public class CivilianSM : NeutralSM {
 
     private void DoPersuaded()
     {
+        d_Timer -= Time.deltaTime;
+        MoveSpeed = origMoveSpeed + increasedSpeed;
 
+        // Move randomly around and emit sound
+        if (PathfinderRef.GetPathFound())
+        {
+            PathfinderRef.FollowPath();
+            d_RepeatTimer += Time.deltaTime;
+
+            if (d_RepeatTimer >= emitSoundInterval)
+            {
+                GetComponent<EmitSound>().emitSound();
+                d_RepeatTimer = 0.0;
+            }
+        }
+        else
+        {
+            Vector3 RandPos = PathfinderRef.RandomPos(15);
+            PathfinderRef.FindPath(RandPos);
+        }
     }
 
     private void DoRun()
@@ -161,5 +194,11 @@ public class CivilianSM : NeutralSM {
         {
             PathfinderRef.FindPath(ExitPoint.transform.position);
         }
+    }
+
+    public void StartPersuade()
+    {
+        CurrentState = CIVILIAN_STATE.PERSUADED;
+        d_Timer = PersuadeActionTime;
     }
 }

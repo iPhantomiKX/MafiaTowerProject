@@ -111,7 +111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theLevelManager: {fileID: 0}
   mapRefreshRate: 0
-  WalkDiagonal: 1
+  reachedNodeDist: 0.005
+  WalkDiagonal: 0
 --- !u!114 &114641141650273164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,6 +153,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  source: {fileID: 0}
+  takeDamageSound: {fileID: 0}
 --- !u!114 &114667835411162536
 MonoBehaviour:
   m_ObjectHideFlags: 1

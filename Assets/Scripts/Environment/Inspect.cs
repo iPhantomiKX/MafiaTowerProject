@@ -62,4 +62,10 @@ public abstract class Inspect : MonoBehaviour, Inspectable {
 
     }
 
+    // Function to handle anything that should be done when inspecting is interupted
+    public virtual void OnInspectInterupt()
+    {
+
+    }
+
 }

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//[RequireComponent(typeof(Rigidbody))]
-//[RequireComponent(typeof(Pathfinder))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Pathfinder))]
+[RequireComponent(typeof(HealthComponent))]
 public abstract class BaseSM : MonoBehaviour {
 
     public MessageBoard theBoard;
