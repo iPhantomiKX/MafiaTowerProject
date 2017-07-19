@@ -119,13 +119,14 @@ public class RescueSM : NeutralSM {
         {
             Vector3 point = player.transform.position + (dir.normalized * followDist);
 
-            if (dir.magnitude > startPathfindDist && !b_UsePathfinder)
+            if (dir.magnitude > startPathfindDist)
             {
                 b_UsePathfinder = true;
             }
             else
             {
                 b_UsePathfinder = false;
+				PathfinderRef.Reset ();
             }
 
             if (!b_UsePathfinder)
@@ -147,6 +148,7 @@ public class RescueSM : NeutralSM {
         else 
         {
             b_UsePathfinder = false;
+			PathfinderRef.Reset ();
         }
 
     }

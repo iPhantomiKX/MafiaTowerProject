@@ -6,7 +6,8 @@ public class Pathfinder : MonoBehaviour {
 
     public LevelManager theLevelManager;
     public float mapRefreshRate;
-    public bool WalkDiagonal = true;
+	public float reachedNodeDist = 0.001f;
+	public bool WalkDiagonal = true;
 
 	Node CurrentNode;
 
@@ -327,7 +328,7 @@ public class Pathfinder : MonoBehaviour {
             //Debug.Log("Following Path");
 
             // Check if reached point
-            if (Vector3.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= 0.001f) // Should change to a var
+			if (Vector3.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= reachedNodeDist) // Should change to a var
             {
                 ++i_CurrentIdx;
             }
@@ -485,6 +486,19 @@ public class Pathfinder : MonoBehaviour {
     {
         return b_PathComplete;
     }
+
+	public void Reset()
+	{
+		b_PathFound = false;
+		b_PathComplete = false;
+		b_FollowPathCreated = false;
+
+		i_CurrentIdx = 0;
+
+		OpenList.Clear ();
+		ClosedList.Clear ();
+		Path.Clear ();
+	}
 
     public Vector3 RandomPos(int range)
     {
