@@ -37,5 +37,10 @@ public class SoundCircleController : MonoBehaviour {
         {
 			other.GetComponent<EnemySM>().StartSuspicious(this.transform.position,5f);
         }
+
+        if (other.GetComponent<CivilianSM>())
+        {
+            other.GetComponent<CivilianSM>().StartRunning();
+        }
     }
 }

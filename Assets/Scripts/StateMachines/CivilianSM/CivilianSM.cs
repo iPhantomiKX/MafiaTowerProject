@@ -19,7 +19,6 @@ public class CivilianSM : NeutralSM {
     public float increasedSpeed = 1f;
 
     float origIdleTime;
-    float DebugTime = 99999999;
     float origMoveSpeed;
     double d_Timer = 0.0;
     double d_RepeatTimer = 0.0;
@@ -42,8 +41,6 @@ public class CivilianSM : NeutralSM {
 		}
 
 		ProcessMessage ();
-
-        DebugTime -= Time.deltaTime;
 	}
 
     public override int Think()
@@ -60,8 +57,11 @@ public class CivilianSM : NeutralSM {
                         return (int)CIVILIAN_STATE.PATROLLING;
                     }
 
-                    if (DebugTime <= 0)
+                    if (GetComponent<HealthComponent>().CalculatePercentageHealth() <= retreatThreshold)
+                    {
+                        PathfinderRef.Reset();
                         return (int)CIVILIAN_STATE.RUNNING;
+                    }
 
                     return (int)CurrentState;
                 }
@@ -73,8 +73,12 @@ public class CivilianSM : NeutralSM {
                         idleTime = origIdleTime;
                         return (int)CIVILIAN_STATE.IDLE;
                     }
-                    if (DebugTime <= 0)
+
+                    if (GetComponent<HealthComponent>().CalculatePercentageHealth() <= retreatThreshold)
+                    {
+                        PathfinderRef.Reset();
                         return (int)CIVILIAN_STATE.RUNNING;
+                    }
 
                     return (int)CurrentState;
                 }
@@ -92,6 +96,12 @@ public class CivilianSM : NeutralSM {
                         MoveSpeed = origMoveSpeed;
 
                         return (int)CIVILIAN_STATE.IDLE;
+                    }
+
+                    if (GetComponent<HealthComponent>().CalculatePercentageHealth() <= retreatThreshold)
+                    {
+                        PathfinderRef.Reset();
+                        return (int)CIVILIAN_STATE.RUNNING;
                     }
 
                     return (int)CurrentState;
@@ -186,6 +196,9 @@ public class CivilianSM : NeutralSM {
 
     private void DoRun()
     {
+        transform.parent.GetComponentInChildren<SpeechScript>().speechType = SpeechType.Damaged;
+
+        MoveSpeed = origMoveSpeed + increasedSpeed;
         if (PathfinderRef.GetPathFound())
         {
             PathfinderRef.FollowPath();
@@ -200,5 +213,19 @@ public class CivilianSM : NeutralSM {
     {
         CurrentState = CIVILIAN_STATE.PERSUADED;
         d_Timer = PersuadeActionTime;
+    }
+
+    public void StartRunning()
+    {
+        CurrentState = CIVILIAN_STATE.RUNNING;
+        PathfinderRef.Reset();
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.name.Contains("PlayerSpawn") && CurrentState == CIVILIAN_STATE.RUNNING)
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
     }
 }
