@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(AudioSource))]
 public class HealthComponent : MonoBehaviour {
 
 	public GameObject GO;
@@ -13,9 +14,15 @@ public class HealthComponent : MonoBehaviour {
 	public AudioSource source;
 	public AudioClip takeDamageSound;
 
+    int origHealth;
+
 	// Use this for initialization
 	void Start () {
-		
+
+        origHealth = health;
+
+        if (GetComponent<AudioSource>())
+            source = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -39,4 +46,10 @@ public class HealthComponent : MonoBehaviour {
 	{
 		death.Invoke ();
 	}
+
+    // Calulates how much health is left as a percentage
+    public float CalculatePercentageHealth()
+    {
+        return (health / origHealth) * 100;
+    }
 }
