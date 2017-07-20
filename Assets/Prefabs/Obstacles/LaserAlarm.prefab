@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114386788797626256}
   - component: {fileID: 114350903857345022}
   - component: {fileID: 82782578537656238}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: LaserAlarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

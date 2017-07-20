@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 58204580360530234}
   - component: {fileID: 114517630338714830}
   - component: {fileID: 82620571915108660}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: AmmoInspect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
