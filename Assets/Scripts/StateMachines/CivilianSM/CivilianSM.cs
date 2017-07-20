@@ -14,9 +14,13 @@ public class CivilianSM : NeutralSM {
     }
 
     public CIVILIAN_STATE CurrentState = CIVILIAN_STATE.IDLE;
+    public float increasedSpeed = 1f;
+    [Tooltip("Will always be at least 2")]
+    public int maxPatrolRooms = 3;
+
+    [Space]
     public double PersuadeActionTime = 5.0;
     public float emitSoundInterval = 2f;
-    public float increasedSpeed = 1f;
 
     float origIdleTime;
     float origMoveSpeed;
@@ -30,6 +34,23 @@ public class CivilianSM : NeutralSM {
 
         origIdleTime = idleTime;
         origMoveSpeed = MoveSpeed;
+
+        // Get a few random rooms to move between
+        int rand = Random.Range(2, maxPatrolRooms);
+        for (int count = 0; count < rand; ++count)
+        {
+            RoomScript temp = PathfinderRef.theLevelManager.GetRandomRoom();
+			float tilespacing = PathfinderRef.theLevelManager.tilespacing;
+
+			Vector3 tempVec = new Vector3(tilespacing * Mathf.RoundToInt(temp.xpos + (temp.roomWidth * 0.5f)), tilespacing * Mathf.RoundToInt(temp.ypos + (temp.roomHeight * 0.5f)), 1f);
+
+            if (!PatrolPoints.Contains(tempVec))
+            {
+                PatrolPoints.Add(tempVec);
+            }
+            else
+                count--;
+        }
     }
 
     public override void Sense ()
@@ -52,7 +73,14 @@ public class CivilianSM : NeutralSM {
                     if (idleTime <= 0)
                     {
                         // Random a new position to walk to 
-                        PatrolPosition = PathfinderRef.RandomPos(15);
+
+					if (patrolIndex >= PatrolPoints.Count) 
+					{
+						patrolIndex = -1;
+						PatrolPosition = PathfinderRef.RandomPos(3, transform.position);
+					}
+					else
+						PatrolPosition = PathfinderRef.RandomPos(3, PatrolPoints[patrolIndex]);
 
                         return (int)CIVILIAN_STATE.PATROLLING;
                     }
@@ -71,6 +99,8 @@ public class CivilianSM : NeutralSM {
                     if (PathfinderRef.GetPathComplete())
                     {
                         idleTime = origIdleTime;
+                  
+                        patrolIndex++;
                         return (int)CIVILIAN_STATE.IDLE;
                     }
 
@@ -189,7 +219,7 @@ public class CivilianSM : NeutralSM {
         }
         else
         {
-            Vector3 RandPos = PathfinderRef.RandomPos(15);
+            Vector3 RandPos = PathfinderRef.RandomPos(15, transform.position);
             PathfinderRef.FindPath(RandPos);
         }
     }

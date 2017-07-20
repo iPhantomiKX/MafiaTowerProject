@@ -121,6 +121,12 @@ public class LevelManager : MonoBehaviour
         InstantiateNextLevelPlatformPosition();
         InstantiateObjective();
         InstantiateEnemyPosition();
+        InstantiateEnemyPosition();
+        InstantiateEnemyPosition();
+        InstantiateEnemyPosition();
+        InstantiateEnemyPosition();
+        InstantiateEnemyPosition();
+        InstantiateEnemyPosition();
 
         Debug.Log("Level Spawned");
     }
@@ -645,10 +651,10 @@ public class LevelManager : MonoBehaviour
                 double offset = 0.5 * tilespacing;
                 Vector3 tempVec3 = GetVec3Pos(x, y);
 
-                if (checkPos.x < tempVec3.x + offset &&
-                    checkPos.x > tempVec3.x - offset &&
-                    checkPos.y < tempVec3.y + offset &&
-                    checkPos.y > tempVec3.y - offset)
+                if (checkPos.x <= tempVec3.x + offset &&
+                    checkPos.x >= tempVec3.x - offset &&
+                    checkPos.y <= tempVec3.y + offset &&
+                    checkPos.y >= tempVec3.y - offset)
                 {
                     return new Vector2(x, y);
                 }
@@ -661,5 +667,10 @@ public class LevelManager : MonoBehaviour
     public TileType GetTileType(int x, int y)
     {
         return maptiles[x][y];
+    }
+
+    public RoomScript GetRandomRoom()
+    {
+        return miscRooms[Random.Range(0, miscRooms.Length - 1)];
     }
 }
