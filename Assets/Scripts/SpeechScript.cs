@@ -90,6 +90,35 @@ public class SpeechScript : MonoBehaviour {
         }
     }
 
+    public void SetDisplayText()
+    {
+        Reset();
+        DisplayText();
+        is_displaying_text = true;
+        is_fading = false;
+        text_interval_counter = fade_counter = 0.0f;
+    }
+
+    public void SetDisplayText(SpeechType speech_type)
+    {
+        this.speechType = speech_type;
+        Reset();
+        DisplayText();
+        is_displaying_text = true;
+        is_fading = false;
+        text_interval_counter = fade_counter = 0.0f;
+    }
+
+    public void SetDisplayText(int speech_type)
+    {
+        this.speechType = (SpeechType)speech_type;
+        Reset();
+        DisplayText();
+        is_displaying_text = true;
+        is_fading = false;
+        text_interval_counter = fade_counter = 0.0f;
+    }
+
     void DisplayText()
     {
         SpeechText.text = speech_database.GetRandomString(this);
@@ -98,8 +127,8 @@ public class SpeechScript : MonoBehaviour {
 
     void Reset()
     {
-        BackgroundImage.CrossFadeAlpha(original_bgimage_alpha, 1, false);
-        SpeechText.CrossFadeAlpha(original_speech_alpha, 1, false);
+        BackgroundImage.CrossFadeAlpha(original_bgimage_alpha, 0.5f, false);
+        SpeechText.CrossFadeAlpha(original_speech_alpha, 0.5f, false);
     }
 
     void BeginFade()

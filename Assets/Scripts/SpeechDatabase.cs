@@ -32,7 +32,7 @@ public class SpeechDatabase : MonoBehaviour
     public SpeechTextAssets[] SpeechTextFiles = new SpeechTextAssets[(int)UnitType.NUM_TYPES];
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         PopulateData();
     }
