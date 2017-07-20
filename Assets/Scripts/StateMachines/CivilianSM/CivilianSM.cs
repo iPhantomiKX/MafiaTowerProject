@@ -73,16 +73,18 @@ public class CivilianSM : NeutralSM {
                     if (idleTime <= 0)
                     {
                         // Random a new position to walk to 
-
-					if (patrolIndex >= PatrolPoints.Count) 
-					{
-						patrolIndex = -1;
-						PatrolPosition = PathfinderRef.RandomPos(3, transform.position);
-					}
-					else
-						PatrolPosition = PathfinderRef.RandomPos(3, PatrolPoints[patrolIndex]);
-
-                        return (int)CIVILIAN_STATE.PATROLLING;
+                        if (patrolIndex >= PatrolPoints.Count)
+                        {
+                            // If at the end of patrol, random a position around current pos
+                            patrolIndex = -1;
+                            PatrolPosition = PathfinderRef.RandomPos(3, transform.position);
+                        }
+                        else
+                        {
+                            // Move towards the next room in patrol points
+                            PatrolPosition = PathfinderRef.RandomPos(3, PatrolPoints[patrolIndex]);
+                        }
+                            return (int)CIVILIAN_STATE.PATROLLING;
                     }
 
                     if (GetComponent<HealthComponent>().CalculatePercentageHealth() <= retreatThreshold)
