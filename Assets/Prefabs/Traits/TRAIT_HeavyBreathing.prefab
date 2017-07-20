@@ -56,3 +56,5 @@ MonoBehaviour:
   levelMultiplier: 0.25
   maxLevel: 5
   BreathInterval: 1
+  breathSoundRadius: 5
+  breathSoundFade: 0.02
