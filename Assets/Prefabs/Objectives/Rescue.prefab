@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 114641141650273164}
   - component: {fileID: 114654402089833726}
   - component: {fileID: 114195799729621596}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Rescue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   om: {fileID: 0}
+  objtname: 
   isTimed: 1
   time: 90
   remainingTime: 0
