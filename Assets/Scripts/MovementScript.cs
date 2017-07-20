@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class MovementScript : MonoBehaviour {
 
+    public float air_resistence;    // Not sure if should put this here or somewhere else
+
     private Rigidbody2D rb;
 
     private bool is_dashing = false;
@@ -25,7 +27,7 @@ public class MovementScript : MonoBehaviour {
         { 
             rb.velocity = dash_dir * dash_speed;
             dash_distance -= Time.deltaTime * dash_speed;
-            dash_speed -= Time.deltaTime * 25;
+            dash_speed -= Time.deltaTime * air_resistence; 
 
             if (dash_distance <= 0 || dash_speed <= 0)
                 is_dashing = false;
