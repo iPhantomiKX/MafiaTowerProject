@@ -228,8 +228,6 @@ public class CivilianSM : NeutralSM {
 
     private void DoRun()
     {
-        transform.parent.GetComponentInChildren<SpeechScript>().speechType = SpeechType.Damaged;
-
         MoveSpeed = origMoveSpeed + increasedSpeed;
         if (PathfinderRef.GetPathFound())
         {
@@ -250,6 +248,7 @@ public class CivilianSM : NeutralSM {
     public void StartRunning()
     {
         CurrentState = CIVILIAN_STATE.RUNNING;
+        transform.parent.GetComponentInChildren<SpeechScript>().SetDisplayText(SpeechType.Damaged);
         PathfinderRef.Reset();
     }
 
