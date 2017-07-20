@@ -51,7 +51,8 @@ public class VentInspect : Inspect
             if (player_object.GetComponent<PlayerController>().inVent)
                 comp.gameObject.layer = LayerMask.NameToLayer("Vent_Player");
             else
-                comp.gameObject.layer = LayerMask.NameToLayer("Default");
+                //Changed from default layer to the new Inspectables layer - Pitchaya
+                comp.gameObject.layer = LayerMask.NameToLayer("Inspectables");
 
             comp.actionName = name;
         }

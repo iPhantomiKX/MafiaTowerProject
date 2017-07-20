@@ -21,6 +21,7 @@ public abstract class BaseSM : MonoBehaviour {
     protected Rigidbody2D rb;
 
     public List<Vector3> PatrolPoints = new List<Vector3>();
+    protected int patrolIndex = 0;
 
     protected GameStateManager GameStateRef;
 

@@ -500,9 +500,9 @@ public class Pathfinder : MonoBehaviour {
 		Path.Clear ();
 	}
 
-    public Vector3 RandomPos(int range)
+    public Vector3 RandomPos(int range, Vector3 startPos)
     {
-        Node CurrentNode = GetNode(transform.position);
+        Node CurrentNode = GetNode(startPos);
         int maxRetries = 5;
 
         while (maxRetries > 0)

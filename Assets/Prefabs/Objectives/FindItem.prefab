@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61337277466695376}
   - component: {fileID: 114883543828502432}
   - component: {fileID: 114884512298562058}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: FindItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   om: {fileID: 0}
+  objtname: 
   isTimed: 0
   time: 10
   remainingTime: 0
