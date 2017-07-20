@@ -147,15 +147,15 @@ public class PlayerController : MonoBehaviour {
         {
             if (inspectingObject == null)
             {
-                int layerMaskInspect = 1 >> LayerMask.NameToLayer("Inspectables");
-                //int layerMaskVentE = 1 >> LayerMask.NameToLayer("Vent_E");
+                int layerMaskInspect = 1 << LayerMask.NameToLayer("Inspectables");
+                int layerMaskVent = 1 << LayerMask.NameToLayer("Vent_Player");
 
-                int layerMask = layerMaskInspect;
+                int layerMask = layerMaskInspect | layerMaskVent;
 
                 Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, inspectionRange, layerMask);
                 Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Collider2D mouseOver = Physics2D.OverlapPoint(mouse, layerMask);
-                Debug.Log("Mouse pos = " + mouse);
+                Debug.Log("Mouse is on object: = " + mouseOver);
                 foreach (Collider2D col in obj)
                 {
                     if (col != null && col.GetComponent<Inspect>() != null && mouseOver != null && col.gameObject == mouseOver.gameObject)
