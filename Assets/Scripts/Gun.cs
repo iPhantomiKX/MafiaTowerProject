@@ -9,6 +9,8 @@ public class Gun : MonoBehaviour {
 	public float fireRate;
 	public int ammo;
 	public int max;
+    public float gunSoundRadius = 25;
+    public float gunSoundFade = 0.02f;
 
 	private GameObject newBulletGO;
 	private float fireRateCountdown;
@@ -43,6 +45,9 @@ public class Gun : MonoBehaviour {
 	{
         if(FindObjectOfType<PlayerActionLimitObjt>() != null)
             FindObjectOfType<PlayerActionLimitObjt>().NotifyGun();
+
+        GetComponent<EmitSound>().maxRadius = gunSoundRadius;
+        GetComponent<EmitSound>().fadeSpeed = gunSoundFade;
         GetComponent<EmitSound>().emitSound();
         ammo--;
 		newBulletGO = (GameObject)Instantiate (bulletGO);

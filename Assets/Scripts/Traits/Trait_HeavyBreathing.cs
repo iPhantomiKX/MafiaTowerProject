@@ -7,6 +7,8 @@ public class Trait_HeavyBreathing : PassiveTrait
 
     [Header("HeavyBreathing Trait Values")]
     public double BreathInterval;
+    public float breathSoundRadius = 10f;
+    public float breathSoundFade = 0.005f;
 
     double d_timer = 0.0;
 
@@ -26,6 +28,9 @@ public class Trait_HeavyBreathing : PassiveTrait
     {
         if (d_timer <= 0.0)
         {
+            playerObject.GetComponentInChildren<EmitSound>().maxInitialRadius = breathSoundRadius * 0.1f;
+            playerObject.GetComponentInChildren<EmitSound>().maxRadius = breathSoundRadius;
+            playerObject.GetComponentInChildren<EmitSound>().fadeSpeed = breathSoundFade;
             playerObject.GetComponentInChildren<EmitSound>().emitSound();
             d_timer = BreathInterval * GetLevelMultiplier();
         }

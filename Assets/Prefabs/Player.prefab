@@ -450,6 +450,7 @@ MonoBehaviour:
   inspectionRange: 0.3
   inspectingObject: {fileID: 0}
   freeze: 0
+  inVent: 0
   rb: {fileID: 50314794004968368}
 --- !u!114 &114258879481565170
 MonoBehaviour:
@@ -544,6 +545,8 @@ MonoBehaviour:
   fireRate: 5
   ammo: 20
   max: 20
+  gunSoundRadius: 25
+  gunSoundFade: 0.02
 --- !u!114 &114897012381887416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -555,6 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6eb6ed1a2b73544b99278d721d60c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  air_resistence: 25
 --- !u!114 &114932067811744018
 MonoBehaviour:
   m_ObjectHideFlags: 1

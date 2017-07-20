@@ -754,19 +754,17 @@ MonoBehaviour:
   theBoard: {fileID: 0}
   MoveSpeed: 0.5
   PatrolPosition: {x: 0, y: 0, z: 0}
-  idleTime: 0
+  idleTime: 2
   idleAngle: 0
   retreatThreshold: 80
   player: {fileID: 0}
-  PatrolPoints:
-  - {x: 2, y: -1.8, z: 0}
-  - {x: 2, y: -0.3, z: 0}
-  - {x: -2, y: -0.3, z: 0}
+  PatrolPoints: []
   ExitPoint: {fileID: 0}
   CurrentState: 0
+  increasedSpeed: 1
+  maxPatrolRooms: 3
   PersuadeActionTime: 5
   emitSoundInterval: 2
-  increasedSpeed: 1
 --- !u!212 &212796954926620938
 SpriteRenderer:
   m_ObjectHideFlags: 1
