@@ -55,10 +55,9 @@ public abstract class EnemySM : BaseSM {
 		//check player in cone and in range
 		Vector3 targetDir = target.transform.position - this.transform.position;
 		Vector3 forward = this.transform.up;
-		float angle = Vector3.Angle (targetDir, forward);
-		float distance = Vector3.Distance (target.transform.position, this.transform.position);
+		float angle = Vector2.Angle (targetDir, forward);
+		float distance = Vector2.Distance (target.transform.position, this.transform.position);
 		if (angle < angleFOV && distance < visionRange) {
-
 			//check if player behind any obstacle
 			int layerMask = (1 << 8 | 1 << 11 | 1 << 12);
 			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, targetDir,Mathf.Infinity,layerMask);
@@ -191,6 +190,7 @@ public abstract class EnemySM : BaseSM {
 
 	public void StartSuspicious(Vector3 pos,float t){
 		SuspiciousPosition = pos;
+		PathfinderRef.Reset ();
 		SuspiciousMax = t;
 		SuspiciousTime = t;
 	}

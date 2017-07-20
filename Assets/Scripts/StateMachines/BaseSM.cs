@@ -14,6 +14,8 @@ public abstract class BaseSM : MonoBehaviour {
     public Vector3 PatrolPosition;
     public float idleTime;
     public float idleAngle;
+    [Tooltip("Capped between 1 and 99")]
+    public float retreatThreshold;  // At what percent of health will the state machine retreat
 
     public GameObject player;
     protected Rigidbody2D rb;
@@ -29,6 +31,8 @@ public abstract class BaseSM : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody2D>();
         PathfinderRef = GetComponent<Pathfinder>();
+
+        retreatThreshold = Mathf.Clamp(retreatThreshold, 1, 100);
     }
 
 	void Start () {
@@ -88,6 +92,17 @@ public abstract class BaseSM : MonoBehaviour {
         FaceTowardPoint(point, 0.33f);
     }
 
+	public void WalkPathFinder(Vector3 point){
+		if (PathfinderRef.GetPathFound())
+		{
+			PathfinderRef.FollowPath();
+		}
+		else
+		{
+			PathfinderRef.FindPath(point);
+		}
+	}
+
     public void FaceTowardAngle(float angle, float percenDelta)
     {
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -103,5 +118,4 @@ public abstract class BaseSM : MonoBehaviour {
     {
         return GetComponent<HealthComponent>().health <= 0;
     }
-
 }

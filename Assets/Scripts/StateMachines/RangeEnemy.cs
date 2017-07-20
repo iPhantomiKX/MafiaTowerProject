@@ -191,10 +191,12 @@ public class RangeEnemy : EnemySM {
 			return;
 		}
 		if (Vector2.Distance (this.transform.position, PatrolPosition) > 0.2f) {
-			WalkTowardPoint (PatrolPosition);
+			//WalkTowardPoint (PatrolPosition);
+			WalkPathFinder(PatrolPosition);
 		} else {
 			idleTime = 1f;
 			PatrolPosition = Vector3.forward;
+			PathfinderRef.Reset ();
 		}
 
 	}
@@ -222,12 +224,15 @@ public class RangeEnemy : EnemySM {
 				SuspiciousTime = 0;
 				StopSuspicious ();
 				idleTime = 1f;
+				PathfinderRef.Reset ();
 			}
 		} else
-			WalkTowardPoint (SuspiciousPosition);
+			//WalkTowardPoint (SuspiciousPosition);
+			WalkPathFinder (SuspiciousPosition);
 	}
 
 	private void DoAttacking(){
+		PathfinderRef.Reset ();
 		knowPlayerPosition = false;
 		if (CurrentTarget) {
 			if (CurrentTarget == player) {
@@ -366,7 +371,8 @@ public class RangeEnemy : EnemySM {
 					searchIndex = 0;
 				}
 			} else {
-				WalkTowardPoint (LastPLayerPosition);
+				//WalkTowardPoint (LastPLayerPosition);
+				WalkPathFinder(LastPLayerPosition);
 			}
 		} else {
 			if (Vector2.Distance (this.transform.position, SearchingRoute [searchIndex]) < 0.3) {
