@@ -120,6 +120,7 @@ public class LevelManager : MonoBehaviour
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
         InstantiateObjective();
+        /*
         InstantiateEnemyPosition();
         InstantiateEnemyPosition();
         InstantiateEnemyPosition();
@@ -127,7 +128,7 @@ public class LevelManager : MonoBehaviour
         InstantiateEnemyPosition();
         InstantiateEnemyPosition();
         InstantiateEnemyPosition();
-
+		*/
         Debug.Log("Level Spawned");
     }
 
@@ -197,12 +198,8 @@ public class LevelManager : MonoBehaviour
 
     void CreateCorridors()
     {
-        for (int i = 0; i < existingRooms.Count; i++)
+        for (int i = 0; i < existingRooms.Count - 1; i++)
         {
-            if (i == existingRooms.Count - 1)
-            {
-                break;
-            }
             SetTilesForVent(existingRooms[i], existingRooms[i + 1]);
         }
     }
@@ -374,60 +371,119 @@ public class LevelManager : MonoBehaviour
         int ResultantXVector = 0;
         int ResultantYVector = 0;
 
+        Vector2 firstVent_E = new Vector2();
+        Vector2 secondVent_E = new Vector2();
+
         ////Check if Otherroom is on left side of room1
-        if (room2CenterXVector < room1.xpos)
+        //if (room2CenterXVector <= room1.xpos)
+        if (room1CenterXVector >= room2CenterXVector)
         {
-            ResultantXVector = room2CenterXVector - room1.xpos;
-            while (x != ResultantXVector)
-            {
-                int xCoord = room1.xpos + x;
-                venttiles[xCoord][room1CenterYVector] = TileType.VENT;
-                venttiles[room1.xpos][room1CenterYVector] = TileType.VENT_E;
-                venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
-                x--;
-            }
+            venttiles[room1.xpos + 1][room1CenterYVector] = TileType.VENT_E;
+            firstVent_E = new Vector2(room1.xpos + 1, room1CenterYVector);
+
+            //ResultantXVector = room2CenterXVector - room1.xpos;
+            //while (x != ResultantXVector)
+            //{
+            //    int xCoord = room1.xpos + x;
+            //    if (venttiles[xCoord][room1CenterYVector] != TileType.VENT_E)
+            //        venttiles[xCoord][room1CenterYVector] = TileType.VENT;
+            //    // added +1 so it doesnt spawn on walls anymore - Don
+            //    venttiles[room1.xpos + 1][room1CenterYVector] = TileType.VENT_E;
+            //    //venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
+            //    x--;
+            //}
         }
         //Check if Otherroom is on right side of room1
-        else if (room2CenterXVector > room1.xpos + room1.roomWidth - 2)
+        else //if (room2CenterXVector >= room1.xpos + room1.roomWidth - 2)
+        if (room1CenterXVector <= room2CenterXVector)
         {
-            ResultantXVector = room2CenterXVector - (room1.xpos + room1.roomWidth - 2);
-            while (x != ResultantXVector)
-            {
-                int xCoord = (room1.xpos + room1.roomWidth - 2) + x;
-                venttiles[xCoord][room1CenterYVector] = TileType.VENT;
-                venttiles[(room1.xpos + room1.roomWidth - 2)][room1CenterYVector] = TileType.VENT_E;
-                venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
-                x++;
-            }
+            venttiles[(room1.xpos + room1.roomWidth - 2)][room1CenterYVector] = TileType.VENT_E;
+            firstVent_E = new Vector2((room1.xpos + room1.roomWidth - 2), room1CenterYVector);
+
+            //ResultantXVector = room2CenterXVector - (room1.xpos + room1.roomWidth - 2);
+            //while (x != ResultantXVector)
+            //{
+            //    int xCoord = (room1.xpos + room1.roomWidth - 2) + x;
+            //    if (venttiles[xCoord][room1CenterYVector] != TileType.VENT_E)
+            //        venttiles[xCoord][room1CenterYVector] = TileType.VENT;
+            //    venttiles[(room1.xpos + room1.roomWidth - 2)][room1CenterYVector] = TileType.VENT_E;
+            //    //venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
+            //    x++;
+            //}
         }
 
         //Check if Otherroom is on the bottom side of room1
-        if (room2CenterYVector < room1.ypos)
+        //if (room2CenterYVector <= room1.ypos + 1)
+        if (room1CenterYVector >= room2CenterYVector)        
         {
-            ResultantYVector = (room2.ypos + room2.roomHeight - 2) - room1CenterYVector;
-            while (y != ResultantYVector)
-            {
-                int yCoord = room1CenterYVector + y;
-                venttiles[room2CenterXVector][yCoord] = TileType.VENT;
-                venttiles[room2CenterXVector][(room2.ypos + room2.roomHeight - 2)] = TileType.VENT_E;
-                venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
-                y--;
-            }
+            venttiles[room2CenterXVector][(room2.ypos + room2.roomHeight - 2)] = TileType.VENT_E;
+            secondVent_E = new Vector2(room2CenterXVector, (room2.ypos + room2.roomHeight - 2));
+
+            //ResultantYVector = (room2.ypos + room2.roomHeight - 2) - room1CenterYVector;
+            //while (y != ResultantYVector)
+            //{ 
+            //    int yCoord = room1CenterYVector + y;
+            //    if (venttiles[room2CenterXVector][yCoord] != TileType.VENT_E)
+            //        venttiles[room2CenterXVector][yCoord] = TileType.VENT;
+            //    venttiles[room2CenterXVector][(room2.ypos + room2.roomHeight - 2)] = TileType.VENT_E;
+            //    //venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
+            //    y--;
+            //}
         }
         //Check if Otherroom is on the top side of room1
-        else if (room2CenterYVector > room1.ypos + room1.roomHeight - 1)
+        else //if (room2CenterYVector >= room1.ypos + room1.roomHeight - 1)
+        if (room1CenterYVector <= room2CenterYVector)        
         {
-            ResultantYVector = (room2.ypos + 2) - room1CenterYVector;
-            while (y != ResultantYVector)
-            {
-                int yCoord = room1CenterYVector + y;
-                venttiles[room2CenterXVector][yCoord] = TileType.VENT;
-                venttiles[room2CenterXVector][(room2.ypos + 2)] = TileType.VENT_E;
-                venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
-                y++;
-            }
+            venttiles[room2CenterXVector][(room2.ypos + 2)] = TileType.VENT_E;
+            secondVent_E = new Vector2(room2CenterXVector, (room2.ypos + 2));
+
+            //ResultantYVector = (room2.ypos + 2) - room1CenterYVector;
+            //while (y != ResultantYVector)
+            //{
+            //    int yCoord = room1CenterYVector + y;
+            //    if (venttiles[room2CenterXVector][yCoord] != TileType.VENT_E)
+            //        venttiles[room2CenterXVector][yCoord] = TileType.VENT;
+            //    venttiles[room2CenterXVector][(room2.ypos + 2)] = TileType.VENT_E;
+            //    //venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
+            //    y++;
+            //}
         }
+
+        SetTilesForBetweenVents(firstVent_E, secondVent_E);
     }
+
+	void SetTilesForBetweenVents(Vector2 firstPos, Vector2 secondPos)
+	{
+		// Horizontal first, then vertical
+        Vector2 check = firstPos;
+
+		while (check != secondPos)
+		{
+		    if (check.x != secondPos.x)
+            {
+                // Horizontal translate
+                if (venttiles[(int)check.x][(int)check.y] != TileType.VENT_E)
+                    venttiles[(int)check.x][(int)check.y] = TileType.VENT;
+
+                if (firstPos.x <= secondPos.x)
+                    check.x++;
+                else
+                    check.x--;
+            }
+            else if (check.x == secondPos.x)
+            {
+                // Vertical translate
+                if (venttiles[(int)check.x][(int)check.y] != TileType.VENT_E)
+                    venttiles[(int)check.x][(int)check.y] = TileType.VENT;
+
+
+                if (firstPos.y <= secondPos.y)
+                    check.y++;
+                else
+                    check.y--;
+            }
+		}
+	}
 
     void InstantiatePlayerPosition()
     {
@@ -590,6 +646,8 @@ public class LevelManager : MonoBehaviour
         {
             tileInstance.transform.parent = VentsEntranceLayout.transform;
             VentsEntranceLayout.transform.parent = LevelLayout.transform;
+
+			tileInstance.GetComponent<SpriteRenderer> ().sortingOrder = 1;
         }
         else if(prefabs == floorTile)
         {
