@@ -27,7 +27,9 @@ public abstract class BaseSM : MonoBehaviour {
 
     protected Pathfinder PathfinderRef;
 
-	// Use this for initialization
+    public bool isBeingDragged = false;
+
+    // Use this for initialization
     protected void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -117,6 +119,32 @@ public abstract class BaseSM : MonoBehaviour {
 
     public bool IsDead()
     {
-        return GetComponent<HealthComponent>().health <= 0;
+        return GetComponent<HealthComponent>().health == 0;
+    }
+
+    protected virtual void CheckForBodyDrag()
+    {
+        if (!isBeingDragged)
+            return;
+
+        if (gameObject.GetComponent<DistanceJoint2D>() == null)
+            gameObject.AddComponent<DistanceJoint2D>();
+
+        gameObject.GetComponent<DistanceJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
+    }
+
+    public virtual void ToggleBodyDrag()
+    {
+        isBeingDragged = !isBeingDragged;
+        gameObject.GetComponent<DistanceJoint2D>().enabled = isBeingDragged;
+    }
+
+    public virtual void OnDeath()
+    {
+        //Remember to disable speech script;
+        gameObject.AddComponent<BodyInspect>();
+        gameObject.AddComponent<SpriteOutline>();
+        gameObject.layer = LayerMask.NameToLayer("Inspectables");
+        MoveSpeed = player.GetComponent<PlayerController>().speed;
     }
 }

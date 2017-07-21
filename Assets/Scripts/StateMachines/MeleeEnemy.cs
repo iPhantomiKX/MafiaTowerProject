@@ -379,12 +379,12 @@ public class MeleeEnemy : EnemySM {
 
 	}
 
-	private void DoDead(){
-		this.GetComponent<CircleCollider2D> ().enabled = false;
-		Destroy (this.transform.parent.gameObject,1);
-	}
+	private void DoDead()
+    {
+        base.CheckForBodyDrag();
+    }
 
-	public override void ProcessMessage ()
+    public override void ProcessMessage ()
 	{
 		if (CurrentMessage == null)
 		{

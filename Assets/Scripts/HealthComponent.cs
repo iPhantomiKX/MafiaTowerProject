@@ -34,11 +34,15 @@ public class HealthComponent : MonoBehaviour {
 
 	public void TakeDmg(int dmg)
 	{
+        if (health == 0) //Added by Randall - This ensures that onDeath is only called once
+            return;
+
 		source.PlayOneShot (takeDamageSound , takeDamageSound.length);
 		health -= dmg;
 		if (health <= 0) 
 		{
-			onDeath();
+            health = 0; //Added by Randall - This ensure health will not be negative
+            onDeath();
 		}
 	}
 
