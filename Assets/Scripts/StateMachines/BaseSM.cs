@@ -29,6 +29,8 @@ public abstract class BaseSM : MonoBehaviour {
 
     public bool isBeingDragged = false;
 
+    protected Vector2 lastGridPos;
+
     // Use this for initialization
     protected void Awake()
     {
@@ -56,6 +58,11 @@ public abstract class BaseSM : MonoBehaviour {
         {
             FSM();
         }
+
+        //// Remove old gridpos
+        //PathfinderRef.theLevelManager.RemoveFromArray(lastGridPos);
+        //// Update the LevelManager gridmap
+        //lastGridPos = PathfinderRef.theLevelManager.AddToArray(transform.position, LevelManager.TileType.ENTITY);
 	}
     public void FSM()
     {

@@ -25,6 +25,7 @@ public class LevelManager : MonoBehaviour
         HACKABLE_DOOR,
         OBJECTIVE_ROOM,
         OBJECTIVE,
+        ENTITY,
     };
 
     [Header("Level Dimension")]
@@ -129,7 +130,7 @@ public class LevelManager : MonoBehaviour
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
         InstantiateObjective();
-        /*
+
         InstantiateEnemyPosition();
         InstantiateEnemyPosition();
         InstantiateEnemyPosition();
@@ -137,7 +138,7 @@ public class LevelManager : MonoBehaviour
         InstantiateEnemyPosition();
         InstantiateEnemyPosition();
         InstantiateEnemyPosition();
-		*/
+
         Debug.Log("Level Spawned");
     }
 
@@ -707,6 +708,7 @@ public class LevelManager : MonoBehaviour
             case TileType.WALL_BOTTOM_RIGHT_CORNER: return -1;
             case TileType.VENT_E: return -1;
             case TileType.OBJECTIVE: return -1;
+            case TileType.ENTITY: return -1;
 
             default: return 1;
         }
@@ -741,13 +743,31 @@ public class LevelManager : MonoBehaviour
         return new Vector2(-1, -1);
     }
 
+    // Gets TileType with indexes
     public TileType GetTileType(int x, int y)
     {
         return maptiles[x][y];
     }
 
+    // Get a random room from miscRooms
     public RoomScript GetRandomRoom()
     {
         return miscRooms[Random.Range(0, miscRooms.Length - 1)];
+    }
+
+    // Set a TileType on the given position
+    // Also returns the grid position of the object
+    public Vector2 AddToArray(Vector3 position, TileType toSet)
+    {
+        Vector2 gridPos = GetGridPos(position);
+
+        maptiles[(int)gridPos.x][(int)gridPos.y] = toSet;
+        return gridPos;
+    }
+
+    // Sets the tile at the given position to floor
+    public void RemoveFromArray(Vector2 position)
+    {
+        maptiles[(int)position.x][(int)position.y] = TileType.FLOOR;
     }
 }
