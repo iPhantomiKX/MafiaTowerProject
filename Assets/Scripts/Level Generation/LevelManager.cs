@@ -700,18 +700,26 @@ public class LevelManager : MonoBehaviour
         {
             case TileType.FLOOR: return 1;
             case TileType.HACKABLE_DOOR: return 5;
-            case TileType.WALL_HORIZONTAL: return -1;
-            case TileType.WALL_VERTICAL: return -1;
-            case TileType.WALL_TOP_LEFT_CORNER: return -1;
-            case TileType.WALL_TOP_RIGHT_CORNER: return -1;
-            case TileType.WALL_BOTTOM_LEFT_CORNER: return -1;
-            case TileType.WALL_BOTTOM_RIGHT_CORNER: return -1;
+            //case TileType.WALL_HORIZONTAL: return -1;
+            //case TileType.WALL_VERTICAL: return -1;
+            //case TileType.WALL_TOP_LEFT_CORNER: return -1;
+            //case TileType.WALL_TOP_RIGHT_CORNER: return -1;
+            //case TileType.WALL_BOTTOM_LEFT_CORNER: return -1;
+            //case TileType.WALL_BOTTOM_RIGHT_CORNER: return -1;
+            //case TileType.WALL_ENDING_BOTTOM: return -1;
+            //case TileType.WALL_ENDING_RIGHT: return -1;
+            //case TileType.WALL_ENDING_LEFT: return -1;
+            //case TileType.WALL_ENDING_TOP: return -1;
             case TileType.VENT_E: return -1;
             case TileType.OBJECTIVE: return -1;
             case TileType.ENTITY: return -1;
 
-            default: return 1;
         }
+
+        if ((int)maptiles[x][y] >= (int)TileType.WALL_VERTICAL && (int)maptiles[x][y] <= (int)TileType.WALL_ENDING_BOTTOM)
+            return -1;
+
+            return 1;
     }
 
     // Gets vector3 position using x and y as indexes
