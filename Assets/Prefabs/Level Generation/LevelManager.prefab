@@ -54,7 +54,7 @@ MonoBehaviour:
   columns: 30
   rows: 30
   tilespacing: 0.3
-  hackableDoorLevel: 0
+  hackableDoorLevel: 1
   numberOfObjectiveRooms: 2
   numberOfMiscRooms: 4
   roomWidth:
@@ -64,7 +64,17 @@ MonoBehaviour:
     m_Min: 5
     m_Max: 8
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
-  wallTile: {fileID: 1495201102341864, guid: 8fb33cfb98d66a441b339a49f68cbe29, type: 2}
+  wallTile:
+  - {fileID: 1267209111468980, guid: 2970f7b31ddc3f343821bd90bf7838d6, type: 2}
+  - {fileID: 1260118052053712, guid: ed7c88b3ed760e8448ef2f407c2cd44e, type: 2}
+  - {fileID: 1586731004063626, guid: b84a846a2aafd8947983772b2ab00c9e, type: 2}
+  - {fileID: 1549921650452216, guid: 5d702ff7345f2f34798a6acde3d84c06, type: 2}
+  - {fileID: 1944467599105768, guid: 4b870195888d0744fa78e2637711e520, type: 2}
+  - {fileID: 1214245159028536, guid: 7925a645d0cf91e4582ae032a384cad9, type: 2}
+  - {fileID: 1846775863625376, guid: 154fd020c3add514d9f685f8bd5b8d5c, type: 2}
+  - {fileID: 1082999921024774, guid: 91bea83d65d65ff42b841b012a058b50, type: 2}
+  - {fileID: 1249165678039816, guid: 523a7a33b516b9f4a8569114495bfab7, type: 2}
+  - {fileID: 1476081458264090, guid: dbb8af194fce680478e0678bfc32ad2f, type: 2}
   roomTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   objectiveRoomTile: {fileID: 1085909745408438, guid: a817c7fd7adb5d5488739b00e5b49260,
     type: 2}

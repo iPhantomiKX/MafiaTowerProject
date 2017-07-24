@@ -8,7 +8,16 @@ public class LevelManager : MonoBehaviour
     public enum TileType
     {
         FLOOR,
-        WALL,
+        WALL_VERTICAL,
+        WALL_HORIZONTAL,
+        WALL_TOP_LEFT_CORNER,
+        WALL_TOP_RIGHT_CORNER,
+        WALL_BOTTOM_LEFT_CORNER,
+        WALL_BOTTOM_RIGHT_CORNER,
+        WALL_ENDING_LEFT,
+        WALL_ENDING_RIGHT,
+        WALL_ENDING_TOP,
+        WALL_ENDING_BOTTOM,
         VENT,
         VENT_E, // VENT ENTRANCE/EXIT
         ROOM,
@@ -37,7 +46,7 @@ public class LevelManager : MonoBehaviour
     [Space]
     [Header("Tile Types")]
     public GameObject floorTile;
-    public GameObject wallTile;
+    public GameObject[] wallTile;
     public GameObject roomTile;
     public GameObject objectiveRoomTile;
     public GameObject[] doorTile;
@@ -274,13 +283,21 @@ public class LevelManager : MonoBehaviour
                             break;
                     }
                     //left wall
-                    maptiles[currentRoom.xpos][yCoord] = TileType.WALL;
+                    maptiles[currentRoom.xpos][yCoord] = TileType.WALL_VERTICAL;
                     //right wall
-                    maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][yCoord] = TileType.WALL;
+                    maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][yCoord] = TileType.WALL_VERTICAL;
                     //bottom wall
-                    maptiles[xCoord][currentRoom.ypos] = TileType.WALL;
+                    maptiles[xCoord][currentRoom.ypos] = TileType.WALL_HORIZONTAL;
                     //top wall
-                    maptiles[xCoord][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL;
+                    maptiles[xCoord][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_HORIZONTAL;
+                    //Top Left Corner
+                    maptiles[currentRoom.xpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_TOP_LEFT_CORNER;
+                    //Top Right Corner
+                    maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_TOP_RIGHT_CORNER;
+                    //Bottom Left Corner
+                    maptiles[currentRoom.xpos][currentRoom.ypos] = TileType.WALL_BOTTOM_LEFT_CORNER;
+                    //Bottom Right Corner
+                    maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][currentRoom.ypos] = TileType.WALL_BOTTOM_RIGHT_CORNER;
                 }
             }
             IntRange randdoorXPos = new IntRange(currentRoom.xpos + 2, currentRoom.xpos + currentRoom.roomWidth - 2);
@@ -296,10 +313,14 @@ public class LevelManager : MonoBehaviour
                         if (currentRoom.doorType == 0)
                         {
                             maptiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.DOOR;
+                            maptiles[doorXpos + 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_ENDING_LEFT;
+                            maptiles[doorXpos - 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_ENDING_RIGHT;
                         }
                         else if (currentRoom.doorType == 1)
                         {
                             maptiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.HACKABLE_DOOR;
+                            maptiles[doorXpos + 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_ENDING_LEFT;
+                            maptiles[doorXpos - 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_ENDING_RIGHT;
                             Vector3 doorposition = new Vector3(tilespacing * (doorXpos), tilespacing * (currentRoom.ypos + currentRoom.roomHeight - 1), 0f);
                             GameObject hackDoor = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 90));
                             hackDoor.transform.parent = LevelLayout.transform;
@@ -311,10 +332,14 @@ public class LevelManager : MonoBehaviour
                         if (currentRoom.doorType == 0)
                         {
                             maptiles[doorXpos][currentRoom.ypos] = TileType.DOOR;
+                            maptiles[doorXpos + 1][currentRoom.ypos] = TileType.WALL_ENDING_LEFT;
+                            maptiles[doorXpos - 1][currentRoom.ypos] = TileType.WALL_ENDING_RIGHT;
                         }
                         else if (currentRoom.doorType == 1)
                         {
                             maptiles[doorXpos][currentRoom.ypos] = TileType.HACKABLE_DOOR;
+                            maptiles[doorXpos + 1][currentRoom.ypos] = TileType.WALL_ENDING_LEFT;
+                            maptiles[doorXpos - 1][currentRoom.ypos] = TileType.WALL_ENDING_RIGHT;
                             Vector3 doorposition = new Vector3(tilespacing * (doorXpos), tilespacing * currentRoom.ypos, 0f);
                             GameObject hackDoor = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 270));
                             hackDoor.transform.parent = LevelLayout.transform;
@@ -327,10 +352,14 @@ public class LevelManager : MonoBehaviour
                         if (currentRoom.doorType == 0)
                         {
                             maptiles[currentRoom.xpos][doorYPos] = TileType.DOOR;
+                            maptiles[currentRoom.xpos][doorYPos + 1] = TileType.WALL_ENDING_BOTTOM;
+                            maptiles[currentRoom.xpos][doorYPos - 1] = TileType.WALL_ENDING_TOP;
                         }
                         else if (currentRoom.doorType == 1)
                         {
                             maptiles[currentRoom.xpos][doorYPos] = TileType.HACKABLE_DOOR;
+                            maptiles[currentRoom.xpos][doorYPos + 1] = TileType.WALL_ENDING_BOTTOM;
+                            maptiles[currentRoom.xpos][doorYPos - 1] = TileType.WALL_ENDING_TOP;
                             Vector3 doorposition = new Vector3(tilespacing * (currentRoom.xpos), tilespacing * doorYPos, 0f);
                             GameObject hackDoor = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 180));
                             hackDoor.transform.parent = LevelLayout.transform;
@@ -343,10 +372,14 @@ public class LevelManager : MonoBehaviour
                         if (currentRoom.doorType == 0)
                         {
                             maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.DOOR;
+                            maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos + 1] = TileType.WALL_ENDING_BOTTOM;
+                            maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos - 1] = TileType.WALL_ENDING_TOP;
                         }
                         else if (currentRoom.doorType == 1)
                         {
                             maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.HACKABLE_DOOR;
+                            maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos + 1] = TileType.WALL_ENDING_BOTTOM;
+                            maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos - 1] = TileType.WALL_ENDING_TOP;
                             Vector3 doorposition = new Vector3(tilespacing * (currentRoom.xpos + currentRoom.roomWidth - 1), tilespacing * doorYPos, 0f);
                             GameObject hackDoor = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 0));
                             hackDoor.transform.parent = LevelLayout.transform;
@@ -365,12 +398,6 @@ public class LevelManager : MonoBehaviour
         int room2CenterXVector = Mathf.RoundToInt(room2.xpos + (room2.roomWidth) / 2);
         int room2CenterYVector = Mathf.RoundToInt(room2.ypos + (room2.roomHeight) / 2);
 
-        int x = 0;
-        int y = 0;
-
-        int ResultantXVector = 0;
-        int ResultantYVector = 0;
-
         Vector2 firstVent_E = new Vector2();
         Vector2 secondVent_E = new Vector2();
 
@@ -380,18 +407,6 @@ public class LevelManager : MonoBehaviour
         {
             venttiles[room1.xpos + 1][room1CenterYVector] = TileType.VENT_E;
             firstVent_E = new Vector2(room1.xpos + 1, room1CenterYVector);
-
-            //ResultantXVector = room2CenterXVector - room1.xpos;
-            //while (x != ResultantXVector)
-            //{
-            //    int xCoord = room1.xpos + x;
-            //    if (venttiles[xCoord][room1CenterYVector] != TileType.VENT_E)
-            //        venttiles[xCoord][room1CenterYVector] = TileType.VENT;
-            //    // added +1 so it doesnt spawn on walls anymore - Don
-            //    venttiles[room1.xpos + 1][room1CenterYVector] = TileType.VENT_E;
-            //    //venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
-            //    x--;
-            //}
         }
         //Check if Otherroom is on right side of room1
         else //if (room2CenterXVector >= room1.xpos + room1.roomWidth - 2)
@@ -399,17 +414,6 @@ public class LevelManager : MonoBehaviour
         {
             venttiles[(room1.xpos + room1.roomWidth - 2)][room1CenterYVector] = TileType.VENT_E;
             firstVent_E = new Vector2((room1.xpos + room1.roomWidth - 2), room1CenterYVector);
-
-            //ResultantXVector = room2CenterXVector - (room1.xpos + room1.roomWidth - 2);
-            //while (x != ResultantXVector)
-            //{
-            //    int xCoord = (room1.xpos + room1.roomWidth - 2) + x;
-            //    if (venttiles[xCoord][room1CenterYVector] != TileType.VENT_E)
-            //        venttiles[xCoord][room1CenterYVector] = TileType.VENT;
-            //    venttiles[(room1.xpos + room1.roomWidth - 2)][room1CenterYVector] = TileType.VENT_E;
-            //    //venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
-            //    x++;
-            //}
         }
 
         //Check if Otherroom is on the bottom side of room1
@@ -418,17 +422,6 @@ public class LevelManager : MonoBehaviour
         {
             venttiles[room2CenterXVector][(room2.ypos + room2.roomHeight - 2)] = TileType.VENT_E;
             secondVent_E = new Vector2(room2CenterXVector, (room2.ypos + room2.roomHeight - 2));
-
-            //ResultantYVector = (room2.ypos + room2.roomHeight - 2) - room1CenterYVector;
-            //while (y != ResultantYVector)
-            //{ 
-            //    int yCoord = room1CenterYVector + y;
-            //    if (venttiles[room2CenterXVector][yCoord] != TileType.VENT_E)
-            //        venttiles[room2CenterXVector][yCoord] = TileType.VENT;
-            //    venttiles[room2CenterXVector][(room2.ypos + room2.roomHeight - 2)] = TileType.VENT_E;
-            //    //venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
-            //    y--;
-            //}
         }
         //Check if Otherroom is on the top side of room1
         else //if (room2CenterYVector >= room1.ypos + room1.roomHeight - 1)
@@ -436,17 +429,6 @@ public class LevelManager : MonoBehaviour
         {
             venttiles[room2CenterXVector][(room2.ypos + 2)] = TileType.VENT_E;
             secondVent_E = new Vector2(room2CenterXVector, (room2.ypos + 2));
-
-            //ResultantYVector = (room2.ypos + 2) - room1CenterYVector;
-            //while (y != ResultantYVector)
-            //{
-            //    int yCoord = room1CenterYVector + y;
-            //    if (venttiles[room2CenterXVector][yCoord] != TileType.VENT_E)
-            //        venttiles[room2CenterXVector][yCoord] = TileType.VENT;
-            //    venttiles[room2CenterXVector][(room2.ypos + 2)] = TileType.VENT_E;
-            //    //venttiles[room2CenterXVector][room1CenterYVector] = TileType.VENT_E;
-            //    y++;
-            //}
         }
 
         SetTilesForBetweenVents(firstVent_E, secondVent_E);
@@ -568,6 +550,7 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+        //Amirul: I'll figure out a way to do this better
         for (int i = 0; i < maptiles.Length; i++)
         {
             for (int j = 0; j < maptiles[i].Length; j++)
@@ -580,8 +563,35 @@ public class LevelManager : MonoBehaviour
                     case TileType.OBJECTIVE_ROOM:
                         InstantiateFromArray(objectiveRoomTile, tilespacing * i, tilespacing * j, 0f);
                         break;
-                    case TileType.WALL:
-                        InstantiateFromArray(wallTile, tilespacing * i, tilespacing * j, 0f);
+                    case TileType.WALL_HORIZONTAL:
+                        InstantiateFromArray(wallTile[3], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_VERTICAL:
+                        InstantiateFromArray(wallTile[5], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_TOP_LEFT_CORNER:
+                        InstantiateFromArray(wallTile[0], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_TOP_RIGHT_CORNER:
+                        InstantiateFromArray(wallTile[1], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_BOTTOM_LEFT_CORNER:
+                        InstantiateFromArray(wallTile[6], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_BOTTOM_RIGHT_CORNER:
+                        InstantiateFromArray(wallTile[7], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_ENDING_RIGHT:
+                        InstantiateFromArray(wallTile[4], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_ENDING_LEFT:
+                        InstantiateFromArray(wallTile[8], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_ENDING_TOP:
+                        InstantiateFromArray(wallTile[2], tilespacing * i, tilespacing * j, 0f);
+                        break;
+                    case TileType.WALL_ENDING_BOTTOM:
+                        InstantiateFromArray(wallTile[9], tilespacing * i, tilespacing * j, 0f);
                         break;
                     case TileType.FLOOR:
                         InstantiateFromArray(floorTile, tilespacing * i, tilespacing * j, 0f);
@@ -610,11 +620,14 @@ public class LevelManager : MonoBehaviour
 
     void InstantiateVerticalOuterWalls(float xCoord, float startingY, float endingY)
     {
-        float currentY = startingY;
-
-        while (currentY <= endingY)
+        float currentY = startingY + 1;
+        InstantiateFromArray(wallTile[6], tilespacing * -1, tilespacing * startingY, 0f);
+        InstantiateFromArray(wallTile[7], tilespacing * columns, tilespacing * startingY, 0f);
+        InstantiateFromArray(wallTile[0], tilespacing * -1, tilespacing * rows, 0f);
+        InstantiateFromArray(wallTile[1], tilespacing * columns, tilespacing * rows, 0f);
+        while (currentY <= endingY - 1)
         {
-            InstantiateFromArray(wallTile, tilespacing * xCoord, tilespacing * currentY, 0f);
+            InstantiateFromArray(wallTile[5], tilespacing * xCoord, tilespacing * currentY, 0f);
 
             currentY++;
         }
@@ -626,7 +639,7 @@ public class LevelManager : MonoBehaviour
 
         while (currentX <= endingX)
         {
-            InstantiateFromArray(wallTile, tilespacing * currentX, tilespacing * yCoord, 0f);
+            InstantiateFromArray(wallTile[3], tilespacing * currentX, tilespacing * yCoord, 0f);
 
             currentX++;
         }
@@ -654,12 +667,6 @@ public class LevelManager : MonoBehaviour
             tileInstance.transform.parent = FloorsLayout.transform;
             FloorsLayout.transform.parent = LevelLayout.transform;
         }
-        else if (prefabs == wallTile)
-        {
-            tileInstance.transform.parent = WallsLayout.transform;
-            WallsLayout.transform.parent = LevelLayout.transform;
-        }
-
         else if (prefabs == objectiveRoomTile)
         {
             tileInstance.transform.parent = ObjectivesRoomTileLayout.transform;
@@ -674,7 +681,14 @@ public class LevelManager : MonoBehaviour
         {
             tileInstance.transform.parent = LevelLayout.transform;
         }
-
+        for(int i = 0; i < wallTile.Length; i++)
+        {    
+            if (prefabs == wallTile[i])
+            {
+                tileInstance.transform.parent = WallsLayout.transform;
+                WallsLayout.transform.parent = LevelLayout.transform;
+            }
+        }
         return tileInstance;
     }
 
@@ -685,7 +699,12 @@ public class LevelManager : MonoBehaviour
         {
             case TileType.FLOOR: return 1;
             case TileType.HACKABLE_DOOR: return 5;
-            case TileType.WALL: return -1;
+            case TileType.WALL_HORIZONTAL: return -1;
+            case TileType.WALL_VERTICAL: return -1;
+            case TileType.WALL_TOP_LEFT_CORNER: return -1;
+            case TileType.WALL_TOP_RIGHT_CORNER: return -1;
+            case TileType.WALL_BOTTOM_LEFT_CORNER: return -1;
+            case TileType.WALL_BOTTOM_RIGHT_CORNER: return -1;
             case TileType.VENT_E: return -1;
             case TileType.OBJECTIVE: return -1;
 
