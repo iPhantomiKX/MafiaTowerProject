@@ -99,7 +99,7 @@ public abstract class TraitBaseClass : MonoBehaviour {
         if (i_TraitLevel == 1)
             return 1;
 
-        return 1 + (i_TraitLevel * levelMultiplier);
+        return 1 + ((i_TraitLevel - 1) * levelMultiplier);
     }
 
     public virtual void DoTrait() { }
