@@ -134,9 +134,6 @@ public abstract class BaseSM : MonoBehaviour {
         if (!isBeingDragged)
             return;
 
-        if (gameObject.GetComponent<DistanceJoint2D>() == null)
-            gameObject.AddComponent<DistanceJoint2D>();
-
         gameObject.GetComponent<DistanceJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
     }
 
@@ -149,6 +146,10 @@ public abstract class BaseSM : MonoBehaviour {
     public virtual void OnDeath()
     {
         //Remember to disable speech script;
+
+        if (gameObject.GetComponent<DistanceJoint2D>() == null)
+            gameObject.AddComponent<DistanceJoint2D>();
+
         gameObject.AddComponent<BodyInspect>();
         gameObject.AddComponent<SpriteOutline>();
         gameObject.layer = LayerMask.NameToLayer("Inspectables");

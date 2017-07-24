@@ -11,6 +11,7 @@ public class CivilianSM : NeutralSM {
         INTERACTING,    // Interacting with the player
         PERSUADED,      // Helping the player after being persuaded
         RUNNING,        // Running to the exit point
+        DEAD,
     }
 
     public CIVILIAN_STATE CurrentState = CIVILIAN_STATE.IDLE;
@@ -66,6 +67,9 @@ public class CivilianSM : NeutralSM {
 
     public override int Think()
     {
+        if (IsDead())
+            return (int)CIVILIAN_STATE.DEAD;
+
         switch (CurrentState)
         {
             case CIVILIAN_STATE.IDLE:
@@ -146,6 +150,7 @@ public class CivilianSM : NeutralSM {
             default:
                 return -1;
         }
+
     }
 
     public override void Act(int value)
@@ -159,6 +164,7 @@ public class CivilianSM : NeutralSM {
             case (int)CIVILIAN_STATE.INTERACTING: DoInteract(); break;
             case (int)CIVILIAN_STATE.PERSUADED: DoPersuaded(); break;
             case (int)CIVILIAN_STATE.RUNNING: DoRun(); break;
+            case (int)CIVILIAN_STATE.DEAD: DoDead(); break;
         }
     }
 
@@ -226,6 +232,11 @@ public class CivilianSM : NeutralSM {
         }
     }
 
+    public void DoDead()
+    {
+        base.CheckForBodyDrag();
+    }
+
     private void DoRun()
     {
         MoveSpeed = origMoveSpeed + increasedSpeed;
@@ -258,5 +269,13 @@ public class CivilianSM : NeutralSM {
         {
             transform.parent.gameObject.SetActive(false);
         }
+    }
+
+    public override void OnDeath()
+    {
+        Destroy(GetComponent<CivilianPersuadeInspect>());
+        Destroy(GetComponent<SpriteOutline>());
+        Destroy(GetComponent<TraitObstacle>());
+        base.OnDeath();
     }
 }

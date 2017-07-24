@@ -7,7 +7,7 @@ public class BodyInspect : Inspect
     public override void inspect()
     {
         Debug.Log("Body Inspect");
-        GetComponent<MeleeEnemy>().ToggleBodyDrag();
+        GetComponent<BaseSM>().ToggleBodyDrag();
     }
 }
 
