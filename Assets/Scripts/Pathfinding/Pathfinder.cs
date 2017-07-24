@@ -558,22 +558,22 @@ public class Pathfinder : MonoBehaviour {
 
 	void OnDrawGizmos()
 	{
-		foreach (Node aNode in ClosedList)
-		{
-			Gizmos.color = Color.red;
-			Gizmos.DrawSphere (aNode.m_pos, 0.075f);
-		}
+        //foreach (Node aNode in ClosedList)
+        //{
+        //    Gizmos.color = Color.red;
+        //    Gizmos.DrawSphere (aNode.m_pos, 0.075f);
+        //}
 
-		foreach (Node aNode in OpenList) 
-		{
-			Gizmos.color = Color.blue;
-			Gizmos.DrawSphere (aNode.m_pos, 0.05f);
-		}
+        //foreach (Node aNode in OpenList) 
+        //{
+        //    Gizmos.color = Color.blue;
+        //    Gizmos.DrawSphere (aNode.m_pos, 0.05f);
+        //}
 
-		if (CurrentNode != null)
-		{
-			Gizmos.color = Color.yellow;
-			Gizmos.DrawSphere (CurrentNode.m_pos, 0.1f);
-		}	
+        //if (CurrentNode != null)
+        //{
+        //    Gizmos.color = Color.yellow;
+        //    Gizmos.DrawSphere (CurrentNode.m_pos, 0.1f);
+        //}	
 	}
 }
