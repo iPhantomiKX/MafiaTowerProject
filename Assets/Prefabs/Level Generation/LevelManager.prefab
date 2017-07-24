@@ -64,7 +64,17 @@ MonoBehaviour:
     m_Min: 5
     m_Max: 8
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
-  wallTile: {fileID: 1495201102341864, guid: 8fb33cfb98d66a441b339a49f68cbe29, type: 2}
+  wallTile:
+  - {fileID: 1267209111468980, guid: 71411f96dd986994cb4775580bc42dd9, type: 2}
+  - {fileID: 1260118052053712, guid: 8cd9e974cbd8ac742992f667f6bd85cb, type: 2}
+  - {fileID: 1586731004063626, guid: 9cf0d378a313da94a860ff1472b751ce, type: 2}
+  - {fileID: 1549921650452216, guid: 444190bd204984d4cb313a5d5e598b64, type: 2}
+  - {fileID: 1944467599105768, guid: bd87b9e51d91f85489110c58519e2dd0, type: 2}
+  - {fileID: 1214245159028536, guid: ab2efad576b17334ea94c284975b684e, type: 2}
+  - {fileID: 1846775863625376, guid: 54fa1d82e7c08e54fa8874e0b1ac7d46, type: 2}
+  - {fileID: 1082999921024774, guid: 1db4ceaa0b7971f4d8a15adfea378a7d, type: 2}
+  - {fileID: 1249165678039816, guid: db1f2478a5f599445ba95e4898dc13f0, type: 2}
+  - {fileID: 1476081458264090, guid: 07c4f32c671972b4b977af875da12f4f, type: 2}
   roomTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   objectiveRoomTile: {fileID: 1085909745408438, guid: a817c7fd7adb5d5488739b00e5b49260,
     type: 2}
