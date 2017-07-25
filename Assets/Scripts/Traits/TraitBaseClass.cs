@@ -25,7 +25,7 @@ public abstract class TraitBaseClass : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
+        i_TraitLevel = Mathf.Clamp(i_TraitLevel, 1, maxLevel);
     }
 
     // Update is called once per frame
@@ -100,6 +100,11 @@ public abstract class TraitBaseClass : MonoBehaviour {
             return 1;
 
         return 1 + ((i_TraitLevel - 1) * levelMultiplier);
+    }
+
+    public int GetLevel()
+    {
+        return i_TraitLevel;
     }
 
     public virtual void DoTrait() { }

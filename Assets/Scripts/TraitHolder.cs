@@ -67,8 +67,26 @@ public class TraitHolder : MonoBehaviour {
         }
     }
 
-    public bool CheckForTrait(TraitBaseClass checkTrait)
+    public bool CheckForTrait(TraitBaseClass checkTrait, int level = 1)
     {
-        return TraitList.Contains(checkTrait);
+        if (level == 1)
+        {
+            return TraitList.Contains(checkTrait);
+        }
+        else
+        {
+            for (int idx = 0; idx < TraitList.Count; ++idx)
+            {
+                if (TraitList[idx] == checkTrait)
+                {
+                    if (TraitList[idx].GetLevel() == level)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
