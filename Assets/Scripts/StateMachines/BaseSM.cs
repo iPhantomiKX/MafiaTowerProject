@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Pathfinder))]
 [RequireComponent(typeof(HealthComponent))]
+[RequireComponent(typeof(TeamHandler))]
 public abstract class BaseSM : MonoBehaviour {
 
     public MessageBoard theBoard;

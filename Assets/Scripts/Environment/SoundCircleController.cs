@@ -8,7 +8,10 @@ public class SoundCircleController : MonoBehaviour {
     public float stayExpandSpeed = 0.1f;
     public float maxRadius = 25f;
     public float fadeSpeed = 0.02f;
-	// Use this for initialization
+
+    public TeamHandler.TEAM senderTeam;
+	
+    // Use this for initialization
 	void Start () {
 		
 	}
@@ -35,12 +38,14 @@ public class SoundCircleController : MonoBehaviour {
     {
         if (other.gameObject.tag == "Enemy")
         {
-			other.GetComponent<EnemySM>().StartSuspicious(this.transform.position,5f);
+            if (other.GetComponent<TeamHandler>().CheckIfCanInteract(senderTeam))
+			    other.GetComponent<EnemySM>().StartSuspicious(this.transform.position,5f);
         }
 
         if (other.GetComponent<CivilianSM>())
         {
-            other.GetComponent<CivilianSM>().StartRunning();
+            if (other.GetComponent<TeamHandler>().CheckIfCanInteract(senderTeam))
+                other.GetComponent<CivilianSM>().StartRunning();
         }
-    }
+    }   
 }

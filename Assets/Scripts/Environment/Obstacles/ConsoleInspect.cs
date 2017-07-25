@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConsoleInspect : Inspect, ITraitObstacle
+public class ConsoleInspect : Inspect
 {
     public override void inspect()
     {

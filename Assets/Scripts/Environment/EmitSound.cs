@@ -20,6 +20,12 @@ public class EmitSound : MonoBehaviour {
         sc.stayExpandSpeed = stayExpandSpeed;
         sc.maxRadius = maxRadius;
         sc.fadeSpeed = fadeSpeed;
+
+        if (GetComponent<TeamHandler>())
+            sc.senderTeam = GetComponent<TeamHandler>().currentTeam;
+        else
+            sc.senderTeam = GetComponentInParent<TeamHandler>().currentTeam;
+
         Instantiate(sc, transform.position, Quaternion.identity);
     }
 	

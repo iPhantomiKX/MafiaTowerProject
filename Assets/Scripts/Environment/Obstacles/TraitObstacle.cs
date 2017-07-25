@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TO DO
-public interface ITraitObstacle
-{
-}  
+//public interface ITraitObstacle
+//{
+//}  
 
-public abstract class TraitObstacle : MonoBehaviour, ITraitObstacle {
+public class TraitObstacle : MonoBehaviour {
 
     [Tooltip("Trait needed to overcome this obstacle")]
     public ObstacleTrait RequiredTrait;

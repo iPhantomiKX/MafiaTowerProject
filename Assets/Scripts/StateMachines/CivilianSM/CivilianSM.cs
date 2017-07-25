@@ -36,6 +36,9 @@ public class CivilianSM : NeutralSM {
         origIdleTime = idleTime;
         origMoveSpeed = MoveSpeed;
 
+        // Set idle to -1 to make the civilian immediately start
+        idleTime = -1;
+
         // Get a few random rooms to move between
         int rand = Random.Range(2, maxPatrolRooms);
         for (int count = 0; count < rand; ++count)
@@ -131,6 +134,7 @@ public class CivilianSM : NeutralSM {
                         d_RepeatTimer = 0.0;
                         MoveSpeed = origMoveSpeed;
 
+                        idleTime = -1;
                         return (int)CIVILIAN_STATE.IDLE;
                     }
 
