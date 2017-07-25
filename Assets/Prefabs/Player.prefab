@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 114605435350371124}
   - component: {fileID: 114897012381887416}
   - component: {fileID: 82546078572859174}
+  - component: {fileID: 114478431537615220}
   m_Layer: 11
   m_Name: PlayerObject
   m_TagString: Player
@@ -500,6 +501,18 @@ MonoBehaviour:
   maxRadius: 25
   fadeSpeed: 0.02
   sc: {fileID: 114821803060620018, guid: f09d552dff7a86444a0fad6c845a325a, type: 2}
+--- !u!114 &114478431537615220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1484258923702130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ed33abc41a3ae43a639968eae7e499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTeam: 0
 --- !u!114 &114480843945152298
 MonoBehaviour:
   m_ObjectHideFlags: 1

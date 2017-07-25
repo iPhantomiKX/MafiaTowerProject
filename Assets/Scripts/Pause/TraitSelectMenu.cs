@@ -9,7 +9,6 @@ public class TraitSelectMenu : MonoBehaviour, IPointerClickHandler
 {
     public float OffsetFromClick;
 
-    public PlayerController PlayerRef;
     public GameObject MenuRef;
 
     Dropdown DropdownRef;
@@ -22,15 +21,12 @@ public class TraitSelectMenu : MonoBehaviour, IPointerClickHandler
         DropdownRef = MenuRef.GetComponentInChildren<Dropdown>();
 
         // SHOULD CHANGE
-        PlayerRef = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
-
-        SkillsRef = PlayerRef.gameObject.transform.parent.gameObject.GetComponentInChildren<SkillsInputManager>();
+        SkillsRef = GameObject.FindObjectOfType<SkillsInputManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void OnPointerClick(PointerEventData eventData)

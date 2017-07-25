@@ -33,6 +33,15 @@ public class FillList : MonoBehaviour {
         go.SetActive(true);
     }
 
+    public void AddToList(TraitBaseClass toAdd)
+    {
+        GameObject go = Instantiate(ButtonPrefab) as GameObject;
+        go.transform.SetParent(transform);
+        go.GetComponent<ButtonElement>().AttachedTrait = toAdd;
+
+        go.SetActive(true);
+    }
+
     public void RemoveFromList(GameObject toRemove)
     {
         Transform[] TransformList = GetComponentsInChildren<Transform>();

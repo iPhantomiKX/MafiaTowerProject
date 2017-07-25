@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224212097203992350}
   - component: {fileID: 114342282444142754}
   - component: {fileID: 95749607694147520}
-  m_Layer: 5
+  m_Layer: 16
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 224786178779054932}
   - component: {fileID: 222391194685699252}
   - component: {fileID: 114608952195347622}
-  m_Layer: 5
+  m_Layer: 16
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4709914374611520}
   - component: {fileID: 212796954926620938}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4493181652790058}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Civilian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 224892549354651270}
   - component: {fileID: 222661359790884432}
   - component: {fileID: 114588838842472918}
-  m_Layer: 5
+  m_Layer: 16
   m_Name: SpeechBackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 224246142117805362}
   - component: {fileID: 222209953695244616}
   - component: {fileID: 114938496357086652}
-  m_Layer: 5
+  m_Layer: 16
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,8 @@ GameObject:
   - component: {fileID: 114040974622537006}
   - component: {fileID: 114913536825297148}
   - component: {fileID: 82019162340268062}
-  m_Layer: 9
+  - component: {fileID: 114161616132953904}
+  m_Layer: 16
   m_Name: CivilianObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +147,7 @@ GameObject:
   - component: {fileID: 224235495358289662}
   - component: {fileID: 222266675483529720}
   - component: {fileID: 114733262249000036}
-  m_Layer: 5
+  m_Layer: 16
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +162,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224218465493193772}
-  m_Layer: 5
+  m_Layer: 16
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +182,7 @@ GameObject:
   - component: {fileID: 114537401731861370}
   - component: {fileID: 114842795971540188}
   - component: {fileID: 114612377242529542}
-  m_Layer: 5
+  m_Layer: 16
   m_Name: CivilianCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,6 +374,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &114161616132953904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450524761547108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ed33abc41a3ae43a639968eae7e499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTeam: 1
 --- !u!114 &114242966662513348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -486,6 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RequiredTrait: {fileID: 114992174500758622, guid: efef5167c51f16945a10ee0655066ece,
     type: 2}
+  requiredLevel: 1
 --- !u!114 &114588838842472918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -712,7 +726,7 @@ MonoBehaviour:
   theBoard: {fileID: 0}
   MoveSpeed: 0.5
   PatrolPosition: {x: 0, y: 0, z: 0}
-  idleTime: 2
+  idleTime: 5
   idleAngle: 0
   retreatThreshold: 80
   player: {fileID: 0}

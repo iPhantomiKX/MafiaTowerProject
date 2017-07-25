@@ -9,6 +9,8 @@ public class ChosenTrait : MonoBehaviour {
     public TraitBaseClass AttachedTrait;
     public Text AttachedText;
 
+    public FillList SelectableList;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -21,6 +23,9 @@ public class ChosenTrait : MonoBehaviour {
 
     public void SetChosenTrait(GameObject toSet)
     {
+        if (AttachedTrait)
+            SelectableList.AddToList(AttachedTrait);
+
         AttachedTrait = toSet.GetComponent<ButtonElement>().AttachedTrait;
         AttachedText.text = AttachedTrait.GetName();
     }
