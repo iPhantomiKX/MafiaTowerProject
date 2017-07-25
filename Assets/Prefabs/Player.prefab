@@ -30,6 +30,7 @@ GameObject:
   - component: {fileID: 114897012381887416}
   - component: {fileID: 82546078572859174}
   - component: {fileID: 114478431537615220}
+  - component: {fileID: 114449685125209624}
   m_Layer: 11
   m_Name: PlayerObject
   m_TagString: Player
@@ -484,6 +485,17 @@ MonoBehaviour:
       PublicKeyToken=null
   source: {fileID: 82546078572859174}
   takeDamageSound: {fileID: 8300000, guid: 6f289c55383fabe4680f51a39de50b5e, type: 3}
+--- !u!114 &114449685125209624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1484258923702130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1a44b86caf04d4db79a790d14f619b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114456858354432972
 MonoBehaviour:
   m_ObjectHideFlags: 1

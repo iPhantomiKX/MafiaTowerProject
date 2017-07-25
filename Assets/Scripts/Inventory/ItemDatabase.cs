@@ -34,4 +34,15 @@ public class ItemDatabase : MonoBehaviour
         Debug.LogWarning("couldn't find item with id: " + id);
         return null;
     }
+
+    public Item FetchItemBySpriteName(string slug)
+    {
+        foreach(Item item in Items)
+        {
+            if (item.Slug == slug)
+                return item;
+        }
+        Debug.LogWarning("couldn't find item with slug: " + slug);
+        return null;
+    }
 }

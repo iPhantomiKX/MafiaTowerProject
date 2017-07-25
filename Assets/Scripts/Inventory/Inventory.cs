@@ -1,92 +1,97 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour {
-    GameObject phoneBG;
-    GameObject currentTab;
-    GameObject inventoryCanvas;
-    GameObject slotPanel;
+public class Inventory : MonoBehaviour
+{
 
-    ItemDatabase database;
-    public GameObject inventorySlot;
-    public GameObject inventoryItem;
+    private int slotAmount = 18;
+    //public bool itemAddedToInventory = false;
+    private ItemDatabase database;
 
-    int slotAmount;
     public List<Item> items = new List<Item>();
-    public List<GameObject> slots = new List<GameObject>();
-
-
-    void Start()
+    public class InventoryDataItem
     {
+        public int ID;
+        public int Amount;
 
-        database = GetComponent<ItemDatabase>();
-
-        slotAmount = 18;
-
-        phoneBG = GameObject.Find("PhoneBG");
-        currentTab = phoneBG.transform.FindChild("CurrentTab").gameObject;
-        inventoryCanvas = currentTab.transform.FindChild("Inventory_").gameObject;
-        slotPanel = inventoryCanvas.transform.FindChild("SlotPanel").gameObject;
-
-        for(int i = 0; i < slotAmount; i++)
+        public InventoryDataItem(int id, int amount)
         {
-            items.Add(new Item());
-            slots.Add(Instantiate(inventorySlot));
-            slots[i].GetComponent<Slot>().id = i;
-            slots[i].transform.SetParent(slotPanel.transform);
+            ID = id;
+            Amount = amount;
         }
-
-        AddItem(0);
-        AddItem(0);
-        AddItem(0);
-        AddItem(0);
-        AddItem(1);
-        AddItem(1);
-        AddItem(2);
     }
 
-    public void AddItem(int id)
+    public List<InventoryDataItem> InventoryDataItems = new List<InventoryDataItem>();
+
+    // Use this for initialization
+    void Start()
     {
-        Item itemToAdd = database.FetchItemByID(id);
-        if(itemToAdd.Stackable && CheckIfItemIsInInventory(itemToAdd))
+        //database = PersistentData.m_Instance.gameObject.GetComponent<ItemDatabase>();
+        //database = GameObject.Find("PersistentData").GetComponent<ItemDatabase>();
+        database = (ItemDatabase)FindObjectOfType(typeof(ItemDatabase));
+        for (int i = 0; i < slotAmount; i++)
         {
-            for (int i = 0; i < items.Count; i++)
+            items.Add(new Item());
+        }
+    }
+
+
+    public int GetSlotAmount()
+    {
+        return slotAmount;
+    }
+
+
+    public void AddItem(GameItem gameItem)
+    {
+        //Item itemToAdd = database.FetchItemByID(id);
+        Item itemToAdd = gameItem.item;
+
+        InventoryDataItem dataItem = new InventoryDataItem(itemToAdd.ID, 1);
+        InventoryDataItems.Add(dataItem);
+
+        if (!InventoryIsFull())
+        {
+            // If item is stackable and isn't the root item
+            if (itemToAdd.Stackable && CheckIfItemIsInInventory(itemToAdd)) 
             {
-                if(items[i].ID == id)
+                for (int i = 0; i < InventoryDataItems.Count; i++)
                 {
-                    ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
-                    data.amount++;
-                    data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
-                    break;
+                    if (itemToAdd.ID == InventoryDataItems[i].ID)
+                    {
+                        InventoryDataItems[i].Amount++;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].ID == -1)
+                    {
+                        items[i] = itemToAdd;
+                        break;
+                    }
                 }
             }
         }
         else
         {
-            for (int i = 0; i < items.Count; i++)
-            {
-                if(items[i].ID == -1)
-                {
-                    items[i] = itemToAdd;
-                    GameObject itemObj = Instantiate(inventoryItem);
-                    itemObj.GetComponent<ItemData>().item = itemToAdd;
-                    itemObj.GetComponent<ItemData>().amount = 1;
-                    itemObj.GetComponent<ItemData>().slot = i;
-                    itemObj.transform.SetParent(slots[i].transform);
-                    itemObj.transform.position = Vector2.zero;
-                    //float iconScaling = 5;
-                    //itemObj.GetComponent<RectTransform>().offsetMin = new Vector2(iconScaling, iconScaling);
-                    //itemObj.GetComponent<RectTransform>().offsetMax = new Vector2(iconScaling, iconScaling);
-                    //itemObj.transform.position = slots[i].transform.position;
-
-                    itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
-                    itemObj.name = itemToAdd.ItemName;
-                    break;
-                }
-            }
+            // TODO:
+            // display message along the lines of "Inventory is full!" to the player
+            Debug.Log("inventory is full!");
         }
+
+    }
+
+    public bool InventoryIsFull()
+    {
+        if (InventoryDataItems.Count >= GetSlotAmount())
+            return true;
+
+        return false;
     }
 
     bool CheckIfItemIsInInventory(Item item)
@@ -96,7 +101,6 @@ public class Inventory : MonoBehaviour {
             if (items[i].ID == item.ID)
                 return true;
         }
-        return false;  
+        return false;
     }
-
 }

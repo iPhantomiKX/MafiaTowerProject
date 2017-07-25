@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-public class Item {
-
-    public enum ItemTypes { Weapon, Consumable, KeyItem}
+public class Item
+{
+    public enum ItemTypes { Weapon, Consumable, KeyItem }
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public ItemTypes ItemType { get; set; }
     public Sprite Sprite { get; set; }
@@ -15,12 +15,13 @@ public class Item {
     public string ActionName { get; set; }
     public string ItemName { get; set; }
     public string Slug { get; set; }
+
     // public List<BaseStat> Stats { get; s et; }
     //public bool ItemModifier { get; set; }
     // Other values to maybe add later:  Value, rarity, power
-            
+
     [Newtonsoft.Json.JsonConstructor]
-    public Item(int id, string description, ItemTypes itemType ,string actionName, string itemName, string slug)
+    public Item(int id, string description, ItemTypes itemType, string actionName, string itemName, string slug)
     {
         this.ID = id;
         this.Description = description;
@@ -35,6 +36,7 @@ public class Item {
     public Item()
     {
         this.ID = -1;
+        this.Stackable = false;
     }
 
 }

@@ -4,32 +4,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IDropHandler {
+public class Slot : MonoBehaviour, IDropHandler
+{
     public int id;
     private Inventory inv;
+    private InventoryDisplay invDisp;
 
 
     // Use this for initialization
     void Start()
     {
-        inv = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<Inventory>();
+        //Debug.Log("Slot script start function called");
+        inv = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Inventory>();
+        //invDisp = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<InventoryDisplay>();
+        invDisp = GameObject.Find("Inventory_").GetComponent<InventoryDisplay>();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         ItemData droppedItem = eventData.pointerDrag.GetComponent<ItemData>();
-        if(inv.items[id].ID == -1)
+        if (inv.items[id].ID == -1)
         {
             inv.items[droppedItem.slot] = new Item();
             inv.items[id] = droppedItem.item;
             droppedItem.slot = id;
         }
-        else if(droppedItem.slot != id)
+        else if (droppedItem.slot != id)
         {
             Transform item = this.transform.GetChild(0);
             item.GetComponent<ItemData>().slot = droppedItem.slot;
-            item.transform.SetParent(inv.slots[droppedItem.slot].transform);
-            item.transform.position = inv.slots[droppedItem.slot].transform.position;
+            item.transform.SetParent(invDisp.slots[droppedItem.slot].transform);
+            item.transform.position = invDisp.slots[droppedItem.slot].transform.position;
 
             inv.items[droppedItem.slot] = item.GetComponent<ItemData>().item;
             inv.items[id] = droppedItem.item;
@@ -37,9 +42,10 @@ public class Slot : MonoBehaviour, IDropHandler {
         }
     }
 
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }
