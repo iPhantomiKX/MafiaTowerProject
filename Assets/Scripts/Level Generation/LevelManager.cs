@@ -160,7 +160,7 @@ public class LevelManager : MonoBehaviour
         {
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Vent"), LayerMask.NameToLayer("Vent"));
             VentsLayout.SetActive(false);
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 
