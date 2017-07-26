@@ -123,6 +123,7 @@ public class LevelManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent_Player"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("VIP"), LayerMask.NameToLayer("Vent_Player"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Vent_Player"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Inspectables"), LayerMask.NameToLayer("Vent_Player"));
         //
 
         LevelLayout = new GameObject("LevelLayout");
