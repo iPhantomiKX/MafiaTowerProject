@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GO: {fileID: 1450524761547108}
-  health: 10
+  health: 2
   death:
     m_PersistentCalls:
       m_Calls:
