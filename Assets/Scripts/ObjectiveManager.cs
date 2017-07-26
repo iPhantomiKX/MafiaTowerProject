@@ -54,7 +54,8 @@ public class ObjectiveManager : MonoBehaviour {
 			text.material = ArialFont.material;
 			text.color = Color.yellow;
             Objective thisObjt = objectives[i];
-			text.text = thisObjt.objtname;
+            text.text = thisObjt.objtname;
+            thisObjt.objtText = text;
 			objtTexts.Add (text);
             if(thisObjt.isTimed)
             {
@@ -94,16 +95,17 @@ public class ObjectiveManager : MonoBehaviour {
         }
     }
     public void OnComplete(GameObject compObjt){
-		foreach (Text text in objtTexts) {
-			if (text.text == compObjt.GetComponent<Objective> ().objtname) {
-				// text.gameObject.SetActive (false);
+        foreach (Objective objt in objectives)
+        {
+            if(objt.gameObject == compObjt)
+            {
+                Text text = objt.objtText;
                 text.text = text.text + "...done!";
                 text.color = Color.green;
                 compObjt.GetComponent<Objective>().remainingTime = 0;
-				return;
-			}
-
-		}
+                return;
+            }
+        }
 	}
 
 }

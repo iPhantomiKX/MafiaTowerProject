@@ -14,6 +14,8 @@ public class CivilianSM : NeutralSM {
         DEAD,
     }
 
+    [Space]
+    [Header("CivilianSM Attributes")]
     public CIVILIAN_STATE CurrentState = CIVILIAN_STATE.IDLE;
     public float increasedSpeed = 1f;
     [Tooltip("Will always be at least 2")]

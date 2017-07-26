@@ -97,11 +97,20 @@ MonoBehaviour:
     type: 2}
   FindItemObject: {fileID: 1174211081820102, guid: a99b064725221c742ab2ad48f0485d86,
     type: 2}
-  EnemyObject: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
-    type: 2}
   SecurityCameraObject: {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d,
     type: 2}
   AmmoCollectibleObject: {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a,
     type: 2}
   HealthpackCollectibleObject: {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c,
     type: 2}
+  SpawnList:
+  - name: Civilian
+    stateMachine: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
+      type: 2}
+    amount: 3
+    spawnRoom: 1
+  - name: Enemy
+    stateMachine: {fileID: 1740129890561196, guid: d79c486d137990f4390cfe8e10e8c9bd,
+      type: 2}
+    amount: 1
+    spawnRoom: 0

@@ -2,6 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class SpawningAIData
+{
+    public enum SPAWN_ROOM_TYPE
+    {
+        ANY,
+        MISC,
+        OBJECTIVE,
+    }
+
+    public string name;
+    public GameObject stateMachine;
+    public int amount;
+    public SPAWN_ROOM_TYPE spawnRoom;
+}
+
 public class LevelManager : MonoBehaviour
 {
 
@@ -82,7 +98,7 @@ public class LevelManager : MonoBehaviour
 
     [Space]
     [Header("Enemy Object")]
-    public GameObject EnemyObject;
+    public List<SpawningAIData> SpawnList;
 
     [Space]
     [Header("Security Camera Object")]
@@ -127,6 +143,7 @@ public class LevelManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent_Player"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("VIP"), LayerMask.NameToLayer("Vent_Player"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Vent_Player"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Inspectables"), LayerMask.NameToLayer("Vent_Player"));
         //
 
         LevelLayout = new GameObject("LevelLayout");
@@ -154,12 +171,6 @@ public class LevelManager : MonoBehaviour
         InstantiateCollectibles();
 
         InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
 
         Debug.Log("Level Spawned");
     }
@@ -171,7 +182,7 @@ public class LevelManager : MonoBehaviour
         {
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Vent"), LayerMask.NameToLayer("Vent"));
             VentsLayout.SetActive(false);
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 
@@ -501,20 +512,58 @@ public class LevelManager : MonoBehaviour
 
     void InstantiateEnemyPosition()
     {
-        int randomRoom = Random.Range(0, existingRooms.Count);
-        while (existingRooms[randomRoom].roomType != RoomScript.RoomType.MISC)
-        {
-            randomRoom = Random.Range(0, existingRooms.Count);
-        }
-    
-        if (existingRooms[randomRoom].roomType == RoomScript.RoomType.MISC)
-        {
-            Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].xpos + (existingRooms[randomRoom].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].ypos + (existingRooms[randomRoom].roomHeight / 2)), 1f);
-            GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
-            //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");    // Not used anymore - Don
+        int spawnIdx = 0;
 
-            enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
-            Debug.Log(existingRooms[randomRoom].roomType);
+        while (SpawnList[spawnIdx].amount > 0)
+        {
+            // Find room to spawn
+            int randomRoom = Random.Range(0, existingRooms.Count);
+
+            // Get what rooms to ignore
+            List<RoomScript.RoomType> typesToIgnore = new List<RoomScript.RoomType>();
+            switch (SpawnList[spawnIdx].spawnRoom)
+            {
+                case SpawningAIData.SPAWN_ROOM_TYPE.ANY:
+                    typesToIgnore.Add(RoomScript.RoomType.SPAWN);
+                    typesToIgnore.Add(RoomScript.RoomType.EXIT);
+                    break;
+                case SpawningAIData.SPAWN_ROOM_TYPE.MISC:
+                    typesToIgnore.Add(RoomScript.RoomType.SPAWN);
+                    typesToIgnore.Add(RoomScript.RoomType.EXIT);
+                    typesToIgnore.Add(RoomScript.RoomType.HOSTAGE);
+                    typesToIgnore.Add(RoomScript.RoomType.ITEM);
+                    break;
+                case SpawningAIData.SPAWN_ROOM_TYPE.OBJECTIVE:
+                    typesToIgnore.Add(RoomScript.RoomType.SPAWN);
+                    typesToIgnore.Add(RoomScript.RoomType.EXIT);
+                    typesToIgnore.Add(RoomScript.RoomType.MISC);
+                    break;
+            }
+
+            while (typesToIgnore.Contains(existingRooms[randomRoom].roomType))
+            {
+                randomRoom = Random.Range(0, existingRooms.Count);
+            }
+
+
+            Vector3 spawnPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].xpos + (existingRooms[randomRoom].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].ypos + (existingRooms[randomRoom].roomHeight / 2)), 1f);
+            GameObject spawnedSM = Instantiate(SpawnList[spawnIdx].stateMachine, spawnPos, Quaternion.identity);
+
+            spawnedSM.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+
+            // Reduce amount, increase index if amount == 0
+            SpawnList[spawnIdx].amount--;
+            if (SpawnList[spawnIdx].amount <= 0)
+            {
+                spawnIdx++;
+
+                // Return when spawn index is at end
+                if (spawnIdx >= SpawnList.Count)
+                {
+                    return;
+                }
+            }
+
         }
     }
 
@@ -819,6 +868,12 @@ public class LevelManager : MonoBehaviour
     {
         return miscRooms[Random.Range(0, miscRooms.Length - 1)];
     }
+
+	// Get a random room from objtRooms
+	public RoomScript GetObjtRooms()
+	{
+		return objectiveRooms[Random.Range(0, objectiveRooms.Length - 1)];
+	}
 
     // Set a TileType on the given position
     // Also returns the grid position of the object

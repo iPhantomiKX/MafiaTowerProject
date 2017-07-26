@@ -76,7 +76,7 @@ public class PersistentData : MonoBehaviour {
 
 	void OnDisable()
 	{
-		SaveDate();
+		SaveData();
 	}
 
 	PlayerData CopyData()
@@ -126,7 +126,7 @@ public class PersistentData : MonoBehaviour {
         }
 	}
 
-	public void SaveDate()
+	public void SaveData()
 	{
         //Debug.Log("Save Called");
 
