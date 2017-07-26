@@ -19,6 +19,7 @@ public class RangeEnemy : EnemySM {
 
 	public ENEMY_STATE CurrentState = ENEMY_STATE.IDLE;
 	public Animator animator;
+	public int maxPatrolRooms = 5;
 
 	// Use this for initialization
 	public override void Start () {
@@ -27,6 +28,32 @@ public class RangeEnemy : EnemySM {
 		AttackSpeed = 1.9f;
 		MoveSpeed = 1f;
 		attackAble = true;
+
+		int rand = Random.Range(2, maxPatrolRooms);
+		for (int count = 0; count < rand; ++count)
+		{
+			RoomScript temp;
+			if (count == 0) {
+				temp = PathfinderRef.theLevelManager.GetObjtRooms ();
+			} else {
+				int random = Random.Range (1, 3);
+				if (random == 1) {
+					temp = PathfinderRef.theLevelManager.GetRandomRoom ();
+				} else {
+					temp = PathfinderRef.theLevelManager.GetObjtRooms ();
+				}
+			}
+			float tilespacing = PathfinderRef.theLevelManager.tilespacing;
+
+			Vector3 tempVec = new Vector3(tilespacing * Mathf.RoundToInt(temp.xpos + (temp.roomWidth * 0.5f)), tilespacing * Mathf.RoundToInt(temp.ypos + (temp.roomHeight * 0.5f)), 1f);
+
+			if (!PatrolPoints.Contains(tempVec))
+			{
+				PatrolPoints.Add(tempVec);
+			}
+			else
+				count--;
+		}
 	}
 
 	public override void Sense ()
@@ -160,27 +187,25 @@ public class RangeEnemy : EnemySM {
 		FaceTowardAngle (idleAngle, 0.03f);
 
 		if (idleTime <= 0) {
-			float rand = Random.Range (0f, 100f);
-			if (rand <= 25 && PatrolPoints.Count > 0) {
-				idleTime = 0;
-				float nearest = 9999f;
-				float tempF;
-				int indexT = -1;
-				for (int i = 0; i < PatrolPoints.Count; i++) {
-					tempF = Vector2.Distance (this.transform.position, PatrolPoints [i]);
-					if (tempF < 0.2)
-						continue;
-					if (tempF < nearest) {
-						nearest = tempF;
-						indexT = i;
+			if (role == ENEMY_ROLE.PATROL) {
+				float rand = Random.Range (0f, 100f);
+				if (rand <= 25 && PatrolPoints.Count > 0) {
+					idleTime = 0;
+					if (patrolIndex >= PatrolPoints.Count) {
+						// If at the end of patrol, random a position around current pos
+						patrolIndex = -1;
+						PatrolPosition = PathfinderRef.RandomPos (3, transform.position);
+					} else {
+						// Move towards the next room in patrol points
+						PatrolPosition = PathfinderRef.RandomPos (3, PatrolPoints [patrolIndex]);
 					}
+				} else {
+					idleTime = rand / 25;
+					float r_angle = Random.Range (0f, 360f);
+					idleAngle = r_angle;
 				}
-				if(indexT>=0)
-					PatrolPosition = PatrolPoints [indexT];
-			} else {
-				idleTime = rand / 25;
-				float r_angle = Random.Range (0f, 360f);
-				idleAngle = r_angle;
+			} else if (role == ENEMY_ROLE.GUARD) {
+
 			}
 		}
 	}
@@ -194,6 +219,7 @@ public class RangeEnemy : EnemySM {
 			//WalkTowardPoint (PatrolPosition);
 			WalkPathFinder(PatrolPosition);
 		} else {
+			patrolIndex++;
 			idleTime = 1f;
 			PatrolPosition = Vector3.forward;
 			PathfinderRef.Reset ();
