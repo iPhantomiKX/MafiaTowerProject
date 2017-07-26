@@ -218,6 +218,7 @@ public class RangeEnemy : EnemySM {
 
 			}
 		}
+	}
 
 	private void DoPatrol(){
 		if (PatrolPoints.Count <= 0 || PatrolPosition == Vector3.forward) {
