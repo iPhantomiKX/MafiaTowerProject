@@ -455,6 +455,7 @@ MonoBehaviour:
   retreatThreshold: 0
   player: {fileID: 0}
   PatrolPoints: []
+  isBeingDragged: 0
   attackAble: 0
   angleFOV: 45
   visionRange: 1
@@ -897,7 +898,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 0.862069, g: 1, b: 0, a: 1}
   m_FlipX: 0
