@@ -7,7 +7,8 @@ public abstract class EnemySM : BaseSM {
 	public enum ENEMY_ROLE
 	{
 		GUARD,
-		PATROL
+		PATROL,
+		WANDER
 	}
 
 	public ENEMY_ROLE role = ENEMY_ROLE.PATROL;

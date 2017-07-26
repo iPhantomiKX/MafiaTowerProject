@@ -204,11 +204,20 @@ public class RangeEnemy : EnemySM {
 					float r_angle = Random.Range (0f, 360f);
 					idleAngle = r_angle;
 				}
+			} else if (role == ENEMY_ROLE.WANDER) {
+				float rand = Random.Range (0f, 100f);
+				if (rand <= 25) {
+					idleTime = 0;
+					PatrolPosition = PathfinderRef.RandomPos (15, transform.position);
+				} else {
+					idleTime = rand / 25;
+					float r_angle = Random.Range (0f, 360f);
+					idleAngle = r_angle;
+				}
 			} else if (role == ENEMY_ROLE.GUARD) {
 
 			}
 		}
-	}
 
 	private void DoPatrol(){
 		if (PatrolPoints.Count <= 0 || PatrolPosition == Vector3.forward) {
