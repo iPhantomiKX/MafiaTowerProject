@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class SpawningAIData
+{
+    public string name;
+    public GameObject stateMachine;
+    public int amount;
+}
+
 public class LevelManager : MonoBehaviour
 {
 
@@ -71,7 +79,7 @@ public class LevelManager : MonoBehaviour
 
     [Space]
     [Header("Enemy Object")]
-    public GameObject EnemyObject;
+    public List<SpawningAIData> SpawnList;
 
     private TileType[][] maptiles;
     private TileType[][] venttiles;
@@ -131,12 +139,6 @@ public class LevelManager : MonoBehaviour
         InstantiateNextLevelPlatformPosition();
         InstantiateObjective();
 
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
-        InstantiateEnemyPosition();
         InstantiateEnemyPosition();
 
         Debug.Log("Level Spawned");
@@ -479,21 +481,55 @@ public class LevelManager : MonoBehaviour
 
     void InstantiateEnemyPosition()
     {
-        int randomRoom = Random.Range(0, existingRooms.Count);
-        while (existingRooms[randomRoom].roomType != RoomScript.RoomType.MISC)
+        int spawnIdx = 0;
+        while (SpawnList[spawnIdx].amount > 0)
         {
-            randomRoom = Random.Range(0, existingRooms.Count);
-        }
-    
-        if (existingRooms[randomRoom].roomType == RoomScript.RoomType.MISC)
-        {
-            Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].xpos + (existingRooms[randomRoom].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].ypos + (existingRooms[randomRoom].roomHeight / 2)), 1f);
-            GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
-            //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");    // Not used anymore - Don
+            // Find room to spawn
+            int randomRoom = Random.Range(0, existingRooms.Count);
+            while (existingRooms[randomRoom].roomType != RoomScript.RoomType.MISC)
+            {
+                randomRoom = Random.Range(0, existingRooms.Count);
+            }
 
-            enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
-            Debug.Log(existingRooms[randomRoom].roomType);
+            if (existingRooms[randomRoom].roomType == RoomScript.RoomType.MISC)
+            {
+                Vector3 spawnPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].xpos + (existingRooms[randomRoom].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].ypos + (existingRooms[randomRoom].roomHeight / 2)), 1f);
+                GameObject spawnedSM = Instantiate(SpawnList[spawnIdx].stateMachine, spawnPos, Quaternion.identity);
+
+                spawnedSM.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+            }
+
+            // Reduce amount, increase index if amount == 0
+            SpawnList[spawnIdx].amount--;
+            if (SpawnList[spawnIdx].amount <= 0)
+            {
+                spawnIdx++;
+
+                // Return when spawn index is at end
+                if (spawnIdx >= SpawnList.Count)
+                {
+                    return;
+                }
+            }
+
         }
+
+
+        //int randomRoom = Random.Range(0, existingRooms.Count);
+        //while (existingRooms[randomRoom].roomType != RoomScript.RoomType.MISC)
+        //{
+        //    randomRoom = Random.Range(0, existingRooms.Count);
+        //}
+    
+        //if (existingRooms[randomRoom].roomType == RoomScript.RoomType.MISC)
+        //{
+        //    Vector3 enemyPos = new Vector3(tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].xpos + (existingRooms[randomRoom].roomWidth / 2)), tilespacing * Mathf.RoundToInt(existingRooms[randomRoom].ypos + (existingRooms[randomRoom].roomHeight / 2)), 1f);
+        //    GameObject enemy = Instantiate(EnemyObject, enemyPos, Quaternion.identity);
+        //    //enemy.GetComponent<EnemyController>().player = GameObject.FindGameObjectWithTag("Player");    // Not used anymore - Don
+
+        //    enemy.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+        //    Debug.Log(existingRooms[randomRoom].roomType);
+        //}
     }
 
     void InstantiateNextLevelPlatformPosition()
