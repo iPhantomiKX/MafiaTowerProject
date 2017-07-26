@@ -97,7 +97,9 @@ MonoBehaviour:
     stateMachine: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
       type: 2}
     amount: 3
+    spawnRoom: 1
   - name: Enemy
     stateMachine: {fileID: 1740129890561196, guid: d79c486d137990f4390cfe8e10e8c9bd,
       type: 2}
     amount: 1
+    spawnRoom: 0

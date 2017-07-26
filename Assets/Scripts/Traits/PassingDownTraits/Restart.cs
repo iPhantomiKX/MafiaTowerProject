@@ -63,7 +63,7 @@ public class Restart : MonoBehaviour {
             PersistentData.m_Instance.CurrentLevel = Mathf.Max(0, PersistentData.m_Instance.CurrentLevel - 1);
         }
 
-
+        PersistentData.m_Instance.SaveData();
         SceneManager.LoadScene("GameScene");
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Objective : MonoBehaviour {
 
@@ -16,7 +17,7 @@ public abstract class Objective : MonoBehaviour {
     public int numCompleted = 0;
     public int numRequired = 1;
     public bool mandatory;
-
+    public Text objtText;
     private GameStateManager GameStateRef;
 
 	// Use this for initialization
@@ -50,7 +51,7 @@ public abstract class Objective : MonoBehaviour {
             }
 
         }
-        if (numCompleted == numRequired)
+        if (numCompleted == numRequired && !complete)
         {
             complete = true;
             om.OnComplete(gameObject);
