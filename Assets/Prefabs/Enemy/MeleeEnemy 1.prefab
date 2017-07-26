@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 114989350413289082}
   - component: {fileID: 95685762116133674}
   - component: {fileID: 82903827863363432}
+  - component: {fileID: 114115100777342168}
   m_Layer: 9
   m_Name: EnemyObject
   m_TagString: Enemy
@@ -414,6 +415,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 3
+--- !u!114 &114115100777342168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894137219359046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ed33abc41a3ae43a639968eae7e499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTeam: 2
 --- !u!114 &114128220352822602
 MonoBehaviour:
   m_ObjectHideFlags: 1
