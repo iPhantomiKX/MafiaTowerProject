@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(TeamHandler))]
 public class EmitSound : MonoBehaviour {
     public float maxInitialRadius = 20f;
     public float expandSpeed = 0.75f;
