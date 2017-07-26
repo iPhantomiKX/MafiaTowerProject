@@ -39,6 +39,7 @@ public class NextLevel : MonoBehaviour {
 
 		Debug.Log("...entering next level... playertrait size " + PersistentData.m_Instance.PlayerTraits.Count);
 
+        PersistentData.m_Instance.SaveData();
 		SceneManager.LoadScene("GameScene");
 	}
 }
