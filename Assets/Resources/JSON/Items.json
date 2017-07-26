@@ -25,5 +25,14 @@
     "itemType": "KeyItem",
     "actionName": "Unlock",
     "slug":  "yellow_key_temp"
-  }   
+  },
+  {
+    "id": 3,
+    "itemName": "test",
+    "description": "a test item",
+    "stackable": false,
+    "itemType": "Consumable",
+    "actionName": "testAction",
+    "slug":  "test"
+  }      
 ]

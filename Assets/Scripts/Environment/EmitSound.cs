@@ -23,8 +23,10 @@ public class EmitSound : MonoBehaviour {
 
         if (GetComponent<TeamHandler>())
             sc.senderTeam = GetComponent<TeamHandler>().currentTeam;
-        else
+        else if (GetComponentInParent<TeamHandler>())
             sc.senderTeam = GetComponentInParent<TeamHandler>().currentTeam;
+        else
+            sc.senderTeam = TeamHandler.TEAM.NEUTRAL;
 
         Instantiate(sc, transform.position, Quaternion.identity);
     }
