@@ -48,7 +48,6 @@ public class LevelManager : MonoBehaviour
     public int columns = 100;
     public int rows = 100;
     public float tilespacing = 0.275f;
-    public bool hackableDoorLevel = false;
 
     [Space]
     [Header("Room Modifications")]
@@ -56,9 +55,21 @@ public class LevelManager : MonoBehaviour
     public int numberOfMiscRooms = 0;
 
     [Space]
+    [Header("Colleectibles")]
+    public int numberOfAmmoCollectibles = 0;
+    public int numberOfHealthpackCollectibles = 0;
+
+    [Space]
     [Header("Room Dimensions")]
     public IntRange roomWidth = new IntRange(5, 10);
     public IntRange roomHeight = new IntRange(5, 10);
+
+    [Space]
+    [Header("Room Conditions")]
+    public bool hackableDoorLevel = false;
+    public bool RandomAmmoCollecitbles = false;
+    public bool RandomHealthpackCollecitbles = false;
+    public bool BossLevel = false;        //For Every 5 Levels in The Game
 
     [Space]
     [Header("Tile Types")]
@@ -88,6 +99,15 @@ public class LevelManager : MonoBehaviour
     [Space]
     [Header("Enemy Object")]
     public List<SpawningAIData> SpawnList;
+
+    [Space]
+    [Header("Security Camera Object")]
+    public GameObject SecurityCameraObject;
+
+    [Space]
+    [Header("Collectible Objects")]
+    public GameObject AmmoCollectibleObject;
+    public GameObject HealthpackCollectibleObject;
 
     private TileType[][] maptiles;
     private TileType[][] venttiles;
@@ -147,6 +167,8 @@ public class LevelManager : MonoBehaviour
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
         InstantiateObjective();
+        InstantiateSecurityObject();
+        InstantiateCollectibles();
 
         InstantiateEnemyPosition();
 
@@ -542,6 +564,41 @@ public class LevelManager : MonoBehaviour
                 }
             }
 
+        }
+    }
+
+    void InstantiateSecurityObject()
+    {
+        foreach(var oR in objectiveRooms)
+        {
+            Vector3 SCPosition = new Vector3(tilespacing * (oR.xpos + 1), tilespacing * (oR.ypos + 1), 0f);
+            GameObject SCObject = Instantiate(SecurityCameraObject, SCPosition, Quaternion.identity) as GameObject;
+        }
+    }
+
+    void InstantiateCollectibles()
+    {
+        if(RandomAmmoCollecitbles)
+        {
+            for(int i = 0; i < numberOfAmmoCollectibles; i++)
+            {
+                int randomMiscRoomNumber = Random.Range(0, miscRooms.Length);
+                float RandomXPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
+                float RandomYPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
+                Vector3 RandomAmmoPos = new Vector3(RandomXPos, RandomYPos, 0f);
+                GameObject AmmoObject = Instantiate(AmmoCollectibleObject, RandomAmmoPos, Quaternion.identity) as GameObject;
+            }
+        }
+        if(RandomHealthpackCollecitbles)
+        {
+            for (int i = 0; i < numberOfHealthpackCollectibles; i++)
+            {
+                int randomMiscRoomNumber = Random.Range(0, miscRooms.Length);
+                float RandomXPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
+                float RandomYPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
+                Vector3 RandomHealthpackPos = new Vector3(RandomXPos, RandomYPos, 0f);
+                GameObject HealthpackObject = Instantiate(HealthpackCollectibleObject, RandomHealthpackPos, Quaternion.identity) as GameObject;
+            }
         }
     }
 
