@@ -55,9 +55,10 @@ public class LevelManager : MonoBehaviour
     public int numberOfMiscRooms = 0;
 
     [Space]
-    [Header("Colleectibles")]
-    public int numberOfAmmoCollectibles = 0;
-    public int numberOfHealthpackCollectibles = 0;
+    [Header("Number Of Collectibles")]
+    //public int numberOfAmmoCollectibles = 0;
+    //public int numberOfHealthpackCollectibles = 0;
+    public int numberOfCollectibles = 0;
 
     [Space]
     [Header("Room Dimensions")]
@@ -89,12 +90,8 @@ public class LevelManager : MonoBehaviour
     public GameObject NextLevelPlatform;
 
     [Space]
-    [Header("Hostage Object")]
-    public GameObject HostageObject;
-
-    [Space]
-    [Header("Find Item Object")]
-    public GameObject FindItemObject;
+    [Header("Level Objectives")]
+    public List<GameObject> Objectives;
 
     [Space]
     [Header("Enemy Object")]
@@ -106,8 +103,7 @@ public class LevelManager : MonoBehaviour
 
     [Space]
     [Header("Collectible Objects")]
-    public GameObject AmmoCollectibleObject;
-    public GameObject HealthpackCollectibleObject;
+    public List<GameObject> Collectibles;
 
     private TileType[][] maptiles;
     private TileType[][] venttiles;
@@ -222,8 +218,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < numberOfObjectiveRooms; i++)
         {
             objectiveRooms[i] = new RoomScript();
-            IntRange objectiveType = new IntRange((int)RoomScript.RoomType.HOSTAGE, (int)RoomScript.RoomType.MISC);
-            RecursiveFindEmptyPos(objectiveRooms[i], existingRooms, (RoomScript.RoomType)objectiveType.Random);
+            RecursiveFindEmptyPos(objectiveRooms[i], existingRooms, RoomScript.RoomType.OBJECTIVES);
             if(hackableDoorLevel)
             {
                 objectiveRooms[i].doorType = Random.Range(0, 2);
@@ -300,12 +295,7 @@ public class LevelManager : MonoBehaviour
                                 maptiles[xCoord][yCoord] = TileType.ROOM;
                             }
                             break;
-                        case RoomScript.RoomType.HOSTAGE:
-                            {
-                                maptiles[xCoord][yCoord] = TileType.OBJECTIVE_ROOM;
-                            }
-                            break;
-                        case RoomScript.RoomType.ITEM:
+                        case RoomScript.RoomType.OBJECTIVES:
                             {
                                 maptiles[xCoord][yCoord] = TileType.OBJECTIVE_ROOM;
                             }
@@ -530,8 +520,7 @@ public class LevelManager : MonoBehaviour
                 case SpawningAIData.SPAWN_ROOM_TYPE.MISC:
                     typesToIgnore.Add(RoomScript.RoomType.SPAWN);
                     typesToIgnore.Add(RoomScript.RoomType.EXIT);
-                    typesToIgnore.Add(RoomScript.RoomType.HOSTAGE);
-                    typesToIgnore.Add(RoomScript.RoomType.ITEM);
+                    typesToIgnore.Add(RoomScript.RoomType.OBJECTIVES);
                     break;
                 case SpawningAIData.SPAWN_ROOM_TYPE.OBJECTIVE:
                     typesToIgnore.Add(RoomScript.RoomType.SPAWN);
@@ -578,26 +567,23 @@ public class LevelManager : MonoBehaviour
 
     void InstantiateCollectibles()
     {
-        if(RandomAmmoCollecitbles)
+        for (int i = 0; i < numberOfCollectibles; i++)
         {
-            for(int i = 0; i < numberOfAmmoCollectibles; i++)
+            int randomMiscRoomNumber = Random.Range(0, miscRooms.Length);
+            float RandomXPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
+            float RandomYPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
+            Vector3 RandomPosInRoom = new Vector3(RandomXPos, RandomYPos, 0f);
+            if (RandomHealthpackCollecitbles && RandomAmmoCollecitbles)
             {
-                int randomMiscRoomNumber = Random.Range(0, miscRooms.Length);
-                float RandomXPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
-                float RandomYPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
-                Vector3 RandomAmmoPos = new Vector3(RandomXPos, RandomYPos, 0f);
-                GameObject AmmoObject = Instantiate(AmmoCollectibleObject, RandomAmmoPos, Quaternion.identity) as GameObject;
+                GameObject Collectible = Instantiate(Collectibles[Random.Range(0, Collectibles.Count)], RandomPosInRoom, Quaternion.identity) as GameObject;
             }
-        }
-        if(RandomHealthpackCollecitbles)
-        {
-            for (int i = 0; i < numberOfHealthpackCollectibles; i++)
+            else if (RandomHealthpackCollecitbles && !RandomAmmoCollecitbles)
             {
-                int randomMiscRoomNumber = Random.Range(0, miscRooms.Length);
-                float RandomXPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
-                float RandomYPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
-                Vector3 RandomHealthpackPos = new Vector3(RandomXPos, RandomYPos, 0f);
-                GameObject HealthpackObject = Instantiate(HealthpackCollectibleObject, RandomHealthpackPos, Quaternion.identity) as GameObject;
+                GameObject AmmoObject = Instantiate(Collectibles[1], RandomPosInRoom, Quaternion.identity) as GameObject;
+            }
+            else if (!RandomHealthpackCollecitbles && RandomAmmoCollecitbles)
+            {
+                GameObject HealthPackObject = Instantiate(Collectibles[1], RandomPosInRoom, Quaternion.identity) as GameObject;
             }
         }
     }
@@ -613,30 +599,20 @@ public class LevelManager : MonoBehaviour
 
     void InstantiateObjective()
     {
-        for (int i = 0; i < existingRooms.Count; i++)
+        for (int i = 0; i < objectiveRooms.Length; i++)
         {
-            if (existingRooms[i].roomType == RoomScript.RoomType.HOSTAGE)
+            int ObjectiveXPos = Mathf.RoundToInt(objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth / 2));
+            int ObjectiveYPos = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2));
+
+            Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
+            GameObject go = Instantiate(Objectives[Random.Range(0, Collectibles.Count)], ObjectivePos, Quaternion.identity) as GameObject;
+
+            if(go.tag == "Rescue")
             {
-                int ObjectiveXPos = Mathf.RoundToInt(existingRooms[i].xpos + (existingRooms[i].roomWidth / 2));
-                int ObjectiveYPos = Mathf.RoundToInt(existingRooms[i].ypos + (existingRooms[i].roomHeight / 2));
-
-                Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
-                GameObject go = Instantiate(HostageObject, ObjectivePos, Quaternion.identity) as GameObject;
-
                 go.GetComponent<Pathfinder>().theLevelManager = this;
-                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
             }
-
-            else if (existingRooms[i].roomType == RoomScript.RoomType.ITEM)
-            {
-                int ObjectiveXPos = Mathf.RoundToInt(existingRooms[i].xpos + (existingRooms[i].roomWidth / 2));
-                int ObjectiveYPos = Mathf.RoundToInt(existingRooms[i].ypos + (existingRooms[i].roomHeight / 2));
-
-                Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
-                Instantiate(FindItemObject, ObjectivePos, Quaternion.identity);
-
+            else
                 maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
-            }
         }
     }
 

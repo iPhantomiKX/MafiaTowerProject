@@ -56,8 +56,7 @@ MonoBehaviour:
   tilespacing: 0.3
   numberOfObjectiveRooms: 2
   numberOfMiscRooms: 4
-  numberOfAmmoCollectibles: 2
-  numberOfHealthpackCollectibles: 5
+  numberOfCollectibles: 5
   roomWidth:
     m_Min: 5
     m_Max: 8
@@ -66,7 +65,7 @@ MonoBehaviour:
     m_Max: 8
   hackableDoorLevel: 0
   RandomAmmoCollecitbles: 1
-  RandomHealthpackCollecitbles: 1
+  RandomHealthpackCollecitbles: 0
   BossLevel: 0
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   wallTile:
@@ -93,16 +92,9 @@ MonoBehaviour:
     type: 2}
   NextLevelPlatform: {fileID: 1801789307318984, guid: 549d4e2c0ae270e4384aba2e58cddd1a,
     type: 2}
-  HostageObject: {fileID: 1797228185905298, guid: 51bc2345ee651eb49b6e458e6447172f,
-    type: 2}
-  FindItemObject: {fileID: 1174211081820102, guid: a99b064725221c742ab2ad48f0485d86,
-    type: 2}
-  SecurityCameraObject: {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d,
-    type: 2}
-  AmmoCollectibleObject: {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a,
-    type: 2}
-  HealthpackCollectibleObject: {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c,
-    type: 2}
+  Objectives:
+  - {fileID: 1174211081820102, guid: a99b064725221c742ab2ad48f0485d86, type: 2}
+  - {fileID: 1797228185905298, guid: 51bc2345ee651eb49b6e458e6447172f, type: 2}
   SpawnList:
   - name: Civilian
     stateMachine: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
@@ -114,3 +106,8 @@ MonoBehaviour:
       type: 2}
     amount: 1
     spawnRoom: 0
+  SecurityCameraObject: {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d,
+    type: 2}
+  Collectibles:
+  - {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a, type: 2}
+  - {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c, type: 2}

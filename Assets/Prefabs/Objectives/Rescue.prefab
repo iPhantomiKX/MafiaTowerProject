@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 114195799729621596}
   m_Layer: 16
   m_Name: Rescue
-  m_TagString: Untagged
+  m_TagString: Rescue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,8 +129,10 @@ MonoBehaviour:
   PatrolPosition: {x: 0, y: 0, z: 0}
   idleTime: 0
   idleAngle: 0
+  retreatThreshold: 0
   player: {fileID: 0}
   PatrolPoints: []
+  isBeingDragged: 0
   ExitPoint: {fileID: 0}
   followDist: 1.1
   startFollowDist: 0.5
@@ -188,6 +190,7 @@ MonoBehaviour:
   numCompleted: 0
   numRequired: 1
   mandatory: 0
+  objtText: {fileID: 0}
 --- !u!212 &212295014867276928
 SpriteRenderer:
   m_ObjectHideFlags: 1

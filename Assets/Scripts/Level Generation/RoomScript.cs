@@ -8,8 +8,7 @@ public class RoomScript{
     {
         SPAWN = 0,
         EXIT,
-        HOSTAGE,
-        ITEM,
+        OBJECTIVES,
         MISC,
         MAX_ROOMS,
     };
