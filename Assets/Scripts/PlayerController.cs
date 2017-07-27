@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour {
     //Quick bool to freeze update
     public bool freeze = false;
     public bool inVent = false;
+    public bool dragging = false;
+    public GameObject draggedObject = null;
 
     /*I have to leave this here cause of PlayerAnimationController class 
         - I think I'll integrate the animation controller stuff into here
@@ -80,25 +82,6 @@ public class PlayerController : MonoBehaviour {
             new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), //Direction
             (speed * mod_speed)                                                  //Speed
             );
-
-        //Dash Prototype
-        if (Input.GetKeyDown("e"))
-        {
-            //Movement.SetToDash
-            //    (
-            //    transform.right,    //Direction
-            //    1.0f,               //Distance
-            //    1.0f                //Duration
-            //    );
-        }
-
-        else if(Input.GetKeyDown("q"))
-        {
-            if (gameObject.layer == LayerMask.NameToLayer("Vent"))
-                gameObject.layer = LayerMask.NameToLayer("Player");
-            else
-                gameObject.layer = LayerMask.NameToLayer("Vent");
-        }
     }
 
 	void FaceMousePos()

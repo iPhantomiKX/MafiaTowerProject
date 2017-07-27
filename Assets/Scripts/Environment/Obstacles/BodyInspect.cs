@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class BodyInspect : Inspect
 {
-    public override void inspect()
-    {
-        Debug.Log("Body Inspect");
-        GetComponent<BaseSM>().ToggleBodyDrag();
-    }
+    public override void inspect(){ GetComponent<BaseSM>().ToggleBodyDrag(); }
 }
 

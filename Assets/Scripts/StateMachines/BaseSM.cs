@@ -141,17 +141,27 @@ public abstract class BaseSM : MonoBehaviour {
     public virtual void ToggleBodyDrag()
     {
         isBeingDragged = !isBeingDragged;
+        player.GetComponent<PlayerController>().dragging = !player.GetComponent<PlayerController>().dragging;
         gameObject.GetComponent<DistanceJoint2D>().enabled = isBeingDragged;
+        if (isBeingDragged)
+            player.GetComponent<PlayerController>().draggedObject = this.gameObject;
+        else
+            player.GetComponent<PlayerController>().draggedObject = null;
     }
 
     public virtual void OnDeath()
     {
-        //Remember to disable speech script;
+        //Check if gameobject has speech script;
+        GameObject canvasGO = gameObject.transform.parent.gameObject.GetComponentInChildren<Canvas>().gameObject;
+        if(canvasGO != null)
+        {
+            canvasGO.GetComponent<SpeechScript>().BackgroundImage.gameObject.SetActive(false);
+            canvasGO.GetComponent<SpeechScript>().enabled = false;
+        }
 
-        if (gameObject.GetComponent<DistanceJoint2D>() == null)
-            gameObject.AddComponent<DistanceJoint2D>();
-
+        //Stuff needed for body dragging
         gameObject.AddComponent<BodyInspect>();
+        gameObject.AddComponent<DistanceJoint2D>();
         gameObject.AddComponent<SpriteOutline>();
         gameObject.layer = LayerMask.NameToLayer("Inspectables");
         MoveSpeed = player.GetComponent<PlayerController>().speed;
