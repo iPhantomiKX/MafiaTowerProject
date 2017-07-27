@@ -866,4 +866,13 @@ public class LevelManager : MonoBehaviour
     {
         maptiles[(int)position.x][(int)position.y] = TileType.FLOOR;
     }
+
+    // Get if player can see thru this tile (used for fog of war)
+    public bool GetCanSeeThru(int x, int y)
+    {
+        if ((int)maptiles[x][y] >= (int)TileType.WALL_VERTICAL && (int)maptiles[x][y] <= (int)TileType.WALL_ENDING_BOTTOM)
+            return false;
+        else
+            return true;
+    }
 }
