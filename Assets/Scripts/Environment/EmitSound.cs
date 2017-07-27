@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(TeamHandler))]
 public class EmitSound : MonoBehaviour {
     public float maxInitialRadius = 20f;
     public float expandSpeed = 0.75f;
@@ -23,8 +24,10 @@ public class EmitSound : MonoBehaviour {
 
         if (GetComponent<TeamHandler>())
             sc.senderTeam = GetComponent<TeamHandler>().currentTeam;
-        else
+        else if (GetComponentInParent<TeamHandler>())
             sc.senderTeam = GetComponentInParent<TeamHandler>().currentTeam;
+        else
+            sc.senderTeam = TeamHandler.TEAM.NEUTRAL;
 
         Instantiate(sc, transform.position, Quaternion.identity);
     }

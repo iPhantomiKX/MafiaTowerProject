@@ -4,6 +4,15 @@ using UnityEngine;
 
 public abstract class EnemySM : BaseSM {
 
+	public enum ENEMY_ROLE
+	{
+		GUARD,
+		PATROL,
+		WANDER
+	}
+
+	public ENEMY_ROLE role = ENEMY_ROLE.PATROL;
+
 	public float AttackDamage{ get; set; }
 	public float AttackSpeed{ get; set; }
 	public bool attackAble;

@@ -242,8 +242,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
-  m_LinearDrag: 0
+  m_Mass: 1
+  m_LinearDrag: 15
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GO: {fileID: 1450524761547108}
-  health: 10
+  health: 2
   death:
     m_PersistentCalls:
       m_Calls:
@@ -734,7 +734,7 @@ MonoBehaviour:
   isBeingDragged: 0
   ExitPoint: {fileID: 0}
   CurrentState: 0
-  increasedSpeed: 1
+  increasedSpeed: 0.5
   maxPatrolRooms: 3
   PersuadeActionTime: 5
   emitSoundInterval: 2
@@ -803,7 +803,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 1, b: 0.6275861, a: 1}
   m_FlipX: 0

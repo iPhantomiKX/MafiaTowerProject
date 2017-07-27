@@ -54,15 +54,20 @@ MonoBehaviour:
   columns: 30
   rows: 30
   tilespacing: 0.3
-  hackableDoorLevel: 0
   numberOfObjectiveRooms: 2
   numberOfMiscRooms: 4
+  numberOfAmmoCollectibles: 2
+  numberOfHealthpackCollectibles: 5
   roomWidth:
     m_Min: 5
     m_Max: 8
   roomHeight:
     m_Min: 5
     m_Max: 8
+  hackableDoorLevel: 0
+  RandomAmmoCollecitbles: 1
+  RandomHealthpackCollecitbles: 1
+  BossLevel: 0
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   wallTile:
   - {fileID: 1267209111468980, guid: 71411f96dd986994cb4775580bc42dd9, type: 2}
@@ -79,7 +84,7 @@ MonoBehaviour:
   objectiveRoomTile: {fileID: 1085909745408438, guid: a817c7fd7adb5d5488739b00e5b49260,
     type: 2}
   doorTile:
-  - {fileID: 1596223912260268, guid: 646692166073e184383a5dbd87641e1e, type: 2}
+  - {fileID: 1020234821988456, guid: 062af825b8920a149b35a8b3e2f5226b, type: 2}
   - {fileID: 1522745637041514, guid: acdee79f0e0fb1c44a6851429c9764a6, type: 2}
   ventTile:
   - {fileID: 1439695560465644, guid: 9e589c8ddfbaa404c92e970ca8ea1b8a, type: 2}
@@ -92,5 +97,20 @@ MonoBehaviour:
     type: 2}
   FindItemObject: {fileID: 1174211081820102, guid: a99b064725221c742ab2ad48f0485d86,
     type: 2}
-  EnemyObject: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
+  SecurityCameraObject: {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d,
     type: 2}
+  AmmoCollectibleObject: {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a,
+    type: 2}
+  HealthpackCollectibleObject: {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c,
+    type: 2}
+  SpawnList:
+  - name: Civilian
+    stateMachine: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
+      type: 2}
+    amount: 3
+    spawnRoom: 1
+  - name: Enemy
+    stateMachine: {fileID: 1740129890561196, guid: d79c486d137990f4390cfe8e10e8c9bd,
+      type: 2}
+    amount: 1
+    spawnRoom: 0
