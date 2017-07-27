@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fogPrefab: {fileID: 1394525052108446, guid: f4fc36b0b23835d41a04e20e41770d4f, type: 2}
-  fogRange: 3
+  fogRange: 10
 --- !u!1001 &901036733
 Prefab:
   m_ObjectHideFlags: 0

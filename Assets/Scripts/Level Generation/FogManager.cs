@@ -62,37 +62,65 @@ public class FogManager : MonoBehaviour {
         int x = (int)checkPos.x;
         int y = (int)checkPos.y;
 
-        fogMap[x][y].GetComponent<FogTile>().SwitchOff();
-        checkedPos.Add(checkPos);
+		if (CheckIfInBounds (checkPos)) 
+		{
+            fogMap[x][y].GetComponent<FogTile>().SwitchOff();
+			checkedPos.Add (checkPos);
+		
+	        if (tilesLeft > 0)
+	        {
+	            Vector2 newPos = checkPos - new Vector2(0, 1);
+				if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+	            {
+					RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
+				}
 
-        if (tilesLeft > 0)
+	            newPos = checkPos - new Vector2(0, -1);
+				if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+				{
+					RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
+				}
+
+	            newPos = checkPos - new Vector2(1, 0);
+				if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+				{
+					RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
+				}
+
+	            newPos = checkPos - new Vector2(-1, 0);
+				if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+				{
+					RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
+				}
+        	}
+		}
+	}
+
+    bool CheckIfInBounds(Vector2 checkPos)
+    {        
+        int x = (int)checkPos.x;
+        int y = (int)checkPos.y;
+        
+		if (x >= 0 && x < fogMap.Length && y >= 0 && y < fogMap[0].Length)
         {
-            Vector2 newPos = checkPos - new Vector2(0, 1);
-            if (!checkedPos.Contains(newPos))
-            {
-                RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
-            }
-
-            newPos = checkPos - new Vector2(0, -1);
-            if (!checkedPos.Contains(newPos))
-            {
-                RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
-            }
-
-            newPos = checkPos - new Vector2(1, 0);
-            if (!checkedPos.Contains(newPos))
-            {
-                RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
-            }
-
-            newPos = checkPos - new Vector2(-1, 0);
-            if (!checkedPos.Contains(newPos))
-            {
-                RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
-            }
+            return true;
         }
+
+        return false;
     }
 
+	bool CheckIfCanSeeThru(Vector2 checkPos)
+	{
+		int x = (int)checkPos.x;
+		int y = (int)checkPos.y;		
+
+		if (levelManagerRef.GetCanSeeThru(x, y))
+		{
+			return true;
+		}
+
+		return false;
+	}	
 }
 
 /*
