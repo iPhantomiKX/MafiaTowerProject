@@ -64,8 +64,12 @@ public class FogManager : MonoBehaviour {
 
 		if (CheckIfInBounds (checkPos)) 
 		{
-            fogMap[x][y].GetComponent<FogTile>().SwitchOff();
-			checkedPos.Add (checkPos);
+            if (tilesLeft == 0)
+                fogMap[x][y].GetComponent<FogTile>().SwitchOff(true);
+			else
+                fogMap[x][y].GetComponent<FogTile>().SwitchOff(false);
+
+            checkedPos.Add (checkPos);
 		
 	        if (tilesLeft > 0)
 	        {
