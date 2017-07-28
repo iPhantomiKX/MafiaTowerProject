@@ -54,10 +54,10 @@ public class FogManager : MonoBehaviour {
     {
         List<Vector3> checkedList = new List<Vector3>();
 
-        RecursiveSwitchTileOff(startPos, range, checkedList);
+        RecursiveSwitchTileOff(startPos, range, checkedList, true);
     }
 
-    void RecursiveSwitchTileOff(Vector2 checkPos, int tilesLeft, List<Vector3> checkedPos)
+    void RecursiveSwitchTileOff(Vector2 checkPos, int tilesLeft, List<Vector3> checkedPos, bool firstLoop = false)
     {
         int x = (int)checkPos.x;
         int y = (int)checkPos.y;
@@ -69,29 +69,73 @@ public class FogManager : MonoBehaviour {
 		
 	        if (tilesLeft > 0)
 	        {
-	            Vector2 newPos = checkPos - new Vector2(0, 1);
-				if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
-	            {
-					RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
-				}
+	            Vector2 newPos = checkPos + new Vector2(0, 1);
+                if (firstLoop)
+                {
+                    List<Vector3> newList = new List<Vector3>();
+                    if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+                    {
+                        RecursiveSwitchTileOff(newPos, tilesLeft - 1, newList);
+                    }
+                }
+                else
+                {
+                    if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+                    {
+                        RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
+                    }
+                }
 
-	            newPos = checkPos - new Vector2(0, -1);
-				if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
-				{
-					RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
-				}
+	            newPos = checkPos + new Vector2(0, -1);
+                if (firstLoop)
+                {
+                    List<Vector3> newList = new List<Vector3>();
+                    if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+                    {
+                        RecursiveSwitchTileOff(newPos, tilesLeft - 1, newList);
+                    }
+                }
+                else
+                {
+                    if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+                    {
+                        RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
+                    }
+                }
 
-	            newPos = checkPos - new Vector2(1, 0);
-				if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
-				{
-					RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
-				}
+	            newPos = checkPos + new Vector2(1, 0);
+                if (firstLoop)
+                {
+                    List<Vector3> newList = new List<Vector3>();
+                    if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+                    {
+                        RecursiveSwitchTileOff(newPos, tilesLeft - 1, newList);
+                    }
+                }
+                else
+                {
+                    if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+                    {
+                        RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
+                    }
+                }
 
-	            newPos = checkPos - new Vector2(-1, 0);
-				if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
-				{
-					RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
-				}
+	            newPos = checkPos + new Vector2(-1, 0);
+                if (firstLoop)
+                {
+                    List<Vector3> newList = new List<Vector3>();
+                    if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+                    {
+                        RecursiveSwitchTileOff(newPos, tilesLeft - 1, newList);
+                    }
+                }
+                else
+                {
+                    if (!checkedPos.Contains(newPos) && CheckIfCanSeeThru(checkPos))
+                    {
+                        RecursiveSwitchTileOff(newPos, tilesLeft - 1, checkedPos);
+                    }
+                }
         	}
 		}
 	}
