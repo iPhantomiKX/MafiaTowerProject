@@ -94,7 +94,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    bool CheckIfItemIsInInventory(Item item)
+    public bool CheckIfItemIsInInventory(Item item)
     {
         for (int i = 0; i < items.Count; i++)
         {
