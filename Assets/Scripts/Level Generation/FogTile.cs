@@ -9,7 +9,8 @@ public class FogTile : MonoBehaviour {
     public float fadeSpeed;
 
     float timer = 0.0f;
-	float alpha;
+    float minAlpha, maxAlpha;
+    float alpha;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +25,7 @@ public class FogTile : MonoBehaviour {
         {
             timer += Time.deltaTime;
 
-			if (alpha >= 0)
+			if (alpha >= minAlpha)
 				GetComponent<SpriteRenderer> ().color -= new Color (0, 0, 0, Time.deltaTime * fadeSpeed);
 
 
@@ -36,14 +37,21 @@ public class FogTile : MonoBehaviour {
         }
         else
         {
-			if (alpha < 1)
+			if (alpha < maxAlpha)
 				GetComponent<SpriteRenderer> ().color += new Color (0, 0, 0, Time.deltaTime * fadeSpeed);
         }
 	}
 
-    public void SwitchOff()
+    public void SwitchOff(bool borderTile = false)
     {
         isOff = true;
         timer = 0;
+
+        if (!borderTile)
+            minAlpha = 0;
+        else
+            minAlpha = 0.5f;
+
+        maxAlpha = 1;
     }
 }

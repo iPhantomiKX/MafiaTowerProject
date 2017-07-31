@@ -21,6 +21,10 @@ public class RangeEnemy : EnemySM {
 	public Animator animator;
 	public int maxPatrolRooms = 5;
 
+	void Awake(){
+		animator = this.gameObject.transform.GetChild (0).GetComponent<Animator>();
+	}
+
 	// Use this for initialization
 	public override void Start () {
 		base.Start ();
