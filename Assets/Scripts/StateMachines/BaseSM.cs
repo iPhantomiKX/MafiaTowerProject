@@ -26,7 +26,7 @@ public abstract class BaseSM : MonoBehaviour {
 
     protected GameStateManager GameStateRef;
 
-    protected Pathfinder PathfinderRef;
+	public Pathfinder PathfinderRef;
 
     public bool isBeingDragged = false;
 
