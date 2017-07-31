@@ -56,8 +56,6 @@ public class LevelManager : MonoBehaviour
 
     [Space]
     [Header("Number Of Collectibles")]
-    //public int numberOfAmmoCollectibles = 0;
-    //public int numberOfHealthpackCollectibles = 0;
     public int numberOfCollectibles = 0;
 
     [Space]
@@ -70,7 +68,7 @@ public class LevelManager : MonoBehaviour
     public bool hackableDoorLevel = false;
     public bool RandomAmmoCollecitbles = false;
     public bool RandomHealthpackCollecitbles = false;
-    public bool BossLevel = false;        //For Every 5 Levels in The Game
+    public bool BossLevel = false;        //For Every 5 Levels in The Game, this bool becomes true
 
     [Space]
     [Header("Tile Types")]
@@ -100,6 +98,10 @@ public class LevelManager : MonoBehaviour
     [Space]
     [Header("Security Camera Object")]
     public GameObject SecurityCameraObject;
+
+    [Space]
+    [Header("Collectible Objects")]
+    public List<GameObject> Obstacles;
 
     [Space]
     [Header("Collectible Objects")]
@@ -552,7 +554,6 @@ public class LevelManager : MonoBehaviour
                     return;
                 }
             }
-
         }
     }
 
@@ -573,17 +574,38 @@ public class LevelManager : MonoBehaviour
             float RandomXPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
             float RandomYPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
             Vector3 RandomPosInRoom = new Vector3(RandomXPos, RandomYPos, 0f);
+
+            //IF BOTH BOOLEANS ARE TRUE
             if (RandomHealthpackCollecitbles && RandomAmmoCollecitbles)
             {
                 GameObject Collectible = Instantiate(Collectibles[Random.Range(0, Collectibles.Count)], RandomPosInRoom, Quaternion.identity) as GameObject;
             }
-            else if (RandomHealthpackCollecitbles && !RandomAmmoCollecitbles)
+
+            //ELSE
+            else
             {
-                GameObject AmmoObject = Instantiate(Collectibles[1], RandomPosInRoom, Quaternion.identity) as GameObject;
-            }
-            else if (!RandomHealthpackCollecitbles && RandomAmmoCollecitbles)
-            {
-                GameObject HealthPackObject = Instantiate(Collectibles[1], RandomPosInRoom, Quaternion.identity) as GameObject;
+                for (int idx = 0; idx < Collectibles.Count; idx++)
+                {
+                    switch (Collectibles[idx].name)
+                    {
+                        case "AmmoInspect":
+                            {
+                                if (RandomAmmoCollecitbles)
+                                {
+                                    GameObject AmmoCollectible = Instantiate(Collectibles[idx], RandomPosInRoom, Quaternion.identity) as GameObject;
+                                }
+                            }
+                            break;
+                        case "Medkit":
+                            {
+                                if (RandomHealthpackCollecitbles)
+                                {
+                                    GameObject HealthpackCollectible = Instantiate(Collectibles[idx], RandomPosInRoom, Quaternion.identity) as GameObject;
+                                }
+                            }
+                            break;
+                    }
+                }
             }
         }
     }
@@ -607,7 +629,7 @@ public class LevelManager : MonoBehaviour
             Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
             GameObject go = Instantiate(Objectives[Random.Range(0, Collectibles.Count)], ObjectivePos, Quaternion.identity) as GameObject;
 
-            if(go.tag == "Rescue")
+            if (go.tag == "Rescue")
             {
                 go.GetComponent<Pathfinder>().theLevelManager = this;
             }

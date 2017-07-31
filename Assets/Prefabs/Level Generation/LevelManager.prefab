@@ -65,7 +65,7 @@ MonoBehaviour:
     m_Max: 8
   hackableDoorLevel: 0
   RandomAmmoCollecitbles: 1
-  RandomHealthpackCollecitbles: 0
+  RandomHealthpackCollecitbles: 1
   BossLevel: 0
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   wallTile:
@@ -108,6 +108,11 @@ MonoBehaviour:
     spawnRoom: 0
   SecurityCameraObject: {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d,
     type: 2}
+  Obstacles:
+  - {fileID: 1140021167988008, guid: 281f4c282a2db4040844f8de402451b5, type: 2}
+  - {fileID: 1353206106811042, guid: be890697a2387b44885417f803ce1aa3, type: 2}
+  - {fileID: 1762170038390208, guid: 5738cb797e7ad0f428b748d1ecd559ab, type: 2}
+  - {fileID: 1349152441447342, guid: 3d7405182d3037748a366676d90aa90b, type: 2}
   Collectibles:
   - {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a, type: 2}
   - {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c, type: 2}
