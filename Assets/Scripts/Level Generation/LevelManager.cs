@@ -41,6 +41,7 @@ public class LevelManager : MonoBehaviour
         HACKABLE_DOOR,
         OBJECTIVE_ROOM,
         OBJECTIVE,
+        OBSTACLE,
         ENTITY,
     };
 
@@ -69,6 +70,23 @@ public class LevelManager : MonoBehaviour
     public bool RandomAmmoCollecitbles = false;
     public bool RandomHealthpackCollecitbles = false;
     public bool BossLevel = false;        //For Every 5 Levels in The Game, this bool becomes true
+
+    //Able to on and off obstacles for the particular level, used for level progression
+    [Space]
+    [Header("Level Obstacles")]
+    public bool GlassObstacle = false;
+    public bool BlinkingTrapObstacle = false;
+    public bool WaitTrapObstacle = false;
+    public bool LaserAlarmObstacle = false;
+
+    [Space]
+    [Header("Quantity of Obstacles/Room")]
+    public int numberOfObstaclesPerRoom = 1;
+
+    [Space]
+    [Header("Quantity of Obstacles For Each Obstacle")]
+    public int numberOfWaitTraps = 0;
+    public int numberOfLaserAlarms = 0;
 
     [Space]
     [Header("Tile Types")]
@@ -108,22 +126,23 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> Collectibles;
 
     private TileType[][] maptiles;
+    private TileType[][] obstacletiles;
     private TileType[][] venttiles;
-    private RoomScript[] rooms;
 
     private List<RoomScript> existingRooms;
     private RoomScript spawnRoom;
     private RoomScript exitRoom;
     private RoomScript[] objectiveRooms;
     private RoomScript[] miscRooms;
-    private GameObject LevelLayout;
 
+    private GameObject LevelLayout;
     private GameObject VentsLayout;
     private GameObject FloorsLayout;
     private GameObject WallsLayout;
     private GameObject VentsEntranceLayout;
     private GameObject ObjectivesRoomTileLayout;
     private GameObject DoorsTileLayout;
+    private GameObject ObstacleLayout;
 
     private bool areaIsIntersecting;
 
@@ -150,6 +169,8 @@ public class LevelManager : MonoBehaviour
         WallsLayout = new GameObject("WallsLayout");
         VentsEntranceLayout = new GameObject("VentsEntranceLayout");
         ObjectivesRoomTileLayout = new GameObject("ObjectivesRoomTileLayout");
+        ObstacleLayout = new GameObject("ObstacleLayout");
+        
         DoorsTileLayout = new GameObject("DoorsTileLayout");
 
         SetupTilesArray();
@@ -165,6 +186,7 @@ public class LevelManager : MonoBehaviour
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
         InstantiateObjective();
+        InstantiateObstacle();
         InstantiateSecurityObject();
         InstantiateCollectibles();
 
@@ -188,10 +210,12 @@ public class LevelManager : MonoBehaviour
     {
         maptiles = new TileType[columns][];
         venttiles = new TileType[columns][];
+        obstacletiles = new TileType[columns][];
         for (int i = 0; i < maptiles.Length; i++)
         {
             maptiles[i] = new TileType[rows];
             venttiles[i] = new TileType[rows];
+            obstacletiles[i] = new TileType[rows];
         }
     }
 
@@ -638,6 +662,143 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void InstantiateObstacle()
+    {
+        for(int i = 0; i < objectiveRooms.Length; i++)
+        {
+            //int RandomObstacle = Random.Range(0, Obstacles.Count);
+            int RandomObstacle = 2;
+            switch(RandomObstacle)
+            {
+                case 0://GLASS OBSTACLE
+                    {
+                        for(int idx = 0; idx < Obstacles.Count; idx++)
+                        {
+                            if (Obstacles[idx].name == "Glass" && GlassObstacle == true)
+                            {
+                                switch(objectiveRooms[i].doorDirection)
+                                {
+                                    case RoomScript.DoorDirection.NORTH:
+                                        {
+
+                                        }
+                                        break;
+                                    case RoomScript.DoorDirection.SOUTH:
+                                        {
+
+                                        }
+                                        break;
+                                    case RoomScript.DoorDirection.EAST:
+                                        {
+
+                                        }
+                                        break;
+                                    case RoomScript.DoorDirection.WEST:
+                                        {
+
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                break;
+                case 1://WAIT TRAP OBSTACLE
+                {
+                    for (int idx = 0; idx < Obstacles.Count; idx++)
+                    {
+                        if (Obstacles[idx].name == "WaitTrap" && WaitTrapObstacle == true)
+                        {
+                            for(int num = 0; num < numberOfWaitTraps; num++)
+                            {
+                                int RandomXPos = Random.Range(objectiveRooms[i].xpos + 1, objectiveRooms[i].xpos + objectiveRooms[i].roomWidth - 1);
+                                int RandomYPos = Random.Range(objectiveRooms[i].ypos + 1, objectiveRooms[i].ypos + objectiveRooms[i].roomHeight - 1);
+
+                                obstacletiles[RandomXPos][RandomYPos] = TileType.OBSTACLE;
+                                Vector3 TrapPos = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos, 0);
+                                GameObject WaitTrap = Instantiate(Obstacles[idx], TrapPos, Quaternion.identity);
+                                WaitTrap.transform.parent = ObstacleLayout.transform;
+                            }
+                        }
+                    }
+                }
+                break;
+                case 2://BLINKING TRAP OBSTACLE
+                {
+                    for (int idx = 0; idx < Obstacles.Count; idx++)
+                    {
+                        if (Obstacles[idx].name == "BlinkingTrap" && BlinkingTrapObstacle == true)
+                        {
+                            switch(objectiveRooms[i].doorDirection)
+                            {
+                                case RoomScript.DoorDirection.NORTH:
+                                    {
+                                        int numberOfBlinkingTraps = objectiveRooms[i].roomWidth - 2;
+                                        for(int BlinkingTrapsIdx = 0; BlinkingTrapsIdx < numberOfBlinkingTraps; BlinkingTrapsIdx++)
+                                        {
+                                            obstacletiles[objectiveRooms[i].xpos + BlinkingTrapsIdx + 1][objectiveRooms[i].ypos + objectiveRooms[i].roomHeight - 2] = TileType.OBSTACLE;
+                                            Vector3 BTPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + BlinkingTrapsIdx + 1), tilespacing * (objectiveRooms[i].ypos + objectiveRooms[i].roomHeight - 2), 0);
+                                            GameObject BlinkingTrap = Instantiate(Obstacles[idx], BTPos, Quaternion.identity);
+                                            BlinkingTrap.transform.parent = ObstacleLayout.transform;
+                                        }
+                                    }
+                                    break;
+                                case RoomScript.DoorDirection.SOUTH:
+                                    {
+                                        int numberOfBlinkingTraps = objectiveRooms[i].roomWidth - 2;
+                                        for (int BlinkingTrapsIdx = 0; BlinkingTrapsIdx < numberOfBlinkingTraps; BlinkingTrapsIdx++)
+                                        {
+                                            obstacletiles[objectiveRooms[i].xpos + BlinkingTrapsIdx + 1][objectiveRooms[i].ypos + 1] = TileType.OBSTACLE;
+                                            Vector3 BTPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + BlinkingTrapsIdx + 1), tilespacing * (objectiveRooms[i].ypos + 1), 0);
+                                            GameObject BlinkingTrap = Instantiate(Obstacles[idx], BTPos, Quaternion.identity);
+                                            BlinkingTrap.transform.parent = ObstacleLayout.transform;
+                                        }
+                                    }
+                                    break;
+                                case RoomScript.DoorDirection.EAST:
+                                    {
+                                        int numberOfBlinkingTraps = objectiveRooms[i].roomHeight - 2;
+                                        for (int BlinkingTrapsIdx = 0; BlinkingTrapsIdx < numberOfBlinkingTraps; BlinkingTrapsIdx++)
+                                        {
+                                            obstacletiles[objectiveRooms[i].xpos + objectiveRooms[i].roomWidth - 2][objectiveRooms[i].ypos + BlinkingTrapsIdx + 1] = TileType.OBSTACLE;
+                                            Vector3 BTPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + objectiveRooms[i].roomWidth - 2), tilespacing * (objectiveRooms[i].ypos + BlinkingTrapsIdx + 1), 0);
+                                            GameObject BlinkingTrap = Instantiate(Obstacles[idx], BTPos, Quaternion.identity);
+                                            BlinkingTrap.transform.parent = ObstacleLayout.transform;
+                                        }
+                                    }
+                                    break;
+                                case RoomScript.DoorDirection.WEST:
+                                    {
+                                        int numberOfBlinkingTraps = objectiveRooms[i].roomHeight - 2;
+                                        for (int BlinkingTrapsIdx = 0; BlinkingTrapsIdx < numberOfBlinkingTraps; BlinkingTrapsIdx++)
+                                        {
+                                            obstacletiles[objectiveRooms[i].xpos + 1][objectiveRooms[i].ypos + BlinkingTrapsIdx + 1] = TileType.OBSTACLE;
+                                            Vector3 BTPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + 1), tilespacing * (objectiveRooms[i].ypos + BlinkingTrapsIdx + 1), 0);
+                                            GameObject BlinkingTrap = Instantiate(Obstacles[idx], BTPos, Quaternion.identity);
+                                            BlinkingTrap.transform.parent = ObstacleLayout.transform;
+                                        }
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+                break;
+                case 3://LASER ALARM OBSTACLE
+                {
+                    for (int idx = 0; idx < Obstacles.Count; idx++)
+                    {
+                        if (Obstacles[idx].name == "LaserAlarm" && LaserAlarmObstacle == true)
+                        {
+
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+
     void InstantiateTiles()
     {
         for (int i = 0; i < venttiles.Length; i++)
@@ -818,6 +979,11 @@ public class LevelManager : MonoBehaviour
             case TileType.OBJECTIVE: return -1;
             case TileType.ENTITY: return -1;
 
+        }
+
+        switch(obstacletiles[x][y])
+        {
+            case TileType.OBSTACLE: return -1;
         }
 
         if ((int)maptiles[x][y] >= (int)TileType.WALL_VERTICAL && (int)maptiles[x][y] <= (int)TileType.WALL_ENDING_BOTTOM)
