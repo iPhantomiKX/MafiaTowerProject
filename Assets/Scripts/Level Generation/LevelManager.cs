@@ -530,6 +530,11 @@ public class LevelManager : MonoBehaviour
     {
         int spawnIdx = 0;
 
+        while (SpawnList[spawnIdx].amount == 0)
+        {
+            ++spawnIdx;
+        }
+
         while (SpawnList[spawnIdx].amount > 0)
         {
             // Find room to spawn
@@ -961,6 +966,11 @@ public class LevelManager : MonoBehaviour
     // Gets the cost of a tile/grid based on the TileType
     public int GetGridCost(int x, int y)
     {
+        switch (obstacletiles[x][y])
+        {
+            //case TileType.OBSTACLE: return -1;
+        }
+
         switch (maptiles[x][y])
         {
             case TileType.FLOOR: return 1;
@@ -979,11 +989,6 @@ public class LevelManager : MonoBehaviour
             case TileType.OBJECTIVE: return -1;
             case TileType.ENTITY: return -1;
 
-        }
-
-        switch(obstacletiles[x][y])
-        {
-            case TileType.OBSTACLE: return -1;
         }
 
         if ((int)maptiles[x][y] >= (int)TileType.WALL_VERTICAL && (int)maptiles[x][y] <= (int)TileType.WALL_ENDING_BOTTOM)

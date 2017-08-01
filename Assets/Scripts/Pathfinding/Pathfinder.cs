@@ -127,6 +127,7 @@ public class Pathfinder : MonoBehaviour {
             {
                 b_ContinueNextFrame = true;
                 Debug.Log("Pathfind took too long. Loops: " + LoopCount);
+                Debug.Log("Current Node: " + CurrentNode.TileCost);
 
                 return;
             }
@@ -561,19 +562,19 @@ public class Pathfinder : MonoBehaviour {
         //foreach (Node aNode in ClosedList)
         //{
         //    Gizmos.color = Color.red;
-        //    Gizmos.DrawSphere (aNode.m_pos, 0.075f);
+        //    Gizmos.DrawSphere(aNode.m_pos, 0.075f);
         //}
 
-        //foreach (Node aNode in OpenList) 
+        //foreach (Node aNode in OpenList)
         //{
         //    Gizmos.color = Color.blue;
-        //    Gizmos.DrawSphere (aNode.m_pos, 0.05f);
+        //    Gizmos.DrawSphere(aNode.m_pos, 0.05f);
         //}
 
         //if (CurrentNode != null)
         //{
         //    Gizmos.color = Color.yellow;
-        //    Gizmos.DrawSphere (CurrentNode.m_pos, 0.1f);
+        //    Gizmos.DrawSphere(CurrentNode.m_pos, 0.1f);
         //}	
 	}
 }

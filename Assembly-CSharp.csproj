@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{00D5DDF0-35A8-2AC9-1408-7555C0ECC742}</ProjectGuid>
+    <ProjectGuid>{90F58531-E852-5F78-4F04-3DD6770B5280}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_1;UNITY_5_5;UNITY_5;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_1;UNITY_5_5;UNITY_5;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\AI\BaseFSM.cs" />
      <Compile Include="Assets\Scripts\AI\MeleeExample.cs" />
      <Compile Include="Assets\Scripts\AmmoInspect.cs" />
+     <Compile Include="Assets\Scripts\BodyTossScript.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CooldownDisplay.cs" />
      <Compile Include="Assets\Scripts\EnemyController.cs" />
@@ -60,10 +61,14 @@
      <Compile Include="Assets\Scripts\Environment\Objective\DefeatEnemy.cs" />
      <Compile Include="Assets\Scripts\Environment\Objective\FindObjt.cs" />
      <Compile Include="Assets\Scripts\Environment\Objective\FindObjtInspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\FinishLevelInTime.cs" />
      <Compile Include="Assets\Scripts\Environment\Objective\Objective.cs" />
+     <Compile Include="Assets\Scripts\Environment\Objective\PlayerActionLimitObjt.cs" />
      <Compile Include="Assets\Scripts\Environment\Objective\ReachArea.cs" />
      <Compile Include="Assets\Scripts\Environment\Objective\RescueObjt.cs" />
      <Compile Include="Assets\Scripts\Environment\Objective\RescueObjtInspect.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\BlinkingTrap.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\BodyInspect.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\CameraConsole.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\Console.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\ConsoleInspect.cs" />
@@ -75,9 +80,9 @@
      <Compile Include="Assets\Scripts\Environment\Obstacles\LaserAlarm.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\LaserAlarmInspect.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\SecurityCamera.cs" />
-     <Compile Include="Assets\Scripts\Environment\Obstacles\SecurityCameraArea.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\SecurityConsoleInspect.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\TraitObstacle.cs" />
+     <Compile Include="Assets\Scripts\Environment\Obstacles\VentInspect.cs" />
      <Compile Include="Assets\Scripts\Environment\Obstacles\WaitTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\SoundCircleController.cs" />
      <Compile Include="Assets\Scripts\FillSkillbar.cs" />
@@ -85,19 +90,28 @@
      <Compile Include="Assets\Scripts\GameStateManager.cs" />
      <Compile Include="Assets\Scripts\Gun.cs" />
      <Compile Include="Assets\Scripts\HealthComponent.cs" />
+     <Compile Include="Assets\Scripts\Inventory\GameItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\GameItemInspect.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Inventory\InventoryDisplay.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemData.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
      <Compile Include="Assets\Scripts\Inventory\Slot.cs" />
      <Compile Include="Assets\Scripts\Inventory\Tooltip.cs" />
+     <Compile Include="Assets\Scripts\Level Generation\FogManager.cs" />
+     <Compile Include="Assets\Scripts\Level Generation\FogTile.cs" />
      <Compile Include="Assets\Scripts\Level Generation\IntRange.cs" />
      <Compile Include="Assets\Scripts\Level Generation\LevelManager.cs" />
      <Compile Include="Assets\Scripts\Level Generation\RoomScript.cs" />
+     <Compile Include="Assets\Scripts\Level Generation\VentColliderScript.cs" />
+     <Compile Include="Assets\Scripts\Level Generation\VentEntranceScript.cs" />
      <Compile Include="Assets\Scripts\Melee.cs" />
      <Compile Include="Assets\Scripts\MovementScript.cs" />
      <Compile Include="Assets\Scripts\ObjectiveManager.cs" />
      <Compile Include="Assets\Scripts\PanelManager.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\Node.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Pause\AssignTrait.cs" />
      <Compile Include="Assets\Scripts\Pause\CurrentTabDisplay.cs" />
      <Compile Include="Assets\Scripts\Pause\GetTraitDescription.cs" />
@@ -114,9 +128,12 @@
      <Compile Include="Assets\Scripts\SkillNumber.cs" />
      <Compile Include="Assets\Scripts\SkillSlot.cs" />
      <Compile Include="Assets\Scripts\SkillsInputManager.cs" />
+     <Compile Include="Assets\Scripts\SpeechDatabase.cs" />
+     <Compile Include="Assets\Scripts\SpeechScript.cs" />
      <Compile Include="Assets\Scripts\SpriteOutline.cs" />
      <Compile Include="Assets\Scripts\StateMachines\BaseSM.cs" />
-     <Compile Include="Assets\Scripts\StateMachines\CivilianSM.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\CivilianSM\CivilianPersuadeInspect.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\CivilianSM\CivilianSM.cs" />
      <Compile Include="Assets\Scripts\StateMachines\EnemyBullet.cs" />
      <Compile Include="Assets\Scripts\StateMachines\EnemySM.cs" />
      <Compile Include="Assets\Scripts\StateMachines\EnemyUI.cs" />
@@ -126,6 +143,7 @@
      <Compile Include="Assets\Scripts\StateMachines\NeutralSM.cs" />
      <Compile Include="Assets\Scripts\StateMachines\RangeEnemy.cs" />
      <Compile Include="Assets\Scripts\StateMachines\RescueSM.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\TeamHandler.cs" />
      <Compile Include="Assets\Scripts\StealthScript.cs" />
      <Compile Include="Assets\Scripts\TraitHolder.cs" />
      <Compile Include="Assets\Scripts\Traits\AbilityTrait.cs" />
@@ -148,16 +166,25 @@
      <Compile Include="Assets\Scripts\Traits\Trait_Persuasion.cs" />
      <Compile Include="Assets\Scripts\Traits\Trait_Speed.cs" />
      <Compile Include="Assets\Scripts\Traits\Trait_WireDefusal.cs" />
+     <Compile Include="Assets\Scripts\Utility\FPSDisplay.cs" />
+     <Compile Include="Assets\Scripts\Utility\MiniMapGenerator.cs" />
+     <Compile Include="Assets\Scripts\Utility\MinimapCamera.cs" />
      <Compile Include="Assets\Scripts\Utility\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Utility\PauseInterface.cs" />
      <Compile Include="Assets\Scripts\Utility\PauseUtilities.cs" />
      <None Include="Assets\Resources\Sprites\AddSpritesHere.txt" />
      <None Include="Assets\Scenes\AddScenesHere.txt" />
+     <None Include="Assets\Resources\SpeechTextFiles\Civilian\Civi Dmg.txt" />
      <None Include="Assets\Prefabs\AddPrefabsHere.txt" />
      <None Include="Assets\Fonts\AddFontsHere.txt" />
+     <None Include="Assets\Resources\SpeechTextFiles\Civilian\Civi Scared.txt" />
      <None Include="Assets\Scripts\AddScriptsHere.txt" />
+     <None Include="Assets\Resources\SpeechTextFiles\Guard\Guard Scared.txt" />
      <None Include="Assets\Shaders\Sprite-Outline.shader" />
+     <None Include="Assets\Resources\SpeechTextFiles\Guard\Guard Idle.txt" />
+     <None Include="Assets\Resources\SpeechTextFiles\Guard\Guard Dmg.txt" />
      <None Include="Assets\Animation\AddAnimationHere.txt" />
+     <None Include="Assets\Resources\SpeechTextFiles\Civilian\Civi Idle.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -177,7 +204,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/MuhammadZao/Desktop/MafiaTowerProjectRepo/Assets/UnityPackages/JsonNet-Lite/Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/DonovanSim/Desktop/MafiaTowerProject/Assets/UnityPackages/JsonNet-Lite/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>

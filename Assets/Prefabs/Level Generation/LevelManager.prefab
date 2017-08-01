@@ -68,8 +68,8 @@ MonoBehaviour:
   RandomHealthpackCollecitbles: 0
   BossLevel: 0
   GlassObstacle: 0
-  BlinkingTrapObstacle: 0
-  WaitTrapObstacle: 0
+  BlinkingTrapObstacle: 1
+  WaitTrapObstacle: 1
   LaserAlarmObstacle: 0
   numberOfObstaclesPerRoom: 1
   numberOfWaitTraps: 3
@@ -112,7 +112,7 @@ MonoBehaviour:
     stateMachine: {fileID: 1740129890561196, guid: d79c486d137990f4390cfe8e10e8c9bd,
       type: 2}
     amount: 1
-    spawnRoom: 0
+    spawnRoom: 1
   SecurityCameraObject: {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d,
     type: 2}
   Obstacles:
