@@ -51,23 +51,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a26b763f493f6d4fba439716cb653e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  columns: 30
-  rows: 30
+  columns: 40
+  rows: 40
   tilespacing: 0.3
   numberOfObjectiveRooms: 1
   numberOfMiscRooms: 4
   numberOfCollectibles: 5
   roomWidth:
-    m_Min: 5
-    m_Max: 8
+    m_Min: 6
+    m_Max: 10
   roomHeight:
-    m_Min: 5
-    m_Max: 8
+    m_Min: 6
+    m_Max: 10
   hackableDoorLevel: 0
   RandomAmmoCollecitbles: 0
   RandomHealthpackCollecitbles: 0
   BossLevel: 0
-  GlassObstacle: 0
+  GlassObstacle: 1
   BlinkingTrapObstacle: 1
   WaitTrapObstacle: 1
   LaserAlarmObstacle: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
       type: 2}
     amount: 1
     spawnRoom: 1
-  SecurityCameraObject: {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d,
+  SecurityCameraObject: {fileID: 1231255563671120, guid: c623e8be5f5f2ea46b36190cea9fce2c,
     type: 2}
   Obstacles:
   - {fileID: 1140021167988008, guid: 281f4c282a2db4040844f8de402451b5, type: 2}
