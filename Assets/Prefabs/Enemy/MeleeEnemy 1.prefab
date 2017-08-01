@@ -589,6 +589,7 @@ MonoBehaviour:
   retreatThreshold: 0
   player: {fileID: 0}
   PatrolPoints: []
+  PathfinderRef: {fileID: 114367738643029800}
   isBeingDragged: 0
   role: 1
   attackAble: 0
