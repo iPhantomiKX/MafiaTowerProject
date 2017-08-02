@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PersistentData.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Pathfinding\Pathfinder.cs">
     <Files>
-      <File FileName="Assets\Scripts\PersistentData.cs" Line="88" Column="4" />
-      <File FileName="Assets\Scripts\Traits\GainingTraits\NextLevel.cs" Line="38" Column="107" />
-      <File FileName="Assets\Scripts\Traits\PassingDownTraits\Restart.cs" Line="57" Column="107" />
+      <File FileName="Assets\Scripts\Pathfinding\Pathfinder.cs" Line="144" Column="1" />
+      <File FileName="Assets\Scripts\StateMachines\BaseSM.cs" Line="132" Column="2" />
+      <File FileName="Assets\Scripts\StateMachines\CivilianSM\CivilianSM.cs" Line="200" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

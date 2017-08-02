@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FogTile : MonoBehaviour {
+    public enum FOG_LEVEL
+    {
+        UNEXPLORED,
+        SEEN,
+        BORDER,
+        EXPLORED,
+    }
 
     public bool isOff = false;
     public float timeToReappear;
@@ -11,10 +18,11 @@ public class FogTile : MonoBehaviour {
     float timer = 0.0f;
     float minAlpha, maxAlpha;
     float alpha;
+    FOG_LEVEL currentFogLevel = FOG_LEVEL.UNEXPLORED;
 
 	// Use this for initialization
 	void Start () {
-		
+        SetFogLevel(FOG_LEVEL.UNEXPLORED);
 	}
 	
 	// Update is called once per frame
@@ -33,6 +41,7 @@ public class FogTile : MonoBehaviour {
             {
                 timer = 0;
                 isOff = false;
+                SetFogLevel(FOG_LEVEL.EXPLORED);
             }
         }
         else
@@ -42,16 +51,36 @@ public class FogTile : MonoBehaviour {
         }
 	}
 
-    public void SwitchOff(bool borderTile = false)
+    public void SetFogLevel(FOG_LEVEL level)
     {
-        isOff = true;
         timer = 0;
 
-        if (!borderTile)
-            minAlpha = 0;
-        else
-            minAlpha = 0.5f;
+        currentFogLevel = level;
 
-        maxAlpha = 1;
+        switch (currentFogLevel)
+        {
+            case FOG_LEVEL.UNEXPLORED: 
+                minAlpha = 1;
+                maxAlpha = 1.0f;                
+                break;
+            
+            case FOG_LEVEL.SEEN: 
+                minAlpha = 0;
+                maxAlpha = 1.0f;
+                isOff = true;
+                break;
+            
+            case FOG_LEVEL.BORDER: 
+                minAlpha = 0.5f;
+                maxAlpha = 1.0f;
+                isOff = true;
+                break;
+
+            case FOG_LEVEL.EXPLORED: 
+                minAlpha = 0.5f;
+                maxAlpha = 0.5f;
+                isOff = false; 
+                break;
+        }
     }
 }
