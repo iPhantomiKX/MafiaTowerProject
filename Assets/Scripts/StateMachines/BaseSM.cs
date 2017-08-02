@@ -138,6 +138,39 @@ public abstract class BaseSM : MonoBehaviour {
         gameObject.GetComponent<DistanceJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
     }
 
+    protected void OnCollide(GameObject other)
+    {
+        if (other.GetComponent<Pathfinder>())
+        {
+            //if (PathfinderRef.GetCooldown() <= 0) 
+            //{
+            //    // Repathfind
+            //    PathfinderRef.Reset();
+            //    PathfinderRef.SetCooldown();
+
+            //    Debug.Log("Path reset on collide");
+            //}
+
+            GetComponent<Collider2D>().isTrigger = true;
+        }
+    }
+
+    protected void OnStay(GameObject other)
+    {
+        if (other.GetComponent<Pathfinder>())
+        {
+            GetComponent<Collider2D>().isTrigger = true;
+        }
+    }
+
+    protected void OnExit(GameObject other)
+    {
+        if (other.GetComponent<Pathfinder>())
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
+    }
+
     public virtual void ToggleBodyDrag()
     {
         isBeingDragged = !isBeingDragged;

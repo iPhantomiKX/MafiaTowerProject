@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theLevelManager: {fileID: 0}
-  mapRefreshRate: 0
+  mapRefreshRate: 1
   reachedNodeDist: 0.001
   WalkDiagonal: 0
 --- !u!114 &114342282444142754
@@ -731,6 +731,7 @@ MonoBehaviour:
   retreatThreshold: 80
   player: {fileID: 0}
   PatrolPoints: []
+  PathfinderRef: {fileID: 0}
   isBeingDragged: 0
   ExitPoint: {fileID: 0}
   CurrentState: 0

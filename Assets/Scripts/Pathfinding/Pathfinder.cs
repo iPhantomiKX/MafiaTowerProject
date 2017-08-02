@@ -10,6 +10,7 @@ public class Pathfinder : MonoBehaviour {
 	public bool WalkDiagonal = true;
 
 	Node CurrentNode;
+    Vector2 CurrentVec2Pos;
 
     Vector3 m_Destination;
     bool b_PathFound;
@@ -24,6 +25,8 @@ public class Pathfinder : MonoBehaviour {
 
     double d_Timer;
     int i_CurrentIdx;
+
+	float cooldownTime;
 
     // Debug
     int BreakInfiniteLoopAmount = 500;
@@ -69,6 +72,8 @@ public class Pathfinder : MonoBehaviour {
         {
             theLevelManager = GameObject.FindObjectOfType<LevelManager>().GetComponent<LevelManager>();
         }
+
+        CurrentVec2Pos = theLevelManager.GetGridPos(transform.position);
     }
 	
 	// Update is called once per frame
@@ -76,44 +81,41 @@ public class Pathfinder : MonoBehaviour {
 
         if (d_Timer > mapRefreshRate)
         {
-            //RefreshNodeList();
+            //theLevelManager.MirgratePos(CurrentVec2Pos, theLevelManager.GetGridPos(transform.position));
+			CurrentVec2Pos = theLevelManager.GetGridPos (transform.position);
+            d_Timer = 0.0;
         }
         else
         {
             d_Timer += Time.deltaTime;
         }
+
+		if (cooldownTime > 0) 
+		{
+			cooldownTime -= Time.deltaTime;
+		}
 	}
 
     public void FindPath(Vector3 dest)
     {
+		if (cooldownTime > 0)
+			return;
+
         int SizeX = theLevelManager.columns;
         int SizeY = theLevelManager.rows;
 
         if (!b_ContinueNextFrame)
         {
             // Reset variables
-            OpenList.Clear();
-            ClosedList.Clear();
-
             b_PathComplete = false;
             b_PathFound = false;
 
-            SizeX = theLevelManager.columns;
-            SizeY = theLevelManager.rows;
-            for (int i = 0; i < SizeX; i++)
-            {
-                for (int j = 0; j < SizeY; j++)
-                {
-                    NodeList[i][j].Reset();
-                }
-            }
+            RefreshNodeList();
 
             m_Destination = dest;
 			CurrentNode = GetNode(transform.position);
-
-			RefreshNodeList();
         }
-
+				
         Node TargetNode = GetNode(m_Destination);
         List<Node> NeighbourList = new List<Node>();
 
@@ -128,8 +130,13 @@ public class Pathfinder : MonoBehaviour {
             if (BreakLoop)
             {
                 b_ContinueNextFrame = true;
-                Debug.Log("Pathfind took too long. Loops: " + LoopCount);
-                Debug.Log("Current Node: " + CurrentNode.TileCost);
+                Debug.Log(" ------------------------------------------------------------");
+                Debug.Log(" ----- Pathfind took too long. Loops: " + LoopCount );
+                Debug.Log(" ----- ClosedList Size: " + ClosedList.Count);
+                Debug.Log(" ----- Destination: " + m_Destination.ToString());
+                Debug.Log(" ----- Current Position: " + CurrentVec2Pos.ToString());
+                Debug.Log(" ------------------------------------------------------------");
+                //Debug.Log("Current Node: " + CurrentNode.TileCost);
 
                 return;
             }
@@ -151,8 +158,14 @@ public class Pathfinder : MonoBehaviour {
             }
 
             // Get Neighbours of curr node, compute F-values and add to openlist
-            int CurrentGridPosX = (int)CurrentNode.m_GridPos.x;
-            int CurrentGridPosY = (int)CurrentNode.m_GridPos.y;
+            int CurrentGridPosX = (int)CurrentVec2Pos.x;
+            int CurrentGridPosY = (int)CurrentVec2Pos.y;
+
+            if (CurrentNode != null)
+            {
+                CurrentGridPosX = (int)CurrentNode.m_GridPos.x;
+                CurrentGridPosY = (int)CurrentNode.m_GridPos.y;
+            }
 
             int CheckX = CurrentGridPosX;
             int CheckY = CurrentGridPosY; 
@@ -457,6 +470,9 @@ public class Pathfinder : MonoBehaviour {
     void RefreshNodeList()
     {
         NodeList.Clear();
+		OpenList.Clear ();
+		ClosedList.Clear ();
+		Path.Clear ();
 
         // Init List
         int SizeX = theLevelManager.columns;
@@ -490,17 +506,31 @@ public class Pathfinder : MonoBehaviour {
         return b_PathComplete;
     }
 
+	public void SetCooldown()
+	{
+        cooldownTime = 2.0f + Random.Range(0, 2); // change to var
+	}
+
+	public float GetCooldown()
+	{
+		return cooldownTime;
+	}
+
+    public Vector3 GetVec2Pos()
+    {
+        return new Vector3(CurrentVec2Pos.x, CurrentVec2Pos.x, transform.position.z);
+    }
+
 	public void Reset()
 	{
 		b_PathFound = false;
 		b_PathComplete = false;
 		b_FollowPathCreated = false;
+        b_ContinueNextFrame = false;
 
 		i_CurrentIdx = 0;
 
-		OpenList.Clear ();
-		ClosedList.Clear ();
-		Path.Clear ();
+		RefreshNodeList ();
 	}
 
     public Vector3 RandomPos(int range, Vector3 startPos)
@@ -551,11 +581,9 @@ public class Pathfinder : MonoBehaviour {
                     return RandomNode.m_pos;
             }
 
-            Debug.Log("Invalid Node");
             --maxRetries;
         }
 
-        Debug.Log("MAX RETRY REACHED");
         return transform.position;
     }
 
@@ -563,15 +591,15 @@ public class Pathfinder : MonoBehaviour {
 	{
         foreach (Node aNode in ClosedList)
         {
-           	Gizmos.color = Color.red;
+            Gizmos.color = Color.red;
             Gizmos.DrawSphere(aNode.m_pos, 0.075f);
         }
 
-		foreach (Node aNode in OpenList) 
-		{
-			Gizmos.color = Color.blue;
-			Gizmos.DrawSphere (aNode.m_pos, 0.05f);
-		}
+        foreach (Node aNode in OpenList) 
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere (aNode.m_pos, 0.05f);
+        }
 
         if (CurrentNode != null)
         {

@@ -619,7 +619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theLevelManager: {fileID: 0}
-  mapRefreshRate: 0
+  mapRefreshRate: 1
   reachedNodeDist: 0.001
   WalkDiagonal: 0
 --- !u!114 &114426017195210786

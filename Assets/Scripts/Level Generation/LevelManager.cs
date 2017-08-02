@@ -1087,4 +1087,10 @@ public class LevelManager : MonoBehaviour
         else
             return true;
     }
+
+    public void MirgratePos(Vector2 oldPos, Vector2 newPos)
+    {
+        maptiles[(int)oldPos.x][(int)oldPos.y] = TileType.FLOOR;
+        maptiles[(int)newPos.x][(int)newPos.y] = TileType.ENTITY;
+    }
 }
