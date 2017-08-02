@@ -16,6 +16,7 @@ public abstract class EnemySM : BaseSM {
 	public float AttackDamage{ get; set; }
 	public float AttackSpeed{ get; set; }
 	public bool attackAble;
+	public bool isHunting;
 
 	public float angleFOV;
 	public float visionRange;
@@ -53,6 +54,7 @@ public abstract class EnemySM : BaseSM {
 		detectGauge = 0f;
 		detectValue = 0f;
 		knowPlayerPosition = false;
+		isHunting = false;
 	}
 
 	protected void OnDrawGizmosSelected(){
@@ -169,6 +171,8 @@ public abstract class EnemySM : BaseSM {
 				detectGauge += (Time.deltaTime / Vector2.Distance (this.transform.position, player.transform.position)) * detectValue;
 				if (detectGauge >= 1f) {
 					CurrentTarget = player;
+					isHunting = true;
+					PlayerController.hunted++;
 					return true;
 				} else {
 					return false;
@@ -180,6 +184,10 @@ public abstract class EnemySM : BaseSM {
 
 		default: 
 			CurrentTarget = null;
+			if (isHunting) {
+				isHunting = false;
+				PlayerController.hunted--;
+			}
 			return false;
         }
     }

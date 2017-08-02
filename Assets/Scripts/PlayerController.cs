@@ -42,6 +42,17 @@ public class PlayerController : MonoBehaviour {
     */
     public Rigidbody2D rb;
 
+	//Sound stuff
+	public static int hunted;
+	public AudioSource bkSource;
+	public AudioClip bkPeacefulSound;
+	public AudioClip bkBattleSound;
+
+	void Awake(){
+		hunted = 0;
+		bkSource = this.transform.parent.GetComponent<AudioSource> ();
+	}
+
     // Use this for initialization
     void Start () {
 
@@ -57,6 +68,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+		Debug.Log ("Count hunted " + hunted);
         if (freeze)
             return;
 
@@ -67,6 +79,7 @@ public class PlayerController : MonoBehaviour {
             FaceMousePos();
             Shootbutton();
 			Meleebutton();
+			UpdateBackgroundSound ();
         }
 
         GetKeyInputs();
@@ -236,4 +249,15 @@ public class PlayerController : MonoBehaviour {
     {
         //Sorry, working on this right now. Don't want conflicts from Version Control.
     }
+
+	private void UpdateBackgroundSound(){
+		if (hunted > 0 && bkSource.clip == bkPeacefulSound) {
+			bkSource.clip = bkBattleSound;
+			bkSource.Play ();
+		} else if(hunted == 0 && bkSource.clip == bkBattleSound){
+			bkSource.clip = bkPeacefulSound;
+			bkSource.Play ();
+		}
+	}
+
 }
