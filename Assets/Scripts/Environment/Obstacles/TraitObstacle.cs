@@ -13,6 +13,8 @@ public class TraitObstacle : MonoBehaviour {
     public ObstacleTrait RequiredTrait;
     public int requiredLevel = 1;
 
+    public TraitHolder traitHolderRef;
+
 	// Use this for initialization
 	void Start () {
 
@@ -25,4 +27,9 @@ public class TraitObstacle : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public bool CheckForTrait()
+    {
+        return (traitHolderRef.CheckForTrait(RequiredTrait, requiredLevel));
+    }
 }

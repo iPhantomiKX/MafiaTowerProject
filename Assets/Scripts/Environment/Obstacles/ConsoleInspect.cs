@@ -6,7 +6,7 @@ public class ConsoleInspect : Inspect
 {
     public override void inspect()
     {
-        if (TraitHolderRef.CheckForTrait(GetComponent<TraitObstacle>().RequiredTrait, GetComponent<TraitObstacle>().requiredLevel))
+        if (GetComponent<TraitObstacle>().CheckForTrait())
             GetComponent<Console>().OpenDoor();
     }
 

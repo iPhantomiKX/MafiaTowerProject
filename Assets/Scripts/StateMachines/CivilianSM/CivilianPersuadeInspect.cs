@@ -6,7 +6,7 @@ public class CivilianPersuadeInspect : Inspect
 {
     public override void inspect()
     {
-        if (TraitHolderRef.CheckForTrait(GetComponent<TraitObstacle>().RequiredTrait))
+        if (GetComponent<TraitObstacle>().CheckForTrait())
             GetComponent<CivilianSM>().StartPersuade();
     }
 
