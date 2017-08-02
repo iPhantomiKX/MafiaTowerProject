@@ -110,8 +110,10 @@ public abstract class EnemySM : BaseSM {
 			}
 		} else if(isHunting){
 			//isHunting = false;
+			Debug.Log("Enter IsPlayerSeen and isHunting");
 			PlayerController.hunted++;
 		}
+		Debug.Log("Enter IsPlayerSeen");
 		return IsTargetSeen (player);
 	}
 
@@ -156,8 +158,9 @@ public abstract class EnemySM : BaseSM {
         {
 		case "Player": 
 			if (alert) {
+				Debug.Log ("Enter CheckValidTarget");
 				CurrentTarget = player;
-				PlayerController.hunted++;
+				isHunting = true;
 				return true;
 			} else {
 				//Last float value will be depend on player action.
@@ -213,6 +216,11 @@ public abstract class EnemySM : BaseSM {
 
 
 	public void StopSearching(){
+
+		if (searchIndex == -1) {
+			return ;
+		}
+
 		searchTime = 0f;
 		searchIndex = -1;
 		SearchingRoute.Clear ();
