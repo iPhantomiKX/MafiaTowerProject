@@ -108,12 +108,7 @@ public abstract class EnemySM : BaseSM {
 			} else {
 				ReduceDetectGauge ();
 			}
-		} else if(isHunting){
-			//isHunting = false;
-			Debug.Log("Enter IsPlayerSeen and isHunting");
-			PlayerController.hunted++;
-		}
-		Debug.Log("Enter IsPlayerSeen");
+		} 
 		return IsTargetSeen (player);
 	}
 
@@ -160,7 +155,6 @@ public abstract class EnemySM : BaseSM {
 			if (alert) {
 				Debug.Log ("Enter CheckValidTarget");
 				CurrentTarget = player;
-				isHunting = true;
 				return true;
 			} else {
 				//Last float value will be depend on player action.
@@ -178,7 +172,7 @@ public abstract class EnemySM : BaseSM {
 				detectGauge += (Time.deltaTime / Vector2.Distance (this.transform.position, player.transform.position)) * detectValue;
 				if (detectGauge >= 1f) {
 					CurrentTarget = player;
-					isHunting = true;
+					StartHunting ();
 					return true;
 				} else {
 					return false;
@@ -193,6 +187,13 @@ public abstract class EnemySM : BaseSM {
 			return false;
         }
     }
+	protected void StartHunting(){
+		if (isHunting)
+			return;
+		isHunting = true;
+		Debug.Log("Enter   isHunting");
+		PlayerController.hunted++;
+	}
 
 	protected bool IsSuspicuous(){
 		if (SuspiciousPosition != Vector3.forward) {
