@@ -16,6 +16,7 @@ public abstract class EnemySM : BaseSM {
 	public float AttackDamage{ get; set; }
 	public float AttackSpeed{ get; set; }
 	public bool attackAble;
+	public bool isHunting;
 
 	public float angleFOV;
 	public float visionRange;
@@ -53,6 +54,7 @@ public abstract class EnemySM : BaseSM {
 		detectGauge = 0f;
 		detectValue = 0f;
 		knowPlayerPosition = false;
+		isHunting = false;
 	}
 
 	protected void OnDrawGizmosSelected(){
@@ -106,7 +108,12 @@ public abstract class EnemySM : BaseSM {
 			} else {
 				ReduceDetectGauge ();
 			}
+		} else if(isHunting){
+			//isHunting = false;
+			Debug.Log("Enter IsPlayerSeen and isHunting");
+			PlayerController.hunted++;
 		}
+		Debug.Log("Enter IsPlayerSeen");
 		return IsTargetSeen (player);
 	}
 
@@ -151,7 +158,9 @@ public abstract class EnemySM : BaseSM {
         {
 		case "Player": 
 			if (alert) {
+				Debug.Log ("Enter CheckValidTarget");
 				CurrentTarget = player;
+				isHunting = true;
 				return true;
 			} else {
 				//Last float value will be depend on player action.
@@ -169,6 +178,7 @@ public abstract class EnemySM : BaseSM {
 				detectGauge += (Time.deltaTime / Vector2.Distance (this.transform.position, player.transform.position)) * detectValue;
 				if (detectGauge >= 1f) {
 					CurrentTarget = player;
+					isHunting = true;
 					return true;
 				} else {
 					return false;
@@ -206,10 +216,19 @@ public abstract class EnemySM : BaseSM {
 
 
 	public void StopSearching(){
+
+		if (searchIndex == -1) {
+			return ;
+		}
+
 		searchTime = 0f;
 		searchIndex = -1;
 		SearchingRoute.Clear ();
 		LastPLayerPosition = Vector3.forward;
+		if (isHunting) {
+			isHunting = false;
+			PlayerController.hunted--;
+		}
 	}
 
 	protected void WalkForward(){
