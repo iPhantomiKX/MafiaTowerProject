@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FogTile : MonoBehaviour {
+
     public enum FOG_LEVEL
     {
         UNEXPLORED,
@@ -61,7 +62,8 @@ public class FogTile : MonoBehaviour {
         {
             case FOG_LEVEL.UNEXPLORED: 
                 minAlpha = 1;
-                maxAlpha = 1.0f;                
+                maxAlpha = 1.0f;
+                isOff = false;
                 break;
             
             case FOG_LEVEL.SEEN: 
@@ -82,5 +84,10 @@ public class FogTile : MonoBehaviour {
                 isOff = false; 
                 break;
         }
+    }
+
+    public FOG_LEVEL GetFogLevel()
+    {
+        return currentFogLevel;
     }
 }

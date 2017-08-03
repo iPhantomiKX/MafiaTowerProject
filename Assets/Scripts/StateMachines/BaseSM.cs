@@ -155,6 +155,20 @@ public abstract class BaseSM : MonoBehaviour {
 
             GetComponent<Collider2D>().isTrigger = true;
         }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);         
+            }
+        }
     }
 
     protected void OnStay(GameObject other)
@@ -163,6 +177,20 @@ public abstract class BaseSM : MonoBehaviour {
         {
             GetComponent<Collider2D>().isTrigger = true;
         }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
+        }
     }
 
     protected void OnExit(GameObject other)
@@ -170,6 +198,20 @@ public abstract class BaseSM : MonoBehaviour {
         if (other.GetComponent<Pathfinder>())
         {
             GetComponent<Collider2D>().isTrigger = false;
+        }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
         }
     }
 
