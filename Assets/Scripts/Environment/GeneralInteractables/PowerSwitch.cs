@@ -13,16 +13,33 @@ public class PowerSwitch : TraitObstacle {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (!fogManagerRef)
+    void Update()
+    {
+        if (!fogManagerRef)
         {
             fogManagerRef = FindObjectOfType<FogManager>();
+        }
+        else
+        {
+            if (!fogOn)
+                fogManagerRef.SwitchOff();
+            else
+                fogManagerRef.SwitchOn();
         }
     }
 
     public void Toggle()
     {
         fogOn = !fogOn;
-        fogManagerRef.enabled = fogOn;
+    }
+
+    public void Destroy()
+    {
+        fogManagerRef.SwitchOn();
+    }
+
+    public bool GetFogOn()
+    {
+        return fogOn;
     }
 }

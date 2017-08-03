@@ -34,8 +34,6 @@ public class FogManager : MonoBehaviour {
                 fogMap[i][j] = Instantiate(fogPrefab, levelManagerRef.GetVec3Pos(i, j), Quaternion.identity, fogLayout.transform);
             }
         }
-
-        enabled = false;
     }
 	
 	// Update is called once per frame
@@ -170,7 +168,25 @@ public class FogManager : MonoBehaviour {
 		}
 
 		return false;
-	}	
+	}
+
+    public void SwitchOn()
+    {
+        fogLayout.SetActive(true);
+    }
+
+    public void SwitchOff()
+    {
+        for (int i = 0; i < fogMap.Length; ++i)
+        {
+            for (int j = 0; j < fogMap[0].Length; ++j)
+            {
+                fogMap[i][j].GetComponent<FogTile>().SetFogLevel(FogTile.FOG_LEVEL.UNEXPLORED);
+            }
+        }
+
+        fogLayout.SetActive(false);
+    }
 }
 
 /*

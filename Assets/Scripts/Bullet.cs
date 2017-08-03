@@ -57,6 +57,8 @@ public class Bullet : MonoBehaviour {
 		{
             if (otherCollider.gameObject.GetComponent<BaseSM>())
                 otherCollider.gameObject.GetComponent<BaseSM>().TakeDamage(1f);
+            else if (otherCollider.gameObject.GetComponent<HealthComponent>())
+                otherCollider.gameObject.GetComponent<HealthComponent>().TakeDmg(1);
 
 			Destroy (this.gameObject);
 		}

@@ -130,12 +130,12 @@ public class Pathfinder : MonoBehaviour {
             if (BreakLoop)
             {
                 b_ContinueNextFrame = true;
-                Debug.Log(" ------------------------------------------------------------");
-                Debug.Log(" ----- Pathfind took too long. Loops: " + LoopCount );
-                Debug.Log(" ----- ClosedList Size: " + ClosedList.Count);
-                Debug.Log(" ----- Destination: " + m_Destination.ToString());
-                Debug.Log(" ----- Current Position: " + CurrentVec2Pos.ToString());
-                Debug.Log(" ------------------------------------------------------------");
+                //Debug.Log(" ------------------------------------------------------------");
+                //Debug.Log(" ----- Pathfind took too long. Loops: " + LoopCount );
+                //Debug.Log(" ----- ClosedList Size: " + ClosedList.Count);
+                //Debug.Log(" ----- Destination: " + m_Destination.ToString());
+                //Debug.Log(" ----- Current Position: " + CurrentVec2Pos.ToString());
+                //Debug.Log(" ------------------------------------------------------------");
                 //Debug.Log("Current Node: " + CurrentNode.TileCost);
 
                 return;
