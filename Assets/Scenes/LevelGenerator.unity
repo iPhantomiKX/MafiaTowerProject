@@ -142,8 +142,43 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
         type: 2}
-      propertyPath: SpawnList.Array.data[0].amount
-      value: 3
+      propertyPath: columns
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: rows
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomWidth.m_Min
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomWidth.m_Max
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomHeight.m_Min
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomHeight.m_Max
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: numberOfObjectiveRooms
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: numberOfMiscRooms
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}

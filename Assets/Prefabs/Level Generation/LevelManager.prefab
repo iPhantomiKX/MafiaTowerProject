@@ -51,25 +51,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a26b763f493f6d4fba439716cb653e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  columns: 40
-  rows: 40
+  columns: 90
+  rows: 90
   tilespacing: 0.3
-  numberOfObjectiveRooms: 1
-  numberOfMiscRooms: 4
+  numberOfObjectiveRooms: 5
+  numberOfMiscRooms: 20
   numberOfCollectibles: 5
   roomWidth:
-    m_Min: 6
-    m_Max: 10
+    m_Min: 9
+    m_Max: 16
   roomHeight:
-    m_Min: 6
-    m_Max: 10
+    m_Min: 9
+    m_Max: 16
   hackableDoorLevel: 0
   RandomAmmoCollecitbles: 0
   RandomHealthpackCollecitbles: 0
   BossLevel: 0
-  GlassObstacle: 1
-  BlinkingTrapObstacle: 1
-  WaitTrapObstacle: 1
+  GlassObstacle: 0
+  BlinkingTrapObstacle: 0
+  WaitTrapObstacle: 0
   LaserAlarmObstacle: 0
   numberOfObstaclesPerRoom: 1
   numberOfWaitTraps: 3
