@@ -587,6 +587,12 @@ public class Pathfinder : MonoBehaviour {
         return transform.position;
     }
 
+	public bool ValidPos(Vector3 pos){
+		Node checkNode = GetNode(pos);
+		return ValidateNode (checkNode);
+
+	}
+
 	void OnDrawGizmos()
 	{
         foreach (Node aNode in ClosedList)
