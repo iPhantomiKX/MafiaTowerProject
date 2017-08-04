@@ -133,12 +133,37 @@ Prefab:
     - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
         type: 2}
       propertyPath: SpawnList.Array.data[0].amount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
         type: 2}
       propertyPath: SpawnList.Array.data[1].amount
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: columns
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: rows
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: numberOfMiscRooms
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomHeight.m_Min
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomHeight.m_Max
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
@@ -200,7 +225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &650725071
 Transform:
   m_ObjectHideFlags: 0

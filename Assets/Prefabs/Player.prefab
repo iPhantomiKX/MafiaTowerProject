@@ -395,7 +395,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 412ec19024322ed488bf1e707db19b75, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 76fa13609db89a34bbd15364da2208cf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.3
   m_Pitch: 1
@@ -516,6 +516,10 @@ MonoBehaviour:
   dragging: 0
   draggedObject: {fileID: 0}
   rb: {fileID: 50314794004968368}
+  hunted: 0
+  bkSource: {fileID: 82566263850245224}
+  bkPeacefulSound: {fileID: 8300000, guid: 76fa13609db89a34bbd15364da2208cf, type: 3}
+  bkBattleSound: {fileID: 8300000, guid: 7752d8674a0fb9f4b814fc8d0127b48c, type: 3}
 --- !u!114 &114258879481565170
 MonoBehaviour:
   m_ObjectHideFlags: 1

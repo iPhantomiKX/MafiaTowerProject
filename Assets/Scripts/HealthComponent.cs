@@ -37,8 +37,10 @@ public class HealthComponent : MonoBehaviour {
         if (health == 0) //Added by Randall - This ensures that onDeath is only called once
             return;
 
-		source.PlayOneShot (takeDamageSound , takeDamageSound.length);
-		health -= dmg;
+        if (takeDamageSound)
+		    source.PlayOneShot (takeDamageSound , takeDamageSound.length);
+		
+        health -= dmg;
 		if (health <= 0) 
 		{
             health = 0; //Added by Randall - This ensure health will not be negative

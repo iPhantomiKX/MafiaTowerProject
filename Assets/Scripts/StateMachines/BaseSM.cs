@@ -91,6 +91,8 @@ public abstract class BaseSM : MonoBehaviour {
 
     public void FaceTowardPoint(Vector3 point, float percenDelta)
     {
+		if (Vector2.Distance (this.transform.position, point) < 0.1)
+			return;
         Vector3 toTarget = point - this.transform.position;
         float angle = (Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg) - 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -100,7 +102,7 @@ public abstract class BaseSM : MonoBehaviour {
     public void WalkTowardPoint(Vector3 point)
     {
         this.transform.position = Vector2.MoveTowards(this.transform.position, point, MoveSpeed * Time.deltaTime);
-        FaceTowardPoint(point, 0.33f);
+        FaceTowardPoint(point, 0.66f);
     }
 
 	public void WalkPathFinder(Vector3 point){
@@ -136,6 +138,81 @@ public abstract class BaseSM : MonoBehaviour {
             return;
 
         gameObject.GetComponent<DistanceJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
+    }
+
+    protected void OnCollide(GameObject other)
+    {
+        if (other.GetComponent<Pathfinder>())
+        {
+            //if (PathfinderRef.GetCooldown() <= 0) 
+            //{
+            //    // Repathfind
+            //    PathfinderRef.Reset();
+            //    PathfinderRef.SetCooldown();
+
+            //    Debug.Log("Path reset on collide");
+            //}
+
+            GetComponent<Collider2D>().isTrigger = true;
+        }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);         
+            }
+        }
+    }
+
+    protected void OnStay(GameObject other)
+    {
+        if (other.GetComponent<Pathfinder>())
+        {
+            GetComponent<Collider2D>().isTrigger = true;
+        }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
+        }
+    }
+
+    protected void OnExit(GameObject other)
+    {
+        if (other.GetComponent<Pathfinder>())
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
+        }
     }
 
     public virtual void ToggleBodyDrag()

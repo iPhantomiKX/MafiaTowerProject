@@ -6,7 +6,7 @@ public class LaserAlarmInspect : Inspect
 {
     public override void inspect()
     {
-        if (TraitHolderRef.CheckForTrait(GetComponent<TraitObstacle>().RequiredTrait))
+        if (GetComponent<TraitObstacle>().CheckForTrait())
             GetComponent<LaserAlarm>().SwitchOff();
     }
 }

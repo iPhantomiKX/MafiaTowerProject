@@ -318,6 +318,7 @@ public class MeleeEnemy : EnemySM {
 		if (LastPLayerPosition == Vector3.forward)
 			return;
 		if (SearchingRoute.Count <= 0) {
+			searchIndex = 0;
 			if (this.transform.position == LastPLayerPosition) {
 				rb.velocity = Vector3.zero;
 				rb.angularVelocity = 0;

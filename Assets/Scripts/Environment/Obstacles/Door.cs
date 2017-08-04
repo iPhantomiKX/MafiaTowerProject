@@ -56,6 +56,21 @@ public class Door : MonoBehaviour {
         }
     }
 
+    void OnCollisionStay2D(Collision2D coll)
+    {
+        if (closed)
+        {
+            if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian"))
+            {
+                //open door
+                GetComponent<Collider2D>().isTrigger = true;
+                GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.5f);
+                GetComponent<DoorInspect>().actionName = "Close";
+                closed = false;
+            }
+        }
+    }
+
     void OnTriggerExit2D(Collider2D coll)
     {
         if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian"))

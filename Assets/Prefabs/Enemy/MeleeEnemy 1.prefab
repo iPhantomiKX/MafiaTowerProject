@@ -241,7 +241,7 @@ Transform:
   m_GameObject: {fileID: 1894137219359046}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
   m_Children:
   - {fileID: 4016900876038932}
   - {fileID: 4492681598886624}
@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theLevelManager: {fileID: 0}
-  mapRefreshRate: 0
+  mapRefreshRate: 1
   reachedNodeDist: 0.001
   WalkDiagonal: 0
 --- !u!114 &114387595373179642
@@ -622,6 +622,7 @@ MonoBehaviour:
   isBeingDragged: 0
   role: 1
   attackAble: 0
+  isHunting: 0
   angleFOV: 45
   visionRange: 1
   SuspiciousPosition: {x: 0, y: 0, z: 0}

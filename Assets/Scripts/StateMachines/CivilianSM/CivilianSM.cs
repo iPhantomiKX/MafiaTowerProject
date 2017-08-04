@@ -277,6 +277,26 @@ public class CivilianSM : NeutralSM {
         }
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        base.OnCollide(col.gameObject);
+    }
+
+    void OnCollisionStay2D(Collision2D col)
+    {
+        base.OnStay(col.gameObject);
+    }
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        base.OnStay(col.gameObject);
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        base.OnExit(col.gameObject);
+    }
+
     public override void OnDeath()
     {
         Destroy(GetComponent<CivilianPersuadeInspect>());
