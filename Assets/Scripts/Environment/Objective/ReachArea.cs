@@ -11,7 +11,7 @@ public class ReachArea : Objective
     // Use this for initialization
     public override void Start()
     {
-        objtname = "Reach an area";
+        objtname = "Secure a designated area";
         stayTimerRemain = stayTimer;
         base.Start();
 
@@ -46,7 +46,6 @@ public class ReachArea : Objective
     public override void onFail()
     {
         this.GetComponent<SpriteRenderer>().enabled = false;
-        this.enabled = false;
         om.OnFail(this.gameObject);
     }
 

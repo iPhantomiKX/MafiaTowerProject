@@ -26,6 +26,10 @@ public class Door : MonoBehaviour {
             GetComponent<DoorInspect>().actionName = "Close";
             closed = false;
         }
+        else
+        {
+            Debug.Log("Key not found");
+        }
 
     }
     public void Close()
@@ -37,10 +41,15 @@ public class Door : MonoBehaviour {
         closed = true;
     }
 
-    bool PlayerHasKey()
+    public bool PlayerHasKey()
     {
         //Check if the player has the key or not
-        
+        Inventory playerInv = FindObjectOfType<PlayerController>().GetComponent<Inventory>();
+        Item key = ItemDatabase.Instance.FetchItemByID(keyID);
+        if(playerInv.CheckIfItemIsInInventory(key))
+        {
+            return true;
+        }
         return false;
     }
 

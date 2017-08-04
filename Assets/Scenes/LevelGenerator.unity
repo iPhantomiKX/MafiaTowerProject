@@ -108,6 +108,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: Interactables.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4097038652156218, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -180,6 +185,18 @@ Prefab:
       propertyPath: numberOfMiscRooms
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: Interactables.Array.data[0]
+      value: 
+      objectReference: {fileID: 1754435117779884, guid: 96a5eeeb4f3a93a4898865472cfac38a,
+        type: 2}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: Interactables.Array.data[1]
+      value: 
+      objectReference: {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
   m_IsPrefabParent: 0
@@ -477,6 +494,10 @@ Prefab:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 541190095}
+    - target: {fileID: 1760278650843232, guid: c36d60d7d4a36d2418840fe0153a746a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c36d60d7d4a36d2418840fe0153a746a, type: 2}
   m_IsPrefabParent: 0

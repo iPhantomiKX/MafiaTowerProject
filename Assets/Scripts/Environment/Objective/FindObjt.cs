@@ -25,7 +25,6 @@ public class FindObjt : Objective {
     public override void onFail()
     {
         this.GetComponent<SpriteRenderer>().enabled = false;
-        this.enabled = false;
         om.OnFail(this.gameObject);
     }
 

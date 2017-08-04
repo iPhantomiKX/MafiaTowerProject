@@ -332,9 +332,8 @@ public class RangeEnemy : EnemySM {
 		if (LastPLayerPosition == Vector3.forward)
 			return;
 		if (SearchingRoute.Count <= 0) {
-			if (this.transform.position == LastPLayerPosition) {
-				rb.velocity = Vector3.zero;
-				rb.angularVelocity = 0;
+			searchIndex = 0;
+			if (PathfinderRef.GetPathComplete()) {
 				int layerMask = 1 << 8;
 				RaycastHit2D hit1 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis (this.transform.up.z, Vector3.forward) * this.transform.up, 2f, layerMask);
 				RaycastHit2D hit2 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis (this.transform.up.z + 45f, Vector3.forward) * this.transform.up, 2f, layerMask);
@@ -353,7 +352,7 @@ public class RangeEnemy : EnemySM {
 				} else {
 					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z, Vector3.forward) * this.transform.up * 1.7f);
 				}
-				if (pos != Vector3.forward) {
+				if (pos != Vector3.forward && PathfinderRef.ValidPos(pos)) {
 					SearchingRoute.Add (pos);
 				}
 				if (hit2.collider != null) {
@@ -363,9 +362,9 @@ public class RangeEnemy : EnemySM {
 						pos = Vector3.forward;
 					}
 				} else {
-					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z + 45f, Vector3.forward) * this.transform.up * 1.7f);
+					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z +45f, Vector3.forward) * this.transform.up * 1.7f);
 				}
-				if (pos != Vector3.forward) {
+				if (pos != Vector3.forward && PathfinderRef.ValidPos(pos)) {
 					SearchingRoute.Add (pos);
 				}
 				if (hit3.collider != null) {
@@ -377,7 +376,7 @@ public class RangeEnemy : EnemySM {
 				} else {
 					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z +90f, Vector3.forward) * this.transform.up * 1.7f);
 				}
-				if (pos != Vector3.forward) {
+				if (pos != Vector3.forward && PathfinderRef.ValidPos(pos)) {
 					SearchingRoute.Add (pos);
 				}
 				if (hit4.collider != null) {
@@ -389,7 +388,7 @@ public class RangeEnemy : EnemySM {
 				} else {
 					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z -45f, Vector3.forward) * this.transform.up * 1.7f);
 				}
-				if (pos != Vector3.forward) {
+				if (pos != Vector3.forward && PathfinderRef.ValidPos(pos)) {
 					SearchingRoute.Add (pos);
 				}
 				if (hit5.collider != null) {
@@ -401,7 +400,7 @@ public class RangeEnemy : EnemySM {
 				} else {
 					pos = this.transform.position + (Quaternion.AngleAxis (this.transform.up.z -90f, Vector3.forward) * this.transform.up * 1.7f);
 				}
-				if (pos != Vector3.forward) {
+				if (pos != Vector3.forward && PathfinderRef.ValidPos(pos)) {
 					SearchingRoute.Add (pos);
 				}
 				if (SearchingRoute.Count <= 0) {
@@ -415,10 +414,11 @@ public class RangeEnemy : EnemySM {
 				WalkPathFinder(LastPLayerPosition);
 			}
 		} else {
-			if (Vector2.Distance (this.transform.position, SearchingRoute [searchIndex]) < 0.3) {
+			if (PathfinderRef.GetPathComplete()) {
 				searchTime -= Time.deltaTime;
 				if (searchTime <= 0) {
 					searchIndex += 1;
+					PathfinderRef.Reset ();
 					if (SearchingRoute.Count > searchIndex) {
 						searchTime = 2f;
 					} else {
@@ -426,7 +426,7 @@ public class RangeEnemy : EnemySM {
 					}
 				}
 			} else {
-				WalkTowardPoint (SearchingRoute [searchIndex]);
+				WalkPathFinder (SearchingRoute [searchIndex]);
 			}
 
 		}

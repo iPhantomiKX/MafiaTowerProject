@@ -530,6 +530,7 @@ MonoBehaviour:
   RequiredTrait: {fileID: 114992174500758622, guid: efef5167c51f16945a10ee0655066ece,
     type: 2}
   requiredLevel: 1
+  traitHolderRef: {fileID: 0}
 --- !u!114 &114588838842472918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -758,6 +759,8 @@ MonoBehaviour:
   PatrolPosition: {x: 0, y: 0, z: 0}
   idleTime: 5
   idleAngle: 0
+  angleFOV: 45
+  visionRange: 1
   retreatThreshold: 80
   player: {fileID: 0}
   PatrolPoints: []

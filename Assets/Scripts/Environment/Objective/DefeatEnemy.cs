@@ -10,10 +10,12 @@ public class DefeatEnemy : Objective
     // Use this for initialization
     public override void Start()
     {
-        objtname = "Defeat enemies";
+        objtname = "Defeat " + enemies.Length + " enemies";
+        
         if(all)
         {
 			enemies = GameObject.FindObjectsOfType<EnemySM>();
+            objtname = "Defeat all enemies!";
         }
         base.Start();
 
@@ -33,7 +35,6 @@ public class DefeatEnemy : Objective
 
     public override void onFail()
     {
-        this.enabled = false;
         om.OnFail(this.gameObject);
     }
 
