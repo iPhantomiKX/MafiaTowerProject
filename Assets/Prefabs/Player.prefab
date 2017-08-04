@@ -453,6 +453,8 @@ MonoBehaviour:
   inspectingObject: {fileID: 0}
   freeze: 0
   inVent: 0
+  dragging: 0
+  draggedObject: {fileID: 0}
   rb: {fileID: 50314794004968368}
 --- !u!114 &114258879481565170
 MonoBehaviour:

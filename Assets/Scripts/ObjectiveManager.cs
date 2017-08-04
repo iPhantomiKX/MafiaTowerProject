@@ -93,6 +93,13 @@ public class ObjectiveManager : MonoBehaviour {
             }
 
         }
+        if (failObjt.GetComponent<Objective>().mandatory)
+        {
+            FindObjectOfType<PlayerController>().GetComponent<HealthComponent>().onDeath();
+            Debug.Log("Mandatory objective failed");
+
+        }
+        failObjt.GetComponent<Objective>().enabled = false;
     }
     public void OnComplete(GameObject compObjt){
         foreach (Objective objt in objectives)

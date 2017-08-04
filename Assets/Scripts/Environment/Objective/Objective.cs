@@ -12,7 +12,9 @@ public abstract class Objective : MonoBehaviour {
     public float time;
     public float remainingTime;
     //public Rect timeBar;
+    [HideInInspector]
     public RectTransform timeBar;
+    [HideInInspector]
     public float timeBarWidth;
     public int numCompleted = 0;
     public int numRequired = 1;
@@ -47,6 +49,7 @@ public abstract class Objective : MonoBehaviour {
             
             if (remainingTime <= 0 && !complete)
             {
+                Debug.Log("Time's up!");
                 onFail();
             }
 

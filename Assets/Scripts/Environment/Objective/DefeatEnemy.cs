@@ -33,7 +33,6 @@ public class DefeatEnemy : Objective
 
     public override void onFail()
     {
-        this.enabled = false;
         om.OnFail(this.gameObject);
     }
 

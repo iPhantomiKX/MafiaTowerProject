@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishLevelInTime : Objective {
+public class UndetectedObjt : Objective {
     bool failed;
-
     public override bool check()
     {
         return !failed;
@@ -14,22 +13,25 @@ public class FinishLevelInTime : Objective {
     public override void onFail()
     {
         failed = true;
-        Debug.Log("Mandatory: " + mandatory);
         om.OnFail(this.gameObject);
-
-        //this.enabled = false;
-
     }
 
     // Use this for initialization
     public override void Start () {
-        objtname = "Finish this floor in " + time + " seconds!";
+        objtname = "Finish this floor undetected!";
         base.Start();
 	}
 	
 	// Update is called once per frame
 	public override void Update () {
-        if (complete) om.OnComplete(gameObject);
+        if (!failed)
+        {
+            EnemySM[] enemies = FindObjectsOfType<EnemySM>();
+            foreach (EnemySM enemy in enemies)
+            {
+                if (enemy.alert == true) failed = true;
+            }
+        }
         base.Update();
 	}
 }

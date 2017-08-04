@@ -10,13 +10,17 @@ public class PlayerActionLimitObjt : Objective {
     public override void onFail()
     {
         failed = true;
-        this.enabled = false;
         om.OnFail(this.gameObject);
     }
 
     // Use this for initialization
     public override void Start () {
         failed = false;
+        objtname = "Finish this floor without using ";
+        if (limitMelee && limitGun) objtname += "any weapons!";
+        else if (limitGun) objtname += "your gun!";
+        else if (limitMelee) objtname += "your melee weapon!";
+        
         base.Start();
 	}
 	
