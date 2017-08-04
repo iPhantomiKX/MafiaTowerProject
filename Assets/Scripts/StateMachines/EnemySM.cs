@@ -18,9 +18,6 @@ public abstract class EnemySM : BaseSM {
 	public bool attackAble;
 	public bool isHunting;
 
-	public float angleFOV;
-	public float visionRange;
-
 	public Vector3 SuspiciousPosition;
 	public Vector3 LastPLayerPosition;
 	public float SuspiciousTime;
@@ -62,7 +59,7 @@ public abstract class EnemySM : BaseSM {
 		Gizmos.DrawWireSphere (this.transform.position, visionRange);
 	}
 
-	protected bool IsTargetSeen(GameObject target){
+	protected override bool IsTargetSeen(GameObject target){
 		//check player in cone and in range
 		Vector3 targetDir = target.transform.position - this.transform.position;
 		Vector3 forward = this.transform.up;
@@ -73,7 +70,7 @@ public abstract class EnemySM : BaseSM {
 			int layerMask = (1 << 8 | 1 << 11 | 1 << 12);
 			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, targetDir,Mathf.Infinity,layerMask);
 			if (hit.collider != null) {
-				if (CheckValidTarget(hit.collider.gameObject.tag,target)) 
+				if (CheckValidTarget(hit.collider.gameObject)) 
 				{
 					return true;
 				}
@@ -81,14 +78,14 @@ public abstract class EnemySM : BaseSM {
 				//In case part of the body is seen
 				RaycastHit2D hit2 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(targetDir.z + 10f, Vector3.forward) * targetDir,Mathf.Infinity,layerMask);
 				if (hit2.collider != null) {
-					if (CheckValidTarget(hit2.collider.gameObject.tag,target)) 
+					if (CheckValidTarget(hit2.collider.gameObject)) 
 					{
 						return true;
 					}
 				} else {
 					RaycastHit2D hit3 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(targetDir.z - 10f, Vector3.forward) * targetDir,Mathf.Infinity,layerMask);
 					if (hit3.collider != null) {
-						if (CheckValidTarget(hit3.collider.gameObject.tag,target))
+						if (CheckValidTarget(hit3.collider.gameObject))
 						{
 							return true;
 						}
@@ -147,8 +144,9 @@ public abstract class EnemySM : BaseSM {
 		return false;
 	}
 
-	bool CheckValidTarget(string tag,GameObject target)
+    protected override bool CheckValidTarget(GameObject checkObject)
     {
+        string tag = checkObject.tag;
         switch (tag)
         {
 		case "Player": 
@@ -179,7 +177,7 @@ public abstract class EnemySM : BaseSM {
 				}
 			}
 		case "VIP":
-			CurrentTarget = target;
+			CurrentTarget = checkObject;
 			return true;
 
 		default: 

@@ -34,6 +34,8 @@ public class FogManager : MonoBehaviour {
                 fogMap[i][j] = Instantiate(fogPrefab, levelManagerRef.GetVec3Pos(i, j), Quaternion.identity, fogLayout.transform);
             }
         }
+
+        SwitchOff();
     }
 	
 	// Update is called once per frame
