@@ -32,7 +32,11 @@ public class PlayerController : MonoBehaviour {
 
     //Quick bool to freeze update
     public bool freeze = false;
+
+    //For moving through vents
     public bool inVent = false;
+
+    //For Body Dragging and dumping
     public bool dragging = false;
     public GameObject draggedObject = null;
 
