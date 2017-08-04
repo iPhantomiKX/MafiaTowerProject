@@ -10,6 +10,8 @@ public class RoomScript{
         EXIT,
         OBJECTIVES,
         MISC,
+        POWER,
+        SECURITYCONSOLE,
         MAX_ROOMS,
     };
 
@@ -25,17 +27,14 @@ public class RoomScript{
     };
 
     public DoorDirection doorDirection;
+    public int doorType;
 
     public int xpos;
     public int ypos;
     public int roomWidth;
     public int roomHeight;
 
-    public int doorType;
-
     public bool isIntersecting = true;
-
-    public bool isActive = false;
 
     public void Init(IntRange widthRange, IntRange heightRange, int columns, int rows, RoomType type, DoorDirection direction)
     {
@@ -48,16 +47,6 @@ public class RoomScript{
         roomType = type;
 
         doorDirection = direction;
-    }
-
-    public void SetActive(bool active)
-    {
-        isActive = active;
-    }
-
-    public bool GetActive()
-    {
-        return isActive;
     }
 
     public bool RoomIntersecting(RoomScript otherRoom)

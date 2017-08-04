@@ -51,18 +51,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a26b763f493f6d4fba439716cb653e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  columns: 90
-  rows: 90
+  columns: 40
+  rows: 40
   tilespacing: 0.3
-  numberOfObjectiveRooms: 5
-  numberOfMiscRooms: 20
+  numberOfObjectiveRooms: 1
+  numberOfMiscRooms: 4
   numberOfCollectibles: 5
   roomWidth:
-    m_Min: 9
-    m_Max: 16
+    m_Min: 6
+    m_Max: 10
   roomHeight:
-    m_Min: 9
-    m_Max: 16
+    m_Min: 6
+    m_Max: 10
   hackableDoorLevel: 0
   RandomAmmoCollecitbles: 0
   RandomHealthpackCollecitbles: 0
@@ -123,3 +123,4 @@ MonoBehaviour:
   Collectibles:
   - {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a, type: 2}
   - {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c, type: 2}
+  Interactables: []

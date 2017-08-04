@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour
         OBJECTIVE_ROOM,
         OBJECTIVE,
         OBSTACLE,
+        INTERACTABLES,
         TRAPS,
         ENTITY,
     };
@@ -126,15 +127,22 @@ public class LevelManager : MonoBehaviour
     [Header("Collectible Objects")]
     public List<GameObject> Collectibles;
 
+    [Space]
+    [Header("Interactables Objects")]
+    public List<GameObject> Interactables;
+
     private TileType[][] maptiles;
     private TileType[][] obstacletiles;
     private TileType[][] venttiles;
+    private TileType[][] interactabletiles;
 
     private List<RoomScript> existingRooms;
     private RoomScript spawnRoom;
     private RoomScript exitRoom;
     private RoomScript[] objectiveRooms;
     private RoomScript[] miscRooms;
+    private RoomScript powerRoom;
+    private RoomScript securityRoom;
 
     private GameObject LevelLayout;
     private GameObject VentsLayout;
@@ -191,6 +199,7 @@ public class LevelManager : MonoBehaviour
         InstantiateCollectibles();
         if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
             InstantiateObstacle();
+        //InstantiateInteractables();
         InstantiateEnemyPosition();
 
         Debug.Log("Level Spawned");
@@ -212,11 +221,13 @@ public class LevelManager : MonoBehaviour
         maptiles = new TileType[columns][];
         venttiles = new TileType[columns][];
         obstacletiles = new TileType[columns][];
+        interactabletiles = new TileType[columns][];
         for (int i = 0; i < maptiles.Length; i++)
         {
             maptiles[i] = new TileType[rows];
             venttiles[i] = new TileType[rows];
             obstacletiles[i] = new TileType[rows];
+            interactabletiles[i] = new TileType[rows];
         }
     }
 
@@ -225,11 +236,27 @@ public class LevelManager : MonoBehaviour
         existingRooms = new List<RoomScript>();
         spawnRoom = new RoomScript();
         exitRoom = new RoomScript();
+        powerRoom = new RoomScript();
+        securityRoom = new RoomScript();
         objectiveRooms = new RoomScript[numberOfObjectiveRooms];
         miscRooms = new RoomScript[numberOfMiscRooms];
 
         RecursiveFindEmptyPos(spawnRoom, existingRooms, RoomScript.RoomType.SPAWN);
         existingRooms.Add(spawnRoom);
+
+        RecursiveFindEmptyPos(powerRoom, existingRooms, RoomScript.RoomType.POWER);
+        if (hackableDoorLevel)
+        {
+            powerRoom.doorType = Random.Range(0, 2);
+        }
+        existingRooms.Add(powerRoom);
+
+        RecursiveFindEmptyPos(securityRoom, existingRooms, RoomScript.RoomType.SECURITYCONSOLE);
+        if (hackableDoorLevel)
+        {
+            securityRoom.doorType = Random.Range(0, 2);
+        }
+        existingRooms.Add(securityRoom);
 
         for (int i = 0; i < numberOfMiscRooms; i++)
         {
@@ -318,6 +345,16 @@ public class LevelManager : MonoBehaviour
                             }
                             break;
                         case RoomScript.RoomType.EXIT:
+                            {
+                                maptiles[xCoord][yCoord] = TileType.ROOM;
+                            }
+                            break;
+                        case RoomScript.RoomType.POWER:
+                            {
+                                maptiles[xCoord][yCoord] = TileType.ROOM;
+                            }
+                            break;
+                        case RoomScript.RoomType.SECURITYCONSOLE:
                             {
                                 maptiles[xCoord][yCoord] = TileType.ROOM;
                             }
@@ -640,6 +677,34 @@ public class LevelManager : MonoBehaviour
                             break;
                     }
                 }
+            }
+        }
+    }
+
+    void InstantiateInteractables()
+    {
+        for(int i = 0; i < Interactables.Count; i++)
+        {
+            switch(Interactables[i].name)
+            {
+                case "PowerSwitch":
+                    {
+                        int XPos = Random.Range(powerRoom.xpos + 1, powerRoom.xpos + powerRoom.roomWidth - 2);
+                        int YPos = Random.Range(powerRoom.ypos + 1, powerRoom.ypos + powerRoom.roomHeight - 2);
+                        interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
+                        Vector3 PowerPos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
+                        GameObject Power = Instantiate(Interactables[i], PowerPos, Quaternion.identity);
+                    }
+                    break;
+                case "SecurityCameraConsole":
+                    {
+                        int XPos = Random.Range(securityRoom.xpos + 1, securityRoom.xpos + securityRoom.roomWidth - 2);
+                        int YPos = Random.Range(securityRoom.ypos + 1, securityRoom.ypos + securityRoom.roomHeight - 2);
+                        interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
+                        Vector3 ConsolePos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
+                        GameObject Console = Instantiate(Interactables[i], ConsolePos, Quaternion.identity);
+                    }
+                    break;
             }
         }
     }
@@ -976,6 +1041,11 @@ public class LevelManager : MonoBehaviour
         {
             case TileType.OBSTACLE: return -1;
             case TileType.TRAPS: return 1;
+        }
+
+        switch (interactabletiles[x][y])
+        {
+            case TileType.INTERACTABLES: return -1;
         }
 
         switch (maptiles[x][y])
