@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObject: {fileID: 0}
   lerpSpeed: 0.5
-  offset: {x: 0, y: 0, z: -1}
+  offset: {x: 0, y: 0, z: -10}
   free: 0
 --- !u!114 &114766181541901948
 MonoBehaviour:
