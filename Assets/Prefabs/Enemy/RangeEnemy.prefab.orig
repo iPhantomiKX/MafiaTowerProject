@@ -866,6 +866,7 @@ LineRenderer:
     alignment: 0
     textureMode: 0
   m_UseWorldSpace: 0
+<<<<<<< HEAD
 --- !u!212 &212001071800993518
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -901,6 +902,9 @@ SpriteRenderer:
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+=======
+  m_Loop: 0
+>>>>>>> f8154fb2472b00709c9878dbf82ad52d5ddb0d61
 --- !u!212 &212058079077579526
 SpriteRenderer:
   m_ObjectHideFlags: 1
