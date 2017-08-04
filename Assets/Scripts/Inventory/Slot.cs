@@ -14,15 +14,14 @@ public class Slot : MonoBehaviour, IDropHandler
     // Use this for initialization
     void Start()
     {
-        //Debug.Log("Slot script start function called");
         inv = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Inventory>();
-        //invDisp = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<InventoryDisplay>();
         invDisp = GameObject.Find("Inventory_").GetComponent<InventoryDisplay>();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         ItemData droppedItem = eventData.pointerDrag.GetComponent<ItemData>();
+
         if (inv.items[id].ID == -1)
         {
             inv.items[droppedItem.slot] = new Item();

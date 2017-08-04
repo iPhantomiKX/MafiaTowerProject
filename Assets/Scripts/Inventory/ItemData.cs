@@ -5,26 +5,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Item item;
     public int amount;
     public int slot;
     public bool instantiated;
 
-    //private GameObject phoneBG;
-    //private GameObject currentTab;
     private InventoryDisplay invDisp;
     private Tooltip tooltip;
+    private ItemMenu itemMenu;
     private Vector2 offset;
-
 
 
     void Start()
     {
-        //invDisp = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<InventoryDisplay>();
         invDisp = GameObject.Find("Inventory_").GetComponent<InventoryDisplay>();
         tooltip = invDisp.GetComponent<Tooltip>();
+        itemMenu = invDisp.GetComponent<ItemMenu>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -61,5 +59,14 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnPointerExit(PointerEventData eventData)
     {
         tooltip.Deactivate();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.pointerId == -2 && !itemMenu.getItemMenuExists())
+        {
+            itemMenu.setItemMenuExists(true);
+            itemMenu.CreateItemMenu(item, slot);
+        }
     }
 }

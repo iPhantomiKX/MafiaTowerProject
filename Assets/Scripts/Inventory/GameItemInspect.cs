@@ -3,18 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameItemInspect : Inspect {
+public class GameItemInspect : Inspect
+{
 
     public override void inspect()
     {
-        GameObject inv = GameObject.Find("PlayerObject");
-        GameItem item = GetComponent<GameItem>();
+        Inventory inv = GameObject.Find("PlayerObject").GetComponent<Inventory>();
+        GameItem gameItem = GetComponent<GameItem>();
 
-        if(!inv.GetComponent<Inventory>().InventoryIsFull())
+        inv.IncreaseSlotItemAmount(gameItem.item);
+        bool destroy = inv.AddItem(gameItem.item);
+
+        if (destroy)
         {
-            inv.GetComponent<Inventory>().AddItem(item);
-            GetComponent<SpriteRenderer>().enabled = false;
-            GetComponent<Collider2D>().enabled = false;
+            Destroy(gameObject);
+        }
+        if (inv.InventoryIsFull())
+        {
+            inv.slotItemAmount = inv.slotAmount;
         }
     }
 }

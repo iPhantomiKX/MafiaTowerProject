@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public int slotItemAmount { get; set; }
+    public int slotAmount { get; set; }
+    public List<Item> items;
 
-    private int slotAmount = 18;
-    //public bool itemAddedToInventory = false;
-    private ItemDatabase database;
+    private bool continueLooping;
 
-    public List<Item> items = new List<Item>();
     public class InventoryDataItem
     {
         public int ID;
@@ -27,9 +27,9 @@ public class Inventory : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //database = PersistentData.m_Instance.gameObject.GetComponent<ItemDatabase>();
-        //database = GameObject.Find("PersistentData").GetComponent<ItemDatabase>();
-        database = (ItemDatabase)FindObjectOfType(typeof(ItemDatabase));
+        slotAmount = 18;
+        slotItemAmount = 0;
+        items = new List<Item>();
         for (int i = 0; i < slotAmount; i++)
         {
             items.Add(new Item());
@@ -37,64 +37,105 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public int GetSlotAmount()
+    public void IncreaseSlotItemAmount(Item item)
     {
-        return slotAmount;
+        bool increaseAmount = false;
+        if (InventoryDataItems.Count == 0)
+        {
+            increaseAmount = true;
+        }
+        else if (!item.Stackable)
+        {
+            increaseAmount = true;
+        }
+        else if (item.Stackable)
+        {
+            increaseAmount = true;
+            for (int i = 0; i < InventoryDataItems.Count; i++)
+            {
+                if (item.ID == InventoryDataItems[i].ID)
+                {
+                    increaseAmount = false;
+                }
+            }
+        }
+        if (increaseAmount)
+        {
+            slotItemAmount++;
+        }
     }
 
-
-    public void AddItem(GameItem gameItem)
+    public void ClearItemData(Item item)
     {
-        //Item itemToAdd = database.FetchItemByID(id);
-        Item itemToAdd = gameItem.item;
-
-        InventoryDataItem dataItem = new InventoryDataItem(itemToAdd.ID, 1);
-        InventoryDataItems.Add(dataItem);
-
-        if (!InventoryIsFull())
+        for (int i = 0; i < InventoryDataItems.Count; i++)
         {
-            // If item is stackable and isn't the root item
-            if (itemToAdd.Stackable && CheckIfItemIsInInventory(itemToAdd)) 
+            if ((item.ID == InventoryDataItems[i].ID) && InventoryDataItems[i].Amount < 2)
             {
-                for (int i = 0; i < InventoryDataItems.Count; i++)
-                {
-                    if (itemToAdd.ID == InventoryDataItems[i].ID)
-                    {
-                        InventoryDataItems[i].Amount++;
-                        break;
-                    }
-                }
+                InventoryDataItems.Remove(InventoryDataItems[i]);
+                break;
             }
-            else
+        }
+    }
+
+    public bool AddItem(Item itemToAdd)
+    {
+        bool DestroyItem = true;
+
+        // Item is stackable and is the root item
+        if (itemToAdd.Stackable && !ItemIsInInventory(itemToAdd) && !InventoryIsFull())
+        {
+            InventoryDataItem dItem = new InventoryDataItem(itemToAdd.ID, 1);
+            InventoryDataItems.Add(dItem);
+            for (int i = 0; i < items.Count; i++)
             {
-                for (int i = 0; i < items.Count; i++)
+                if (items[i].ID == -1)
                 {
-                    if (items[i].ID == -1)
-                    {
-                        items[i] = itemToAdd;
-                        break;
-                    }
+                    items[i] = itemToAdd;
+                    break;
                 }
             }
         }
-        else
+        // Item is stackable and isn't the root item
+        else if (itemToAdd.Stackable && ItemIsInInventory(itemToAdd))
         {
-            // TODO:
-            // display message along the lines of "Inventory is full!" to the player
-            Debug.Log("inventory is full!");
+            for (int i = 0; i < InventoryDataItems.Count; i++)
+            {
+                if (itemToAdd.ID == InventoryDataItems[i].ID)
+                {
+                    InventoryDataItems[i].Amount++;
+                    break;
+                }
+            }
+        }
+        else if (!itemToAdd.Stackable && !InventoryIsFull())
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].ID == -1)
+                {
+                    items[i] = itemToAdd;
+                    break;
+                }
+            }
+        }
+        else if (!itemToAdd.Stackable && InventoryIsFull())
+        {
+            DestroyItem = false;
         }
 
+        return DestroyItem;
     }
 
     public bool InventoryIsFull()
     {
-        if (InventoryDataItems.Count >= GetSlotAmount())
+        if (slotItemAmount > slotAmount)
+        {
             return true;
-
+        }
         return false;
     }
 
-    public bool CheckIfItemIsInInventory(Item item)
+    public bool ItemIsInInventory(Item item)
     {
         for (int i = 0; i < items.Count; i++)
         {

@@ -21,7 +21,6 @@ public class ItemDatabase : MonoBehaviour
     private void BuildDatabase()
     {
         Items = JsonConvert.DeserializeObject<List<Item>>(Resources.Load<TextAsset>("Json/Items").ToString());
-        //Debug.Log(Items[0].ActionName);
     }
 
     public Item FetchItemByID(int id)
@@ -37,7 +36,7 @@ public class ItemDatabase : MonoBehaviour
 
     public Item FetchItemBySpriteName(string slug)
     {
-        foreach(Item item in Items)
+        foreach (Item item in Items)
         {
             if (item.Slug == slug)
                 return item;

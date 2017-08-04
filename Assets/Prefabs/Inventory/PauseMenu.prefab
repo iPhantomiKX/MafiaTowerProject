@@ -534,6 +534,7 @@ GameObject:
   - component: {fileID: 114724779215440852}
   - component: {fileID: 114159542779474706}
   - component: {fileID: 114072191813898004}
+  - component: {fileID: 114635521418198176}
   m_Layer: 5
   m_Name: Inventory_
   m_TagString: PauseMenuScreen
@@ -1817,6 +1818,23 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Button
+--- !u!114 &114635521418198176
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1739269892300698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c006fcd60c5e3b840a3a289c833cb4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemMenuPanel: {fileID: 114118960453475006, guid: f5fb26a406cac234d9699ca45689957e,
+    type: 2}
+  itemMenuButton: {fileID: 114794310479257628, guid: 72971c5d4c4b57f4fbc729d4ce4caff3,
+    type: 2}
+  medkit: {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c, type: 2}
+  pistol: {fileID: 1865130772411930, guid: 087814e0b5cf19d4787d061a1d0279a4, type: 2}
 --- !u!114 &114641599020303420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1829,7 +1847,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OffsetFromClick: 75
-  PlayerRef: {fileID: 0}
   MenuRef: {fileID: 1306977338795980}
 --- !u!114 &114648388427683770
 MonoBehaviour:

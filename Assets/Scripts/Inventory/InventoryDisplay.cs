@@ -24,11 +24,11 @@ public class InventoryDisplay : MonoBehaviour
         inv = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Inventory>();
 
         phoneBG = GameObject.Find("PhoneBG");
-        currentTab = phoneBG.transform.FindChild("CurrentTab").gameObject;
-        inventoryCanvas = currentTab.transform.FindChild("Inventory_").gameObject;
-        slotPanel = inventoryCanvas.transform.FindChild("SlotPanel").gameObject;
+        currentTab = phoneBG.transform.Find("CurrentTab").gameObject;
+        inventoryCanvas = currentTab.transform.Find("Inventory_").gameObject;
+        slotPanel = inventoryCanvas.transform.Find("SlotPanel").gameObject;
 
-        for (int i = 0; i < inv.GetSlotAmount(); i++)
+        for (int i = 0; i < inv.slotAmount; i++)
         {
             slots.Add(Instantiate(inventorySlot));
             slots[i].GetComponent<Slot>().id = i;
@@ -45,7 +45,7 @@ public class InventoryDisplay : MonoBehaviour
         }
     }
 
-    void UpdateInventory()
+    private void UpdateInventory()
     {
         if (!updated)
         {
@@ -67,9 +67,9 @@ public class InventoryDisplay : MonoBehaviour
             {
                 if (items[i].Stackable && (slots[i].transform.childCount > 0))
                 {
-                    for(int j = 0; j < inv.InventoryDataItems.Count; j++)
+                    for (int j = 0; j < inv.InventoryDataItems.Count; j++)
                     {
-                        if((items[i].ID == inv.InventoryDataItems[j].ID) && (inv.InventoryDataItems[j].Amount > 1))
+                        if ((items[i].ID == inv.InventoryDataItems[j].ID) && (inv.InventoryDataItems[j].Amount > 1))
                         {
                             ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
                             data.transform.GetChild(0).GetComponent<Text>().text = inv.InventoryDataItems[j].Amount.ToString();

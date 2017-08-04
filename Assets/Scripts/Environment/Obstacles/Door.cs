@@ -46,7 +46,7 @@ public class Door : MonoBehaviour {
         //Check if the player has the key or not
         Inventory playerInv = FindObjectOfType<PlayerController>().GetComponent<Inventory>();
         Item key = ItemDatabase.Instance.FetchItemByID(keyID);
-        if(playerInv.CheckIfItemIsInInventory(key))
+        if(playerInv.ItemIsInInventory(key))
         {
             return true;
         }
