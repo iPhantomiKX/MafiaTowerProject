@@ -67,9 +67,9 @@ MonoBehaviour:
   RandomAmmoCollecitbles: 0
   RandomHealthpackCollecitbles: 0
   BossLevel: 0
-  GlassObstacle: 1
-  BlinkingTrapObstacle: 1
-  WaitTrapObstacle: 1
+  GlassObstacle: 0
+  BlinkingTrapObstacle: 0
+  WaitTrapObstacle: 0
   LaserAlarmObstacle: 0
   numberOfObstaclesPerRoom: 1
   numberOfWaitTraps: 3
@@ -123,3 +123,4 @@ MonoBehaviour:
   Collectibles:
   - {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a, type: 2}
   - {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c, type: 2}
+  Interactables: []

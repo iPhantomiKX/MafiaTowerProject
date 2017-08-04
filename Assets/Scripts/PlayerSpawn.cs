@@ -36,7 +36,7 @@ public class PlayerSpawn : MonoBehaviour {
         Inspect[] Obstacles = GameObject.FindObjectsOfType<Inspect>();
         foreach (Inspect anObject in Obstacles)
         {
-            Debug.Log(anObject.name);
+            //Debug.Log(anObject.name);
             anObject.TraitHolderRef = PlayerReference.GetComponentInChildren<TraitHolder>();
         }
 	}

@@ -7,14 +7,26 @@ using UnityEngine;
 [RequireComponent(typeof(HealthComponent))]
 [RequireComponent(typeof(TeamHandler))]
 public abstract class BaseSM : MonoBehaviour {
-
+    
+    [Header("BaseSM Variables")]
+    [Space]
+    [Header("MessageBoard Variables")]
     public MessageBoard theBoard;
     public Message CurrentMessage = null;     // Handle to message
-
+    
+    [Space]
+    [Header("Patrolling Variables")]
     public float MoveSpeed = 1f;
     public Vector3 PatrolPosition;
     public float idleTime;
     public float idleAngle;
+
+    [Space]
+    [Header("Vision Variables")]
+    public float angleFOV;
+    public float visionRange;
+
+    [Space]
     [Tooltip("Capped between 1 and 99")]
     public float retreatThreshold;  // At what percent of health will the state machine retreat
 
@@ -80,6 +92,8 @@ public abstract class BaseSM : MonoBehaviour {
     public abstract int Think();            // process the updates
     public abstract void Act(int value);    // act upon any change in behaviour
     public abstract void ProcessMessage();
+    protected abstract bool IsTargetSeen(GameObject target);
+    protected abstract bool CheckValidTarget(GameObject checkObject);
 
     public Message ReadFromMessageBoard()
     {
@@ -129,7 +143,7 @@ public abstract class BaseSM : MonoBehaviour {
 
     public bool IsDead()
     {
-        return GetComponent<HealthComponent>().health == 0;
+        return GetComponent<HealthComponent>().health <= 0;
     }
 
     protected virtual void CheckForBodyDrag()
@@ -155,6 +169,20 @@ public abstract class BaseSM : MonoBehaviour {
 
             GetComponent<Collider2D>().isTrigger = true;
         }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);         
+            }
+        }
     }
 
     protected void OnStay(GameObject other)
@@ -163,6 +191,20 @@ public abstract class BaseSM : MonoBehaviour {
         {
             GetComponent<Collider2D>().isTrigger = true;
         }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
+        }
     }
 
     protected void OnExit(GameObject other)
@@ -170,6 +212,20 @@ public abstract class BaseSM : MonoBehaviour {
         if (other.GetComponent<Pathfinder>())
         {
             GetComponent<Collider2D>().isTrigger = false;
+        }
+
+        if (other.GetComponent<FogTile>())
+        {
+            if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+                transform.parent.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
         }
     }
 

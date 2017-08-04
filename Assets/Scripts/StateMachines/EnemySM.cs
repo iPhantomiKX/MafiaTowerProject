@@ -16,9 +16,7 @@ public abstract class EnemySM : BaseSM {
 	public float AttackDamage{ get; set; }
 	public float AttackSpeed{ get; set; }
 	public bool attackAble;
-
-	public float angleFOV;
-	public float visionRange;
+	public bool isHunting;
 
 	public Vector3 SuspiciousPosition;
 	public Vector3 LastPLayerPosition;
@@ -53,6 +51,7 @@ public abstract class EnemySM : BaseSM {
 		detectGauge = 0f;
 		detectValue = 0f;
 		knowPlayerPosition = false;
+		isHunting = false;
 	}
 
 	protected void OnDrawGizmosSelected(){
@@ -60,7 +59,7 @@ public abstract class EnemySM : BaseSM {
 		Gizmos.DrawWireSphere (this.transform.position, visionRange);
 	}
 
-	protected bool IsTargetSeen(GameObject target){
+	protected override bool IsTargetSeen(GameObject target){
 		//check player in cone and in range
 		Vector3 targetDir = target.transform.position - this.transform.position;
 		Vector3 forward = this.transform.up;
@@ -71,7 +70,7 @@ public abstract class EnemySM : BaseSM {
 			int layerMask = (1 << 8 | 1 << 11 | 1 << 12);
 			RaycastHit2D hit = Physics2D.Raycast (this.transform.position, targetDir,Mathf.Infinity,layerMask);
 			if (hit.collider != null) {
-				if (CheckValidTarget(hit.collider.gameObject.tag,target)) 
+				if (CheckValidTarget(hit.collider.gameObject)) 
 				{
 					return true;
 				}
@@ -79,14 +78,14 @@ public abstract class EnemySM : BaseSM {
 				//In case part of the body is seen
 				RaycastHit2D hit2 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(targetDir.z + 10f, Vector3.forward) * targetDir,Mathf.Infinity,layerMask);
 				if (hit2.collider != null) {
-					if (CheckValidTarget(hit2.collider.gameObject.tag,target)) 
+					if (CheckValidTarget(hit2.collider.gameObject)) 
 					{
 						return true;
 					}
 				} else {
 					RaycastHit2D hit3 = Physics2D.Raycast (this.transform.position, Quaternion.AngleAxis(targetDir.z - 10f, Vector3.forward) * targetDir,Mathf.Infinity,layerMask);
 					if (hit3.collider != null) {
-						if (CheckValidTarget(hit3.collider.gameObject.tag,target))
+						if (CheckValidTarget(hit3.collider.gameObject))
 						{
 							return true;
 						}
@@ -106,7 +105,7 @@ public abstract class EnemySM : BaseSM {
 			} else {
 				ReduceDetectGauge ();
 			}
-		}
+		} 
 		return IsTargetSeen (player);
 	}
 
@@ -145,12 +144,14 @@ public abstract class EnemySM : BaseSM {
 		return false;
 	}
 
-	bool CheckValidTarget(string tag,GameObject target)
+    protected override bool CheckValidTarget(GameObject checkObject)
     {
+        string tag = checkObject.tag;
         switch (tag)
         {
 		case "Player": 
 			if (alert) {
+				Debug.Log ("Enter CheckValidTarget");
 				CurrentTarget = player;
 				return true;
 			} else {
@@ -169,13 +170,14 @@ public abstract class EnemySM : BaseSM {
 				detectGauge += (Time.deltaTime / Vector2.Distance (this.transform.position, player.transform.position)) * detectValue;
 				if (detectGauge >= 1f) {
 					CurrentTarget = player;
+					StartHunting ();
 					return true;
 				} else {
 					return false;
 				}
 			}
 		case "VIP":
-			CurrentTarget = target;
+			CurrentTarget = checkObject;
 			return true;
 
 		default: 
@@ -183,6 +185,13 @@ public abstract class EnemySM : BaseSM {
 			return false;
         }
     }
+	protected void StartHunting(){
+		if (isHunting)
+			return;
+		isHunting = true;
+		Debug.Log("Enter   isHunting");
+		PlayerController.hunted++;
+	}
 
 	protected bool IsSuspicuous(){
 		if (SuspiciousPosition != Vector3.forward) {
@@ -206,10 +215,19 @@ public abstract class EnemySM : BaseSM {
 
 
 	public void StopSearching(){
+
+		if (searchIndex == -1) {
+			return ;
+		}
+
 		searchTime = 0f;
 		searchIndex = -1;
 		SearchingRoute.Clear ();
 		LastPLayerPosition = Vector3.forward;
+		if (isHunting) {
+			isHunting = false;
+			PlayerController.hunted--;
+		}
 	}
 
 	protected void WalkForward(){

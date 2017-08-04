@@ -11,6 +11,8 @@ public class CivilianSM : NeutralSM {
         INTERACTING,    // Interacting with the player
         PERSUADED,      // Helping the player after being persuaded
         RUNNING,        // Running to the exit point
+        CALL_HELP,      // Running to guard after seeing suspicious activity
+        INFORM_GUARD,   // Informing guard about player
         DEAD,
     }
 
@@ -29,6 +31,9 @@ public class CivilianSM : NeutralSM {
     float origMoveSpeed;
     double d_Timer = 0.0;
     double d_RepeatTimer = 0.0;
+
+    bool playerSeen;
+    EnemySM nearbyGuard;
 
 	// Use this for initialization
     public override void Start()
@@ -57,6 +62,8 @@ public class CivilianSM : NeutralSM {
             else
                 count--;
         }
+
+        nearbyGuard = null;
     }
 
     public override void Sense ()
@@ -102,6 +109,14 @@ public class CivilianSM : NeutralSM {
                         return (int)CIVILIAN_STATE.RUNNING;
                     }
 
+                    if (IsDeadBodiesSeen())
+                    {
+                        PathfinderRef.Reset();
+                        transform.parent.GetComponentInChildren<SpeechScript>().SetDisplayText(SpeechType.Damaged);
+                        playerSeen = IsTargetSeen(player);
+                        return (int)CIVILIAN_STATE.CALL_HELP;
+                    }
+
                     return (int)CurrentState;
                 }
 
@@ -119,6 +134,14 @@ public class CivilianSM : NeutralSM {
                     {
                         PathfinderRef.Reset();
                         return (int)CIVILIAN_STATE.RUNNING;
+                    }
+
+                    if (IsDeadBodiesSeen())
+                    {
+                        PathfinderRef.Reset();
+                        transform.parent.GetComponentInChildren<SpeechScript>().SetDisplayText(SpeechType.Damaged);
+                        playerSeen = IsTargetSeen(player);
+                        return (int)CIVILIAN_STATE.CALL_HELP;
                     }
 
                     return (int)CurrentState;
@@ -146,6 +169,31 @@ public class CivilianSM : NeutralSM {
                         return (int)CIVILIAN_STATE.RUNNING;
                     }
 
+                    if (IsDeadBodiesSeen())
+                    {
+                        PathfinderRef.Reset();
+                        transform.parent.GetComponentInChildren<SpeechScript>().SetDisplayText(SpeechType.Damaged);
+                        playerSeen = IsTargetSeen(player);
+                        return (int)CIVILIAN_STATE.CALL_HELP;
+                    }
+
+                    return (int)CurrentState;
+                }
+
+            case CIVILIAN_STATE.CALL_HELP:
+                {
+                    if (!nearbyGuard)
+                    {
+                        return (int)CIVILIAN_STATE.RUNNING;
+                    }
+                    else
+                    {
+                        if (Vector2.Distance(transform.position, nearbyGuard.transform.position) < 0.2f)
+                        {
+                            return (int)CIVILIAN_STATE.INFORM_GUARD;
+                        }
+                    }
+                    
                     return (int)CurrentState;
                 }
 
@@ -153,6 +201,7 @@ public class CivilianSM : NeutralSM {
                 {
                     return (int)CurrentState;
                 }
+
             default:
                 return -1;
         }
@@ -169,6 +218,8 @@ public class CivilianSM : NeutralSM {
             case (int)CIVILIAN_STATE.PATROLLING: DoPatrol(); break;
             case (int)CIVILIAN_STATE.INTERACTING: DoInteract(); break;
             case (int)CIVILIAN_STATE.PERSUADED: DoPersuaded(); break;
+            case (int)CIVILIAN_STATE.CALL_HELP: DoCallHelp(); break;
+            case (int)CIVILIAN_STATE.INFORM_GUARD: DoInformGuard(); break;
             case (int)CIVILIAN_STATE.RUNNING: DoRun(); break;
             case (int)CIVILIAN_STATE.DEAD: DoDead(); break;
         }
@@ -238,6 +289,52 @@ public class CivilianSM : NeutralSM {
         }
     }
 
+    public void DoCallHelp()
+    {
+        MoveSpeed = origMoveSpeed + increasedSpeed;
+        if (nearbyGuard == null)
+        {
+            EnemySM[] allGuards = FindObjectsOfType<EnemySM>();
+
+            float closest = 99999;
+            int idx = 0;
+            for (int i = 0; i < allGuards.Length; ++i)
+            {
+                float dist = Vector2.Distance(allGuards[i].transform.position, transform.position);
+                if (dist < closest)
+                {
+                    closest = dist;
+                    idx = i;
+                }
+            }
+
+            nearbyGuard = allGuards[idx];
+        }
+
+        if (PathfinderRef.GetPathFound())
+        {
+            PathfinderRef.FollowPath();
+        }
+        else
+        {
+            if (nearbyGuard)
+                PathfinderRef.FindPath(nearbyGuard.transform.position);
+        }   
+    }
+
+    void DoInformGuard()
+    {
+        nearbyGuard.role = EnemySM.ENEMY_ROLE.WANDER;
+
+        if (playerSeen)
+        {
+            nearbyGuard.knowPlayerPosition = true;
+            nearbyGuard.CurrentTarget = player;
+        }
+
+        StartRunning();
+    }
+
     public void DoDead()
     {
         base.CheckForBodyDrag();
@@ -254,6 +351,22 @@ public class CivilianSM : NeutralSM {
         {
             PathfinderRef.FindPath(ExitPoint.transform.position);
         }
+    }
+
+    private bool IsDeadBodiesSeen()
+    {
+        BaseSM[] allSM = FindObjectsOfType<BaseSM>();
+
+        foreach (BaseSM sm in allSM)
+        {
+            if (IsTargetSeen(sm.gameObject))
+            {
+                Debug.Log("DEAD SEEN");
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void StartPersuade()

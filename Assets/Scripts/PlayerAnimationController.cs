@@ -6,11 +6,6 @@ public class PlayerAnimationController : MonoBehaviour {
 
 	private Animator animator;
 
-	// Background Sound
-	//public AudioSource bkSource;
-	//public AudioClip bkPeacefulSound;
-	//public AudioClip bkBattleSound;
-
 	// Sound Effect
 	public AudioSource source;
 	public AudioClip shootingSound;

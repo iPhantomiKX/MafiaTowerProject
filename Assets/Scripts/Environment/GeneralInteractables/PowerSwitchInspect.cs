@@ -8,7 +8,12 @@ public class PowerSwitchInspect : Inspect {
     {
         if (GetComponent<TraitObstacle>().CheckForTrait())
         {
+            GetComponent<PowerSwitch>().Toggle();
 
+            if (GetComponent<PowerSwitch>().GetFogOn())
+                actionName = "Power Off";
+            else
+                actionName = "Power On";
         }
     }
 }

@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour
         OBJECTIVE_ROOM,
         OBJECTIVE,
         OBSTACLE,
+        INTERACTABLES,
         TRAPS,
         ENTITY,
     };
@@ -119,22 +120,29 @@ public class LevelManager : MonoBehaviour
     public GameObject SecurityCameraObject;
 
     [Space]
-    [Header("Collectible Objects")]
+    [Header("Obstacles Objects")]
     public List<GameObject> Obstacles;
 
     [Space]
     [Header("Collectible Objects")]
     public List<GameObject> Collectibles;
 
+    [Space]
+    [Header("Interactables Objects")]
+    public List<GameObject> Interactables;
+
     private TileType[][] maptiles;
     private TileType[][] obstacletiles;
     private TileType[][] venttiles;
+    private TileType[][] interactabletiles;
 
     private List<RoomScript> existingRooms;
     private RoomScript spawnRoom;
     private RoomScript exitRoom;
     private RoomScript[] objectiveRooms;
     private RoomScript[] miscRooms;
+    private RoomScript powerRoom;
+    private RoomScript securityRoom;
 
     private GameObject LevelLayout;
     private GameObject VentsLayout;
@@ -191,6 +199,7 @@ public class LevelManager : MonoBehaviour
         InstantiateCollectibles();
         if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
             InstantiateObstacle();
+        //InstantiateInteractables();
         InstantiateEnemyPosition();
 
         Debug.Log("Level Spawned");
@@ -212,11 +221,13 @@ public class LevelManager : MonoBehaviour
         maptiles = new TileType[columns][];
         venttiles = new TileType[columns][];
         obstacletiles = new TileType[columns][];
+        interactabletiles = new TileType[columns][];
         for (int i = 0; i < maptiles.Length; i++)
         {
             maptiles[i] = new TileType[rows];
             venttiles[i] = new TileType[rows];
             obstacletiles[i] = new TileType[rows];
+            interactabletiles[i] = new TileType[rows];
         }
     }
 
@@ -225,11 +236,27 @@ public class LevelManager : MonoBehaviour
         existingRooms = new List<RoomScript>();
         spawnRoom = new RoomScript();
         exitRoom = new RoomScript();
+        powerRoom = new RoomScript();
+        securityRoom = new RoomScript();
         objectiveRooms = new RoomScript[numberOfObjectiveRooms];
         miscRooms = new RoomScript[numberOfMiscRooms];
 
         RecursiveFindEmptyPos(spawnRoom, existingRooms, RoomScript.RoomType.SPAWN);
         existingRooms.Add(spawnRoom);
+
+        RecursiveFindEmptyPos(powerRoom, existingRooms, RoomScript.RoomType.POWER);
+        if (hackableDoorLevel)
+        {
+            powerRoom.doorType = Random.Range(0, 2);
+        }
+        existingRooms.Add(powerRoom);
+
+        RecursiveFindEmptyPos(securityRoom, existingRooms, RoomScript.RoomType.SECURITYCONSOLE);
+        if (hackableDoorLevel)
+        {
+            securityRoom.doorType = Random.Range(0, 2);
+        }
+        existingRooms.Add(securityRoom);
 
         for (int i = 0; i < numberOfMiscRooms; i++)
         {
@@ -318,6 +345,16 @@ public class LevelManager : MonoBehaviour
                             }
                             break;
                         case RoomScript.RoomType.EXIT:
+                            {
+                                maptiles[xCoord][yCoord] = TileType.ROOM;
+                            }
+                            break;
+                        case RoomScript.RoomType.POWER:
+                            {
+                                maptiles[xCoord][yCoord] = TileType.ROOM;
+                            }
+                            break;
+                        case RoomScript.RoomType.SECURITYCONSOLE:
                             {
                                 maptiles[xCoord][yCoord] = TileType.ROOM;
                             }
@@ -595,7 +632,7 @@ public class LevelManager : MonoBehaviour
     {
         foreach(var oR in objectiveRooms)
         {
-            Vector3 SCPosition = new Vector3(tilespacing * (oR.xpos + 2), tilespacing * (oR.ypos + 2), 0f);
+            Vector3 SCPosition = new Vector3(tilespacing * (oR.xpos + oR.roomWidth - 2), tilespacing * (oR.ypos + 1), 0f);
             GameObject SCObject = Instantiate(SecurityCameraObject, SCPosition, Quaternion.identity) as GameObject;
         }
     }
@@ -644,6 +681,34 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void InstantiateInteractables()
+    {
+        for(int i = 0; i < Interactables.Count; i++)
+        {
+            switch(Interactables[i].name)
+            {
+                case "PowerSwitch":
+                    {
+                        int XPos = Random.Range(powerRoom.xpos + 1, powerRoom.xpos + powerRoom.roomWidth - 2);
+                        int YPos = Random.Range(powerRoom.ypos + 1, powerRoom.ypos + powerRoom.roomHeight - 2);
+                        interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
+                        Vector3 PowerPos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
+                        GameObject Power = Instantiate(Interactables[i], PowerPos, Quaternion.identity);
+                    }
+                    break;
+                case "SecurityCameraConsole":
+                    {
+                        int XPos = Random.Range(securityRoom.xpos + 1, securityRoom.xpos + securityRoom.roomWidth - 2);
+                        int YPos = Random.Range(securityRoom.ypos + 1, securityRoom.ypos + securityRoom.roomHeight - 2);
+                        interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
+                        Vector3 ConsolePos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
+                        GameObject Console = Instantiate(Interactables[i], ConsolePos, Quaternion.identity);
+                    }
+                    break;
+            }
+        }
+    }
+
     void InstantiateNextLevelPlatformPosition()
     {
         int NextLevelPlatformXPos = Mathf.RoundToInt(exitRoom.xpos + (exitRoom.roomWidth / 2));
@@ -676,8 +741,8 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < objectiveRooms.Length; i++)
         {
-            //int RandomObstacle = Random.Range(0, Obstacles.Count);
-            int RandomObstacle = Random.Range(0, 3);
+            int RandomObstacle = Random.Range(0, Obstacles.Count);
+            //int RandomObstacle = 3;
             switch (RandomObstacle)
             {
                 case 0://GLASS OBSTACLE
@@ -752,57 +817,7 @@ public class LevelManager : MonoBehaviour
                         {
                             if (Obstacles[idx].name == "BlinkingTrap" && BlinkingTrapObstacle == true)
                             {
-                                switch (objectiveRooms[i].doorDirection)
-                                {
-                                    case RoomScript.DoorDirection.NORTH:
-                                        {
-                                            int numberOfBlinkingTraps = objectiveRooms[i].roomWidth - 2;
-                                            for (int BlinkingTrapsIdx = 0; BlinkingTrapsIdx < numberOfBlinkingTraps; BlinkingTrapsIdx++)
-                                            {
-                                                obstacletiles[objectiveRooms[i].xpos + BlinkingTrapsIdx + 1][objectiveRooms[i].ypos + objectiveRooms[i].roomHeight - 2] = TileType.TRAPS;
-                                                Vector3 BTPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + BlinkingTrapsIdx + 1), tilespacing * (objectiveRooms[i].ypos + objectiveRooms[i].roomHeight - 2), 0);
-                                                GameObject BlinkingTrap = Instantiate(Obstacles[idx], BTPos, Quaternion.identity);
-                                                BlinkingTrap.transform.parent = ObstacleLayout.transform;
-                                            }
-                                        }
-                                        break;
-                                    case RoomScript.DoorDirection.SOUTH:
-                                        {
-                                            int numberOfBlinkingTraps = objectiveRooms[i].roomWidth - 2;
-                                            for (int BlinkingTrapsIdx = 0; BlinkingTrapsIdx < numberOfBlinkingTraps; BlinkingTrapsIdx++)
-                                            {
-                                                obstacletiles[objectiveRooms[i].xpos + BlinkingTrapsIdx + 1][objectiveRooms[i].ypos + 1] = TileType.TRAPS;
-                                                Vector3 BTPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + BlinkingTrapsIdx + 1), tilespacing * (objectiveRooms[i].ypos + 1), 0);
-                                                GameObject BlinkingTrap = Instantiate(Obstacles[idx], BTPos, Quaternion.identity);
-                                                BlinkingTrap.transform.parent = ObstacleLayout.transform;
-                                            }
-                                        }
-                                        break;
-                                    case RoomScript.DoorDirection.EAST:
-                                        {
-                                            int numberOfBlinkingTraps = objectiveRooms[i].roomHeight - 2;
-                                            for (int BlinkingTrapsIdx = 0; BlinkingTrapsIdx < numberOfBlinkingTraps; BlinkingTrapsIdx++)
-                                            {
-                                                obstacletiles[objectiveRooms[i].xpos + objectiveRooms[i].roomWidth - 2][objectiveRooms[i].ypos + BlinkingTrapsIdx + 1] = TileType.TRAPS;
-                                                Vector3 BTPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + objectiveRooms[i].roomWidth - 2), tilespacing * (objectiveRooms[i].ypos + BlinkingTrapsIdx + 1), 0);
-                                                GameObject BlinkingTrap = Instantiate(Obstacles[idx], BTPos, Quaternion.identity);
-                                                BlinkingTrap.transform.parent = ObstacleLayout.transform;
-                                            }
-                                        }
-                                        break;
-                                    case RoomScript.DoorDirection.WEST:
-                                        {
-                                            int numberOfBlinkingTraps = objectiveRooms[i].roomHeight - 2;
-                                            for (int BlinkingTrapsIdx = 0; BlinkingTrapsIdx < numberOfBlinkingTraps; BlinkingTrapsIdx++)
-                                            {
-                                                obstacletiles[objectiveRooms[i].xpos + 1][objectiveRooms[i].ypos + BlinkingTrapsIdx + 1] = TileType.TRAPS;
-                                                Vector3 BTPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + 1), tilespacing * (objectiveRooms[i].ypos + BlinkingTrapsIdx + 1), 0);
-                                                GameObject BlinkingTrap = Instantiate(Obstacles[idx], BTPos, Quaternion.identity);
-                                                BlinkingTrap.transform.parent = ObstacleLayout.transform;
-                                            }
-                                        }
-                                        break;
-                                }
+                                
                             }
                         }
                     }
@@ -813,7 +828,45 @@ public class LevelManager : MonoBehaviour
                         {
                             if (Obstacles[idx].name == "LaserAlarm" && LaserAlarmObstacle == true)
                             {
-
+                                switch(objectiveRooms[i].doorDirection)
+                                {
+                                    case RoomScript.DoorDirection.NORTH:
+                                        {
+                                            int sizeOfLaser = objectiveRooms[i].roomWidth - 1;
+                                            Vector3 LAPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + Mathf.RoundToInt(objectiveRooms[i].roomWidth * 0.5f)),tilespacing * (objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight - 2)), 0);
+                                            GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                            LaserAlarm.transform.parent = ObstacleLayout.transform;
+                                            LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
+                                        }
+                                        break;
+                                    case RoomScript.DoorDirection.SOUTH:
+                                        {
+                                            int sizeOfLaser = objectiveRooms[i].roomWidth - 1;
+                                            Vector3 LAPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + Mathf.RoundToInt(objectiveRooms[i].roomWidth * 0.5f)), tilespacing * (objectiveRooms[i].ypos + 1), 0);
+                                            GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                            LaserAlarm.transform.parent = ObstacleLayout.transform;
+                                            LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
+                                        }
+                                        break;
+                                    case RoomScript.DoorDirection.EAST:
+                                        {
+                                            int sizeOfLaser = objectiveRooms[i].roomHeight - 1;
+                                            Vector3 LAPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth - 2)), tilespacing * (objectiveRooms[i].ypos + Mathf.RoundToInt(objectiveRooms[i].roomHeight * 0.5f)), 0);
+                                            GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                            LaserAlarm.transform.parent = ObstacleLayout.transform;
+                                            LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
+                                        }
+                                        break;
+                                    case RoomScript.DoorDirection.WEST:
+                                        {
+                                            int sizeOfLaser = objectiveRooms[i].roomHeight - 1;
+                                            Vector3 LAPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + 1), tilespacing * (objectiveRooms[i].ypos + Mathf.RoundToInt(objectiveRooms[i].roomHeight * 0.5f)), 0);
+                                            GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                            LaserAlarm.transform.parent = ObstacleLayout.transform;
+                                            LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
+                                        }
+                                        break;
+                                }
                             }
                         }
                     }
@@ -988,6 +1041,11 @@ public class LevelManager : MonoBehaviour
         {
             case TileType.OBSTACLE: return -1;
             case TileType.TRAPS: return 1;
+        }
+
+        switch (interactabletiles[x][y])
+        {
+            case TileType.INTERACTABLES: return -1;
         }
 
         switch (maptiles[x][y])

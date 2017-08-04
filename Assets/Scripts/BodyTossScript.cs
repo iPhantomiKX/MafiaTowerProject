@@ -16,7 +16,7 @@ public class BodyTossScript : Inspect
         {
             GameObject dragged_object = player.draggedObject;
             player.draggedObject.GetComponent<BaseSM>().ToggleBodyDrag();
-            Destroy(dragged_object.transform.parent.gameObject);    //This is pretty volatile. Becareful to delete the correct parent and not the entire heriarchy.
+            Destroy(dragged_object.transform.parent.gameObject);    //This is pretty volatile. Becareful to delete the correct parent and NOT the entire heriarchy.
         }
     }
 }
