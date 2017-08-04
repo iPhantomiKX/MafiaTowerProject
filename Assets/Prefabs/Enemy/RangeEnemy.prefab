@@ -288,7 +288,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 15
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -496,6 +496,8 @@ MonoBehaviour:
   PatrolPosition: {x: 0, y: 0, z: 0}
   idleTime: 0
   idleAngle: 0
+  angleFOV: 45
+  visionRange: 1
   retreatThreshold: 0
   player: {fileID: 0}
   PatrolPoints: []
@@ -503,8 +505,7 @@ MonoBehaviour:
   isBeingDragged: 0
   role: 1
   attackAble: 0
-  angleFOV: 45
-  visionRange: 1
+  isHunting: 0
   SuspiciousPosition: {x: 0, y: 0, z: 0}
   LastPLayerPosition: {x: 0, y: 0, z: 0}
   SuspiciousTime: 0
@@ -866,6 +867,7 @@ LineRenderer:
     alignment: 0
     textureMode: 0
   m_UseWorldSpace: 0
+  m_Loop: 0
 --- !u!212 &212001071800993518
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -896,11 +898,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!212 &212058079077579526
 SpriteRenderer:
   m_ObjectHideFlags: 1
