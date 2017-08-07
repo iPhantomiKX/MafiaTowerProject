@@ -68,6 +68,8 @@ public class LevelManager : MonoBehaviour
 
     [Space]
     [Header("Room Conditions")]
+    public int numberOfSubObjectives = 0;
+    public bool SubObjectivesLevel = false;
     public bool hackableDoorLevel = false;
     public bool RandomAmmoCollecitbles = false;
     public bool RandomHealthpackCollecitbles = false;
@@ -109,7 +111,8 @@ public class LevelManager : MonoBehaviour
 
     [Space]
     [Header("Level Objectives")]
-    public List<GameObject> Objectives;
+    public List<GameObject> MainObjectives;
+    public List<GameObject> SubObjectives;
 
     [Space]
     [Header("Enemy Object")]
@@ -153,6 +156,8 @@ public class LevelManager : MonoBehaviour
     private GameObject DoorsTileLayout;
     private GameObject ObstacleLayout;
 
+    private List<GameObject> SubGameObjectiveList;
+
     private bool areaIsIntersecting;
 
     private short counter = 0;
@@ -194,7 +199,9 @@ public class LevelManager : MonoBehaviour
 
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
-        InstantiateObjective();
+        InstantiateMainObjective();
+        if(SubObjectivesLevel)
+            InstantiateSubObjective();
         InstantiateSecurityObject();
         InstantiateCollectibles();
         if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
@@ -718,15 +725,16 @@ public class LevelManager : MonoBehaviour
         Instantiate(NextLevelPlatform, NextLevelPlatformPos, Quaternion.identity);
     }
 
-    void InstantiateObjective()
+    void InstantiateMainObjective()
     {
+        //Instantaitable Objectives
         for (int i = 0; i < objectiveRooms.Length; i++)
         {
             int ObjectiveXPos = Mathf.RoundToInt(objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth / 2));
             int ObjectiveYPos = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2));
 
             Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
-            GameObject go = Instantiate(Objectives[Random.Range(0, Collectibles.Count)], ObjectivePos, Quaternion.identity) as GameObject;
+            GameObject go = Instantiate(MainObjectives[Random.Range(0, MainObjectives.Count)], ObjectivePos, Quaternion.identity) as GameObject;
 
             if (go.tag == "Rescue")
             {
@@ -737,12 +745,29 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void InstantiateSubObjective()
+    {
+        SubGameObjectiveList = new List<GameObject>();
+        if (SubObjectivesLevel)
+        {
+            for (int i = 0; i < numberOfSubObjectives; i++)
+            {
+                int randomSubObjectives = Random.Range(0, SubObjectives.Count);
+                GameObject sgo = Instantiate(SubObjectives[randomSubObjectives]) as GameObject;
+                if (SubGameObjectiveList != null && SubGameObjectiveList.Contains(sgo))
+                    InstantiateSubObjective();
+                else
+                    SubGameObjectiveList.Add(sgo);
+            }
+        }
+    }
+
     void InstantiateObstacle()
     {
         for (int i = 0; i < objectiveRooms.Length; i++)
         {
-            int RandomObstacle = Random.Range(0, Obstacles.Count);
-            //int RandomObstacle = 3;
+            //int RandomObstacle = Random.Range(0, Obstacles.Count);
+            int RandomObstacle = 2;
             switch (RandomObstacle)
             {
                 case 0://GLASS OBSTACLE
@@ -817,7 +842,42 @@ public class LevelManager : MonoBehaviour
                         {
                             if (Obstacles[idx].name == "BlinkingTrap" && BlinkingTrapObstacle == true)
                             {
-                                
+                                int x = 0;
+                                int y = 0;
+
+                                int minX = Mathf.RoundToInt(objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth / 2)) - 1;
+                                int maxX = Mathf.RoundToInt(objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth / 2)) + 1;
+
+                                int minY = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2)) - 1;
+                                int maxY = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2)) + 1;
+
+                                while (minX + x <= maxX)
+                                {
+                                    obstacletiles[minX + x][minY] = TileType.OBSTACLE;
+                                    obstacletiles[minX + x][maxY] = TileType.OBSTACLE;
+
+                                    GameObject BlinkingTrapObjectBottom = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY), 0), Quaternion.identity);
+                                    GameObject BlinkingTrapObjectTop = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (maxY), 0), Quaternion.identity);
+
+                                    BlinkingTrapObjectBottom.transform.parent = ObstacleLayout.transform;
+                                    BlinkingTrapObjectTop.transform.parent = ObstacleLayout.transform;
+
+                                    x++;
+                                }
+
+                                while (minY + y <= maxY)
+                                {
+                                    obstacletiles[minX][minY + y] = TileType.OBSTACLE;
+                                    obstacletiles[maxX][minY + y] = TileType.OBSTACLE;
+
+                                    GameObject BlinkingTrapObjectLeft = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX), tilespacing * (minY + y), 0), Quaternion.identity);
+                                    GameObject BlinkingTrapObjectRight = Instantiate(Obstacles[idx], new Vector3(tilespacing * (maxX), tilespacing * (minY + y), 0), Quaternion.identity);
+
+                                    BlinkingTrapObjectLeft.transform.parent = ObstacleLayout.transform;
+                                    BlinkingTrapObjectRight.transform.parent = ObstacleLayout.transform;
+
+                                    y++;
+                                }
                             }
                         }
                     }
