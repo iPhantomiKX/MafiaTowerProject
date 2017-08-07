@@ -32,6 +32,7 @@ public class CivilianSM : NeutralSM {
     double d_Timer = 0.0;
     double d_RepeatTimer = 0.0;
 
+    Vector3 deadBodyPos;
     bool playerSeen;
     EnemySM nearbyGuard;
 
@@ -114,6 +115,8 @@ public class CivilianSM : NeutralSM {
                         PathfinderRef.Reset();
                         transform.parent.GetComponentInChildren<SpeechScript>().SetDisplayText(SpeechType.Damaged);
                         playerSeen = IsTargetSeen(player);
+                        deadBodyPos = transform.position;
+
                         return (int)CIVILIAN_STATE.CALL_HELP;
                     }
 
@@ -141,6 +144,8 @@ public class CivilianSM : NeutralSM {
                         PathfinderRef.Reset();
                         transform.parent.GetComponentInChildren<SpeechScript>().SetDisplayText(SpeechType.Damaged);
                         playerSeen = IsTargetSeen(player);
+                        deadBodyPos = transform.position;
+
                         return (int)CIVILIAN_STATE.CALL_HELP;
                     }
 
@@ -174,6 +179,8 @@ public class CivilianSM : NeutralSM {
                         PathfinderRef.Reset();
                         transform.parent.GetComponentInChildren<SpeechScript>().SetDisplayText(SpeechType.Damaged);
                         playerSeen = IsTargetSeen(player);
+                        deadBodyPos = transform.position;
+
                         return (int)CIVILIAN_STATE.CALL_HELP;
                     }
 
@@ -328,9 +335,12 @@ public class CivilianSM : NeutralSM {
 
         if (playerSeen)
         {
+            Debug.Log("Player Seen");
             nearbyGuard.knowPlayerPosition = true;
             nearbyGuard.CurrentTarget = player;
         }
+        else
+            nearbyGuard.StartSuspicious(deadBodyPos, 5f);
 
         StartRunning();
     }
@@ -357,14 +367,17 @@ public class CivilianSM : NeutralSM {
     {
         BaseSM[] allSM = FindObjectsOfType<BaseSM>();
 
-        foreach (BaseSM sm in allSM)
-        {
-            if (IsTargetSeen(sm.gameObject))
-            {
-                Debug.Log("DEAD SEEN");
-                return true;
-            }
-        }
+		foreach (BaseSM sm in allSM) 
+		{
+			if (sm != this) 
+			{
+				if (IsTargetSeen (sm.gameObject)) 
+				{
+					Debug.Log ("DEAD SEEN");
+					return true;
+				}
+			}
+		}
 
         return false;
     }
