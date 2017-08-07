@@ -54,7 +54,7 @@ MonoBehaviour:
   columns: 40
   rows: 40
   tilespacing: 0.3
-  numberOfObjectiveRooms: 1
+  numberOfObjectiveRooms: 2
   numberOfMiscRooms: 4
   numberOfCollectibles: 5
   roomWidth:
@@ -63,12 +63,14 @@ MonoBehaviour:
   roomHeight:
     m_Min: 6
     m_Max: 10
+  numberOfSubObjectives: 0
+  SubObjectivesLevel: 0
   hackableDoorLevel: 0
   RandomAmmoCollecitbles: 0
   RandomHealthpackCollecitbles: 0
   BossLevel: 0
   GlassObstacle: 0
-  BlinkingTrapObstacle: 0
+  BlinkingTrapObstacle: 1
   WaitTrapObstacle: 0
   LaserAlarmObstacle: 0
   numberOfObstaclesPerRoom: 1
@@ -99,9 +101,14 @@ MonoBehaviour:
     type: 2}
   NextLevelPlatform: {fileID: 1801789307318984, guid: 549d4e2c0ae270e4384aba2e58cddd1a,
     type: 2}
-  Objectives:
+  MainObjectives:
   - {fileID: 1174211081820102, guid: a99b064725221c742ab2ad48f0485d86, type: 2}
   - {fileID: 1797228185905298, guid: 51bc2345ee651eb49b6e458e6447172f, type: 2}
+  - {fileID: 1797374757248592, guid: 7b17364290145cb4586b94ed228d72f0, type: 2}
+  SubObjectives:
+  - {fileID: 1421068601335828, guid: ad8186df4bf70414080c8387ceead241, type: 2}
+  - {fileID: 1145892065867122, guid: 8b70fb0319dbe2540a8e5488bbaf8527, type: 2}
+  - {fileID: 1151426344935160, guid: ba3ac5efaec627e47a8d1b3e3b28c402, type: 2}
   SpawnList:
   - name: Civilian
     stateMachine: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
@@ -123,4 +130,6 @@ MonoBehaviour:
   Collectibles:
   - {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a, type: 2}
   - {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c, type: 2}
-  Interactables: []
+  Interactables:
+  - {fileID: 1754435117779884, guid: 96a5eeeb4f3a93a4898865472cfac38a, type: 2}
+  - {fileID: 1836227778358726, guid: 5ef52c021d27ca14e8640000538c4b5d, type: 2}

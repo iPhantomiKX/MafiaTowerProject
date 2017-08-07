@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4266574362385476}
   - component: {fileID: 114414101063323276}
+  - component: {fileID: 114769816426838494}
   m_Layer: 0
   m_Name: PersistentData
   m_TagString: Untagged
@@ -65,3 +66,14 @@ MonoBehaviour:
   NumTraitsPassDown: 0
   InitialLoad: 0
   LoadFailed: 0
+--- !u!114 &114769816426838494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1017194534019056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30b56d66016b6247a9b309605240370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
