@@ -6,6 +6,7 @@ public class PowerSwitch : TraitObstacle {
 
     FogManager fogManagerRef;
     bool fogOn = false;
+    bool changeStatus = false;
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +20,7 @@ public class PowerSwitch : TraitObstacle {
         {
             fogManagerRef = FindObjectOfType<FogManager>();
         }
-        else
+        else if (fogManagerRef && changeStatus)
         {
             if (!fogOn)
                 fogManagerRef.SwitchOff();
@@ -31,6 +32,8 @@ public class PowerSwitch : TraitObstacle {
     public void Toggle()
     {
         fogOn = !fogOn;
+        changeStatus = true;
+
     }
 
     public void Destroy()

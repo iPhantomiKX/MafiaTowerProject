@@ -35,7 +35,7 @@ public class FogManager : MonoBehaviour {
             }
         }
 
-        SwitchOff();
+        fogLayout.SetActive(false);
     }
 	
 	// Update is called once per frame
