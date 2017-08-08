@@ -36,6 +36,8 @@ public abstract class BaseSM : MonoBehaviour {
     public List<Vector3> PatrolPoints = new List<Vector3>();
     protected int patrolIndex = 0;
 
+	public Vector3 SpawnPoint;
+
     protected GameStateManager GameStateRef;
 
 	public Pathfinder PathfinderRef;
