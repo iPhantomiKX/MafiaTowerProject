@@ -63,16 +63,16 @@ MonoBehaviour:
   roomHeight:
     m_Min: 6
     m_Max: 10
-  numberOfSubObjectives: 0
-  SubObjectivesLevel: 0
+  numberOfSubObjectives: 1
+  SubObjectivesLevel: 1
   hackableDoorLevel: 0
   RandomAmmoCollecitbles: 0
   RandomHealthpackCollecitbles: 0
   BossLevel: 0
-  GlassObstacle: 0
+  GlassObstacle: 1
   BlinkingTrapObstacle: 1
-  WaitTrapObstacle: 0
-  LaserAlarmObstacle: 0
+  WaitTrapObstacle: 1
+  LaserAlarmObstacle: 1
   numberOfObstaclesPerRoom: 1
   numberOfWaitTraps: 3
   numberOfLaserAlarms: 0
@@ -95,8 +95,8 @@ MonoBehaviour:
   - {fileID: 1020234821988456, guid: 062af825b8920a149b35a8b3e2f5226b, type: 2}
   - {fileID: 1522745637041514, guid: acdee79f0e0fb1c44a6851429c9764a6, type: 2}
   ventTile:
-  - {fileID: 1439695560465644, guid: 9e589c8ddfbaa404c92e970ca8ea1b8a, type: 2}
-  - {fileID: 1931024645608510, guid: 83c1c80b99275b34a9c8c2b57f015a9d, type: 2}
+  - {fileID: 1030155233907756, guid: e46b044eba79a0c498eab1753012bb03, type: 2}
+  - {fileID: 1884849801718694, guid: 67087c984b8b2904dbb06c5f138e4861, type: 2}
   PlayerSpawnerPlatform: {fileID: 1124095657477202, guid: 385597dcd9a766c428699d418b79a160,
     type: 2}
   NextLevelPlatform: {fileID: 1801789307318984, guid: 549d4e2c0ae270e4384aba2e58cddd1a,

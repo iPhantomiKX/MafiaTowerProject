@@ -648,10 +648,18 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfCollectibles; i++)
         {
+            Vector3 RandomPosInRoom;
             int randomMiscRoomNumber = Random.Range(0, miscRooms.Length);
-            float RandomXPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
-            float RandomYPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
-            Vector3 RandomPosInRoom = new Vector3(RandomXPos, RandomYPos, 0f);
+            int RandomXPos = Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
+            int RandomYPos = Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
+            while(venttiles[RandomXPos][RandomYPos] == TileType.VENT_E)
+            {
+                RandomXPos = Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
+                RandomYPos = Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
+                if (venttiles[RandomXPos][RandomYPos] != TileType.VENT_E)
+                    break;
+            }
+            RandomPosInRoom = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos);
 
             //IF BOTH BOOLEANS ARE TRUE
             if (RandomHealthpackCollecitbles && RandomAmmoCollecitbles)
@@ -766,8 +774,7 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < objectiveRooms.Length; i++)
         {
-            //int RandomObstacle = Random.Range(0, Obstacles.Count);
-            int RandomObstacle = 2;
+            int RandomObstacle = Random.Range(0, Obstacles.Count);
             switch (RandomObstacle)
             {
                 case 0://GLASS OBSTACLE
