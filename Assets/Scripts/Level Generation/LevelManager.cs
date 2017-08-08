@@ -619,7 +619,7 @@ public class LevelManager : MonoBehaviour
             GameObject spawnedSM = Instantiate(SpawnList[spawnIdx].stateMachine, spawnPos, Quaternion.identity);
 
             spawnedSM.GetComponentInChildren<Pathfinder>().theLevelManager = this;
-
+			spawnedSM.GetComponentInChildren<BaseSM> ().SpawnPoint = spawnPos;
             // Reduce amount, increase index if amount == 0
             SpawnList[spawnIdx].amount--;
             if (SpawnList[spawnIdx].amount <= 0)

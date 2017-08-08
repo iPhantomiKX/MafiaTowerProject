@@ -19,7 +19,7 @@ public class RangeEnemy : EnemySM {
 
 	public ENEMY_STATE CurrentState = ENEMY_STATE.IDLE;
 	public Animator animator;
-	public int maxPatrolRooms = 5;
+	public int maxPatrolRooms = 3;
 
 	void Awake(){
 		animator = this.gameObject.transform.GetChild (0).GetComponent<Animator>();
@@ -219,7 +219,15 @@ public class RangeEnemy : EnemySM {
 					idleAngle = r_angle;
 				}
 			} else if (role == ENEMY_ROLE.GUARD) {
-
+				float rand = Random.Range (0f, 100f);
+				if (rand <= 25) {
+					idleTime = 0;
+					PatrolPosition = PathfinderRef.RandomPos (3, SpawnPoint);
+				} else {
+					idleTime = rand / 25;
+					float r_angle = Random.Range (0f, 360f);
+					idleAngle = r_angle;
+				}
 			}
 		}
 	}
