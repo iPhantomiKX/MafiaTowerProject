@@ -105,8 +105,6 @@ public abstract class BaseSM : MonoBehaviour {
 
     public void FaceTowardPoint(Vector3 point, float percenDelta)
     {
-		if (Vector2.Distance (this.transform.position, point) < 0.1)
-			return;
         Vector3 toTarget = point - this.transform.position;
         float angle = (Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg) - 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -115,7 +113,9 @@ public abstract class BaseSM : MonoBehaviour {
 
     public void WalkTowardPoint(Vector3 point)
     {
-        this.transform.position = Vector2.MoveTowards(this.transform.position, point, MoveSpeed * Time.deltaTime);
+		this.transform.position = Vector2.MoveTowards(this.transform.position, point, MoveSpeed * Time.deltaTime);	
+		if (Vector2.Distance (this.transform.position, point) < 0.1)
+			return;
         FaceTowardPoint(point, 0.66f);
     }
 
