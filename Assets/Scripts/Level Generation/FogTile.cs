@@ -60,14 +60,14 @@ public class FogTile : MonoBehaviour {
         }
 
         // Update colour based on fog type
-        if (currentFogType == FOG_TYPE.DARK)
-        {
-            GetComponent<SpriteRenderer>().color = Color.black;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().color = Color.red;
-        }
+        //if (currentFogType == FOG_TYPE.DARK)
+        //{
+        //    GetComponent<SpriteRenderer>().color = Color.black;
+        //}
+        //else
+        //{
+        //    GetComponent<SpriteRenderer>().color = Color.red;
+        //}
 	}
 
     public void SetFogLevel(FOG_LEVEL level)

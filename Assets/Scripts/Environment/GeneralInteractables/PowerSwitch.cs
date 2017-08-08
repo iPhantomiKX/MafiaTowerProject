@@ -35,7 +35,10 @@ public class PowerSwitch : TraitObstacle {
 
     public void Destroy()
     {
+        fogOn = true;
         fogManagerRef.SwitchOn();
+
+        Destroy(this.gameObject);
     }
 
     public bool GetFogOn()
