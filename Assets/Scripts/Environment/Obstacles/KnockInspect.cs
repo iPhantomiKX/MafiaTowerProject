@@ -6,6 +6,7 @@ using UnityEngine;
 public class KnockInspect : Inspect {
     public override void inspect()
     {
+		print ("knock the door ");
         GetComponent<EmitSound>().emitSound();
     }
 
