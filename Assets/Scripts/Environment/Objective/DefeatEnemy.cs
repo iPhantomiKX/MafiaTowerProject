@@ -11,7 +11,8 @@ public class DefeatEnemy : Objective
     public override void Start()
     {
         objtname = "Defeat " + enemies.Length + " enemies";
-        
+        enemies = GameObject.FindObjectsOfType<EnemySM>();
+
         if(all)
         {
 			enemies = GameObject.FindObjectsOfType<EnemySM>();
