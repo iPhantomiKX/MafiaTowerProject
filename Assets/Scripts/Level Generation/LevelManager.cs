@@ -746,7 +746,8 @@ public class LevelManager : MonoBehaviour
 
             if (go.tag == "Rescue")
             {
-                go.GetComponent<Pathfinder>().theLevelManager = this;
+                go.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+                go.GetComponentInChildren<BaseSM>().SpawnPoint = ObjectivePos;
             }
             else
                 maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;

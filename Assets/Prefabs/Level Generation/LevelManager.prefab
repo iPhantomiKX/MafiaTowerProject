@@ -55,19 +55,19 @@ MonoBehaviour:
   rows: 40
   tilespacing: 0.3
   numberOfObjectiveRooms: 2
-  numberOfMiscRooms: 4
+  numberOfMiscRooms: 5
   numberOfCollectibles: 5
   roomWidth:
     m_Min: 6
-    m_Max: 10
+    m_Max: 8
   roomHeight:
     m_Min: 6
-    m_Max: 10
+    m_Max: 8
   numberOfSubObjectives: 1
   SubObjectivesLevel: 1
   hackableDoorLevel: 0
-  RandomAmmoCollecitbles: 0
-  RandomHealthpackCollecitbles: 0
+  RandomAmmoCollecitbles: 1
+  RandomHealthpackCollecitbles: 1
   BossLevel: 0
   GlassObstacle: 1
   BlinkingTrapObstacle: 1
@@ -103,7 +103,7 @@ MonoBehaviour:
     type: 2}
   MainObjectives:
   - {fileID: 1174211081820102, guid: a99b064725221c742ab2ad48f0485d86, type: 2}
-  - {fileID: 1797228185905298, guid: 51bc2345ee651eb49b6e458e6447172f, type: 2}
+  - {fileID: 1216106612668114, guid: 51bc2345ee651eb49b6e458e6447172f, type: 2}
   - {fileID: 1797374757248592, guid: 7b17364290145cb4586b94ed228d72f0, type: 2}
   SubObjectives:
   - {fileID: 1421068601335828, guid: ad8186df4bf70414080c8387ceead241, type: 2}
