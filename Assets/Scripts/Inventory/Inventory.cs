@@ -144,4 +144,19 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
+
+    public void RemoveItemFromInventory (Item itemToRemove)
+    {
+        if (ItemIsInInventory(itemToRemove))
+        {
+            for (int i = 0; i < InventoryDataItems.Count; i++)
+            {
+                if (itemToRemove.ID == InventoryDataItems[i].ID)
+                {
+                    InventoryDataItems[i].Amount--;
+                    break;
+                }
+            }
+        }
+    }
 }

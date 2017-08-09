@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine.SceneManagement;
+
 public class ObjectiveManager : MonoBehaviour {
 
 	public GameObject PlayerRef{ get; set;}
@@ -89,17 +91,29 @@ public class ObjectiveManager : MonoBehaviour {
             {
                 text.text = text.text + "...failed";
                 text.color = Color.red;
-                return;
+                //return;
+                break;
             }
 
         }
+
         if (failObjt.GetComponent<Objective>().mandatory)
         {
-            FindObjectOfType<PlayerController>().GetComponent<HealthComponent>().onDeath();
+            //FindObjectOfType<PlayerController>().GetComponent<HealthComponent>().onDeath();
             Debug.Log("Mandatory objective failed");
-
+            failObjt.GetComponent<Objective>().enabled = false;
+            SceneManager.LoadScene("LoseTraitScene");
         }
-        failObjt.GetComponent<Objective>().enabled = false;
+
+        // Added by donovan
+        if (failObjt.GetComponentInChildren<Objective>().mandatory)
+        {
+            //FindObjectOfType<PlayerController>().GetComponent<HealthComponent>().onDeath();
+            Debug.Log("Mandatory objective failed");
+            failObjt.GetComponentInChildren<Objective>().enabled = false;
+            SceneManager.LoadScene("LoseTraitScene");
+        }
+
     }
     public void OnComplete(GameObject compObjt){
         foreach (Objective objt in objectives)

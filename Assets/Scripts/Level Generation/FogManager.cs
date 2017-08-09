@@ -35,7 +35,7 @@ public class FogManager : MonoBehaviour {
             }
         }
 
-        SwitchOff();
+        fogLayout.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -174,7 +174,24 @@ public class FogManager : MonoBehaviour {
 
     public void SwitchOn()
     {
+        for (int i = 0; i < fogMap.Length; ++i)
+        {
+            for (int j = 0; j < fogMap[0].Length; ++j)
+            {
+                fogMap[i][j].GetComponent<FogTile>().SetFogLevel(FogTile.FOG_LEVEL.UNEXPLORED);
+            }
+        }
+
         fogLayout.SetActive(true);
+
+        // Affect AI vision
+        BaseSM[] allSM = GameObject.FindObjectsOfType<BaseSM>();
+        foreach (BaseSM sm in allSM)
+        {
+            sm.visionRange /= 2;
+            sm.angleFOV /= 2;
+        }
+
     }
 
     public void SwitchOff()
@@ -188,6 +205,14 @@ public class FogManager : MonoBehaviour {
         }
 
         fogLayout.SetActive(false);
+        
+        // Affect AI vision
+        BaseSM[] allSM = GameObject.FindObjectsOfType<BaseSM>();
+        foreach (BaseSM sm in allSM)
+        {
+            sm.visionRange *= 2;
+            sm.angleFOV *= 2;
+        }
     }
 }
 

@@ -80,4 +80,9 @@ public class InventoryDisplay : MonoBehaviour
         }
         updated = true;
     }
+
+    public void SetInventoryToUpdate()
+    {
+        updated = false;
+    }
 }

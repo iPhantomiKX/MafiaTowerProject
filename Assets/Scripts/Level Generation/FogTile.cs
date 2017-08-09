@@ -12,6 +12,12 @@ public class FogTile : MonoBehaviour {
         EXPLORED,
     }
 
+    public enum FOG_TYPE
+    {
+        DARK,
+        ALARM,
+    }
+
     public bool isOff = false;
     public float timeToReappear;
     public float fadeSpeed;
@@ -20,6 +26,7 @@ public class FogTile : MonoBehaviour {
     float minAlpha, maxAlpha;
     float alpha;
     FOG_LEVEL currentFogLevel = FOG_LEVEL.UNEXPLORED;
+    FOG_TYPE currentFogType = FOG_TYPE.DARK;
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +36,7 @@ public class FogTile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+        // Update alpha
 		alpha = GetComponent<SpriteRenderer> ().color.a;
         if (isOff)
         {
@@ -50,6 +58,16 @@ public class FogTile : MonoBehaviour {
 			if (alpha < maxAlpha)
 				GetComponent<SpriteRenderer> ().color += new Color (0, 0, 0, Time.deltaTime * fadeSpeed);
         }
+
+        // Update colour based on fog type
+        //if (currentFogType == FOG_TYPE.DARK)
+        //{
+        //    GetComponent<SpriteRenderer>().color = Color.black;
+        //}
+        //else
+        //{
+        //    GetComponent<SpriteRenderer>().color = Color.red;
+        //}
 	}
 
     public void SetFogLevel(FOG_LEVEL level)

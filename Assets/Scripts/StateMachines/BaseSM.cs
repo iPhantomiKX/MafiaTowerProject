@@ -36,6 +36,8 @@ public abstract class BaseSM : MonoBehaviour {
     public List<Vector3> PatrolPoints = new List<Vector3>();
     protected int patrolIndex = 0;
 
+	public Vector3 SpawnPoint;
+
     protected GameStateManager GameStateRef;
 
 	public Pathfinder PathfinderRef;
@@ -105,8 +107,6 @@ public abstract class BaseSM : MonoBehaviour {
 
     public void FaceTowardPoint(Vector3 point, float percenDelta)
     {
-		if (Vector2.Distance (this.transform.position, point) < 0.1)
-			return;
         Vector3 toTarget = point - this.transform.position;
         float angle = (Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg) - 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -115,7 +115,9 @@ public abstract class BaseSM : MonoBehaviour {
 
     public void WalkTowardPoint(Vector3 point)
     {
-        this.transform.position = Vector2.MoveTowards(this.transform.position, point, MoveSpeed * Time.deltaTime);
+		this.transform.position = Vector2.MoveTowards(this.transform.position, point, MoveSpeed * Time.deltaTime);	
+		if (Vector2.Distance (this.transform.position, point) < 0.1)
+			return;
         FaceTowardPoint(point, 0.66f);
     }
 
@@ -174,13 +176,25 @@ public abstract class BaseSM : MonoBehaviour {
         {
             if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
             {
+                // Switch on sprite renderer
                 GetComponent<SpriteRenderer>().enabled = true;
+
+                // Switch on canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(true);
+
+                // Switch on minimap icon
+                transform.GetChild(1).gameObject.SetActive(true);            
             }
             else
-            {
+            {                
+                // Switch off sprite renderer
                 GetComponent<SpriteRenderer>().enabled = false;
-                transform.parent.GetChild(1).gameObject.SetActive(false);         
+
+                // Switch off canvas                
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+
+                // Switch off minimap icon
+                transform.GetChild(1).gameObject.SetActive(false);         
             }
         }
     }
@@ -196,13 +210,25 @@ public abstract class BaseSM : MonoBehaviour {
         {
             if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
             {
+                // Switch on sprite renderer
                 GetComponent<SpriteRenderer>().enabled = true;
+
+                // Switch on canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(true);
+
+                // Switch on minimap icon
+                transform.GetChild(1).gameObject.SetActive(true);
             }
             else
             {
+                // Switch off sprite renderer
                 GetComponent<SpriteRenderer>().enabled = false;
+
+                // Switch off canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(false);
+
+                // Switch off minimap icon
+                transform.GetChild(1).gameObject.SetActive(false);
             }
         }
     }
@@ -218,13 +244,25 @@ public abstract class BaseSM : MonoBehaviour {
         {
             if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
             {
+                // Switch on sprite renderer
                 GetComponent<SpriteRenderer>().enabled = true;
+
+                // Switch on canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(true);
+
+                // Switch on minimap icon
+                transform.GetChild(1).gameObject.SetActive(true);
             }
             else
             {
+                // Switch off sprite renderer
                 GetComponent<SpriteRenderer>().enabled = false;
+
+                // Switch off canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(false);
+
+                // Switch off minimap icon
+                transform.GetChild(1).gameObject.SetActive(false);
             }
         }
     }

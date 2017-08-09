@@ -206,7 +206,7 @@ public class LevelManager : MonoBehaviour
         InstantiateCollectibles();
         if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
             InstantiateObstacle();
-        //InstantiateInteractables();
+        InstantiateInteractables();
         InstantiateEnemyPosition();
 
         Debug.Log("Level Spawned");
@@ -619,7 +619,7 @@ public class LevelManager : MonoBehaviour
             GameObject spawnedSM = Instantiate(SpawnList[spawnIdx].stateMachine, spawnPos, Quaternion.identity);
 
             spawnedSM.GetComponentInChildren<Pathfinder>().theLevelManager = this;
-
+			spawnedSM.GetComponentInChildren<BaseSM> ().SpawnPoint = spawnPos;
             // Reduce amount, increase index if amount == 0
             SpawnList[spawnIdx].amount--;
             if (SpawnList[spawnIdx].amount <= 0)
@@ -648,10 +648,18 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfCollectibles; i++)
         {
+            Vector3 RandomPosInRoom;
             int randomMiscRoomNumber = Random.Range(0, miscRooms.Length);
-            float RandomXPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
-            float RandomYPos = tilespacing * Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
-            Vector3 RandomPosInRoom = new Vector3(RandomXPos, RandomYPos, 0f);
+            int RandomXPos = Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
+            int RandomYPos = Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
+            while(venttiles[RandomXPos][RandomYPos] == TileType.VENT_E)
+            {
+                RandomXPos = Random.Range(miscRooms[randomMiscRoomNumber].xpos + 1, miscRooms[randomMiscRoomNumber].xpos + miscRooms[randomMiscRoomNumber].roomWidth - 1);
+                RandomYPos = Random.Range(miscRooms[randomMiscRoomNumber].ypos + 1, miscRooms[randomMiscRoomNumber].ypos + miscRooms[randomMiscRoomNumber].roomHeight - 1);
+                if (venttiles[RandomXPos][RandomYPos] != TileType.VENT_E)
+                    break;
+            }
+            RandomPosInRoom = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos);
 
             //IF BOTH BOOLEANS ARE TRUE
             if (RandomHealthpackCollecitbles && RandomAmmoCollecitbles)
@@ -696,8 +704,8 @@ public class LevelManager : MonoBehaviour
             {
                 case "PowerSwitch":
                     {
-                        int XPos = Random.Range(powerRoom.xpos + 1, powerRoom.xpos + powerRoom.roomWidth - 2);
-                        int YPos = Random.Range(powerRoom.ypos + 1, powerRoom.ypos + powerRoom.roomHeight - 2);
+                        int XPos = powerRoom.xpos + Mathf.RoundToInt(powerRoom.roomWidth / 2);
+                        int YPos = powerRoom.ypos + Mathf.RoundToInt(powerRoom.roomHeight / 2);
                         interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
                         Vector3 PowerPos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
                         GameObject Power = Instantiate(Interactables[i], PowerPos, Quaternion.identity);
@@ -738,7 +746,8 @@ public class LevelManager : MonoBehaviour
 
             if (go.tag == "Rescue")
             {
-                go.GetComponent<Pathfinder>().theLevelManager = this;
+                go.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+                go.GetComponentInChildren<BaseSM>().SpawnPoint = ObjectivePos;
             }
             else
                 maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
@@ -766,8 +775,7 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < objectiveRooms.Length; i++)
         {
-            //int RandomObstacle = Random.Range(0, Obstacles.Count);
-            int RandomObstacle = 2;
+            int RandomObstacle = Random.Range(0, Obstacles.Count);
             switch (RandomObstacle)
             {
                 case 0://GLASS OBSTACLE
@@ -931,6 +939,50 @@ public class LevelManager : MonoBehaviour
                         }
                     }
                     break;
+            }
+        }
+
+        //Instantiating For Power Switch
+        for (int idx = 0; idx < Obstacles.Count; idx++)
+        {
+            if (Obstacles[idx].name == "Glass")
+            {
+                int x = 0;
+                int y = 0;
+
+                int minX = Mathf.RoundToInt(powerRoom.xpos + (powerRoom.roomWidth / 2)) - 1;
+                int maxX = Mathf.RoundToInt(powerRoom.xpos + (powerRoom.roomWidth / 2)) + 1;
+
+                int minY = Mathf.RoundToInt(powerRoom.ypos + (powerRoom.roomHeight / 2)) - 1;
+                int maxY = Mathf.RoundToInt(powerRoom.ypos + (powerRoom.roomHeight / 2)) + 1;
+
+                while (minX + x <= maxX)
+                {
+                    obstacletiles[minX + x][minY] = TileType.OBSTACLE;
+                    obstacletiles[minX + x][maxY] = TileType.OBSTACLE;
+
+                    GameObject GlassObjectBottom = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY), 0), Quaternion.identity);
+                    GameObject GlassObjectTop = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (maxY), 0), Quaternion.identity);
+
+                    GlassObjectBottom.transform.parent = ObstacleLayout.transform;
+                    GlassObjectTop.transform.parent = ObstacleLayout.transform;
+
+                    x++;
+                }
+
+                while (minY + y <= maxY)
+                {
+                    obstacletiles[minX][minY + y] = TileType.OBSTACLE;
+                    obstacletiles[maxX][minY + y] = TileType.OBSTACLE;
+
+                    GameObject GlassObjectLeft = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX), tilespacing * (minY + y), 0), Quaternion.identity);
+                    GameObject GlassObjectRight = Instantiate(Obstacles[idx], new Vector3(tilespacing * (maxX), tilespacing * (minY + y), 0), Quaternion.identity);
+
+                    GlassObjectLeft.transform.parent = ObstacleLayout.transform;
+                    GlassObjectRight.transform.parent = ObstacleLayout.transform;
+
+                    y++;
+                }
             }
         }
     }

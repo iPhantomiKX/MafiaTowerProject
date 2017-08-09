@@ -29,7 +29,7 @@ public class UndetectedObjt : Objective {
             EnemySM[] enemies = FindObjectsOfType<EnemySM>();
             foreach (EnemySM enemy in enemies)
             {
-                if (enemy.alert == true) failed = true;
+                if (enemy.alert == true) onFail();
             }
         }
         base.Update();

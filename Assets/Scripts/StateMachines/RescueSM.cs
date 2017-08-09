@@ -184,4 +184,11 @@ public class RescueSM : NeutralSM {
             CurrentState = RESCUE_STATE.RESCUED;
         }
     }
+
+    public override void OnDeath()
+    {
+        Destroy(GetComponent<RescueObjtInspect>());
+        Destroy(GetComponent<SpriteOutline>());
+        base.OnDeath();
+    }
 }

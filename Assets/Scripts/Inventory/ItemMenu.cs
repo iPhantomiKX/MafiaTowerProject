@@ -71,6 +71,9 @@ public class ItemMenu : MonoBehaviour
         {
             // TODO:
             // Add some functionality
+            DoItemAction(item);
+            RemoveItem(item, slot);
+
             itemMenuExists = false;
             panel.enabled = false;
             Destroy(panel.gameObject);
@@ -145,6 +148,69 @@ public class ItemMenu : MonoBehaviour
             Destroy(panel.gameObject);
         });
 
+    }
+
+    void DoItemAction(Item item)
+    {
+        switch (item.ID)
+        {
+            case 0:
+                {
+                    GameObject.FindObjectOfType<PlayerController>().gameObject.GetComponent<HealthComponent>().health += 1;
+                    break;
+                }
+
+            case 1:
+                {
+                    break;
+                }
+
+            case 2:
+                {
+                    break;
+                }
+        }
+    }
+
+    void RemoveItem(Item item, int slot)
+    {
+        removeItem = true;
+        int dataItemIndex = 0;
+        for (int i = 0; i < inv.InventoryDataItems.Count; i++)
+        {
+            if ((inv.InventoryDataItems[i].ID == item.ID) && (inv.InventoryDataItems[i].Amount > 1))
+            {
+                removeItem = false;
+                dataItemIndex = i;
+                break;
+            }
+        }
+
+        if (removeItem)
+        {
+            inv.slotItemAmount--;
+            inv.ClearItemData(item);
+            Debug.Log("SLOT ITEM AMOUNT after decreasing by 1: " + inv.slotItemAmount);
+
+            inv.items[slot] = new Item();
+            Transform itemTrans = inventoryDisp.slots[slot].transform;
+            Destroy(itemTrans.GetChild(0).gameObject);
+        }
+        else
+        {
+            inv.InventoryDataItems[dataItemIndex].Amount--;
+
+            if (inv.InventoryDataItems[dataItemIndex].Amount > 1)
+            {
+                ItemData data = inventoryDisp.slots[slot].transform.GetChild(0).GetComponent<ItemData>();
+                data.transform.GetChild(0).GetComponent<Text>().text = inv.InventoryDataItems[dataItemIndex].Amount.ToString();
+            }
+            if (inv.InventoryDataItems[dataItemIndex].Amount < 2)
+            {
+                ItemData data = inventoryDisp.slots[slot].transform.GetChild(0).GetComponent<ItemData>();
+                data.transform.GetChild(0).GetComponent<Text>().text = " ";
+            }
+        }
     }
 
 }
