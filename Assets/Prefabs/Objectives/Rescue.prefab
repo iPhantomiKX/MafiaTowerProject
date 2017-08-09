@@ -159,9 +159,12 @@ MonoBehaviour:
   PatrolPosition: {x: 0, y: 0, z: 0}
   idleTime: 0
   idleAngle: 0
+  angleFOV: 0
+  visionRange: 0
   retreatThreshold: 0
   player: {fileID: 0}
   PatrolPoints: []
+  SpawnPoint: {x: 0, y: 0, z: 0}
   PathfinderRef: {fileID: 0}
   isBeingDragged: 0
   ExitPoint: {fileID: 0}
@@ -183,7 +186,29 @@ MonoBehaviour:
   health: 5
   death:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114814704481172936}
+        m_MethodName: onFail
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1797228185905298}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   source: {fileID: 0}
