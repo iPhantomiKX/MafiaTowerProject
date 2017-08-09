@@ -56,6 +56,7 @@ public class ObjectiveManager : MonoBehaviour {
 			text.material = ArialFont.material;
 			text.color = Color.yellow;
             Objective thisObjt = objectives[i];
+            if (!thisObjt.mandatory) text.color = Color.cyan;
             text.text = thisObjt.objtname;
             thisObjt.objtText = text;
 			objtTexts.Add (text);
@@ -67,7 +68,8 @@ public class ObjectiveManager : MonoBehaviour {
                 Image timeBar = objtTimeBar.AddComponent<Image>();
                 //Rect bar = new Rect(text.transform.position.x, text.transform.position.y, timeBarWidth, timeBarHeight);
                 Color barColor = Color.yellow;
-                barColor.a = 0.5f;
+                if (!thisObjt.mandatory) barColor = Color.cyan;
+                barColor.a = 0.4f;
                 timeBar.color = barColor;
                 timeBar.rectTransform.pivot = new Vector2(0, 0);
                 timeBar.rectTransform.anchorMin = new Vector2(0, 0.5f);
