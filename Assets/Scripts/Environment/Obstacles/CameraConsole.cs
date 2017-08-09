@@ -16,13 +16,13 @@ public class CameraConsole : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        pm = GameObject.Find("Canvas").GetComponent<PanelManager>();
-        securityCameraList = GameObject.FindGameObjectsWithTag("SecurityCamera");
-        camera_offline_screen = transform.GetChild(0).gameObject; //A bit hardcoded but uh should be fine as long as the first child is the offline screen
     }
 
     void Start()
     {
+        pm = GameObject.Find("Canvas").GetComponent<PanelManager>();
+        securityCameraList = GameObject.FindGameObjectsWithTag("SecurityCamera");
+        camera_offline_screen = transform.GetChild(0).gameObject; //A bit hardcoded but uh should be fine as long as the first child is the offline screen
         player = GameObject.Find("PlayerObject").GetComponent<PlayerController>();
     }
 
@@ -91,7 +91,9 @@ public class CameraConsole : MonoBehaviour {
 
         pm.ActivatePanels(new[] { "PlayerUI", "ObjectiveUI" });
 
-        gameObject.SetActive(false);
+        pm.DeactivatePanel("SecurityConsole");
+
+        //gameObject.SetActive(false);
     }
 
     public void OpenPanel()
