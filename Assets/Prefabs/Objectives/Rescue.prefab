@@ -326,7 +326,7 @@ MonoBehaviour:
   timeBarWidth: 0
   numCompleted: 0
   numRequired: 1
-  mandatory: 0
+  mandatory: 1
   objtText: {fileID: 0}
 --- !u!114 &114201306729022578
 MonoBehaviour:
@@ -577,17 +577,6 @@ MonoBehaviour:
       - m_Target: {fileID: 114167714291059072}
         m_MethodName: onFail
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1216106612668114}
-        m_MethodName: SetActive
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
