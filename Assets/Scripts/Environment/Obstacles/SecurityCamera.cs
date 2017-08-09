@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SecurityCamera : MonoBehaviour {
-
+public class SecurityCamera : NeutralSM
+{
     enum STATE
     {
         ON,
@@ -19,29 +20,53 @@ public class SecurityCamera : MonoBehaviour {
     public float rotationAngle;
     public float rotationSpeed;
 
-    private GameObject player;
+    GameObject playerasdf;
 
     public float soundInterval = 1.0f;
     private float sound_counter;
 
     private STATE current_state = STATE.ON;
 
+    public override void Sense()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Act(int value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override int Think()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void ProcessMessage()
+    {
+        throw new NotImplementedException();
+    }
+
     // Use this for initialization
     void Start()
     {
         current_state = STATE.ON;
         sound_counter = soundInterval;
+        playerasdf = GameObject.Find("PlayerObject");
+
+        angleFOV = detectionAngle;
+        visionRange = detectionDistance;
         //GetComponent<LineRenderer>().SetPosition(1, new Vector3(0, detectionAngle / 360.0f, 0));
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch(current_state)
+        switch (current_state)
         {
             case STATE.ON:
 
-                if (IsPlayerSeen())
+                if (IsTargetSeen(playerasdf))
                     current_state = STATE.ALERT;
                 else
                     Rotate();
@@ -55,64 +80,10 @@ public class SecurityCamera : MonoBehaviour {
 
             case STATE.ALERT:
                 EmitSound();
-                if (!IsPlayerSeen())
+                if (!IsTargetSeen(playerasdf))
                     current_state = STATE.ON;
                 break;
         }
-    }
-
-    protected bool IsPlayerSeen()
-    {
-        //Move this out -> place it into the start instead (once player spawner spawns player on AWAKE instead)
-        if(!player)
-            player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>().gameObject;
-
-        //check player in cone and in range
-        Vector3 playerDir = player.transform.position - this.transform.position;
-        Vector3 forward = this.transform.up;
-        float angle = Vector3.Angle(playerDir, forward);
-        float distance = Vector3.Distance(player.transform.position, this.transform.position);
-        if (angle < detectionAngle && distance < detectionDistance)
-        {
-
-            //check if player behind any obstacle
-            int layerMask = (1 << 8 | 1 << 11);
-            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, playerDir, Mathf.Infinity, layerMask);
-            if (hit.collider != null)
-            {
-                if (hit.collider.gameObject.tag == "Player")
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                //In case part of the body is seen
-                RaycastHit2D hit2 = Physics2D.Raycast(this.transform.position, Quaternion.AngleAxis(playerDir.z + 10f, Vector3.forward) * playerDir, Mathf.Infinity, layerMask);
-                if (hit2.collider != null)
-                {
-                    if (hit2.collider.gameObject.tag == "Player")
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    RaycastHit2D hit3 = Physics2D.Raycast(this.transform.position, Quaternion.AngleAxis(playerDir.z - 10f, Vector3.forward) * playerDir, Mathf.Infinity, layerMask);
-                    if (hit3.collider != null)
-                    {
-                        if (hit3.collider.gameObject.tag == "Player")
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-        else
-            return false;
     }
 
     void Rotate()

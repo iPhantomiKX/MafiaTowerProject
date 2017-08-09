@@ -26,7 +26,7 @@ public abstract class NeutralSM : BaseSM {
             if (target.GetComponent<BaseSM>())
                 layerMask = LayerMask.GetMask("Default", "Inspectables");
             else
-                layerMask = LayerMask.GetMask("Inspectables");
+                layerMask = LayerMask.GetMask("Player", "Inspectables");
 
             RaycastHit2D hit = Physics2D.Raycast(this.transform.position, targetDir, Mathf.Infinity, layerMask);
             if (hit.collider != null)
@@ -71,6 +71,9 @@ public abstract class NeutralSM : BaseSM {
     // Check if the checkObject is relevant to the SM
     protected override bool CheckValidTarget(GameObject checkObject)
     {
+        if (checkObject.tag == "Player")
+            return true;
+
         Debug.Log("2 " + checkObject.gameObject.name);
         // Checking for a	 State Machine
         if (checkObject.GetComponent<BaseSM>())

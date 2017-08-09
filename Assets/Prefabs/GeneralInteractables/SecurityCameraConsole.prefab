@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50498635340855722}
   - component: {fileID: 114171068883244714}
   - component: {fileID: 114234134067975642}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: SecurityCameraConsole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
