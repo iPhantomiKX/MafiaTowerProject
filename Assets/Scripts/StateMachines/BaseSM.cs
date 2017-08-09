@@ -176,13 +176,25 @@ public abstract class BaseSM : MonoBehaviour {
         {
             if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
             {
+                // Switch on sprite renderer
                 GetComponent<SpriteRenderer>().enabled = true;
+
+                // Switch on canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(true);
+
+                // Switch on minimap icon
+                transform.GetChild(1).gameObject.SetActive(true);            
             }
             else
-            {
+            {                
+                // Switch off sprite renderer
                 GetComponent<SpriteRenderer>().enabled = false;
-                transform.parent.GetChild(1).gameObject.SetActive(false);         
+
+                // Switch off canvas                
+                transform.parent.GetChild(1).gameObject.SetActive(false);
+
+                // Switch off minimap icon
+                transform.GetChild(1).gameObject.SetActive(false);         
             }
         }
     }
@@ -198,13 +210,25 @@ public abstract class BaseSM : MonoBehaviour {
         {
             if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
             {
+                // Switch on sprite renderer
                 GetComponent<SpriteRenderer>().enabled = true;
+
+                // Switch on canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(true);
+
+                // Switch on minimap icon
+                transform.GetChild(1).gameObject.SetActive(true);
             }
             else
             {
+                // Switch off sprite renderer
                 GetComponent<SpriteRenderer>().enabled = false;
+
+                // Switch off canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(false);
+
+                // Switch off minimap icon
+                transform.GetChild(1).gameObject.SetActive(false);
             }
         }
     }
@@ -220,13 +244,25 @@ public abstract class BaseSM : MonoBehaviour {
         {
             if (other.GetComponent<FogTile>().GetFogLevel() == FogTile.FOG_LEVEL.SEEN)
             {
+                // Switch on sprite renderer
                 GetComponent<SpriteRenderer>().enabled = true;
+
+                // Switch on canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(true);
+
+                // Switch on minimap icon
+                transform.GetChild(1).gameObject.SetActive(true);
             }
             else
             {
+                // Switch off sprite renderer
                 GetComponent<SpriteRenderer>().enabled = false;
+
+                // Switch off canvas                
                 transform.parent.GetChild(1).gameObject.SetActive(false);
+
+                // Switch off minimap icon
+                transform.GetChild(1).gameObject.SetActive(false);
             }
         }
     }
