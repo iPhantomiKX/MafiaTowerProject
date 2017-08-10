@@ -6,27 +6,31 @@ public class LaserAlarm : TraitObstacle {
 
 	private AudioSource source;
 	public AudioClip alarmSound;
-
+    float cooldown = 3;
+    float cooldownLeft;
+    
 	void Awake(){
 		source = GetComponent<AudioSource> ();
 	}
 
 	// Use this for initialization
 	void Start () {
-		
+        cooldownLeft = cooldown;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (cooldownLeft <= 0) cooldownLeft = 0;
+        else cooldownLeft -= Time.deltaTime;
 	}
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player")
+        if(col.gameObject.tag == "Player" && cooldownLeft <= 0)
         {
 			source.PlayOneShot (alarmSound , alarmSound.length);
             GetComponent<EmitSound>().emitSound();
+            cooldownLeft = cooldown;
         }
     }
 
