@@ -824,8 +824,7 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < objectiveRooms.Length; i++)
         {
-            //int RandomObstacle = Random.Range(0, Obstacles.Count);
-            int RandomObstacle = 2;
+            int RandomObstacle = Random.Range(0, Obstacles.Count);
             switch (RandomObstacle)
             {
                 case 0://GLASS OBSTACLE
@@ -1216,7 +1215,7 @@ public class LevelManager : MonoBehaviour
 	// Get a random room from objtRooms
 	public RoomScript GetObjtRooms()
 	{
-		return objectiveRooms[Random.Range(0, objectiveRooms.Length - 1)];
+        return objectiveRooms[Random.Range(0, objectiveRooms.Length - 1)];
 	}
 
     // Set a TileType on the given position
