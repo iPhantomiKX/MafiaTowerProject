@@ -132,7 +132,8 @@ public class PanelManager : MonoBehaviour {
     public void DeactivateAllPanels()
     {
         foreach (Transform child in transform)
-            child.gameObject.SetActive(false);
+            if(child.name != "EventSystem")
+                child.gameObject.SetActive(false);
     }
 
     void OnApplicationQuit()
