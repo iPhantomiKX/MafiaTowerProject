@@ -20,6 +20,7 @@ public abstract class Objective : MonoBehaviour {
     public int numRequired = 1;
     public bool mandatory;
     public Text objtText;
+    public bool failed;
     private GameStateManager GameStateRef;
 
 	// Use this for initialization
@@ -47,8 +48,9 @@ public abstract class Objective : MonoBehaviour {
                 timeBar.sizeDelta = barSize;
             }
             
-            if (remainingTime <= 0 && !complete)
+            if (remainingTime <= 0 && !complete && !failed)
             {
+                failed = true;
                 Debug.Log("Time's up!");
                 onFail();
             }

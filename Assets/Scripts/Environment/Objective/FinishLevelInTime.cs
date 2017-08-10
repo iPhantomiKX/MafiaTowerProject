@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FinishLevelInTime : Objective {
-    bool failed;
 
     public override bool check()
     {
@@ -13,7 +12,6 @@ public class FinishLevelInTime : Objective {
 
     public override void onFail()
     {
-        failed = true;
         Debug.Log("Mandatory: " + mandatory);
         om.OnFail(this.gameObject);
 

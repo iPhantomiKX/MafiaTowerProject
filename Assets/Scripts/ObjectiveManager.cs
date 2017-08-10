@@ -87,17 +87,9 @@ public class ObjectiveManager : MonoBehaviour {
 
     public void OnFail(GameObject failObjt)
     {
-        foreach (Text text in objtTexts)
-        {
-            if (text.text == failObjt.GetComponent<Objective>().objtname)
-            {
-                text.text = text.text + "...failed";
-                text.color = Color.red;
-                //return;
-                break;
-            }
-
-        }
+        Text text = failObjt.GetComponent<Objective>().objtText;
+        text.text = text.text + "..failed";
+        text.color = Color.red;
 
         if (failObjt.GetComponent<Objective>().mandatory)
         {

@@ -13,12 +13,11 @@ public class BlinkingTrap : LaserAlarm {
     }
 
     // Update is called once per frame
-    void Update () {
-	}
     IEnumerator Blink()
     {
         while (true)
         {
+            
             GetComponent<SpriteRenderer>().enabled = true;
             GetComponent<Collider2D>().enabled = true;
             yield return new WaitForSeconds(stayDuration);
