@@ -596,16 +596,22 @@ public class LevelManager : MonoBehaviour
                 case SpawningAIData.SPAWN_ROOM_TYPE.ANY:
                     typesToIgnore.Add(RoomScript.RoomType.SPAWN);
                     typesToIgnore.Add(RoomScript.RoomType.EXIT);
+                    typesToIgnore.Add(RoomScript.RoomType.POWER);
+                    typesToIgnore.Add(RoomScript.RoomType.SECURITYCONSOLE);
                     break;
                 case SpawningAIData.SPAWN_ROOM_TYPE.MISC:
                     typesToIgnore.Add(RoomScript.RoomType.SPAWN);
                     typesToIgnore.Add(RoomScript.RoomType.EXIT);
                     typesToIgnore.Add(RoomScript.RoomType.OBJECTIVES);
+                    typesToIgnore.Add(RoomScript.RoomType.POWER);
+                    typesToIgnore.Add(RoomScript.RoomType.SECURITYCONSOLE);
                     break;
                 case SpawningAIData.SPAWN_ROOM_TYPE.OBJECTIVE:
                     typesToIgnore.Add(RoomScript.RoomType.SPAWN);
                     typesToIgnore.Add(RoomScript.RoomType.EXIT);
                     typesToIgnore.Add(RoomScript.RoomType.MISC);
+                    typesToIgnore.Add(RoomScript.RoomType.POWER);
+                    typesToIgnore.Add(RoomScript.RoomType.SECURITYCONSOLE);
                     break;
             }
 
@@ -709,6 +715,57 @@ public class LevelManager : MonoBehaviour
                         interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
                         Vector3 PowerPos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
                         GameObject Power = Instantiate(Interactables[i], PowerPos, Quaternion.identity);
+
+                        //Instantiating For Power Switch
+                        for (int idx = 0; idx < Obstacles.Count; idx++)
+                        {
+                            if (Obstacles[idx].name == "Glass")
+                            {
+                                int x = 0;
+                                int y = 0;
+
+                                int minX = XPos - 1;
+                                int maxX = XPos + 1;
+
+                                int minY = YPos - 1;
+                                int maxY = YPos + 1;
+
+                                while (minX + x <= maxX)
+                                {
+
+                                    obstacletiles[minX + x][minY] = TileType.OBSTACLE;
+                                    obstacletiles[minX + x][maxY] = TileType.OBSTACLE;
+
+                                    if((int)obstacletiles[minX + x][minY] == (int)TileType.OBSTACLE ||  (int)obstacletiles[minX + x][maxY] == (int)TileType.OBSTACLE)
+                                    {
+                                        GameObject GlassObjectBottom = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY), 0), Quaternion.identity);
+                                        GameObject GlassObjectTop = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (maxY), 0), Quaternion.identity);
+
+                                        GlassObjectBottom.transform.parent = ObstacleLayout.transform;
+                                        GlassObjectTop.transform.parent = ObstacleLayout.transform;
+                                    }
+
+                                    x++;
+                                }
+
+                                while (minY + y <= maxY)
+                                {
+                                    obstacletiles[minX][minY + y] = TileType.OBSTACLE;
+                                    obstacletiles[maxX][minY + y] = TileType.OBSTACLE;
+
+                                    if ((int)obstacletiles[minX][minY + y] == (int)TileType.OBSTACLE || (int)obstacletiles[maxX][minY + y] == (int)TileType.OBSTACLE)
+                                    {
+                                        GameObject GlassObjectLeft = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX), tilespacing * (minY + y), 0), Quaternion.identity);
+                                        GameObject GlassObjectRight = Instantiate(Obstacles[idx], new Vector3(tilespacing * (maxX), tilespacing * (minY + y), 0), Quaternion.identity);
+
+                                        GlassObjectLeft.transform.parent = ObstacleLayout.transform;
+                                        GlassObjectRight.transform.parent = ObstacleLayout.transform;
+                                    }
+
+                                    y++;
+                                }
+                            }
+                        }
                     }
                     break;
                 case "SecurityCameraConsole":
@@ -939,50 +996,6 @@ public class LevelManager : MonoBehaviour
                         }
                     }
                     break;
-            }
-        }
-
-        //Instantiating For Power Switch
-        for (int idx = 0; idx < Obstacles.Count; idx++)
-        {
-            if (Obstacles[idx].name == "Glass")
-            {
-                int x = 0;
-                int y = 0;
-
-                int minX = Mathf.RoundToInt(powerRoom.xpos + (powerRoom.roomWidth / 2)) - 1;
-                int maxX = Mathf.RoundToInt(powerRoom.xpos + (powerRoom.roomWidth / 2)) + 1;
-
-                int minY = Mathf.RoundToInt(powerRoom.ypos + (powerRoom.roomHeight / 2)) - 1;
-                int maxY = Mathf.RoundToInt(powerRoom.ypos + (powerRoom.roomHeight / 2)) + 1;
-
-                while (minX + x <= maxX)
-                {
-                    obstacletiles[minX + x][minY] = TileType.OBSTACLE;
-                    obstacletiles[minX + x][maxY] = TileType.OBSTACLE;
-
-                    GameObject GlassObjectBottom = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY), 0), Quaternion.identity);
-                    GameObject GlassObjectTop = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (maxY), 0), Quaternion.identity);
-
-                    GlassObjectBottom.transform.parent = ObstacleLayout.transform;
-                    GlassObjectTop.transform.parent = ObstacleLayout.transform;
-
-                    x++;
-                }
-
-                while (minY + y <= maxY)
-                {
-                    obstacletiles[minX][minY + y] = TileType.OBSTACLE;
-                    obstacletiles[maxX][minY + y] = TileType.OBSTACLE;
-
-                    GameObject GlassObjectLeft = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX), tilespacing * (minY + y), 0), Quaternion.identity);
-                    GameObject GlassObjectRight = Instantiate(Obstacles[idx], new Vector3(tilespacing * (maxX), tilespacing * (minY + y), 0), Quaternion.identity);
-
-                    GlassObjectLeft.transform.parent = ObstacleLayout.transform;
-                    GlassObjectRight.transform.parent = ObstacleLayout.transform;
-
-                    y++;
-                }
             }
         }
     }
