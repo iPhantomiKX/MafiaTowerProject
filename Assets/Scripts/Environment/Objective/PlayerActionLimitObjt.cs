@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerActionLimitObjt : Objective {
     public bool limitMelee;
     public bool limitGun;
-    public bool failed = false;
     public override void onFail()
     {
         failed = true;
