@@ -732,7 +732,15 @@ public class LevelManager : MonoBehaviour
 
                                 while (minX + x <= maxX)
                                 {
-
+                                    if((int)venttiles[minX + x][minY] == (int)TileType.VENT_E)
+                                    {
+                                        obstacletiles[minX + x][minY] = TileType.VENT_E;
+                                    }
+                                    if ((int)venttiles[minX + x][maxY] == (int)TileType.VENT_E)
+                                    {
+                                        obstacletiles[minX + x][maxY] = TileType.VENT_E;
+                                    }
+                                    
                                     obstacletiles[minX + x][minY] = TileType.OBSTACLE;
                                     obstacletiles[minX + x][maxY] = TileType.OBSTACLE;
 
@@ -750,8 +758,18 @@ public class LevelManager : MonoBehaviour
 
                                 while (minY + y <= maxY)
                                 {
+                                    if ((int)venttiles[minX][minY + y] == (int)TileType.VENT_E)
+                                    {
+                                        obstacletiles[minX][minY + y] = TileType.VENT_E;
+                                    }
+                                    if ((int)venttiles[maxX][minY + y] == (int)TileType.VENT_E)
+                                    {
+                                        obstacletiles[maxX][minY + y] = TileType.VENT_E;
+                                    }
+
                                     obstacletiles[minX][minY + y] = TileType.OBSTACLE;
                                     obstacletiles[maxX][minY + y] = TileType.OBSTACLE;
+                                    
 
                                     if ((int)obstacletiles[minX][minY + y] == (int)TileType.OBSTACLE || (int)obstacletiles[maxX][minY + y] == (int)TileType.OBSTACLE)
                                     {
