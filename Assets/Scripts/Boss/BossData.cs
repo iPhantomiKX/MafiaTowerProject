@@ -12,6 +12,7 @@ public class BossData : MonoBehaviour {
 
     public float m_meleeDamage = 10.0f;
     public float m_rangeDamage = 10.0f;
+    public float m_attackSpeed = 0.5f;      // How seconds before an attack can occur
 
     //These act as a multiplier modifer (Higher the float value, more damage taken)
     public float m_meleeDefense = 10.0f;
@@ -20,18 +21,36 @@ public class BossData : MonoBehaviour {
     public List<BossTrait> modifierList = new List<BossTrait>();
     public Base_BossStrategy strategy = null;
     public BossSpecial special = null;
+
+    // For pathfinding between rooms etc.
+    public Pathfinder m_pathfinderRef;
+
+    // For searching for the player and damaging the player
+    public GameObject m_player;
+    public float m_visionFOV = 45;
+    public float m_visionDistance = 1;
+
+    // Attack type of the boss
+    public enum ATTACK_TYPE
+    {
+        MELEE,
+        RANGED,
+
+        NUM_STATES,
+    }
+    public ATTACK_TYPE m_currentAttackType;
     
     void Awake()
     {
         //Some Example shit
-        strategy = new Base_BossStrategy();
+        strategy = new Coward_BossStrategy();
         special = new Teleport();
 
-        modifierList.Add(new MeleeDamageIncrease());
-        modifierList.Add(new RangeDamageIncrease());
-        modifierList.Add(new MeleeDefenseDecrease());
-        modifierList.Add(new RangeDefenseDecrease());
-        modifierList.Add(new ConstantRegeneration());
+        //modifierList.Add(new MeleeDamageIncrease());
+        //modifierList.Add(new RangeDamageIncrease());
+        //modifierList.Add(new MeleeDefenseDecrease());
+        //modifierList.Add(new RangeDefenseDecrease());
+        //modifierList.Add(new ConstantRegeneration());
         modifierList.Add(new MoveSpeedIncrease());
     }
 
@@ -40,11 +59,14 @@ public class BossData : MonoBehaviour {
     {
         m_health = GetComponent<HealthComponent>();
 
+        strategy.Init(this);
         special.Init(this);
 
         for (int i = 0; i < modifierList.Count; ++i)
             modifierList[i].Init(this);
-	}
+
+        m_pathfinderRef = GetComponent<Pathfinder>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -54,6 +76,9 @@ public class BossData : MonoBehaviour {
 
         for (int i = 0; i < modifierList.Count; ++i)
             modifierList[i].Update(this);
+
+        m_movement.Move(strategy.direction, m_moveSpeed);
+        m_movement.RotateToDirection(strategy.direction);
     }
 
     public void PrintBossStats()
