@@ -13,15 +13,22 @@ public class VentInspect : Inspect
     private GameObject player_object;
 
     private GameObject vent_entrances;
+    private GameObject black_image;
 
     void Start()
     {
+        GetComponent<SpriteRenderer>().sortingOrder = 5;
         player_object = GameObject.Find("PlayerObject");
         vents_layout = GameObject.Find("VentsLayout");
-
         //RANDALL - TODO. Can just leave as "vents" to remove this shit.
         //this fucking sucks la. idk.
         vent_entrances = GameObject.Find("VentsEntranceLayout");
+
+        //RANDALL - TODO: Find someway to instantiate this only once
+        black_image = GameObject.Find("BlackImage");
+        if (black_image == null)
+            black_image = Instantiate(Resources.Load("BlackImage")) as GameObject;
+        black_image.SetActive(false);
     }
 
     public override void inspect()
@@ -30,15 +37,19 @@ public class VentInspect : Inspect
         {
             player_object.GetComponent<PlayerController>().inVent = true;
             player_object.layer = LayerMask.NameToLayer("Vent_Player");
+            player_object.GetComponent<SpriteRenderer>().sortingOrder = 5;
             ChangeActionName("Exit Vents");
             vents_layout.SetActive(true);
+            black_image.SetActive(true);
         }
         else
         {
             player_object.GetComponent<PlayerController>().inVent = false;
             player_object.layer = LayerMask.NameToLayer("Player");
+            player_object.GetComponent<SpriteRenderer>().sortingOrder = 2;
             ChangeActionName("Enter Vents");
             vents_layout.SetActive(false);
+            black_image.SetActive(false);
         }
 
         player_object.transform.position = transform.position;
