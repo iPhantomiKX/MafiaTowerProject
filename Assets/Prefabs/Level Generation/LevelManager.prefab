@@ -54,26 +54,27 @@ MonoBehaviour:
   columns: 40
   rows: 40
   tilespacing: 0.3
-  numberOfObjectiveRooms: 2
-  numberOfMiscRooms: 5
+  numberOfObjectiveRooms: 1
+  numberOfMiscRooms: 4
   numberOfCollectibles: 5
   roomWidth:
     m_Min: 6
-    m_Max: 8
+    m_Max: 9
   roomHeight:
     m_Min: 6
-    m_Max: 8
+    m_Max: 9
   numberOfSubObjectives: 1
   SubObjectivesLevel: 1
   hackableDoorLevel: 0
   RandomAmmoCollecitbles: 1
   RandomHealthpackCollecitbles: 1
+  FogOfWar: 0
   BossLevel: 0
   GlassObstacle: 1
   BlinkingTrapObstacle: 1
   WaitTrapObstacle: 1
   LaserAlarmObstacle: 1
-  numberOfObstaclesPerRoom: 1
+  numberOfObstaclesPerRoom: 2
   numberOfWaitTraps: 3
   numberOfLaserAlarms: 0
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
