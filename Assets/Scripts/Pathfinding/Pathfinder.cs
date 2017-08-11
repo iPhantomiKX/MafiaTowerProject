@@ -320,7 +320,7 @@ public class Pathfinder : MonoBehaviour {
 
     }
 
-    public void FollowPath()
+    public Vector3 FollowPath()
     {
         if (!b_FollowPathCreated)
         {
@@ -360,7 +360,7 @@ public class Pathfinder : MonoBehaviour {
                 i_CurrentIdx = 0;
 
                 //Debug.Log("Path Complete");
-                return;
+                return new Vector3();
             }
 
             // DEBUG
@@ -369,8 +369,13 @@ public class Pathfinder : MonoBehaviour {
                 Debug.DrawLine(Path[i].m_pos, Path[i + 1].m_pos, Color.blue);
             }
 
-            GetComponent<BaseSM>().WalkTowardPoint(Path[i_CurrentIdx].m_pos);
+            if (GetComponent<BaseSM>())
+                GetComponent<BaseSM>().WalkTowardPoint(Path[i_CurrentIdx].m_pos);
+            else
+                return (Path[i_CurrentIdx].m_pos - transform.position).normalized;
         }
+
+        return new Vector3();
     }
 
     float GetManhattenDistance(Node aNode)

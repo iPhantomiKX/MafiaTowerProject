@@ -1218,6 +1218,12 @@ public class LevelManager : MonoBehaviour
         return objectiveRooms[Random.Range(0, objectiveRooms.Length - 1)];
 	}
 
+    // Gets the array of misc rooms
+    public RoomScript[] GetAllMiscRooms()
+    {
+        return miscRooms;
+    }
+
     // Set a TileType on the given position
     // Also returns the grid position of the object
     public Vector2 AddToArray(Vector3 position, TileType toSet)

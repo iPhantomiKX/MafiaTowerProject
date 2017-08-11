@@ -38,6 +38,15 @@ public class Teleport : BossSpecial
     public override void Init(BossData boss)
     {
         //Use LevelManager to get a list of all the rooms and add them to the list
+        
+        for (int i = 0; i < boss.m_pathfinderRef.theLevelManager.numberOfMiscRooms; ++i)
+        {
+            RoomScript temp = boss.m_pathfinderRef.theLevelManager.GetAllMiscRooms()[i];
+            float tilespacing = boss.m_pathfinderRef.theLevelManager.tilespacing;
+            Vector3 tempVec = new Vector3(tilespacing * Mathf.RoundToInt(temp.xpos + (temp.roomWidth * 0.5f)), tilespacing * Mathf.RoundToInt(temp.ypos + (temp.roomHeight * 0.5f)), 1f);
+
+            teleport_locations.Add(tempVec);
+        }
     }
 
     public override void Update(BossData boss)

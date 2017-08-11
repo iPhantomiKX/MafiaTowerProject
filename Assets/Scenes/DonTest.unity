@@ -177,86 +177,19 @@ Prefab:
       propertyPath: SpawnList.Array.data[1].spawnRoom
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: SpawnList.Array.data[1].amount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: SpawnList.Array.data[0].amount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &852570107
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 852570109}
-  - component: {fileID: 852570108}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &852570108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 852570107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c3111fdf07282842bc4f3cae331f2ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BossStatsRanges:
-  - name: Movement Speed
-    min_value: 0
-    max_value: 0
-  - name: Attack Speed
-    min_value: 0
-    max_value: 0
-  - name: Melee Attack Damage
-    min_value: 0
-    max_value: 0
-  - name: Ranged Attack Damage
-    min_value: 0
-    max_value: 0
-  - name: Melee Attack Defense
-    min_value: 0
-    max_value: 0
-  - name: Ranged Attack Defense
-    min_value: 0
-    max_value: 0
-  - name: Movement Speed
-    min_value: 0
-    max_value: 0
-  - name: Attack Speed
-    min_value: 0
-    max_value: 0
-  - name: Melee Attack Damage
-    min_value: 0
-    max_value: 0
-  - name: Ranged Attack Damage
-    min_value: 0
-    max_value: 0
-  - name: Melee Attack Defense
-    min_value: 0
-    max_value: 0
-  - name: Ranged Attack Defense
-    min_value: 0
-    max_value: 0
---- !u!4 &852570109
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 852570107}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05600001, y: -0.049999997, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1398106677
 Prefab:
   m_ObjectHideFlags: 0
@@ -315,6 +248,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30b56d66016b6247a9b309605240370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1427452384
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4094105894683478, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.05600001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094105894683478, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.049999997
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094105894683478, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094105894683478, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094105894683478, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094105894683478, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094105894683478, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094105894683478, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b3965a7217d97484ca7964e5c99a3f8f, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1680213716
 GameObject:
   m_ObjectHideFlags: 0
