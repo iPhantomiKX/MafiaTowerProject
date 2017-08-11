@@ -73,6 +73,7 @@ public class LevelManager : MonoBehaviour
     public bool hackableDoorLevel = false;
     public bool RandomAmmoCollecitbles = false;
     public bool RandomHealthpackCollecitbles = false;
+    public bool FogOfWar = false;
     public bool BossLevel = false;        //For Every 5 Levels in The Game, this bool becomes true
 
     //Able to on and off obstacles for the particular level, used for level progression
@@ -86,11 +87,6 @@ public class LevelManager : MonoBehaviour
     [Space]
     [Header("Quantity of Obstacles/Room")]
     public int numberOfObstaclesPerRoom = 1;
-
-    [Space]
-    [Header("Quantity of Obstacles For Each Obstacle")]
-    public int numberOfWaitTraps = 0;
-    public int numberOfLaserAlarms = 0;
 
     [Space]
     [Header("Tile Types")]
@@ -710,48 +706,51 @@ public class LevelManager : MonoBehaviour
             {
                 case "PowerSwitch":
                     {
-                        int XPos = powerRoom.xpos + Mathf.RoundToInt(powerRoom.roomWidth / 2);
-                        int YPos = powerRoom.ypos + Mathf.RoundToInt(powerRoom.roomHeight / 2);
-                        interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
-                        Vector3 PowerPos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
-                        GameObject Power = Instantiate(Interactables[i], PowerPos, Quaternion.identity);
-
-                        //Instantiating For Power Switch
-                        for (int idx = 0; idx < Obstacles.Count; idx++)
+                        if(FogOfWar)
                         {
-                            if (Obstacles[idx].name == "Glass")
+                            int XPos = powerRoom.xpos + Mathf.RoundToInt(powerRoom.roomWidth / 2);
+                            int YPos = powerRoom.ypos + Mathf.RoundToInt(powerRoom.roomHeight / 2);
+                            interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
+                            Vector3 PowerPos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
+                            GameObject Power = Instantiate(Interactables[i], PowerPos, Quaternion.identity);
+
+                            //Instantiating For Power Switch
+                            for (int idx = 0; idx < Obstacles.Count; idx++)
                             {
-                                int x = 0;
-                                int y = 0;
-
-                                int minX = XPos - 1;
-                                int maxX = XPos + 1;
-
-                                int minY = YPos - 1;
-                                int maxY = YPos + 1;
-
-                                for(x = 0; x <= (maxX - minX); x++)
+                                if (Obstacles[idx].name == "Glass")
                                 {
-                                    for(y = 0; y <= (maxY - minY); y++)
-                                    {
-                                        if((int)venttiles[minX + x][minY + y] == (int)TileType.VENT_E)
-                                        {
-                                            obstacletiles[minX + x][minY + y] = TileType.VENT_E;
-                                        }
-                                        else if((int)interactabletiles[minX + x][minY + y] == (int)TileType.INTERACTABLES)
-                                        {
-                                            obstacletiles[minX + x][minY + y] = TileType.FLOOR;
-                                            Instantiate(floorTile, new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
-                                        }
-                                        else
-                                        {
-                                            obstacletiles[minX + x][minY + y] = TileType.OBSTACLE;
-                                        }
+                                    int x = 0;
+                                    int y = 0;
 
-                                        if((int)obstacletiles[minX + x][minY + y] == (int)TileType.OBSTACLE)
+                                    int minX = XPos - 1;
+                                    int maxX = XPos + 1;
+
+                                    int minY = YPos - 1;
+                                    int maxY = YPos + 1;
+
+                                    for (x = 0; x <= (maxX - minX); x++)
+                                    {
+                                        for (y = 0; y <= (maxY - minY); y++)
                                         {
-                                            GameObject GlassObstacle = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
-                                            GlassObstacle.transform.parent = ObstacleLayout.transform;
+                                            if ((int)venttiles[minX + x][minY + y] == (int)TileType.VENT_E)
+                                            {
+                                                obstacletiles[minX + x][minY + y] = TileType.VENT_E;
+                                            }
+                                            else if ((int)interactabletiles[minX + x][minY + y] == (int)TileType.INTERACTABLES)
+                                            {
+                                                obstacletiles[minX + x][minY + y] = TileType.FLOOR;
+                                                Instantiate(floorTile, new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
+                                            }
+                                            else
+                                            {
+                                                obstacletiles[minX + x][minY + y] = TileType.OBSTACLE;
+                                            }
+
+                                            if ((int)obstacletiles[minX + x][minY + y] == (int)TileType.OBSTACLE)
+                                            {
+                                                GameObject GlassObstacle = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
+                                                GlassObstacle.transform.parent = ObstacleLayout.transform;
+                                            }
                                         }
                                     }
                                 }
@@ -824,153 +823,158 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < objectiveRooms.Length; i++)
         {
-            int RandomObstacle = Random.Range(0, Obstacles.Count);
-            switch (RandomObstacle)
+            for(int obsNum = 0; obsNum < numberOfObstaclesPerRoom; obsNum++)
             {
-                case 0://GLASS OBSTACLE
-                    {
-                        for (int idx = 0; idx < Obstacles.Count; idx++)
-                        {
-                            if (Obstacles[idx].name == "Glass" && GlassObstacle == true)
-                            {
-                                int x = 0;
-                                int y = 0;
-
-                                int minX = Mathf.RoundToInt(objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth / 2)) - 1;
-                                int maxX = Mathf.RoundToInt(objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth / 2)) + 1;
-
-                                int minY = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2)) - 1;
-                                int maxY = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2)) + 1;
-
-                                for(x = 0; x <= (maxX - minX); x++)
-                                {
-                                    for(y = 0; y <= (maxY - minY); y++)
-                                    {
-                                        if ((int)obstacletiles[minX + x][minY + y] == (int)TileType.OBJECTIVE)
-                                        {
-                                            obstacletiles[minX + x][minY + y] = TileType.OBJECTIVE_ROOM;
-                                            Instantiate(objectiveRoomTile, new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
-                                        }
-                                        else
-                                        {
-                                            obstacletiles[minX + x][minY + y] = TileType.OBSTACLE;
-                                            GameObject GlassObject = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
-                                            GlassObject.transform.parent = ObstacleLayout.transform;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 1://WAIT TRAP OBSTACLE
-                    {
-                        for (int idx = 0; idx < Obstacles.Count; idx++)
-                        {
-                            if (Obstacles[idx].name == "WaitTrap" && WaitTrapObstacle == true)
-                            {
-                                for (int num = 0; num < numberOfWaitTraps; num++)
-                                {
-                                    int RandomXPos = Random.Range(objectiveRooms[i].xpos + 1, objectiveRooms[i].xpos + objectiveRooms[i].roomWidth - 2);
-                                    int RandomYPos = Random.Range(objectiveRooms[i].ypos + 1, objectiveRooms[i].ypos + objectiveRooms[i].roomHeight - 2);
-
-                                    obstacletiles[RandomXPos][RandomYPos] = TileType.TRAPS;
-                                    Vector3 TrapPos = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos, 0);
-                                    GameObject WaitTrap = Instantiate(Obstacles[idx], TrapPos, Quaternion.identity);
-                                    WaitTrap.transform.parent = ObstacleLayout.transform;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 2://BLINKING TRAP OBSTACLE
-                    {
-                        for (int idx = 0; idx < Obstacles.Count; idx++)
-                        {
-                            if (Obstacles[idx].name == "BlinkingTrap" && BlinkingTrapObstacle == true)
-                            {
-                                int x = 0;
-                                int y = 0;
-
-                                int minX = Mathf.RoundToInt(objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth / 2)) - 1;
-                                int maxX = Mathf.RoundToInt(objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth / 2)) + 1;
-
-                                int minY = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2)) - 1;
-                                int maxY = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2)) + 1;
-
-                                for (x = 0; x <= (maxX - minX); x++)
-                                {
-                                    for (y = 0; y <= (maxY - minY); y++)
-                                    {
-                                        if ((int)obstacletiles[minX + x][minY + y] == (int)TileType.OBJECTIVE)
-                                        {
-                                            obstacletiles[minX + x][minY + y] = TileType.OBJECTIVE_ROOM;
-                                            Instantiate(objectiveRoomTile, new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
-                                        }
-                                        else
-                                        {
-                                            obstacletiles[minX + x][minY + y] = TileType.OBSTACLE;
-                                            GameObject BlinkingTrapObject = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
-                                            BlinkingTrapObject.transform.parent = ObstacleLayout.transform;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 3://LASER ALARM OBSTACLE
-                    {
-                        for (int idx = 0; idx < Obstacles.Count; idx++)
-                        {
-                            if (Obstacles[idx].name == "LaserAlarm" && LaserAlarmObstacle == true)
-                            {
-                                switch(objectiveRooms[i].doorDirection)
-                                {
-                                    case RoomScript.DoorDirection.NORTH:
-                                        {
-                                            int sizeOfLaser = objectiveRooms[i].roomWidth - 1;
-                                            Vector3 LAPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + Mathf.RoundToInt(objectiveRooms[i].roomWidth * 0.5f)),tilespacing * (objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight - 2)), 0);
-                                            GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
-                                            LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                            LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
-                                        }
-                                        break;
-                                    case RoomScript.DoorDirection.SOUTH:
-                                        {
-                                            int sizeOfLaser = objectiveRooms[i].roomWidth - 1;
-                                            Vector3 LAPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + Mathf.RoundToInt(objectiveRooms[i].roomWidth * 0.5f)), tilespacing * (objectiveRooms[i].ypos + 1), 0);
-                                            GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
-                                            LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                            LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
-                                        }
-                                        break;
-                                    case RoomScript.DoorDirection.EAST:
-                                        {
-                                            int sizeOfLaser = objectiveRooms[i].roomHeight - 1;
-                                            Vector3 LAPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + (objectiveRooms[i].roomWidth - 2)), tilespacing * (objectiveRooms[i].ypos + Mathf.RoundToInt(objectiveRooms[i].roomHeight * 0.5f)), 0);
-                                            GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
-                                            LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                            LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
-                                        }
-                                        break;
-                                    case RoomScript.DoorDirection.WEST:
-                                        {
-                                            int sizeOfLaser = objectiveRooms[i].roomHeight - 1;
-                                            Vector3 LAPos = new Vector3(tilespacing * (objectiveRooms[i].xpos + 1), tilespacing * (objectiveRooms[i].ypos + Mathf.RoundToInt(objectiveRooms[i].roomHeight * 0.5f)), 0);
-                                            GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
-                                            LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                            LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
-                                        }
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                    break;
+                int RandomObstacle = Random.Range(0, Obstacles.Count);
+                InstantiateObstacleID(RandomObstacle, objectiveRooms[i]);
+                int temp = RandomObstacle;
+                while(RandomObstacle == temp)
+                {
+                    RandomObstacle = Random.Range(0, Obstacles.Count);
+                }
             }
         }
     }
+
+    void InstantiateObstacleID(int ObstacleID, RoomScript ObjectiveRoom)
+    {
+        switch (ObstacleID)
+        {
+            case 0://GLASS OBSTACLE
+                {
+                    for (int idx = 0; idx < Obstacles.Count; idx++)
+                    {
+                        if (Obstacles[idx].name == "Glass" && GlassObstacle == true)
+                        {
+                            int x = 0;
+                            int y = 0;
+
+                            int minX = Mathf.RoundToInt(ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth / 2)) - 1;
+                            int maxX = Mathf.RoundToInt(ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth / 2)) + 1;
+
+                            int minY = Mathf.RoundToInt(ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight / 2)) - 1;
+                            int maxY = Mathf.RoundToInt(ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight / 2)) + 1;
+
+                            for(x = 0; x <= (maxX - minX); x++)
+                            {
+                                for(y = 0; y <= (maxY - minY); y++)
+                                {
+                                    if ((minX + x) != Mathf.RoundToInt(ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth / 2)) || (minY + y) != Mathf.RoundToInt(ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight / 2)))
+                                    {
+                                        obstacletiles[minX + x][minY + y] = TileType.OBSTACLE;
+                                        GameObject GlassObject = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
+                                        GlassObject.transform.parent = ObstacleLayout.transform;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 1://WAIT TRAP OBSTACLE
+                {
+                    int numberOfWaitTraps = Random.Range(1, 5);
+                    for (int idx = 0; idx < Obstacles.Count; idx++)
+                    {
+                        if (Obstacles[idx].name == "WaitTrap" && WaitTrapObstacle == true)
+                        {
+                            for (int num = 0; num < numberOfWaitTraps; num++)
+                            {
+                                int RandomXPos = Random.Range(ObjectiveRoom.xpos + 1, ObjectiveRoom.xpos + ObjectiveRoom.roomWidth - 2);
+                                int RandomYPos = Random.Range(ObjectiveRoom.ypos + 1, ObjectiveRoom.ypos + ObjectiveRoom.roomHeight - 2);
+
+                                obstacletiles[RandomXPos][RandomYPos] = TileType.TRAPS;
+                                Vector3 TrapPos = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos, 0);
+                                GameObject WaitTrap = Instantiate(Obstacles[idx], TrapPos, Quaternion.identity);
+                                WaitTrap.transform.parent = ObstacleLayout.transform;
+                            }
+                        }
+                    }
+                }
+                break;
+            case 2://BLINKING TRAP OBSTACLE
+                {
+                    for (int idx = 0; idx < Obstacles.Count; idx++)
+                    {
+                        if (Obstacles[idx].name == "BlinkingTrap" && BlinkingTrapObstacle == true)
+                        {
+                            int x = 0;
+                            int y = 0;
+
+                            int minX = Mathf.RoundToInt(ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth / 2)) - 1;
+                            int maxX = Mathf.RoundToInt(ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth / 2)) + 1;
+
+                            int minY = Mathf.RoundToInt(ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight / 2)) - 1;
+                            int maxY = Mathf.RoundToInt(ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight / 2)) + 1;
+
+                            for (x = 0; x <= (maxX - minX); x++)
+                            {
+                                for (y = 0; y <= (maxY - minY); y++)
+                                {
+                                    if (minX + x != Mathf.RoundToInt(ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth / 2)) || minY + y != Mathf.RoundToInt(ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight / 2)))
+                                    {
+                                        obstacletiles[minX + x][minY + y] = TileType.OBSTACLE;
+                                        GameObject BlinkingTrapObject = Instantiate(Obstacles[idx], new Vector3(tilespacing * (minX + x), tilespacing * (minY + y), 0), Quaternion.identity);
+                                        BlinkingTrapObject.transform.parent = ObstacleLayout.transform;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 3://LASER ALARM OBSTACLE
+                {
+                    for (int idx = 0; idx < Obstacles.Count; idx++)
+                    {
+                        if (Obstacles[idx].name == "LaserAlarm" && LaserAlarmObstacle == true)
+                        {
+                            switch(ObjectiveRoom.doorDirection)
+                            {
+                                case RoomScript.DoorDirection.NORTH:
+                                    {
+                                        int sizeOfLaser = ObjectiveRoom.roomWidth - 1;
+                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + Mathf.RoundToInt(ObjectiveRoom.roomWidth * 0.5f)),tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight - 2)), 0);
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        LaserAlarm.transform.parent = ObstacleLayout.transform;
+                                        LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
+                                    }
+                                    break;
+                                case RoomScript.DoorDirection.SOUTH:
+                                    {
+                                        int sizeOfLaser = ObjectiveRoom.roomWidth - 1;
+                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + Mathf.RoundToInt(ObjectiveRoom.roomWidth * 0.5f)), tilespacing * (ObjectiveRoom.ypos + 1), 0);
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        LaserAlarm.transform.parent = ObstacleLayout.transform;
+                                        LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
+                                    }
+                                    break;
+                                case RoomScript.DoorDirection.EAST:
+                                    {
+                                        int sizeOfLaser = ObjectiveRoom.roomHeight - 1;
+                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth - 2)), tilespacing * (ObjectiveRoom.ypos + Mathf.RoundToInt(ObjectiveRoom.roomHeight * 0.5f)), 0);
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        LaserAlarm.transform.parent = ObstacleLayout.transform;
+                                        LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
+                                    }
+                                    break;
+                                case RoomScript.DoorDirection.WEST:
+                                    {
+                                        int sizeOfLaser = ObjectiveRoom.roomHeight - 1;
+                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + 1), tilespacing * (ObjectiveRoom.ypos + Mathf.RoundToInt(ObjectiveRoom.roomHeight * 0.5f)), 0);
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        LaserAlarm.transform.parent = ObstacleLayout.transform;
+                                        LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+    }
+    
 
     void InstantiateTiles()
     {
