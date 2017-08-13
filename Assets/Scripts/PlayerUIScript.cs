@@ -10,24 +10,31 @@ public class PlayerUIScript : MonoBehaviour {
 	public Slider ammoSlider;
 	public Slider healthSlider;
     public GameObject player;
+	public Text currentAmmo;
+	public Text maxAmmo;
+	public Text healthText;
+
 
 	// Use this for initialization
 	void Start ()
     {
-        Debug.Log("test");
         player = GameObject.Find("PlayerObject");
         gun = player.GetComponentInChildren<Gun>();
         hc = player.GetComponent<HealthComponent>();
 
-        ammoSlider.maxValue = gun.ammo;
+		maxAmmo.text = gun.ammo + "";
 		healthSlider.maxValue = hc.health;
+		UpdateText ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		ammoSlider.value = gun.ammo;
 		healthSlider.value = hc.health;
+		UpdateText ();
 	}
 
-
+	void UpdateText(){
+		currentAmmo.text = gun.ammo + "";
+		healthText.text = (healthSlider.value/healthSlider.maxValue)*100 + "%";
+	}
 }
