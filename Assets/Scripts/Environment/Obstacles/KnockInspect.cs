@@ -4,8 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class KnockInspect : Inspect {
+
+	private AudioSource source;
+	public AudioClip knockingSound;
+
+	void Awake(){
+		source = GetComponent<AudioSource> ();
+	}
+
     public override void inspect()
     {
+		source.PlayOneShot (knockingSound);
         GetComponent<EmitSound>().emitSound();
     }
 
