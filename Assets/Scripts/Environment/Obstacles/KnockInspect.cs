@@ -10,6 +10,7 @@ public class KnockInspect : Inspect {
 
 	void Awake(){
 		source = GetComponent<AudioSource> ();
+
 	}
 
     public override void inspect()
