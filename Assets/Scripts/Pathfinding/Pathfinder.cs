@@ -344,7 +344,8 @@ public class Pathfinder : MonoBehaviour {
             //Debug.Log("Following Path");
 
             // Check if reached point
-			if (Vector3.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= reachedNodeDist) // Should change to a var
+            //Debug.Log(Vector3.Distance(transform.position, Path[i_CurrentIdx].m_pos));
+            if (Vector3.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= reachedNodeDist)
             {
                 ++i_CurrentIdx;
             }
@@ -616,6 +617,12 @@ public class Pathfinder : MonoBehaviour {
         //{
         //    Gizmos.color = Color.yellow;
         //    Gizmos.DrawSphere(CurrentNode.m_pos, 0.1f);
-        //}	
+        //}
+	
+        //if (Path[i_CurrentIdx] != null)
+        //{
+        //    Gizmos.color = Color.gray;
+        //    Gizmos.DrawSphere(Path[i_CurrentIdx].m_pos, 0.1f);
+        //}
 	}
 }

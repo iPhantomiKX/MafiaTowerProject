@@ -23,14 +23,28 @@ public class Base_BossStrategy
     // direction to pass to movement script
     public Vector2 direction;
 
-    // timer to calculate when to attack
-    public float timer;
+    public bool isMoving;
+
+    // values for suspicion
+    public Vector3 suspiciousPos;
+    public bool isSuspicious;    
+    public float suspicion_time = 2;
+    public float suspicion_timer;
+    
+    public float attack_timer;          // timer to calculate when to attack
+
+    public float look_time = 3;         // time it takes to look around
+    public float look_timer;            // timer to calculate when to look around
 
     public virtual void Init(BossData boss)
     {
         direction = Vector2.zero;
         m_currentState = STATES.IDLE;
-        timer = 0;
+        look_timer = suspicion_timer = 0;
+        attack_timer = 99999;
+
+        isMoving = true;
+        isSuspicious = false;
     }
 
     //protected abstract void Init(BossData boss);
@@ -57,7 +71,6 @@ public class Base_BossStrategy
 
     public virtual void Idle(BossData boss)
     {
-
     }
 
     public virtual void Attacking(BossData boss)
@@ -75,13 +88,21 @@ public class Base_BossStrategy
     public virtual void Searching(BossData boss)
     {
         if (boss.special.m_trait_type == BOSS_SPECIAL_TYPE.MOBILITY)
-            boss.special.TriggerSpecial(boss);
+        {
+            if (boss.special.TriggerSpecial(boss))
+                boss.m_pathfinderRef.Reset();
+        }
     }
 
     public virtual void Retreat(BossData boss)
     {
         if (boss.special.m_trait_type == BOSS_SPECIAL_TYPE.MOBILITY)
             boss.special.TriggerSpecial(boss);
+    }
+
+    public virtual void OnCollide(GameObject collGO, BossData boss)
+    {
+
     }
 
     protected bool IsTargetSeen(GameObject target, BossData boss)
@@ -96,7 +117,7 @@ public class Base_BossStrategy
         if (angle < boss.m_visionFOV && distance < boss.m_visionDistance)
         {
             int layerMask = Physics2D.DefaultRaycastLayers;
-            layerMask = LayerMask.GetMask("Default", "Player", "Inspectables");
+            layerMask = LayerMask.GetMask("Default", "Player");
 
             RaycastHit2D hit = Physics2D.Raycast(boss.transform.position, targetDir, Mathf.Infinity, layerMask);
             if (hit.collider != null)
