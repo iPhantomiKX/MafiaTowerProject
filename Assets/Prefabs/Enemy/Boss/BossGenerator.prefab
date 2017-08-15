@@ -56,7 +56,7 @@ MonoBehaviour:
   BossStatsRanges:
   - name: Movement Speed
     min_value: 1.25
-    max_value: 2
+    max_value: 1.5
   - name: Attack Speed
     min_value: 0.25
     max_value: 1

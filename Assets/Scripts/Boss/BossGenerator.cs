@@ -36,7 +36,7 @@ public class BossGenerator : MonoBehaviour {
         //BossStatsRanges.Add(new MinMaxData("Melee Attack Defense"));
         //BossStatsRanges.Add(new MinMaxData("Ranged Attack Defense"));
 
-        //BossStrategyList.Add(new Coward_BossStrategy());
+        BossStrategyList.Add(new Coward_BossStrategy());
         BossStrategyList.Add(new Aggro_BossStrategy());
 
         BossSpecialList.Add(new Teleport());

@@ -11,7 +11,7 @@ public class Coward_BossStrategy : Base_BossStrategy {
     float returnDist = 1.5f;    // Distance where boss would return to his 'room'
     float idleDist = 0.25f;     // Distance where boss is close enough to origSpawn to stop returning
 
-    float mod_speed = 1.5f;     // Multiplier for boss speed
+    float mod_speed = 1.15f;     // Multiplier for boss speed
 
     public override void Init(BossData boss)
     {
