@@ -234,8 +234,8 @@ public class LevelManager : MonoBehaviour
             BossLevel = false;
 
         //Level Values
-        columns = 30 + (10 * stageNumber);
-        rows = 30 + (10 * stageNumber);
+        columns = 25 + (10 * stageNumber);
+        rows = 25 + (10 * stageNumber);
 
         //Room Datas
         numberOfMiscRooms = 2 + (2 * stageNumber);
@@ -266,7 +266,7 @@ public class LevelManager : MonoBehaviour
                     BlinkingTrapObstacle = true;
                     WaitTrapObstacle = true;
                     LaserAlarmObstacle = true;
-                    numberOfObstaclesPerRoom = 1 + stageNumber;
+                    numberOfObstaclesPerRoom = 1 * stageNumber;
 
                     //Enemies Spawn
                     for (int i = 0; i < SpawnList.Count; i++)
@@ -277,10 +277,16 @@ public class LevelManager : MonoBehaviour
                                 SpawnList[i].amount = 3 * stageNumber;
                                 break;
                             case "MeleeEnemy":
-                                SpawnList[i].amount = 1 + stageNumber;
+                                {
+                                    SpawnList[i].amount = 1 * stageNumber;
+                                    SpawnList[i].stateMachine.GetComponentInChildren<EnemySM>().role = (EnemySM.ENEMY_ROLE)Random.Range((int)EnemySM.ENEMY_ROLE.GUARD, (int)EnemySM.ENEMY_ROLE.WANDER);
+                                }
                                 break;
                             case "RangeEnemy":
-                                SpawnList[i].amount = 1 + stageNumber;
+                                {
+                                    SpawnList[i].amount = 1 * stageNumber;
+                                    SpawnList[i].stateMachine.GetComponentInChildren<EnemySM>().role = (EnemySM.ENEMY_ROLE)Random.Range((int)EnemySM.ENEMY_ROLE.GUARD, (int)EnemySM.ENEMY_ROLE.WANDER);
+                                }
                                 break;
                         }
                     }
