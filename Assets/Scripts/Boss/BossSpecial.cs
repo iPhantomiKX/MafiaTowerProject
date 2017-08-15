@@ -27,7 +27,7 @@ public class Teleport : BossSpecial
     List<Vector3>teleport_locations = new List<Vector3>();
     bool cooldown_done;
     float timer = 0.0f;
-    float trigger_timer = 10.0f;
+    float trigger_timer = 20.0f;
 
     public Teleport()
     {

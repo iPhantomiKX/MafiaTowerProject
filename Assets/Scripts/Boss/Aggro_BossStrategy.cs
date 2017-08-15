@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Aggro_BossStrategy : Base_BossStrategy {
 
+    float playerSearchDist = 3.0f; 
+
     public override void Init(BossData boss)
     {
         base.Init(boss);
@@ -95,7 +97,15 @@ public class Aggro_BossStrategy : Base_BossStrategy {
 
     public override void Searching(BossData boss)
     {
-        base.Searching(boss);
+        // If player is too far away, use special to find 
+        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) > playerSearchDist)
+        {
+            if (boss.special.m_trait_type == BOSS_SPECIAL_TYPE.MOBILITY)
+            {
+                if (boss.special.TriggerSpecial(boss))
+                    boss.m_pathfinderRef.Reset();
+            }
+        }
 
         // Randomly pathfind around 
         if (!boss.m_pathfinderRef.GetPathFound())
@@ -106,7 +116,6 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         {
             isMoving = true;
             direction = boss.m_pathfinderRef.FollowPath();
-            Debug.Log(direction.ToString());
         }
 
         // Transitions

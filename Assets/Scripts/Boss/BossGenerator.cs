@@ -44,19 +44,19 @@ public class BossGenerator : MonoBehaviour {
         //BossSpecialList.Add(new InstantKillMelee());
         //BossSpecialList.Add(new SummonGuards());
 
-        BossTraitList.Add(new BurstRegeneration());
-        BossTraitList.Add(new ConstantRegeneration());
-        BossTraitList.Add(new MoveSpeedBurst());
-        BossTraitList.Add(new MoveSpeedIncrease());
-        BossTraitList.Add(new MoveSpeedDecrease());
-        BossTraitList.Add(new MeleeDamageIncrease());
-        BossTraitList.Add(new MeleeDamageDecrease());
-        BossTraitList.Add(new MeleeDefenseIncrease());
-        BossTraitList.Add(new MeleeDefenseDecrease());
-        BossTraitList.Add(new RangeDamageIncrease());
-        BossTraitList.Add(new RangeDamageDecrease());
-        BossTraitList.Add(new RangeDefenseIncrease());
-        BossTraitList.Add(new RangeDefenseDecrease());
+        //BossTraitList.Add(new BurstRegeneration());
+        //BossTraitList.Add(new ConstantRegeneration());
+        //BossTraitList.Add(new MoveSpeedBurst());
+        //BossTraitList.Add(new MoveSpeedIncrease());
+        //BossTraitList.Add(new MoveSpeedDecrease());
+        //BossTraitList.Add(new MeleeDamageIncrease());
+        //BossTraitList.Add(new MeleeDamageDecrease());
+        //BossTraitList.Add(new MeleeDefenseIncrease());
+        //BossTraitList.Add(new MeleeDefenseDecrease());
+        //BossTraitList.Add(new RangeDamageIncrease());
+        //BossTraitList.Add(new RangeDamageDecrease());
+        //BossTraitList.Add(new RangeDefenseIncrease());
+        //BossTraitList.Add(new RangeDefenseDecrease());
     }
 	
 	// Update is called once per frame
@@ -100,18 +100,18 @@ public class BossGenerator : MonoBehaviour {
         go.GetComponentInChildren<BossData>().m_rangeDefense = GetRandomValue("Ranged Attack Defense");
 
         // Random strategy
-        go.GetComponentInChildren<BossData>().strategy = BossStrategyList[Random.Range(0, BossStrategyList.Count - 1)];
+        go.GetComponentInChildren<BossData>().strategy = BossStrategyList[Random.Range(0, BossStrategyList.Count)];
         
         // Random special
-        go.GetComponentInChildren<BossData>().special = BossSpecialList[Random.Range(0, BossSpecialList.Count - 1)];
+        go.GetComponentInChildren<BossData>().special = BossSpecialList[Random.Range(0, BossSpecialList.Count)];
 
         // Random modifiers
-        int randAmount = Random.Range(1, BossTraitList.Count - 1);
+        int randAmount = Random.Range(1, BossTraitList.Count);
         List<BossTrait> tempList = BossTraitList;
 
         while (randAmount > 0)
         {
-            int rand = Random.Range(0, tempList.Count - 1);
+            int rand = Random.Range(0, tempList.Count);
             go.GetComponentInChildren<BossData>().modifierList.Add(tempList[rand]);
 
             tempList.RemoveAt(rand);
@@ -120,7 +120,7 @@ public class BossGenerator : MonoBehaviour {
         }
 
         // Random attack type
-        go.GetComponentInChildren<BossData>().m_currentAttackType = (BossData.ATTACK_TYPE)Random.Range(0, (int)BossData.ATTACK_TYPE.NUM_STATES - 1);
+        go.GetComponentInChildren<BossData>().m_currentAttackType = (BossData.ATTACK_TYPE)Random.Range(0, (int)BossData.ATTACK_TYPE.NUM_STATES);
     }
 
     public float GetRandomValue(string name)
