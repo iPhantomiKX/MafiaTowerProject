@@ -233,24 +233,7 @@ MonoBehaviour:
   canvas: {fileID: 0}
   objtTexts: []
   timeBarWidth: 100
-  timeBarHeight: 20
-  gameOver:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114171314731814816, guid: 20000c9467437c241bc5301e26dc56ad,
-          type: 2}
-        m_MethodName: OnDeath
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+  timeBarHeight: 5
 --- !u!114 &114407975356413026
 MonoBehaviour:
   m_ObjectHideFlags: 1

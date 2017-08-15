@@ -50,7 +50,7 @@ public class ObjectiveManager : MonoBehaviour {
 		for(int i = 0;i<=objectives.Length-1;i++) {
 			GameObject newText = new GameObject ("Objective " + i);
 			newText.transform.SetParent (panel.transform);
-			newText.transform.localPosition = -Vector3.up * i * 50f;
+			newText.transform.localPosition = -Vector3.up * i * 55f;
 			Text text = newText.AddComponent<Text>();
 			text.font = ArialFont;
 			text.material = ArialFont.material;
@@ -64,7 +64,7 @@ public class ObjectiveManager : MonoBehaviour {
             {
                 GameObject objtTimeBar = new GameObject("Objective " + i + " Bar");
                 objtTimeBar.transform.SetParent(newText.transform);
-                objtTimeBar.transform.localPosition = new Vector2(0,30);
+                objtTimeBar.transform.localPosition = new Vector2(0,50);
                 Image timeBar = objtTimeBar.AddComponent<Image>();
                 //Rect bar = new Rect(text.transform.position.x, text.transform.position.y, timeBarWidth, timeBarHeight);
                 Color barColor = Color.yellow;

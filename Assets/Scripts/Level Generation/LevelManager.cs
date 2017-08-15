@@ -205,6 +205,13 @@ public class LevelManager : MonoBehaviour
         InstantiateInteractables();
         InstantiateEnemyPosition();
 
+        //Added by Randall - To set the black image for the Vent Entrances
+        GameObject bi = Instantiate(Resources.Load("BlackImage")) as GameObject;
+        bi.SetActive(false);
+        VentInspect[] via = VentsEntranceLayout.GetComponentsInChildren<VentInspect>();
+        foreach (VentInspect vi in via)
+            vi.black_image = bi;
+
         Debug.Log("Level Spawned");
     }
 
@@ -661,7 +668,7 @@ public class LevelManager : MonoBehaviour
                 if (venttiles[RandomXPos][RandomYPos] != TileType.VENT_E)
                     break;
             }
-            RandomPosInRoom = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos);
+            RandomPosInRoom = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos, -1.0f);
 
             //IF BOTH BOOLEANS ARE TRUE
             if (RandomHealthpackCollecitbles && RandomAmmoCollecitbles)
