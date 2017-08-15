@@ -81,7 +81,7 @@ public class BossData : MonoBehaviour {
             modifierList[i].Update(this);
 
         if (strategy.isMoving)
-            m_movement.Move(strategy.direction, m_moveSpeed);
+            m_movement.Move(strategy.direction.normalized, m_moveSpeed);
         
         m_movement.RotateToDirection(strategy.direction);
 
@@ -89,6 +89,11 @@ public class BossData : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.N))
         {
             PrintBossStats();
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            special.TriggerSpecial(this);
         }
     }
 

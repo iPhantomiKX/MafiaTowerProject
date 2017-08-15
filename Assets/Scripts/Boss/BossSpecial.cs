@@ -27,7 +27,7 @@ public class Teleport : BossSpecial
     List<Vector3>teleport_locations = new List<Vector3>();
     bool cooldown_done;
     float timer = 0.0f;
-    float trigger_timer = 10.0f;
+    float trigger_timer = 20.0f;
 
     public Teleport()
     {
@@ -161,7 +161,7 @@ public class SummonGuards : BossSpecial
     public override bool TriggerSpecial(BossData boss)
     {
         //Instantiate some guards
-        GameObject.Instantiate(Resources.Load("EnemyGuard"));//does not work, get the proper prefab name and remember to init - force change state to alert or something
+        GameObject.Instantiate(Resources.Load("MeleeEnemy 1"));//does not work, get the proper prefab name and remember to init - force change state to alert or something
 
         return false;
     }

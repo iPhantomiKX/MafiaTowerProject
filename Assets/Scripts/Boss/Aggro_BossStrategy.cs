@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Aggro_BossStrategy : Base_BossStrategy {
 
+    float playerSearchDist = 1.5f;
+    float playerSpecialSearchDist = 3f; 
+
     public override void Init(BossData boss)
     {
         base.Init(boss);
 
         m_name = "Aggro";
+        suspicion_time = 5;
     }
 
     public override void Idle(BossData boss)
@@ -40,7 +44,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
     {
         base.Attacking(boss);
 
-        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) < 0.5f)
+        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) < 0.3f && IsTargetSeen(boss.m_player, boss)) 
         {
             // Attack player
             if (attack_timer > boss.m_attackSpeed)
@@ -63,6 +67,12 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         {
             if (isSuspicious)
             {
+                if (Vector2.Distance(suspiciousPos, boss.m_player.transform.position) > 1.0f)
+                {
+                    boss.m_pathfinderRef.Reset();
+                    suspiciousPos = boss.m_player.transform.position;
+                }
+
                 // Pathfind to player
                 if (!boss.m_pathfinderRef.GetPathFound())
                 {
@@ -73,7 +83,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
                     direction = boss.m_pathfinderRef.FollowPath();
                 }
 
-                if ((suspicion_timer += Time.deltaTime) > suspicion_time && !IsTargetSeen(boss.m_player, boss))
+                if ((suspicion_timer += Time.deltaTime) > suspicion_time && !IsTargetSeen(boss.m_player, boss) && Vector2.Distance(boss.m_player.transform.position, boss.transform.position) > playerSearchDist)
                 {
                     isSuspicious = false;
                     suspicion_timer = 0;
@@ -90,23 +100,53 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         if (!IsTargetSeen(boss.m_player, boss) && !isSuspicious)
         {
             m_currentState = STATES.SEARCHING;
+            boss.m_pathfinderRef.Reset();
         }
     }
 
     public override void Searching(BossData boss)
     {
-        base.Searching(boss);
-
-        // Randomly pathfind around 
-        if (!boss.m_pathfinderRef.GetPathFound())
+        if (isSuspicious)
         {
-            boss.m_pathfinderRef.FindPath(boss.m_pathfinderRef.RandomPos(5, boss.transform.position));
+            if (!boss.m_pathfinderRef.GetPathFound())
+            {
+                // pathfind to suspicious pos
+                boss.m_pathfinderRef.FindPath(suspiciousPos);
+            }
+            else
+            {
+                isMoving = true;
+                direction = boss.m_pathfinderRef.FollowPath();
+            }
+
+            if (Vector2.Distance(boss.transform.position, suspiciousPos) < 0.25f)
+            {
+                isSuspicious = false;
+            }
         }
         else
         {
-            isMoving = true;
-            direction = boss.m_pathfinderRef.FollowPath();
-            Debug.Log(direction.ToString());
+            // If player is too far away, use special to find 
+            if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) > playerSpecialSearchDist)
+            {
+                if (boss.special.m_trait_type == BOSS_SPECIAL_TYPE.MOBILITY)
+                {
+                    if (boss.special.TriggerSpecial(boss))
+                        boss.m_pathfinderRef.Reset();
+                }
+            }
+
+            if (!boss.m_pathfinderRef.GetPathFound())
+            {
+                // randomly pathfind around
+                boss.m_pathfinderRef.FindPath(boss.m_pathfinderRef.RandomPos(10, boss.transform.position));
+            }
+            else
+            {
+                isMoving = true;
+                direction = boss.m_pathfinderRef.FollowPath();
+            }
+
         }
 
         // Transitions
@@ -126,7 +166,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
     {
         base.OnCollide(collGO, boss);
 
-        if (collGO.GetComponent<SoundCircleController>() && m_currentState == STATES.IDLE)
+        if (collGO.GetComponent<SoundCircleController>() && (m_currentState == STATES.IDLE || m_currentState == STATES.SEARCHING))
         {
             m_currentState = STATES.SEARCHING;
 
@@ -134,7 +174,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
             suspiciousPos = collGO.transform.position;
         }
 
-        if (collGO.GetComponent<Bullet>())
+        if (collGO.GetComponent<Bullet>() && m_currentState != STATES.ATTACKING)
         {
             m_currentState = STATES.ATTACKING;
 

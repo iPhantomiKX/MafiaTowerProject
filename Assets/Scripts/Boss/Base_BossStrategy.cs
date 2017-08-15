@@ -89,8 +89,7 @@ public class Base_BossStrategy
     {
         if (boss.special.m_trait_type == BOSS_SPECIAL_TYPE.MOBILITY)
         {
-            if (boss.special.TriggerSpecial(boss))
-                boss.m_pathfinderRef.Reset();
+            boss.special.TriggerSpecial(boss);
         }
     }
 
