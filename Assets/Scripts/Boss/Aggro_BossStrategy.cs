@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Aggro_BossStrategy : Base_BossStrategy {
 
-    float playerSearchDist = 3.0f; 
+    float playerSearchDist = 1.5f;
+    float playerSpecialSearchDist = 3f; 
 
     public override void Init(BossData boss)
     {
         base.Init(boss);
 
         m_name = "Aggro";
+        suspicion_time = 15;
     }
 
     public override void Idle(BossData boss)
@@ -65,6 +67,12 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         {
             if (isSuspicious)
             {
+                if (Vector2.Distance(suspiciousPos, boss.m_player.transform.position) > 1.0f)
+                {
+                    boss.m_pathfinderRef.Reset();
+                    suspiciousPos = boss.m_player.transform.position;
+                }
+
                 // Pathfind to player
                 if (!boss.m_pathfinderRef.GetPathFound())
                 {
@@ -75,7 +83,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
                     direction = boss.m_pathfinderRef.FollowPath();
                 }
 
-                if ((suspicion_timer += Time.deltaTime) > suspicion_time && !IsTargetSeen(boss.m_player, boss))
+                if ((suspicion_timer += Time.deltaTime) > suspicion_time && !IsTargetSeen(boss.m_player, boss) && Vector2.Distance(boss.m_player.transform.position, boss.transform.position) > playerSearchDist)
                 {
                     isSuspicious = false;
                     suspicion_timer = 0;
@@ -99,7 +107,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
     public override void Searching(BossData boss)
     {
         // If player is too far away, use special to find 
-        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) > playerSearchDist)
+        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) > playerSpecialSearchDist)
         {
             if (boss.special.m_trait_type == BOSS_SPECIAL_TYPE.MOBILITY)
             {
