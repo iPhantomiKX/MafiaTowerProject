@@ -18,7 +18,7 @@ public abstract class BossSpecial
     public BOSS_SPECIAL_TYPE m_trait_type;
     public abstract void Init(BossData boss);
     public abstract void Update(BossData boss);   //Maybe I don't need this? Leave this here just in case I guess
-    public abstract void TriggerSpecial(BossData boss);
+    public abstract bool TriggerSpecial(BossData boss);
 }
 
 //Teleports to a random room
@@ -68,13 +68,14 @@ public class Teleport : BossSpecial
         }
     }
 
-    public override void TriggerSpecial(BossData boss)
+    public override bool TriggerSpecial(BossData boss)
     {
         if (!cooldown_done)
-            return;
+            return false;
 
         boss.transform.GetChild(0).GetComponent<ParticleSystem>().Emit(particle_emission);
         boss.transform.position = teleport_locations[UnityEngine.Random.Range(0, teleport_locations.Count)];
+        return true;
     }
 }
 
@@ -117,10 +118,10 @@ public class Enrage : BossSpecial
             sr.color = original_color;
     }
 
-    public override void TriggerSpecial(BossData boss)
+    public override bool TriggerSpecial(BossData boss)
     {
         if (triggered)
-            return;
+            return false;
 
         if (boss.m_health.CalculatePercentageHealth() < health_percentage_treshold)
         {
@@ -129,7 +130,10 @@ public class Enrage : BossSpecial
             boss.m_meleeDamage *= 1.5f;
             original_color = sr.color;
             sr.color = new Color(1f, sr.color.g * 0.5f, sr.color.b * 0.5f);
+            return true;
         }
+
+        return false;
     }
 }
 
@@ -152,9 +156,9 @@ public class InstantKillMelee : BossSpecial
 
     }
 
-    public override void TriggerSpecial(BossData boss)
+    public override bool TriggerSpecial(BossData boss)
     {
-
+        return true;
     }
 }
 
@@ -177,9 +181,11 @@ public class SummonGuards : BossSpecial
     {
     }
 
-    public override void TriggerSpecial(BossData boss)
+    public override bool TriggerSpecial(BossData boss)
     {
         //Instantiate some guards
-        GameObject.Instantiate(Resources.Load("EnemyGuard"));//does not work, get the proper prefab name and remember to init - force change state to alert or something
+        GameObject.Instantiate(Resources.Load("MeleeEnemy 1"));//does not work, get the proper prefab name and remember to init - force change state to alert or something
+
+        return false;
     }
 }

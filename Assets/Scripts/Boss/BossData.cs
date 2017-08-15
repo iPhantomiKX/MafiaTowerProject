@@ -80,7 +80,9 @@ public class BossData : MonoBehaviour {
         for (int i = 0; i < modifierList.Count; ++i)
             modifierList[i].Update(this);
 
-        m_movement.Move(strategy.direction, m_moveSpeed);
+        if (strategy.isMoving)
+            m_movement.Move(strategy.direction.normalized, m_moveSpeed);
+        
         m_movement.RotateToDirection(strategy.direction);
 
         // Debug
@@ -121,5 +123,12 @@ public class BossData : MonoBehaviour {
         {
             //Health -= Damage * m_rangeDefense;
         }
+
+        strategy.OnCollide(coll.gameObject, this);
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        strategy.OnCollide(coll.gameObject, this);
     }
 }

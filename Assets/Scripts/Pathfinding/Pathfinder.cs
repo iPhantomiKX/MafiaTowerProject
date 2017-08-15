@@ -344,7 +344,8 @@ public class Pathfinder : MonoBehaviour {
             //Debug.Log("Following Path");
 
             // Check if reached point
-			if (Vector3.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= reachedNodeDist) // Should change to a var
+            //Debug.Log(Vector2.Distance(transform.position, Path[i_CurrentIdx].m_pos));
+            if (Vector2.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= reachedNodeDist)
             {
                 ++i_CurrentIdx;
             }
@@ -536,6 +537,8 @@ public class Pathfinder : MonoBehaviour {
 		i_CurrentIdx = 0;
 
 		RefreshNodeList ();
+
+        Debug.Log("Reset");
 	}
 
     public Vector3 RandomPos(int range, Vector3 startPos)
@@ -616,6 +619,15 @@ public class Pathfinder : MonoBehaviour {
         //{
         //    Gizmos.color = Color.yellow;
         //    Gizmos.DrawSphere(CurrentNode.m_pos, 0.1f);
-        //}	
+        //}
+
+        //if (!b_PathComplete && b_PathFound)
+        //{
+        //    if (Path[i_CurrentIdx] != null)
+        //    {
+        //        Gizmos.color = Color.gray;
+        //        Gizmos.DrawSphere(Path[i_CurrentIdx].m_pos, 0.1f);
+        //    }
+        //}
 	}
 }

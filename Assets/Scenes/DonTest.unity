@@ -175,7 +175,7 @@ Prefab:
     - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
         type: 2}
       propertyPath: SpawnList.Array.data[1].spawnRoom
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
         type: 2}
@@ -489,6 +489,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176909054442944, guid: 9067d89e8a368d2488b0c6fb7cd508ce, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9067d89e8a368d2488b0c6fb7cd508ce, type: 2}

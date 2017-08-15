@@ -62,7 +62,7 @@ MonoBehaviour:
   - {fileID: 114992174500758622, guid: efef5167c51f16945a10ee0655066ece, type: 2}
   PlayerTraits: []
   PlayerTraitNames: []
-  CurrentLevel: 0
+  CurrentLevel: 1
   NumTraitsPassDown: 0
   InitialLoad: 0
   LoadFailed: 0
