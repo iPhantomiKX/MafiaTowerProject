@@ -63,20 +63,18 @@ MonoBehaviour:
   roomHeight:
     m_Min: 6
     m_Max: 9
-  numberOfSubObjectives: 1
-  SubObjectivesLevel: 1
+  numberOfSubObjectives: 0
+  SubObjectivesLevel: 0
   hackableDoorLevel: 0
-  RandomAmmoCollecitbles: 1
-  RandomHealthpackCollecitbles: 1
+  RandomAmmoCollecitbles: 0
+  RandomHealthpackCollecitbles: 0
   FogOfWar: 0
   BossLevel: 0
   GlassObstacle: 1
   BlinkingTrapObstacle: 1
   WaitTrapObstacle: 1
   LaserAlarmObstacle: 1
-  numberOfObstaclesPerRoom: 2
-  numberOfWaitTraps: 3
-  numberOfLaserAlarms: 0
+  numberOfObstaclesPerRoom: 1
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   wallTile:
   - {fileID: 1267209111468980, guid: 71411f96dd986994cb4775580bc42dd9, type: 2}
@@ -116,8 +114,13 @@ MonoBehaviour:
       type: 2}
     amount: 3
     spawnRoom: 1
-  - name: Enemy
+  - name: MeleeEnemy
     stateMachine: {fileID: 1740129890561196, guid: d79c486d137990f4390cfe8e10e8c9bd,
+      type: 2}
+    amount: 1
+    spawnRoom: 1
+  - name: RangeEnemy
+    stateMachine: {fileID: 1235583375091510, guid: ba4c4a579f1940c4ba014046ce4ec856,
       type: 2}
     amount: 1
     spawnRoom: 1
