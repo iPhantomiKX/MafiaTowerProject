@@ -30,6 +30,10 @@ public class HealthComponent : MonoBehaviour {
 		// CHEAT
 		if (Input.GetKeyUp(KeyCode.K))
 			onDeath ();
+
+        // Cap health - Don
+        if (health > origHealth)
+            health = origHealth;
 	}
 
 	public void TakeDmg(int dmg)
@@ -56,6 +60,6 @@ public class HealthComponent : MonoBehaviour {
     // Calulates how much health is left as a percentage
     public float CalculatePercentageHealth()
     {
-        return (health / origHealth) * 100;
+        return ((float)health / (float)origHealth) * 100;
     }
 }

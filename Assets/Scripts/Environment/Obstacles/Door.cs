@@ -63,7 +63,7 @@ public class Door : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll) 
     {
-        if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian"))
+        if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian") || coll.gameObject.tag.Contains("Enemy"))
         {
             //open door
             GetComponent<Collider2D>().isTrigger = true;
@@ -77,7 +77,7 @@ public class Door : MonoBehaviour {
     {
         if (closed)
         {
-            if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian"))
+            if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian") || coll.gameObject.tag.Contains("Enemy"))
             {
                 //open door
                 GetComponent<Collider2D>().isTrigger = true;
