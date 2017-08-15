@@ -138,10 +138,15 @@ public class PlayerController : MonoBehaviour {
             PauseCanvasRef.gameObject.SetActive(!PauseCanvasRef.gameObject.activeInHierarchy);
 
             if (PauseCanvasRef.gameObject.activeInHierarchy)
+            {
                 GameStateRef.SetState(GameStateManager.GAME_STATE.PAUSED);
-            else 
+                Time.timeScale = 0;
+            }
+            else
+            {
                 GameStateRef.SetState(GameStateManager.GAME_STATE.RUNNING);
-
+                Time.timeScale = 1;
+            }
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
