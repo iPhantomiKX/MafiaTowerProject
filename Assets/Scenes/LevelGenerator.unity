@@ -101,6 +101,12 @@ Canvas:
   m_PrefabParentObject: {fileID: 223156513944376588, guid: 9067d89e8a368d2488b0c6fb7cd508ce,
     type: 2}
   m_PrefabInternal: {fileID: 1539540483}
+--- !u!114 &573218458 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114414101063323276, guid: 72e07b0c98f32ff42b63f77216a5353c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1850755917}
+  m_Script: {fileID: 11500000, guid: 0478f13419c506747bfa016b9ad87e2a, type: 3}
 --- !u!1001 &718904729
 Prefab:
   m_ObjectHideFlags: 0
@@ -181,6 +187,56 @@ Prefab:
     - target: {fileID: 4097038652156218, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomWidth.m_Min
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomWidth.m_Max
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomHeight.m_Min
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: roomHeight.m_Max
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: LevelData
+      value: 
+      objectReference: {fileID: 573218458}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: SubObjectivesLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: RandomAmmoCollecitbles
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: RandomHealthpackCollecitbles
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: numberOfSubObjectives
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114191362558410994, guid: dd02cb906d78ca24f8295a3333d1ec7b,
+        type: 2}
+      propertyPath: numberOfObstaclesPerRoom
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd02cb906d78ca24f8295a3333d1ec7b, type: 2}
@@ -425,6 +481,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4266574362385476, guid: 72e07b0c98f32ff42b63f77216a5353c, type: 2}
       propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114414101063323276, guid: 72e07b0c98f32ff42b63f77216a5353c,
+        type: 2}
+      propertyPath: CurrentStage
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

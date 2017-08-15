@@ -20,7 +20,6 @@ public class SpawningAIData
 
 public class LevelManager : MonoBehaviour
 {
-
     public enum TileType
     {
         FLOOR,
@@ -161,6 +160,11 @@ public class LevelManager : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
+        GetCurrentStage(PersistentData.m_Instance.CurrentLevel);
+        Debug.Log("CurrentLevel: " + PersistentData.m_Instance.CurrentLevel);
+        Debug.Log("CurrentStage: " + GetCurrentStage(PersistentData.m_Instance.CurrentLevel));
+        LevelGeneration(GetCurrentStage(PersistentData.m_Instance.CurrentLevel));
+
         //Added by Randall 
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Vent"));
@@ -180,7 +184,7 @@ public class LevelManager : MonoBehaviour
         VentsEntranceLayout = new GameObject("VentsEntranceLayout");
         ObjectivesRoomTileLayout = new GameObject("ObjectivesRoomTileLayout");
         ObstacleLayout = new GameObject("ObstacleLayout");
-        
+
         DoorsTileLayout = new GameObject("DoorsTileLayout");
 
         SetupTilesArray();
@@ -196,7 +200,7 @@ public class LevelManager : MonoBehaviour
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
         InstantiateMainObjective();
-        if(SubObjectivesLevel)
+        if (SubObjectivesLevel)
             InstantiateSubObjective();
         InstantiateSecurityObject();
         InstantiateCollectibles();
@@ -206,6 +210,76 @@ public class LevelManager : MonoBehaviour
         InstantiateEnemyPosition();
 
         Debug.Log("Level Spawned");
+    }
+
+    int GetCurrentStage(int currentLevel)
+    {
+        int stageNumber = 1;
+        while (currentLevel > stageNumber * 3)
+        {
+            stageNumber += 1;
+        }
+        return stageNumber;
+    }
+
+    void LevelGeneration(int stageNumber)
+    {
+        //Level Values
+        columns = 20 + (20 * stageNumber);
+        rows = 20 + (20 * stageNumber);
+        numberOfObjectiveRooms = stageNumber;
+        numberOfMiscRooms = 4 * stageNumber;
+        roomWidth = new IntRange(4 + (2 * stageNumber), 6 + (3 * stageNumber));
+        roomHeight = new IntRange(4 + (2 * stageNumber), 6 + (3 * stageNumber));
+
+        //Collectibles
+        RandomAmmoCollecitbles = true;
+        RandomHealthpackCollecitbles = true;
+        numberOfCollectibles = 5 * stageNumber;
+
+        //Obstacles
+        GlassObstacle = true;
+        BlinkingTrapObstacle = true;
+        WaitTrapObstacle = true;
+        LaserAlarmObstacle = true;
+        numberOfObstaclesPerRoom = 1 + stageNumber;
+
+        //Enemies Spawn
+        for (int i = 0; i < SpawnList.Count; i++)
+        {
+            switch(SpawnList[i].name)
+            {
+                case "Civilian":
+                    SpawnList[i].amount = 3 * stageNumber;
+                    break;
+                case "MeleeEnemy":
+                    SpawnList[i].amount = 1 + stageNumber;
+                    break;
+                case "RangeEnemy":
+                    SpawnList[i].amount = 1 + stageNumber;
+                    break;
+            }
+        }
+
+        switch (stageNumber)
+        {
+            case 0:
+                {
+                    //JUST A DEFAULT LEVEL
+                }
+                break;
+            case 1:
+                {
+                    numberOfSubObjectives = stageNumber;
+                    SubObjectivesLevel = true;
+                }
+                break;
+            case 2:
+                {
+                    FogOfWar = true;
+                }
+                break;
+        }
     }
 
     void Update()
@@ -247,12 +321,15 @@ public class LevelManager : MonoBehaviour
         RecursiveFindEmptyPos(spawnRoom, existingRooms, RoomScript.RoomType.SPAWN);
         existingRooms.Add(spawnRoom);
 
-        RecursiveFindEmptyPos(powerRoom, existingRooms, RoomScript.RoomType.POWER);
-        if (hackableDoorLevel)
+        if (FogOfWar)
         {
-            powerRoom.doorType = Random.Range(0, 2);
+            RecursiveFindEmptyPos(powerRoom, existingRooms, RoomScript.RoomType.POWER);
+            if (hackableDoorLevel)
+            {
+                powerRoom.doorType = Random.Range(0, 2);
+            }
+            existingRooms.Add(powerRoom);
         }
-        existingRooms.Add(powerRoom);
 
         RecursiveFindEmptyPos(securityRoom, existingRooms, RoomScript.RoomType.SECURITYCONSOLE);
         if (hackableDoorLevel)
