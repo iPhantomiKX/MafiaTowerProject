@@ -26,8 +26,11 @@ public class Teleport : BossSpecial
 {
     List<Vector3>teleport_locations = new List<Vector3>();
     bool cooldown_done;
-    float timer = 0.0f;
-    float trigger_timer = 20.0f;
+    float timer = 10.0f;
+    float trigger_timer = 10.0f;
+
+    //Aesthetic stuff
+    int particle_emission = 50;
 
     public Teleport()
     {
@@ -37,8 +40,11 @@ public class Teleport : BossSpecial
 
     public override void Init(BossData boss)
     {
+
+        //boss.gameObject.transform.GetChild(0).gameObject.AddComponent<ParticleSystem>();    //Add a ParticleSystem to the Child Object. The one with the SpriteRenderer.
+
+
         //Use LevelManager to get a list of all the rooms and add them to the list
-        
         for (int i = 0; i < boss.m_pathfinderRef.theLevelManager.numberOfMiscRooms; ++i)
         {
             RoomScript temp = boss.m_pathfinderRef.theLevelManager.GetAllMiscRooms()[i];
@@ -64,15 +70,12 @@ public class Teleport : BossSpecial
 
     public override bool TriggerSpecial(BossData boss)
     {
-        if (cooldown_done)
-        {
-            boss.transform.position = teleport_locations[UnityEngine.Random.Range(0, teleport_locations.Count)];
-            cooldown_done = false;
+        if (!cooldown_done)
+            return false;
 
-            return true;
-        }
-
-        return false;
+        boss.transform.GetChild(0).GetComponent<ParticleSystem>().Emit(particle_emission);
+        boss.transform.position = teleport_locations[UnityEngine.Random.Range(0, teleport_locations.Count)];
+        return true;
     }
 }
 
@@ -80,6 +83,13 @@ public class Teleport : BossSpecial
 public class Enrage : BossSpecial
 {
     bool triggered = false;
+
+    float health_percentage_treshold = 75f;
+
+    float red_treshold = 0.75f;
+    float red_fade_speed = 0.25f;
+    SpriteRenderer sr;
+    Color original_color;
 
     public Enrage()
     {
@@ -89,12 +99,23 @@ public class Enrage : BossSpecial
 
     public override void Init(BossData boss)
     {
-        
+        sr = boss.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();  //Because Boss Sprite is a child of BossObject
     }
 
     public override void Update(BossData boss)
     {
+        TriggerSpecial(boss);
 
+        if (!triggered)
+            return;
+
+        if (sr.color.r <= red_treshold)
+            sr.color = new Color(1f, sr.color.g, sr.color.b);
+        else
+            sr.color = new Color(sr.color.r - red_fade_speed * Time.deltaTime, sr.color.g, sr.color.b);
+
+        if (boss.m_health.CalculatePercentageHealth() > health_percentage_treshold)
+            sr.color = original_color;
     }
 
     public override bool TriggerSpecial(BossData boss)
@@ -102,11 +123,13 @@ public class Enrage : BossSpecial
         if (triggered)
             return false;
 
-        if (boss.m_health.CalculatePercentageHealth() < 25.0f)
+        if (boss.m_health.CalculatePercentageHealth() < health_percentage_treshold)
         {
+            Debug.Log("ENRAGE TRIGGERED");
             triggered = true;
-            boss.m_meleeDamage *= 1.25f;
-
+            boss.m_meleeDamage *= 1.5f;
+            original_color = sr.color;
+            sr.color = new Color(1f, sr.color.g * 0.5f, sr.color.b * 0.5f);
             return true;
         }
 

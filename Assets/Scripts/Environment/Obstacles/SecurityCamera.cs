@@ -81,7 +81,10 @@ public class SecurityCamera : NeutralSM
             case STATE.ALERT:
                 EmitSound();
                 if (!IsTargetSeen(playerasdf))
+                {
+                    sound_counter = 1.0f;
                     current_state = STATE.ON;
+                }
                 break;
         }
     }
@@ -141,12 +144,11 @@ public class SecurityCamera : NeutralSM
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        //RANDALL - TODO
-        //Check that coll is a projectile or melee attack or something - by tag or something
-
-        CameraOff();
-        current_state = STATE.DESTROYED;
-
-        //Remember to despawn projectile
+        if(coll.gameObject.name == "Melee" || coll.gameObject.name == "Bullet" || coll.gameObject.name == "EnemyBullet")
+        {
+            Destroy(coll.gameObject);
+            CameraOff();
+            current_state = STATE.DESTROYED;
+        }
     }
 }

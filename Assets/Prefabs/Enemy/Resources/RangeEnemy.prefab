@@ -240,7 +240,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1235583375091510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.04, y: -0.06, z: 0}
+  m_LocalPosition: {x: -1.7593255, y: 0.5166471, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4502913085280364}
@@ -790,7 +790,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -809,25 +809,25 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0.07, z: 0}
   - {x: 0, y: 0.25, z: 0}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 1
+    widthMultiplier: 0.9
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.021278381
+        value: 0
         inSlope: 1.0749692
         outSlope: 1.0749692
         tangentMode: 0
       - serializedVersion: 2
         time: 1
         value: 1
-        inSlope: 1.0155619
-        outSlope: 1.0155619
+        inSlope: 1.1640142
+        outSlope: 1.1640142
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -835,13 +835,13 @@ LineRenderer:
     colorGradient:
       key0:
         serializedVersion: 2
-        rgba: 4294967295
+        rgba: 3036676282
       key1:
         serializedVersion: 2
-        rgba: 4294967295
+        rgba: 1728053434
       key2:
         serializedVersion: 2
-        rgba: 0
+        rgba: 1392508927
       key3:
         serializedVersion: 2
         rgba: 0
@@ -859,25 +859,25 @@ LineRenderer:
         rgba: 0
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 0
-      atime1: 65535
-      atime2: 0
+      atime0: 4241
+      atime1: 28527
+      atime2: 42405
       atime3: 0
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
+      m_NumAlphaKeys: 3
     numCornerVertices: 0
-    numCapVertices: 10
+    numCapVertices: 15
     alignment: 0
     textureMode: 0
   m_UseWorldSpace: 0
