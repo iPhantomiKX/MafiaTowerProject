@@ -244,10 +244,18 @@ public class LevelManager : MonoBehaviour
         LaserAlarmObstacle = true;
         numberOfObstaclesPerRoom = 1 + stageNumber;
 
+        for (int idx = 0; idx < PersistentData.m_Instance.PlayerTraits.Count; idx++ )
+        {
+            if (PersistentData.m_Instance.PlayerTraits[idx].GetComponent<Trait_Hacking>())
+            {
+                hackableDoorLevel = true;
+            }
+        }
+
         //Enemies Spawn
         for (int i = 0; i < SpawnList.Count; i++)
         {
-            switch(SpawnList[i].name)
+            switch (SpawnList[i].name)
             {
                 case "Civilian":
                     SpawnList[i].amount = 3 * stageNumber;

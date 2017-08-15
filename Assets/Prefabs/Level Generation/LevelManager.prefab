@@ -58,23 +58,23 @@ MonoBehaviour:
   numberOfMiscRooms: 4
   numberOfCollectibles: 5
   roomWidth:
-    m_Min: 8
-    m_Max: 12
+    m_Min: 6
+    m_Max: 9
   roomHeight:
-    m_Min: 8
-    m_Max: 12
-  numberOfSubObjectives: 1
-  SubObjectivesLevel: 1
+    m_Min: 6
+    m_Max: 9
+  numberOfSubObjectives: 0
+  SubObjectivesLevel: 0
   hackableDoorLevel: 0
-  RandomAmmoCollecitbles: 1
-  RandomHealthpackCollecitbles: 1
+  RandomAmmoCollecitbles: 0
+  RandomHealthpackCollecitbles: 0
   FogOfWar: 0
   BossLevel: 0
   GlassObstacle: 1
   BlinkingTrapObstacle: 1
   WaitTrapObstacle: 1
   LaserAlarmObstacle: 1
-  numberOfObstaclesPerRoom: 2
+  numberOfObstaclesPerRoom: 1
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   wallTile:
   - {fileID: 1267209111468980, guid: 71411f96dd986994cb4775580bc42dd9, type: 2}
