@@ -112,6 +112,7 @@ public class LevelManager : MonoBehaviour
     [Space]
     [Header("Enemy Object")]
     public List<SpawningAIData> SpawnList;
+    public GameObject BossSpawner;
 
     [Space]
     [Header("Security Camera Object")]
@@ -160,10 +161,10 @@ public class LevelManager : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        GetCurrentStage(PersistentData.m_Instance.CurrentLevel);
+        GetCurrentStage();
         Debug.Log("CurrentLevel: " + PersistentData.m_Instance.CurrentLevel);
-        Debug.Log("CurrentStage: " + GetCurrentStage(PersistentData.m_Instance.CurrentLevel));
-        LevelGeneration(GetCurrentStage(PersistentData.m_Instance.CurrentLevel));
+        Debug.Log("CurrentStage: " + GetCurrentStage());
+        LevelGeneration(GetCurrentStage());
 
         //Added by Randall 
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent"));
@@ -193,29 +194,32 @@ public class LevelManager : MonoBehaviour
 
         SetTilesValueForRooms();
         CreateCorridors();
-
         InstantiateTiles();
         InstantiateOuterWalls();
-
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
-        InstantiateMainObjective();
         if (SubObjectivesLevel)
             InstantiateSubObjective();
-        InstantiateSecurityObject();
         InstantiateCollectibles();
-        if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
-            InstantiateObstacle();
         InstantiateInteractables();
         InstantiateEnemyPosition();
+        if (BossLevel)
+            InstantiateBoss();
+        else
+        {
+            InstantiateSecurityObject();
+            InstantiateMainObjective();
+            if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
+                InstantiateObstacle();
+        }
 
         Debug.Log("Level Spawned");
     }
 
-    int GetCurrentStage(int currentLevel)
+    int GetCurrentStage()
     {
         int stageNumber = 1;
-        while (currentLevel > stageNumber * 3)
+        while (PersistentData.m_Instance.CurrentLevel > stageNumber * 3)
         {
             stageNumber += 1;
         }
@@ -224,13 +228,19 @@ public class LevelManager : MonoBehaviour
 
     void LevelGeneration(int stageNumber)
     {
+        if (PersistentData.m_Instance.CurrentLevel == stageNumber * 3)
+            BossLevel = true;
+        else
+            BossLevel = false;
+
         //Level Values
-        columns = 20 + (20 * stageNumber);
-        rows = 20 + (20 * stageNumber);
-        numberOfObjectiveRooms = stageNumber;
-        numberOfMiscRooms = 4 * stageNumber;
-        roomWidth = new IntRange(4 + (2 * stageNumber), 6 + (3 * stageNumber));
-        roomHeight = new IntRange(4 + (2 * stageNumber), 6 + (3 * stageNumber));
+        columns = 30 + (10 * stageNumber);
+        rows = 30 + (10 * stageNumber);
+
+        //Room Datas
+        numberOfMiscRooms = 2 + (2 * stageNumber);
+        roomWidth = new IntRange(4 + (2 * stageNumber), 5 + (3 * stageNumber));
+        roomHeight = new IntRange(4 + (2 * stageNumber), 5 + (3 * stageNumber));
 
         //Collectibles
         RandomAmmoCollecitbles = true;
@@ -238,11 +248,45 @@ public class LevelManager : MonoBehaviour
         numberOfCollectibles = 5 * stageNumber;
 
         //Obstacles
-        GlassObstacle = true;
-        BlinkingTrapObstacle = true;
-        WaitTrapObstacle = true;
-        LaserAlarmObstacle = true;
-        numberOfObstaclesPerRoom = 1 + stageNumber;
+        switch (BossLevel)
+        {
+            case true:
+                {
+                    columns = 20 + (10 * stageNumber);
+                    rows = 20 + (10 * stageNumber);
+
+                    numberOfMiscRooms = 2 + (2 * stageNumber);
+                    roomWidth = new IntRange(3 + (2 * stageNumber), 4 + (3 * stageNumber));
+                    roomHeight = new IntRange(3 + (2 * stageNumber), 4 + (3 * stageNumber));
+                }
+                break;
+            case false:
+                {
+                    GlassObstacle = true;
+                    BlinkingTrapObstacle = true;
+                    WaitTrapObstacle = true;
+                    LaserAlarmObstacle = true;
+                    numberOfObstaclesPerRoom = 1 + stageNumber;
+
+                    //Enemies Spawn
+                    for (int i = 0; i < SpawnList.Count; i++)
+                    {
+                        switch (SpawnList[i].name)
+                        {
+                            case "Civilian":
+                                SpawnList[i].amount = 3 * stageNumber;
+                                break;
+                            case "MeleeEnemy":
+                                SpawnList[i].amount = 1 + stageNumber;
+                                break;
+                            case "RangeEnemy":
+                                SpawnList[i].amount = 1 + stageNumber;
+                                break;
+                        }
+                    }
+                }
+                break;
+        }
 
         for (int idx = 0; idx < PersistentData.m_Instance.PlayerTraits.Count; idx++ )
         {
@@ -252,37 +296,25 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        //Enemies Spawn
-        for (int i = 0; i < SpawnList.Count; i++)
-        {
-            switch (SpawnList[i].name)
-            {
-                case "Civilian":
-                    SpawnList[i].amount = 3 * stageNumber;
-                    break;
-                case "MeleeEnemy":
-                    SpawnList[i].amount = 1 + stageNumber;
-                    break;
-                case "RangeEnemy":
-                    SpawnList[i].amount = 1 + stageNumber;
-                    break;
-            }
-        }
-
         switch (stageNumber)
         {
-            case 0:
+            case 1:
                 {
                     //JUST A DEFAULT LEVEL
+                    numberOfSubObjectives = stageNumber;
+                    if(BossLevel)
+                    {
+                        SubObjectivesLevel = true;
+                    }
                 }
                 break;
-            case 1:
+            case 2:
                 {
                     numberOfSubObjectives = stageNumber;
                     SubObjectivesLevel = true;
                 }
                 break;
-            case 2:
+            case 3:
                 {
                     FogOfWar = true;
                 }
@@ -361,7 +393,7 @@ public class LevelManager : MonoBehaviour
         {
             objectiveRooms[i] = new RoomScript();
             RecursiveFindEmptyPos(objectiveRooms[i], existingRooms, RoomScript.RoomType.OBJECTIVES);
-            if(hackableDoorLevel)
+            if (hackableDoorLevel)
             {
                 objectiveRooms[i].doorType = Random.Range(0, 2);
             }
@@ -720,6 +752,19 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    void InstantiateBoss()
+    {
+        int BossSpawnRoom = Random.Range(0, objectiveRooms.Length);
+
+        int BossXPos = Mathf.RoundToInt(objectiveRooms[BossSpawnRoom].xpos + (objectiveRooms[BossSpawnRoom].roomWidth / 2));
+        int BossYPos = Mathf.RoundToInt(objectiveRooms[BossSpawnRoom].ypos + (objectiveRooms[BossSpawnRoom].roomHeight / 2));
+
+        Vector3 bossSpawnerPos = new Vector3(tilespacing * BossXPos, tilespacing * BossYPos, 0);
+        GameObject go = Instantiate(BossSpawner, bossSpawnerPos, Quaternion.identity);
+
+        go.GetComponent<BossGenerator>().CreateBoss(bossSpawnerPos);
     }
 
     void InstantiateSecurityObject()

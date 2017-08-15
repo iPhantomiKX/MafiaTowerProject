@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   om: {fileID: 0}
+  objtname: 
   isTimed: 1
   time: 15
   remainingTime: 0
@@ -75,7 +76,9 @@ MonoBehaviour:
   timeBarWidth: 0
   numCompleted: 0
   numRequired: 1
-  mandatory: 0
+  mandatory: 1
+  objtText: {fileID: 0}
+  failed: 0
   stayTimer: 3
   stayTimerRemain: 0
 --- !u!212 &212933034901790488
