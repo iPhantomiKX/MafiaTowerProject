@@ -99,7 +99,7 @@ public class Coward_BossStrategy : Base_BossStrategy {
         base.Attacking(boss);
 
         // Actions
-        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) < 0.5f)
+        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) < 0.3f && IsTargetSeen(boss.m_player, boss))
         {
             // Attack player
             if (attack_timer > boss.m_attackSpeed)

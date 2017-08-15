@@ -12,7 +12,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         base.Init(boss);
 
         m_name = "Aggro";
-        suspicion_time = 15;
+        suspicion_time = 5;
     }
 
     public override void Idle(BossData boss)
@@ -44,7 +44,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
     {
         base.Attacking(boss);
 
-        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) < 0.5f)
+        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) < 0.3f && IsTargetSeen(boss.m_player, boss)) 
         {
             // Attack player
             if (attack_timer > boss.m_attackSpeed)
@@ -106,25 +106,47 @@ public class Aggro_BossStrategy : Base_BossStrategy {
 
     public override void Searching(BossData boss)
     {
-        // If player is too far away, use special to find 
-        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) > playerSpecialSearchDist)
+        if (isSuspicious)
         {
-            if (boss.special.m_trait_type == BOSS_SPECIAL_TYPE.MOBILITY)
+            if (!boss.m_pathfinderRef.GetPathFound())
             {
-                if (boss.special.TriggerSpecial(boss))
-                    boss.m_pathfinderRef.Reset();
+                // pathfind to suspicious pos
+                boss.m_pathfinderRef.FindPath(suspiciousPos);
             }
-        }
+            else
+            {
+                isMoving = true;
+                direction = boss.m_pathfinderRef.FollowPath();
+            }
 
-        // Randomly pathfind around 
-        if (!boss.m_pathfinderRef.GetPathFound())
-        {
-            boss.m_pathfinderRef.FindPath(boss.m_pathfinderRef.RandomPos(10, boss.transform.position));
+            if (Vector2.Distance(boss.transform.position, suspiciousPos) < 0.25f)
+            {
+                isSuspicious = false;
+            }
         }
         else
         {
-            isMoving = true;
-            direction = boss.m_pathfinderRef.FollowPath();
+            // If player is too far away, use special to find 
+            if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) > playerSpecialSearchDist)
+            {
+                if (boss.special.m_trait_type == BOSS_SPECIAL_TYPE.MOBILITY)
+                {
+                    if (boss.special.TriggerSpecial(boss))
+                        boss.m_pathfinderRef.Reset();
+                }
+            }
+
+            if (!boss.m_pathfinderRef.GetPathFound())
+            {
+                // randomly pathfind around
+                boss.m_pathfinderRef.FindPath(boss.m_pathfinderRef.RandomPos(10, boss.transform.position));
+            }
+            else
+            {
+                isMoving = true;
+                direction = boss.m_pathfinderRef.FollowPath();
+            }
+
         }
 
         // Transitions
@@ -144,7 +166,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
     {
         base.OnCollide(collGO, boss);
 
-        if (collGO.GetComponent<SoundCircleController>() && m_currentState == STATES.IDLE)
+        if (collGO.GetComponent<SoundCircleController>() && (m_currentState == STATES.IDLE || m_currentState == STATES.SEARCHING))
         {
             m_currentState = STATES.SEARCHING;
 
