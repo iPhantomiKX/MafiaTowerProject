@@ -90,6 +90,11 @@ public class BossData : MonoBehaviour {
         {
             PrintBossStats();
         }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            special.TriggerSpecial(this);
+        }
     }
 
     public void PrintBossStats()

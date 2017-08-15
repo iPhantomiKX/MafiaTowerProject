@@ -161,7 +161,7 @@ public class SummonGuards : BossSpecial
     public override bool TriggerSpecial(BossData boss)
     {
         //Instantiate some guards
-        GameObject.Instantiate(Resources.Load("EnemyGuard"));//does not work, get the proper prefab name and remember to init - force change state to alert or something
+        GameObject.Instantiate(Resources.Load("MeleeEnemy 1"));//does not work, get the proper prefab name and remember to init - force change state to alert or something
 
         return false;
     }
