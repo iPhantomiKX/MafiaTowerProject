@@ -92,6 +92,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         if (!IsTargetSeen(boss.m_player, boss) && !isSuspicious)
         {
             m_currentState = STATES.SEARCHING;
+            boss.m_pathfinderRef.Reset();
         }
     }
 
@@ -110,7 +111,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         // Randomly pathfind around 
         if (!boss.m_pathfinderRef.GetPathFound())
         {
-            boss.m_pathfinderRef.FindPath(boss.m_pathfinderRef.RandomPos(5, boss.transform.position));
+            boss.m_pathfinderRef.FindPath(boss.m_pathfinderRef.RandomPos(10, boss.transform.position));
         }
         else
         {
@@ -143,7 +144,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
             suspiciousPos = collGO.transform.position;
         }
 
-        if (collGO.GetComponent<Bullet>())
+        if (collGO.GetComponent<Bullet>() && m_currentState != STATES.ATTACKING)
         {
             m_currentState = STATES.ATTACKING;
 

@@ -218,7 +218,7 @@ public class Coward_BossStrategy : Base_BossStrategy {
             suspiciousPos = collGO.transform.position;
         }
 
-        if (collGO.GetComponent<Bullet>())
+        if (collGO.GetComponent<Bullet>() && m_currentState != STATES.ATTACKING)
         {
             m_currentState = STATES.ATTACKING;
 

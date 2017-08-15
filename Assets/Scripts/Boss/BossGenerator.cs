@@ -44,19 +44,19 @@ public class BossGenerator : MonoBehaviour {
         //BossSpecialList.Add(new InstantKillMelee());
         //BossSpecialList.Add(new SummonGuards());
 
-        //BossTraitList.Add(new BurstRegeneration());
-        //BossTraitList.Add(new ConstantRegeneration());
-        //BossTraitList.Add(new MoveSpeedBurst());
-        //BossTraitList.Add(new MoveSpeedIncrease());
-        //BossTraitList.Add(new MoveSpeedDecrease());
-        //BossTraitList.Add(new MeleeDamageIncrease());
-        //BossTraitList.Add(new MeleeDamageDecrease());
-        //BossTraitList.Add(new MeleeDefenseIncrease());
-        //BossTraitList.Add(new MeleeDefenseDecrease());
-        //BossTraitList.Add(new RangeDamageIncrease());
-        //BossTraitList.Add(new RangeDamageDecrease());
-        //BossTraitList.Add(new RangeDefenseIncrease());
-        //BossTraitList.Add(new RangeDefenseDecrease());
+        BossTraitList.Add(new BurstRegeneration());
+        BossTraitList.Add(new ConstantRegeneration());
+        BossTraitList.Add(new MoveSpeedBurst());
+        BossTraitList.Add(new MoveSpeedIncrease());
+        BossTraitList.Add(new MoveSpeedDecrease());
+        BossTraitList.Add(new MeleeDamageIncrease());
+        BossTraitList.Add(new MeleeDamageDecrease());
+        BossTraitList.Add(new MeleeDefenseIncrease());
+        BossTraitList.Add(new MeleeDefenseDecrease());
+        BossTraitList.Add(new RangeDamageIncrease());
+        BossTraitList.Add(new RangeDamageDecrease());
+        BossTraitList.Add(new RangeDefenseIncrease());
+        BossTraitList.Add(new RangeDefenseDecrease());
     }
 	
 	// Update is called once per frame
