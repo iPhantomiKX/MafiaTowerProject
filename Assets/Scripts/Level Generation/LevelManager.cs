@@ -202,15 +202,17 @@ public class LevelManager : MonoBehaviour
             InstantiateSubObjective();
         InstantiateCollectibles();
         InstantiateInteractables();
-        InstantiateEnemyPosition();
         if (BossLevel)
+        {
             InstantiateBoss();
+        }
         else
         {
             InstantiateSecurityObject();
             InstantiateMainObjective();
             if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
                 InstantiateObstacle();
+            InstantiateEnemyPosition();
         }
 
         //Added by Randall - To set the black image for the Vent Entrances
