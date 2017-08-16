@@ -229,7 +229,7 @@ public class Coward_BossStrategy : Base_BossStrategy {
 
         if (collGO.GetComponent<Bullet>() && m_currentState != STATES.ATTACKING)
         {
-            Debug.Log("bulleted " + m_currentState.ToString());
+            //Debug.Log("bulleted " + m_currentState.ToString());
 
             m_currentState = STATES.ATTACKING;
 

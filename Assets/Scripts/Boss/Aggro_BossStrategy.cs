@@ -176,6 +176,8 @@ public class Aggro_BossStrategy : Base_BossStrategy {
 
         if (collGO.GetComponent<SoundCircleController>() && (m_currentState == STATES.IDLE || m_currentState == STATES.SEARCHING))
         {
+            //Debug.Log("circled " + m_currentState.ToString());
+
             m_currentState = STATES.SEARCHING;
 
             boss.m_pathfinderRef.Reset();
@@ -189,7 +191,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
 
         if (collGO.GetComponent<Bullet>() && m_currentState != STATES.ATTACKING)
         {
-            Debug.Log("bulleted " + m_currentState.ToString());
+            //Debug.Log("bulleted " + m_currentState.ToString());
 
             m_currentState = STATES.ATTACKING;
 
