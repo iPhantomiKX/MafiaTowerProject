@@ -26,6 +26,7 @@ public class BossGenerator : MonoBehaviour {
     public List<BossTrait> BossTraitList = new List<BossTrait>();
 
     public GameObject currentBossObject;
+    public bool b_BossSpawned = false;
 
 	// Use this for initialization
 	void Start () {
@@ -57,6 +58,12 @@ public class BossGenerator : MonoBehaviour {
         BossTraitList.Add(new RangeDamageDecrease());
         BossTraitList.Add(new RangeDefenseIncrease());
         BossTraitList.Add(new RangeDefenseDecrease());
+
+        if (!levelManagerRef)
+            levelManagerRef = FindObjectOfType<LevelManager>();
+
+        if (!playerRef)
+            playerRef = FindObjectOfType<PlayerController>();
     }
 	
 	// Update is called once per frame
@@ -68,6 +75,9 @@ public class BossGenerator : MonoBehaviour {
         if (!playerRef)
             playerRef = FindObjectOfType<PlayerController>();
 
+        if (!b_BossSpawned)
+            CreateBoss(this.transform.position);
+
         // Debug
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -77,6 +87,8 @@ public class BossGenerator : MonoBehaviour {
 
     public void CreateBoss(Vector3 spawnPos)
     {
+        b_BossSpawned = true;
+
         // Create object and give it the boss data component
         GameObject go = Instantiate(currentBossObject);
 
