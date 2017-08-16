@@ -42,8 +42,9 @@ public class BossGenerator : MonoBehaviour {
 
         BossSpecialList.Add(new Teleport());
         BossSpecialList.Add(new Enrage());
-        BossSpecialList.Add(new InstantKillMelee());
-        BossSpecialList.Add(new SummonGuards());
+        //BossSpecialList.Add(new InstantKillMelee());
+        //BossSpecialList.Add(new SummonGuards());
+        BossSpecialList.Add(new Invulnerability());
 
         BossTraitList.Add(new BurstRegeneration());
         BossTraitList.Add(new ConstantRegeneration());
