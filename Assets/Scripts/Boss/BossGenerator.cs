@@ -99,7 +99,9 @@ public class BossGenerator : MonoBehaviour {
         go.GetComponentInChildren<BossData>().m_meleeDefense = GetRandomValue("Melee Attack Defense");
         go.GetComponentInChildren<BossData>().m_rangeDefense = GetRandomValue("Ranged Attack Defense");
 
-        // Random strategy
+        // Random strategy -> the sprite used will be based on this strategy
+        // Coward -> 'Thin' sprite
+        // Aggro -> 'Muscle' sprite
         go.GetComponentInChildren<BossData>().strategy = BossStrategyList[Random.Range(0, BossStrategyList.Count)];
         
         // Random special
