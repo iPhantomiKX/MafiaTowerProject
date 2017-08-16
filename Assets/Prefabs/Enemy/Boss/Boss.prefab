@@ -703,7 +703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theLevelManager: {fileID: 0}
   mapRefreshRate: 0
-  reachedNodeDist: 0.01
+  reachedNodeDist: 0.025
   WalkDiagonal: 0
 --- !u!114 &114941308010469552
 MonoBehaviour:

@@ -36,6 +36,8 @@ public class Base_BossStrategy
     public float look_time = 3;         // time it takes to look around
     public float look_timer;            // timer to calculate when to look around
 
+    public float resetPathfindDist = 0.5f;
+
     public virtual void Init(BossData boss)
     {
         direction = Vector2.zero;

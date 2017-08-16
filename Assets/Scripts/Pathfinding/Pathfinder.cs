@@ -537,8 +537,6 @@ public class Pathfinder : MonoBehaviour {
 		i_CurrentIdx = 0;
 
 		RefreshNodeList ();
-
-        Debug.Log("Reset");
 	}
 
     public Vector3 RandomPos(int range, Vector3 startPos)

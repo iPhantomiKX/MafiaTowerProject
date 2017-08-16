@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Aggro_BossStrategy : Base_BossStrategy {
 
-    float playerSearchDist = 1.5f;
+    float playerSearchDist = 2.5f;
     float playerSpecialSearchDist = 3f; 
 
     public override void Init(BossData boss)
@@ -65,9 +65,15 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         }
         else
         {
+            if (IsTargetSeen(boss.m_player, boss))
+            {
+                isSuspicious = false;
+                suspicion_timer = 0;
+            }
+
             if (isSuspicious)
             {
-                if (Vector2.Distance(suspiciousPos, boss.m_player.transform.position) > 1.0f)
+                if (Vector2.Distance(suspiciousPos, boss.m_player.transform.position) > resetPathfindDist)
                 {
                     boss.m_pathfinderRef.Reset();
                     suspiciousPos = boss.m_player.transform.position;
@@ -83,7 +89,9 @@ public class Aggro_BossStrategy : Base_BossStrategy {
                     direction = boss.m_pathfinderRef.FollowPath();
                 }
 
-                if ((suspicion_timer += Time.deltaTime) > suspicion_time && !IsTargetSeen(boss.m_player, boss) && Vector2.Distance(boss.m_player.transform.position, boss.transform.position) > playerSearchDist)
+                if ((suspicion_timer += Time.deltaTime) > suspicion_time && 
+                    !IsTargetSeen(boss.m_player, boss) && 
+                    Vector2.Distance(boss.m_player.transform.position, boss.transform.position) > playerSearchDist)
                 {
                     isSuspicious = false;
                     suspicion_timer = 0;
@@ -170,19 +178,29 @@ public class Aggro_BossStrategy : Base_BossStrategy {
         {
             m_currentState = STATES.SEARCHING;
 
+            boss.m_pathfinderRef.Reset();
+
             isSuspicious = true;
+            suspicion_timer = 0;
             suspiciousPos = collGO.transform.position;
+
+            return;
         }
 
         if (collGO.GetComponent<Bullet>() && m_currentState != STATES.ATTACKING)
         {
+            Debug.Log("bulleted " + m_currentState.ToString());
+
             m_currentState = STATES.ATTACKING;
 
             boss.m_pathfinderRef.Reset();
             isMoving = true;
 
             isSuspicious = true;
+            suspicion_timer = 0;
             suspiciousPos = collGO.transform.position;
+
+            return;
         }
     }
 }

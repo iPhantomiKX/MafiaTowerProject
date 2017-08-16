@@ -11,7 +11,7 @@ public class Coward_BossStrategy : Base_BossStrategy {
     float returnDist = 1.5f;    // Distance where boss would return to his 'room'
     float idleDist = 0.25f;     // Distance where boss is close enough to origSpawn to stop returning
 
-    float mod_speed = 1.15f;     // Multiplier for boss speed
+    float mod_speed = 1.5f;     // Multiplier for boss speed
 
     public override void Init(BossData boss)
     {
@@ -120,9 +120,15 @@ public class Coward_BossStrategy : Base_BossStrategy {
         }
         else
         {
+            if (IsTargetSeen(boss.m_player, boss))
+            {
+                isSuspicious = false;
+                suspicion_timer = 0;
+            }
+
             if (isSuspicious)
             {
-                if (Vector2.Distance(suspiciousPos, boss.m_player.transform.position) > 1.0f)
+                if (Vector2.Distance(suspiciousPos, boss.m_player.transform.position) > resetPathfindDist)
                 {
                     boss.m_pathfinderRef.Reset();
                     suspiciousPos = boss.m_player.transform.position;
@@ -215,18 +221,26 @@ public class Coward_BossStrategy : Base_BossStrategy {
         if (collGO.GetComponent<SoundCircleController>() && m_currentState == STATES.IDLE)
         {
             isSuspicious = true;
+            suspicion_timer = 0;
             suspiciousPos = collGO.transform.position;
+
+            return;
         }
 
         if (collGO.GetComponent<Bullet>() && m_currentState != STATES.ATTACKING)
         {
+            Debug.Log("bulleted " + m_currentState.ToString());
+
             m_currentState = STATES.ATTACKING;
 
             boss.m_pathfinderRef.Reset();
             isMoving = true;
 
             isSuspicious = true;
+            suspicion_timer = 0;
             suspiciousPos = boss.m_player.transform.position;
+
+            return;
         }
     }
 
