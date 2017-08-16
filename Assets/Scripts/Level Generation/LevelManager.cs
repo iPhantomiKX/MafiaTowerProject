@@ -974,14 +974,13 @@ public class LevelManager : MonoBehaviour
         {
             for(int obsNum = 0; obsNum < numberOfObstaclesPerRoom; obsNum++)
             {
-                //int RandomObstacle = Random.Range(0, Obstacles.Count);
-                int RandomObstacle = 3;
+                int RandomObstacle = Random.Range(0, Obstacles.Count);
                 InstantiateObstacleID(RandomObstacle, objectiveRooms[i]);
-                //int temp = RandomObstacle;
-                //while(RandomObstacle == temp)
-                //{
-                //    RandomObstacle = Random.Range(0, Obstacles.Count);
-                //}
+                int temp = RandomObstacle;
+                while (RandomObstacle == temp)
+                {
+                    RandomObstacle = Random.Range(0, Obstacles.Count);
+                }
             }
         }
     }
