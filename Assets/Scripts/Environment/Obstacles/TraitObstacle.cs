@@ -25,6 +25,9 @@ public class TraitObstacle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (!traitHolderRef)
+            traitHolderRef = FindObjectOfType<TraitHolder>();
 		
 	}
 

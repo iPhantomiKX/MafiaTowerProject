@@ -75,6 +75,9 @@ public class Teleport : BossSpecial
 
         boss.transform.GetChild(0).GetComponent<ParticleSystem>().Emit(particle_emission);
         boss.transform.position = teleport_locations[UnityEngine.Random.Range(0, teleport_locations.Count)];
+
+        cooldown_done = false;
+
         return true;
     }
 }

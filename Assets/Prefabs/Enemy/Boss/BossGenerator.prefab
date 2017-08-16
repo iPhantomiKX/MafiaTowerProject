@@ -56,16 +56,16 @@ MonoBehaviour:
   BossStatsRanges:
   - name: Movement Speed
     min_value: 1.25
-    max_value: 1.5
+    max_value: 1.35
   - name: Attack Speed
-    min_value: 0.25
+    min_value: 0.5
     max_value: 1
   - name: Melee Attack Damage
-    min_value: 3
-    max_value: 5
+    min_value: 2
+    max_value: 3
   - name: Ranged Attack Damage
-    min_value: 3
-    max_value: 5
+    min_value: 2
+    max_value: 3
   - name: Melee Attack Defense
     min_value: 3
     max_value: 5
@@ -74,3 +74,4 @@ MonoBehaviour:
     max_value: 5
   currentBossObject: {fileID: 1534882795907588, guid: 314361b6f0aa7014f996211f84b8fd2d,
     type: 2}
+  b_BossSpawned: 0
