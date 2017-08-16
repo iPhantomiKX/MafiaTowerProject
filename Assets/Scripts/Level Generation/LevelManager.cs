@@ -968,13 +968,14 @@ public class LevelManager : MonoBehaviour
         {
             for(int obsNum = 0; obsNum < numberOfObstaclesPerRoom; obsNum++)
             {
-                int RandomObstacle = Random.Range(0, Obstacles.Count);
+                //int RandomObstacle = Random.Range(0, Obstacles.Count);
+                int RandomObstacle = 3;
                 InstantiateObstacleID(RandomObstacle, objectiveRooms[i]);
-                int temp = RandomObstacle;
-                while(RandomObstacle == temp)
-                {
-                    RandomObstacle = Random.Range(0, Obstacles.Count);
-                }
+                //int temp = RandomObstacle;
+                //while(RandomObstacle == temp)
+                //{
+                //    RandomObstacle = Random.Range(0, Obstacles.Count);
+                //}
             }
         }
     }
@@ -1070,44 +1071,69 @@ public class LevelManager : MonoBehaviour
                 {
                     for (int idx = 0; idx < Obstacles.Count; idx++)
                     {
-                        if (Obstacles[idx].name == "LaserAlarm" && LaserAlarmObstacle == true)
+                        if (Obstacles[idx].name == "LaserAlarmObstacle" && LaserAlarmObstacle == true)
                         {
                             switch(ObjectiveRoom.doorDirection)
                             {
                                 case RoomScript.DoorDirection.NORTH:
                                     {
-                                        int sizeOfLaser = ObjectiveRoom.roomWidth - 1;
-                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + Mathf.RoundToInt(ObjectiveRoom.roomWidth * 0.5f)),tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight - 2)), 0);
-                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        float fromX = (tilespacing * ObjectiveRoom.xpos);
+                                        float toX = (tilespacing * ObjectiveRoom.xpos) + ((tilespacing * ObjectiveRoom.roomWidth) - 1);
+
+                                        //Debug.Log(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth * 0.5f)));
+                                        Debug.Log(tilespacing * ((ObjectiveRoom.xpos + ObjectiveRoom.roomWidth) * 0.5f));
+
+                                        Vector3 MidXPos = new Vector3(((ObjectiveRoom.xpos + ObjectiveRoom.roomWidth * 0.5f) * tilespacing) - 0.15f, tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight - 2)), 0);
+
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], MidXPos, Quaternion.Euler(0, 0, 90));
+                                        LaserAlarm.GetComponentInChildren<LaserAlarm>().gameObject.transform.localScale = new Vector3(1, 2 * (toX - fromX), 1);
+
                                         LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                        LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
                                     }
                                     break;
                                 case RoomScript.DoorDirection.SOUTH:
                                     {
-                                        int sizeOfLaser = ObjectiveRoom.roomWidth - 1;
-                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + Mathf.RoundToInt(ObjectiveRoom.roomWidth * 0.5f)), tilespacing * (ObjectiveRoom.ypos + 1), 0);
-                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        float fromX = (tilespacing * ObjectiveRoom.xpos);
+                                        float toX = (tilespacing * ObjectiveRoom.xpos) + ((tilespacing * ObjectiveRoom.roomWidth) - 1);
+
+                                        //Debug.Log(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth * 0.5f)));
+
+                                        Vector3 MidXPos = new Vector3(((ObjectiveRoom.xpos + ObjectiveRoom.roomWidth * 0.5f) * tilespacing) - 0.15f, tilespacing * (ObjectiveRoom.ypos + 1), 0);
+
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], MidXPos, Quaternion.Euler(0, 0, 90));
+                                        LaserAlarm.GetComponentInChildren<LaserAlarm>().gameObject.transform.localScale = new Vector3(1, 2 * (toX - fromX), 1);
+
                                         LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                        LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
                                     }
                                     break;
                                 case RoomScript.DoorDirection.EAST:
                                     {
-                                        int sizeOfLaser = ObjectiveRoom.roomHeight - 1;
-                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth - 2)), tilespacing * (ObjectiveRoom.ypos + Mathf.RoundToInt(ObjectiveRoom.roomHeight * 0.5f)), 0);
-                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        float fromY = (tilespacing * ObjectiveRoom.ypos);
+                                        float toY = (tilespacing * ObjectiveRoom.ypos) + ((tilespacing * ObjectiveRoom.roomHeight) - 1);
+
+                                        //Debug.Log(tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight * 0.5f)));
+
+                                        Vector3 MidYPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth - 2)), ((ObjectiveRoom.ypos + ObjectiveRoom.roomHeight * 0.5f) * tilespacing) - 0.15f, 0);
+
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], MidYPos, Quaternion.Euler(0, 0, 0));
+                                        LaserAlarm.GetComponentInChildren<LaserAlarm>().gameObject.transform.localScale = new Vector3(1, 2 * (toY - fromY), 1);
+
                                         LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                        LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
                                     }
                                     break;
                                 case RoomScript.DoorDirection.WEST:
                                     {
-                                        int sizeOfLaser = ObjectiveRoom.roomHeight - 1;
-                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + 1), tilespacing * (ObjectiveRoom.ypos + Mathf.RoundToInt(ObjectiveRoom.roomHeight * 0.5f)), 0);
-                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        float fromY = (tilespacing * ObjectiveRoom.ypos);
+                                        float toY = (tilespacing * ObjectiveRoom.ypos) + ((tilespacing * ObjectiveRoom.roomHeight) - 1);
+
+                                        //Debug.Log(tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight * 0.5f)));
+
+                                        Vector3 MidYPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + 1), ((ObjectiveRoom.ypos + ObjectiveRoom.roomHeight * 0.5f) * tilespacing) - 0.15f, 0);
+
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], MidYPos, Quaternion.Euler(0, 0, 0));
+                                        LaserAlarm.GetComponentInChildren<LaserAlarm>().gameObject.transform.localScale = new Vector3(1, 2 * (toY - fromY), 1);
+
                                         LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                        LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
                                     }
                                     break;
                             }
