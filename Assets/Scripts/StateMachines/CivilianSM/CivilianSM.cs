@@ -347,11 +347,13 @@ public class CivilianSM : NeutralSM {
 
     public void DoDead()
     {
+		this.gameObject.transform.GetChild (0).GetComponent<Animator> ().SetBool ("isDead", true);
         base.CheckForBodyDrag();
     }
 
     private void DoRun()
     {
+		this.gameObject.transform.GetChild (0).GetComponent<Animator> ().SetBool ("isRun", true);
         MoveSpeed = origMoveSpeed + increasedSpeed;
         if (PathfinderRef.GetPathFound())
         {
