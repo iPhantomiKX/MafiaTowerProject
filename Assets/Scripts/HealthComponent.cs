@@ -50,9 +50,16 @@ public class HealthComponent : MonoBehaviour {
 
         if (takeDamageSound)
 		    source.PlayOneShot (takeDamageSound , takeDamageSound.length);
-		
-        health -= dmg;
-		if (health <= 0) 
+
+        if (base_health > 0)
+            base_health -= dmg;
+        else
+            mod_health -= dmg;
+
+        // Calc health value with base and mod
+        health = base_health + mod_health;
+
+        if (health <= 0) 
 		{
             health = 0; //Added by Randall - This ensure health will not be negative
             onDeath();
@@ -70,8 +77,10 @@ public class HealthComponent : MonoBehaviour {
         return ((float)health / (float)origHealth + mod_health) * 100;
     }
 
-    public void AddHealthMod(int amount)
+    public void SetHealthMod(int amount)
     {
+        Debug.Log("health mod");
+
         mod_health = amount;
     }
 }

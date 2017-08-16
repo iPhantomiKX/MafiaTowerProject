@@ -19,6 +19,6 @@ public class Trait_HealthGain : PassiveTrait {
 
     public override void DoEffect()
     {
-        playerObject.GetComponentInChildren<HealthComponent>().AddHealthMod((int)(health_amount * GetLevelMultiplier()));
+        playerObject.GetComponentInChildren<HealthComponent>().SetHealthMod((int)(health_amount * GetLevelMultiplier()));
     }
 }

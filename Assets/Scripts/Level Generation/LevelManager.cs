@@ -232,6 +232,10 @@ public class LevelManager : MonoBehaviour
         {
             stageNumber += 1;
         }
+        
+        // added by don
+        PersistentData.m_Instance.NumTraitsPassDown = stageNumber * 2;
+
         return stageNumber;
     }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class PassiveTrait : TraitBaseClass {
 
+    public bool ConstantEffect = false;
+
 	// Use this for initialization
 	void Start () {
 		

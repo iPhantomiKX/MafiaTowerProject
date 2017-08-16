@@ -55,4 +55,5 @@ MonoBehaviour:
   displayDescription: Increases your health.
   levelMultiplier: 2
   maxLevel: 3
+  DoOnce: 1
   health_amount: 2
