@@ -3,6 +3,9 @@ using UnityEngine;
 
 //Require componenet -> HealthComponenet
 //Requite componenet -> MovementScript
+[RequireComponent(typeof(HealthComponent))]
+[RequireComponent(typeof(MovementScript))]
+[RequireComponent(typeof(Pathfinder))]
 public class BossData : MonoBehaviour {
 
     public HealthComponent m_health;
@@ -43,29 +46,29 @@ public class BossData : MonoBehaviour {
     void Awake()
     {
         //Some Example shit
-        strategy = new Coward_BossStrategy();
-        special = new Teleport();
+        //strategy = new Coward_BossStrategy();
+        //special = new Teleport();
 
         //modifierList.Add(new MeleeDamageIncrease());
         //modifierList.Add(new RangeDamageIncrease());
         //modifierList.Add(new MeleeDefenseDecrease());
         //modifierList.Add(new RangeDefenseDecrease());
         //modifierList.Add(new ConstantRegeneration());
-        modifierList.Add(new MoveSpeedIncrease());
+        //modifierList.Add(new MoveSpeedIncrease());
     }
 
 	// Use this for initialization
 	void Start ()
     {
         m_health = GetComponent<HealthComponent>();
+        m_movement = GetComponent<MovementScript>();
+        m_pathfinderRef = GetComponent<Pathfinder>();
 
         strategy.Init(this);
         special.Init(this);
 
         for (int i = 0; i < modifierList.Count; ++i)
             modifierList[i].Init(this);
-
-        m_pathfinderRef = GetComponent<Pathfinder>();
     }
 	
 	// Update is called once per frame
@@ -77,8 +80,21 @@ public class BossData : MonoBehaviour {
         for (int i = 0; i < modifierList.Count; ++i)
             modifierList[i].Update(this);
 
-        m_movement.Move(strategy.direction, m_moveSpeed);
+        if (strategy.isMoving)
+            m_movement.Move(strategy.direction.normalized, m_moveSpeed);
+        
         m_movement.RotateToDirection(strategy.direction);
+
+        // Debug
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            PrintBossStats();
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            special.TriggerSpecial(this);
+        }
     }
 
     public void PrintBossStats()
@@ -107,5 +123,12 @@ public class BossData : MonoBehaviour {
         {
             //Health -= Damage * m_rangeDefense;
         }
+
+        strategy.OnCollide(coll.gameObject, this);
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        strategy.OnCollide(coll.gameObject, this);
     }
 }

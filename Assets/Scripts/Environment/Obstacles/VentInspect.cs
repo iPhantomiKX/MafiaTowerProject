@@ -13,7 +13,7 @@ public class VentInspect : Inspect
     private GameObject player_object;
 
     private GameObject vent_entrances;
-    private GameObject black_image;
+    public GameObject black_image;
 
     void Start()
     {
@@ -23,12 +23,6 @@ public class VentInspect : Inspect
         //RANDALL - TODO. Can just leave as "vents" to remove this shit.
         //this fucking sucks la. idk.
         vent_entrances = GameObject.Find("VentsEntranceLayout");
-
-        //RANDALL - TODO: Find someway to instantiate this only once
-        black_image = GameObject.Find("BlackImage");
-        if (black_image == null)
-            black_image = Instantiate(Resources.Load("BlackImage")) as GameObject;
-        black_image.SetActive(false);
     }
 
     public override void inspect()

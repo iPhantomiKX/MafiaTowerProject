@@ -44,10 +44,9 @@ public class MovementScript : MonoBehaviour {
         rb.velocity = direction * multiplier;
     }
 
-    public void RotateToDirection(Vector3 direction, float rotateSpeed = 0.03f)
+    public void RotateToDirection(Vector3 direction, float rotateSpeed = 0.3f)
     {
-        Vector3 toTarget = direction - this.transform.position;
-        float angle = (Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg) - 90;
+        float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, q, rotateSpeed);
     }

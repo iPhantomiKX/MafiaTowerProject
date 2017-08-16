@@ -6,7 +6,14 @@ public class Door : MonoBehaviour {
     public bool locked;
     public int keyID;
     public bool closed;
-    Color color;
+	Color color;
+
+	private AudioSource source;
+	public AudioClip openSound;
+
+	void Awake(){
+		source = GetComponent<AudioSource> ();
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +27,7 @@ public class Door : MonoBehaviour {
     public void Open()
     {
         if (PlayerHasKey() || !locked) {
+			source.PlayOneShot (openSound);
             GetComponent<Collider2D>().isTrigger = true;
             GetComponent<EmitSound>().emitSound();
             GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.5f);
@@ -55,7 +63,7 @@ public class Door : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll) 
     {
-        if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian"))
+        if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian") || coll.gameObject.tag.Contains("Enemy"))
         {
             //open door
             GetComponent<Collider2D>().isTrigger = true;
@@ -69,7 +77,7 @@ public class Door : MonoBehaviour {
     {
         if (closed)
         {
-            if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian"))
+            if (coll.gameObject.name.Contains("Enemy") || coll.gameObject.name.Contains("Civilian") || coll.gameObject.tag.Contains("Enemy"))
             {
                 //open door
                 GetComponent<Collider2D>().isTrigger = true;

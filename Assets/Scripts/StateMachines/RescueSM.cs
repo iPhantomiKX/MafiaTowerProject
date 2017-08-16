@@ -187,6 +187,7 @@ public class RescueSM : NeutralSM {
 
     public override void OnDeath()
     {
+		this.gameObject.transform.GetChild (0).GetComponent<Animator> ().SetBool ("isDead", true);
         Destroy(GetComponent<RescueObjtInspect>());
         Destroy(GetComponent<SpriteOutline>());
         base.OnDeath();

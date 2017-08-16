@@ -39,7 +39,10 @@ public class SoundCircleController : MonoBehaviour {
         if (other.gameObject.tag == "Enemy")
         {
             if (other.GetComponent<TeamHandler>().CheckIfCanInteract(senderTeam))
-			    other.GetComponent<EnemySM>().StartSuspicious(this.transform.position,5f);
+            {
+                if (other.GetComponent<EnemySM>())
+                    other.GetComponent<EnemySM>().StartSuspicious(this.transform.position, 5f);
+            }
         }
 
         if (other.GetComponent<CivilianSM>())

@@ -16,6 +16,17 @@ public class TraitHolder : MonoBehaviour {
 			aTrait.StartUp();
             aTrait.SetPlayer(gameObject);
         }
+
+        foreach (TraitBaseClass aTrait in TraitList)
+        {
+            if (aTrait.GetTraitType() == TraitBaseClass.TRAIT_TYPE.PASSIVE)
+            {
+                if (!aTrait.GetComponent<PassiveTrait>().ConstantEffect)
+                {
+                    aTrait.DoTrait();
+                }
+            }
+        }
 	}
 	
 	// Update is called once per frame
@@ -24,8 +35,12 @@ public class TraitHolder : MonoBehaviour {
         foreach (TraitBaseClass aTrait in TraitList)
         {
             if (aTrait.GetTraitType() == TraitBaseClass.TRAIT_TYPE.PASSIVE)
-                aTrait.DoTrait();
-            else if (aTrait.GetTraitType() == TraitBaseClass.TRAIT_TYPE.ABILITY)
+            {
+                if (aTrait.GetComponent<PassiveTrait>().ConstantEffect)
+                    aTrait.DoTrait();
+            }
+
+            if (aTrait.GetTraitType() == TraitBaseClass.TRAIT_TYPE.ABILITY)
                 (aTrait as AbilityTrait).DoCooldown();
         }
 

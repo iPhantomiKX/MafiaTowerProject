@@ -320,7 +320,7 @@ public class Pathfinder : MonoBehaviour {
 
     }
 
-    public void FollowPath()
+    public Vector3 FollowPath()
     {
         if (!b_FollowPathCreated)
         {
@@ -344,7 +344,8 @@ public class Pathfinder : MonoBehaviour {
             //Debug.Log("Following Path");
 
             // Check if reached point
-			if (Vector3.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= reachedNodeDist) // Should change to a var
+            //Debug.Log(Vector2.Distance(transform.position, Path[i_CurrentIdx].m_pos));
+            if (Vector2.Distance(transform.position, Path[i_CurrentIdx].m_pos) <= reachedNodeDist)
             {
                 ++i_CurrentIdx;
             }
@@ -360,7 +361,7 @@ public class Pathfinder : MonoBehaviour {
                 i_CurrentIdx = 0;
 
                 //Debug.Log("Path Complete");
-                return;
+                return new Vector3();
             }
 
             // DEBUG
@@ -369,8 +370,13 @@ public class Pathfinder : MonoBehaviour {
                 Debug.DrawLine(Path[i].m_pos, Path[i + 1].m_pos, Color.blue);
             }
 
-            GetComponent<BaseSM>().WalkTowardPoint(Path[i_CurrentIdx].m_pos);
+            if (GetComponent<BaseSM>())
+                GetComponent<BaseSM>().WalkTowardPoint(Path[i_CurrentIdx].m_pos);
+            else
+                return (Path[i_CurrentIdx].m_pos - transform.position).normalized;
         }
+
+        return new Vector3();
     }
 
     float GetManhattenDistance(Node aNode)
@@ -611,6 +617,15 @@ public class Pathfinder : MonoBehaviour {
         //{
         //    Gizmos.color = Color.yellow;
         //    Gizmos.DrawSphere(CurrentNode.m_pos, 0.1f);
-        //}	
+        //}
+
+        //if (!b_PathComplete && b_PathFound)
+        //{
+        //    if (Path[i_CurrentIdx] != null)
+        //    {
+        //        Gizmos.color = Color.gray;
+        //        Gizmos.DrawSphere(Path[i_CurrentIdx].m_pos, 0.1f);
+        //    }
+        //}
 	}
 }

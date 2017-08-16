@@ -16,9 +16,13 @@ public class HealthComponent : MonoBehaviour {
 
     int origHealth;
 
+    int base_health;    
+    int mod_health = 0;
+
 	// Use this for initialization
 	void Start () {
 
+        base_health = health;
         origHealth = health;
 
         if (GetComponent<AudioSource>())
@@ -30,6 +34,13 @@ public class HealthComponent : MonoBehaviour {
 		// CHEAT
 		if (Input.GetKeyUp(KeyCode.K))
 			onDeath ();
+
+        // Calc health value with base and mod
+        health = base_health + mod_health;
+
+        // Cap health - Don
+        if (health > origHealth + mod_health)
+            health = origHealth+ mod_health;
 	}
 
 	public void TakeDmg(int dmg)
@@ -39,9 +50,16 @@ public class HealthComponent : MonoBehaviour {
 
         if (takeDamageSound)
 		    source.PlayOneShot (takeDamageSound , takeDamageSound.length);
-		
-        health -= dmg;
-		if (health <= 0) 
+
+        if (base_health > 0)
+            base_health -= dmg;
+        else
+            mod_health -= dmg;
+
+        // Calc health value with base and mod
+        health = base_health + mod_health;
+
+        if (health <= 0) 
 		{
             health = 0; //Added by Randall - This ensure health will not be negative
             onDeath();
@@ -56,6 +74,13 @@ public class HealthComponent : MonoBehaviour {
     // Calulates how much health is left as a percentage
     public float CalculatePercentageHealth()
     {
-        return (health / origHealth) * 100;
+        return ((float)health / (float)origHealth + mod_health) * 100;
+    }
+
+    public void SetHealthMod(int amount)
+    {
+        Debug.Log("health mod");
+
+        mod_health = amount;
     }
 }

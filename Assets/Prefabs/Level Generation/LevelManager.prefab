@@ -58,25 +58,23 @@ MonoBehaviour:
   numberOfMiscRooms: 4
   numberOfCollectibles: 5
   roomWidth:
-    m_Min: 6
-    m_Max: 9
+    m_Min: 5
+    m_Max: 7
   roomHeight:
-    m_Min: 6
-    m_Max: 9
-  numberOfSubObjectives: 1
-  SubObjectivesLevel: 1
+    m_Min: 5
+    m_Max: 7
+  numberOfSubObjectives: 0
+  SubObjectivesLevel: 0
   hackableDoorLevel: 0
-  RandomAmmoCollecitbles: 1
-  RandomHealthpackCollecitbles: 1
+  RandomAmmoCollecitbles: 0
+  RandomHealthpackCollecitbles: 0
   FogOfWar: 0
   BossLevel: 0
   GlassObstacle: 1
   BlinkingTrapObstacle: 1
   WaitTrapObstacle: 1
   LaserAlarmObstacle: 1
-  numberOfObstaclesPerRoom: 2
-  numberOfWaitTraps: 3
-  numberOfLaserAlarms: 0
+  numberOfObstaclesPerRoom: 1
   floorTile: {fileID: 1425562469495582, guid: 4ddf9f947532b38468e91b85ad5fb7bb, type: 2}
   wallTile:
   - {fileID: 1267209111468980, guid: 71411f96dd986994cb4775580bc42dd9, type: 2}
@@ -105,9 +103,10 @@ MonoBehaviour:
   MainObjectives:
   - {fileID: 1174211081820102, guid: a99b064725221c742ab2ad48f0485d86, type: 2}
   - {fileID: 1216106612668114, guid: 51bc2345ee651eb49b6e458e6447172f, type: 2}
+  - {fileID: 1421068601335828, guid: ad8186df4bf70414080c8387ceead241, type: 2}
   - {fileID: 1797374757248592, guid: 7b17364290145cb4586b94ed228d72f0, type: 2}
   SubObjectives:
-  - {fileID: 1421068601335828, guid: ad8186df4bf70414080c8387ceead241, type: 2}
+  - {fileID: 1947948597877622, guid: 4682e802a14f0cc47a6236dfd8e73c4b, type: 2}
   - {fileID: 1145892065867122, guid: 8b70fb0319dbe2540a8e5488bbaf8527, type: 2}
   - {fileID: 1151426344935160, guid: ba3ac5efaec627e47a8d1b3e3b28c402, type: 2}
   SpawnList:
@@ -116,20 +115,27 @@ MonoBehaviour:
       type: 2}
     amount: 3
     spawnRoom: 1
-  - name: Enemy
+  - name: MeleeEnemy
     stateMachine: {fileID: 1740129890561196, guid: d79c486d137990f4390cfe8e10e8c9bd,
       type: 2}
     amount: 1
     spawnRoom: 1
+  - name: RangeEnemy
+    stateMachine: {fileID: 1235583375091510, guid: ba4c4a579f1940c4ba014046ce4ec856,
+      type: 2}
+    amount: 1
+    spawnRoom: 1
+  BossSpawner: {fileID: 1910704972117202, guid: b3965a7217d97484ca7964e5c99a3f8f,
+    type: 2}
   SecurityCameraObject: {fileID: 1231255563671120, guid: c623e8be5f5f2ea46b36190cea9fce2c,
     type: 2}
   Obstacles:
   - {fileID: 1140021167988008, guid: 281f4c282a2db4040844f8de402451b5, type: 2}
   - {fileID: 1353206106811042, guid: be890697a2387b44885417f803ce1aa3, type: 2}
   - {fileID: 1762170038390208, guid: 5738cb797e7ad0f428b748d1ecd559ab, type: 2}
-  - {fileID: 1349152441447342, guid: 3d7405182d3037748a366676d90aa90b, type: 2}
+  - {fileID: 1146175181653552, guid: 8cad62d1293d12540b1be23748655c07, type: 2}
   Collectibles:
-  - {fileID: 1920132296204146, guid: 907a8b1d9c7ceb24ab661fe698563d3a, type: 2}
+  - {fileID: 1087467469061690, guid: 907a8b1d9c7ceb24ab661fe698563d3a, type: 2}
   - {fileID: 1305222415044336, guid: 211b5ed2365daf04b904704565ba955c, type: 2}
   Interactables:
   - {fileID: 1754435117779884, guid: 96a5eeeb4f3a93a4898865472cfac38a, type: 2}

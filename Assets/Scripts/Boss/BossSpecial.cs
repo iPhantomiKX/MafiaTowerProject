@@ -18,7 +18,7 @@ public abstract class BossSpecial
     public BOSS_SPECIAL_TYPE m_trait_type;
     public abstract void Init(BossData boss);
     public abstract void Update(BossData boss);   //Maybe I don't need this? Leave this here just in case I guess
-    public abstract void TriggerSpecial(BossData boss);
+    public abstract bool TriggerSpecial(BossData boss);
 }
 
 //Teleports to a random room
@@ -26,8 +26,11 @@ public class Teleport : BossSpecial
 {
     List<Vector3>teleport_locations = new List<Vector3>();
     bool cooldown_done;
-    float timer = 0.0f;
+    float timer = 10.0f;
     float trigger_timer = 10.0f;
+
+    //Aesthetic stuff
+    int particle_emission = 50;
 
     public Teleport()
     {
@@ -37,7 +40,19 @@ public class Teleport : BossSpecial
 
     public override void Init(BossData boss)
     {
+
+        //boss.gameObject.transform.GetChild(0).gameObject.AddComponent<ParticleSystem>();    //Add a ParticleSystem to the Child Object. The one with the SpriteRenderer.
+
+
         //Use LevelManager to get a list of all the rooms and add them to the list
+        for (int i = 0; i < boss.m_pathfinderRef.theLevelManager.numberOfMiscRooms; ++i)
+        {
+            RoomScript temp = boss.m_pathfinderRef.theLevelManager.GetAllMiscRooms()[i];
+            float tilespacing = boss.m_pathfinderRef.theLevelManager.tilespacing;
+            Vector3 tempVec = new Vector3(tilespacing * Mathf.RoundToInt(temp.xpos + (temp.roomWidth * 0.5f)), tilespacing * Mathf.RoundToInt(temp.ypos + (temp.roomHeight * 0.5f)), 1f);
+
+            teleport_locations.Add(tempVec);
+        }
     }
 
     public override void Update(BossData boss)
@@ -53,10 +68,17 @@ public class Teleport : BossSpecial
         }
     }
 
-    public override void TriggerSpecial(BossData boss)
+    public override bool TriggerSpecial(BossData boss)
     {
-        if(cooldown_done)
-            boss.transform.position = teleport_locations[UnityEngine.Random.Range(0, teleport_locations.Count)];
+        if (!cooldown_done)
+            return false;
+
+        boss.transform.GetChild(0).GetComponent<ParticleSystem>().Emit(particle_emission);
+        boss.transform.position = teleport_locations[UnityEngine.Random.Range(0, teleport_locations.Count)];
+
+        cooldown_done = false;
+
+        return true;
     }
 }
 
@@ -64,6 +86,13 @@ public class Teleport : BossSpecial
 public class Enrage : BossSpecial
 {
     bool triggered = false;
+
+    float health_percentage_treshold = 75f;
+
+    float red_treshold = 0.75f;
+    float red_fade_speed = 0.25f;
+    SpriteRenderer sr;
+    Color original_color;
 
     public Enrage()
     {
@@ -73,24 +102,41 @@ public class Enrage : BossSpecial
 
     public override void Init(BossData boss)
     {
-        
+        sr = boss.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();  //Because Boss Sprite is a child of BossObject
     }
 
     public override void Update(BossData boss)
     {
+        TriggerSpecial(boss);
 
-    }
-
-    public override void TriggerSpecial(BossData boss)
-    {
-        if (triggered)
+        if (!triggered)
             return;
 
-        if (boss.m_health.CalculatePercentageHealth() < 25.0f)
+        if (sr.color.r <= red_treshold)
+            sr.color = new Color(1f, sr.color.g, sr.color.b);
+        else
+            sr.color = new Color(sr.color.r - red_fade_speed * Time.deltaTime, sr.color.g, sr.color.b);
+
+        if (boss.m_health.CalculatePercentageHealth() > health_percentage_treshold)
+            sr.color = original_color;
+    }
+
+    public override bool TriggerSpecial(BossData boss)
+    {
+        if (triggered)
+            return false;
+
+        if (boss.m_health.CalculatePercentageHealth() < health_percentage_treshold)
         {
+            Debug.Log("ENRAGE TRIGGERED");
             triggered = true;
-            boss.m_meleeDamage *= 1.25f; 
+            boss.m_meleeDamage *= 1.5f;
+            original_color = sr.color;
+            sr.color = new Color(1f, sr.color.g * 0.5f, sr.color.b * 0.5f);
+            return true;
         }
+
+        return false;
     }
 }
 
@@ -113,9 +159,9 @@ public class InstantKillMelee : BossSpecial
 
     }
 
-    public override void TriggerSpecial(BossData boss)
+    public override bool TriggerSpecial(BossData boss)
     {
-
+        return true;
     }
 }
 
@@ -138,9 +184,94 @@ public class SummonGuards : BossSpecial
     {
     }
 
-    public override void TriggerSpecial(BossData boss)
+    public override bool TriggerSpecial(BossData boss)
     {
         //Instantiate some guards
-        GameObject.Instantiate(Resources.Load("EnemyGuard"));//does not work, get the proper prefab name and remember to init - force change state to alert or something
+        GameObject.Instantiate(Resources.Load("MeleeEnemy 1"));//does not work, get the proper prefab name and remember to init - force change state to alert or something
+
+        return false;
+    }
+}
+
+//Grants an extreme boost to defenses for a duration
+public class Invulnerability : BossSpecial
+{
+    bool triggered = false;
+    bool cooldown_done = true;
+
+    float invul_timer = 0.0f;
+    float invul_duration = 5.0f;
+
+    float invul_cooldown_timer = 0.0f;
+    float invul_cooldown_duration = 10.0f;
+
+    GameObject invul_image = null;
+    float original_melee_def_value = 0.0f;
+    float original_range_def_value = 0.0f;
+
+    public Invulnerability()
+    {
+        m_name = "Invulnerability";
+        m_trait_type = BOSS_SPECIAL_TYPE.DEFENSIVE;
+    }
+
+    public override void Init(BossData boss)
+    {
+        original_melee_def_value = boss.m_meleeDefense;
+        original_range_def_value = boss.m_rangeDefense;
+
+        invul_image = GameObject.Instantiate(Resources.Load("InvulnerableImage")) as GameObject;
+        invul_image.transform.SetParent(boss.gameObject.transform);
+        invul_image.transform.localPosition = Vector3.zero;
+        invul_image.SetActive(false);
+    }
+
+    public override void Update(BossData boss)
+    {
+        if (triggered)
+        {
+            invul_timer += Time.deltaTime;
+            if (invul_timer >= invul_duration)
+            {
+                DeactivateShield(boss);
+                invul_timer = 0.0f;
+                triggered = false;
+                cooldown_done = false;
+            }
+        }
+        else
+        {
+            invul_cooldown_timer += Time.deltaTime;
+            if (invul_cooldown_timer >= invul_cooldown_duration)
+            {
+                invul_cooldown_timer = 0.0f;
+                cooldown_done = true;
+            }
+        }
+    }
+
+    public override bool TriggerSpecial(BossData boss)
+    {
+        if (triggered || !cooldown_done)
+            return false;
+
+        ActivateShield(boss);
+        return true;
+    }
+
+    void ActivateShield(BossData boss)
+    {
+        triggered = true;
+        invul_image.SetActive(true);
+        boss.m_meleeDefense *= 9999.9f;
+        boss.m_rangeDefense *= 9999.9f; 
+    }
+
+    void DeactivateShield(BossData boss)
+    {
+        triggered = false;
+        invul_image.SetActive(false);
+        boss.m_meleeDefense = original_melee_def_value;
+        boss.m_rangeDefense = original_range_def_value;
     }
 }

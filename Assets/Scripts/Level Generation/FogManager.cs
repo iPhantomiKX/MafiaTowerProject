@@ -47,9 +47,10 @@ public class FogManager : MonoBehaviour {
     {
         // Get Player GridPos
         Vector2 playerGridPos = levelManagerRef.GetGridPos(playerRef.transform.position);
+        Vector2 mainCamGridPos = levelManagerRef.GetGridPos(Camera.main.transform.position);
 
         // Recursive and switch off the relevant fogtiles
-        SwitchOffNearFog(playerGridPos, fogRange);
+        SwitchOffNearFog(mainCamGridPos, fogRange);
     }
 
     public void SwitchOffNearFog(Vector2 startPos, int range)

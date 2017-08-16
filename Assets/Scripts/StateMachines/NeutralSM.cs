@@ -31,7 +31,7 @@ public abstract class NeutralSM : BaseSM {
             RaycastHit2D hit = Physics2D.Raycast(this.transform.position, targetDir, Mathf.Infinity, layerMask);
             if (hit.collider != null)
             {
-                Debug.Log("1 " + hit.collider.gameObject.name);
+                //Debug.Log("1 " + hit.collider.gameObject.name);
                 if (CheckValidTarget(hit.collider.gameObject))
                 {
                     return true;
@@ -43,7 +43,7 @@ public abstract class NeutralSM : BaseSM {
                 RaycastHit2D hit2 = Physics2D.Raycast(this.transform.position, Quaternion.AngleAxis(targetDir.z + 10f, Vector3.forward) * targetDir, Mathf.Infinity, layerMask);
                 if (hit2.collider != null)
                 {
-                    Debug.Log("1 " + hit.collider.gameObject.name);
+                    //Debug.Log("1 " + hit.collider.gameObject.name);
                     if (CheckValidTarget(hit2.collider.gameObject))
                     {
                         return true;
@@ -54,7 +54,7 @@ public abstract class NeutralSM : BaseSM {
                     RaycastHit2D hit3 = Physics2D.Raycast(this.transform.position, Quaternion.AngleAxis(targetDir.z - 10f, Vector3.forward) * targetDir, Mathf.Infinity, layerMask);
                     if (hit3.collider != null)
                     {
-                        Debug.Log("1 " + hit.collider.gameObject.name);
+                        //Debug.Log("1 " + hit.collider.gameObject.name);
                         if (CheckValidTarget(hit3.collider.gameObject))
                         {
                             return true;
@@ -74,13 +74,13 @@ public abstract class NeutralSM : BaseSM {
         if (checkObject.tag == "Player")
             return true;
 
-        Debug.Log("2 " + checkObject.gameObject.name);
+        //Debug.Log("2 " + checkObject.gameObject.name);
         // Checking for a	 State Machine
         if (checkObject.GetComponent<BaseSM>())
         {
-            Debug.Log("3 " + checkObject.gameObject.name);
+            //Debug.Log("3 " + checkObject.gameObject.name);
 
-			Debug.Log (checkObject.GetComponent<HealthComponent> ().health);
+			//Debug.Log (checkObject.GetComponent<HealthComponent> ().health);
 
             // Checking for dead StateMachine
             return checkObject.GetComponent<BaseSM>().IsDead();

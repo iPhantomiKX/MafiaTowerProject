@@ -20,7 +20,6 @@ public class SpawningAIData
 
 public class LevelManager : MonoBehaviour
 {
-
     public enum TileType
     {
         FLOOR,
@@ -113,6 +112,7 @@ public class LevelManager : MonoBehaviour
     [Space]
     [Header("Enemy Object")]
     public List<SpawningAIData> SpawnList;
+    public GameObject BossSpawner;
 
     [Space]
     [Header("Security Camera Object")]
@@ -161,6 +161,11 @@ public class LevelManager : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
+        GetCurrentStage();
+        Debug.Log("CurrentLevel: " + PersistentData.m_Instance.CurrentLevel);
+        Debug.Log("CurrentStage: " + GetCurrentStage());
+        LevelGeneration(GetCurrentStage());
+
         //Added by Randall 
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("Vent"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Vent"));
@@ -180,7 +185,7 @@ public class LevelManager : MonoBehaviour
         VentsEntranceLayout = new GameObject("VentsEntranceLayout");
         ObjectivesRoomTileLayout = new GameObject("ObjectivesRoomTileLayout");
         ObstacleLayout = new GameObject("ObstacleLayout");
-        
+
         DoorsTileLayout = new GameObject("DoorsTileLayout");
 
         SetupTilesArray();
@@ -189,23 +194,151 @@ public class LevelManager : MonoBehaviour
 
         SetTilesValueForRooms();
         CreateCorridors();
-
         InstantiateTiles();
         InstantiateOuterWalls();
-
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
-        InstantiateMainObjective();
-        if(SubObjectivesLevel)
+        if (SubObjectivesLevel)
             InstantiateSubObjective();
-        InstantiateSecurityObject();
         InstantiateCollectibles();
-        if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
-            InstantiateObstacle();
         InstantiateInteractables();
-        InstantiateEnemyPosition();
+        if (BossLevel)
+        {
+            InstantiateBoss();
+        }
+        else
+        {
+            InstantiateSecurityObject();
+            InstantiateMainObjective();
+            if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
+                InstantiateObstacle();
+            InstantiateEnemyPosition();
+        }
+
+        //Added by Randall - To set the black image for the Vent Entrances
+        GameObject bi = Instantiate(Resources.Load("BlackImage")) as GameObject;
+        bi.SetActive(false);
+        VentInspect[] via = VentsEntranceLayout.GetComponentsInChildren<VentInspect>();
+        foreach (VentInspect vi in via)
+            vi.black_image = bi;
 
         Debug.Log("Level Spawned");
+    }
+
+    int GetCurrentStage()
+    {
+        int stageNumber = 1;
+        while (PersistentData.m_Instance.CurrentLevel > stageNumber * 3)
+        {
+            stageNumber += 1;
+        }
+        
+        // added by don
+        PersistentData.m_Instance.NumTraitsPassDown = stageNumber * 2;
+
+        return stageNumber;
+    }
+
+    void LevelGeneration(int stageNumber)
+    {
+        if (PersistentData.m_Instance.CurrentLevel == stageNumber * 3)
+            BossLevel = true;
+        else
+            BossLevel = false;
+
+        //Level Values
+        columns = 25 + (10 * stageNumber);
+        rows = 25 + (10 * stageNumber);
+
+        //Room Datas
+        numberOfMiscRooms = 2 + (2 * stageNumber);
+        roomWidth = new IntRange(4 + (2 * stageNumber), 5 + (3 * stageNumber));
+        roomHeight = new IntRange(4 + (2 * stageNumber), 5 + (3 * stageNumber));
+
+        //Collectibles
+        RandomAmmoCollecitbles = true;
+        RandomHealthpackCollecitbles = true;
+        numberOfCollectibles = 5 * stageNumber;
+
+        //Obstacles
+        switch (BossLevel)
+        {
+            case true:
+                {
+                    columns = 20 + (10 * stageNumber);
+                    rows = 20 + (10 * stageNumber);
+
+                    numberOfMiscRooms = 2 + (2 * stageNumber);
+                    roomWidth = new IntRange(3 + (2 * stageNumber), 4 + (3 * stageNumber));
+                    roomHeight = new IntRange(3 + (2 * stageNumber), 4 + (3 * stageNumber));
+                }
+                break;
+            case false:
+                {
+                    GlassObstacle = true;
+                    BlinkingTrapObstacle = true;
+                    WaitTrapObstacle = true;
+                    LaserAlarmObstacle = true;
+                    numberOfObstaclesPerRoom = 1 * stageNumber;
+
+                    //Enemies Spawn
+                    for (int i = 0; i < SpawnList.Count; i++)
+                    {
+                        switch (SpawnList[i].name)
+                        {
+                            case "Civilian":
+                                SpawnList[i].amount = 3 * stageNumber;
+                                break;
+                            case "MeleeEnemy":
+                                {
+                                    SpawnList[i].amount = 1 * stageNumber;
+                                    SpawnList[i].stateMachine.GetComponentInChildren<EnemySM>().role = (EnemySM.ENEMY_ROLE)Random.Range((int)EnemySM.ENEMY_ROLE.GUARD, (int)EnemySM.ENEMY_ROLE.WANDER);
+                                }
+                                break;
+                            case "RangeEnemy":
+                                {
+                                    SpawnList[i].amount = 1 * stageNumber;
+                                    SpawnList[i].stateMachine.GetComponentInChildren<EnemySM>().role = (EnemySM.ENEMY_ROLE)Random.Range((int)EnemySM.ENEMY_ROLE.GUARD, (int)EnemySM.ENEMY_ROLE.WANDER);
+                                }
+                                break;
+                        }
+                    }
+                }
+                break;
+        }
+
+        for (int idx = 0; idx < PersistentData.m_Instance.PlayerTraits.Count; idx++ )
+        {
+            if (PersistentData.m_Instance.PlayerTraits[idx].GetComponent<Trait_Hacking>())
+            {
+                hackableDoorLevel = true;
+            }
+        }
+
+        switch (stageNumber)
+        {
+            case 1:
+                {
+                    //JUST A DEFAULT LEVEL
+                    numberOfSubObjectives = stageNumber;
+                    if(BossLevel)
+                    {
+                        SubObjectivesLevel = true;
+                    }
+                }
+                break;
+            case 2:
+                {
+                    numberOfSubObjectives = stageNumber;
+                    SubObjectivesLevel = true;
+                }
+                break;
+            case 3:
+                {
+                    FogOfWar = true;
+                }
+                break;
+        }
     }
 
     void Update()
@@ -247,12 +380,15 @@ public class LevelManager : MonoBehaviour
         RecursiveFindEmptyPos(spawnRoom, existingRooms, RoomScript.RoomType.SPAWN);
         existingRooms.Add(spawnRoom);
 
-        RecursiveFindEmptyPos(powerRoom, existingRooms, RoomScript.RoomType.POWER);
-        if (hackableDoorLevel)
+        if (FogOfWar)
         {
-            powerRoom.doorType = Random.Range(0, 2);
+            RecursiveFindEmptyPos(powerRoom, existingRooms, RoomScript.RoomType.POWER);
+            if (hackableDoorLevel)
+            {
+                powerRoom.doorType = Random.Range(0, 2);
+            }
+            existingRooms.Add(powerRoom);
         }
-        existingRooms.Add(powerRoom);
 
         RecursiveFindEmptyPos(securityRoom, existingRooms, RoomScript.RoomType.SECURITYCONSOLE);
         if (hackableDoorLevel)
@@ -276,7 +412,7 @@ public class LevelManager : MonoBehaviour
         {
             objectiveRooms[i] = new RoomScript();
             RecursiveFindEmptyPos(objectiveRooms[i], existingRooms, RoomScript.RoomType.OBJECTIVES);
-            if(hackableDoorLevel)
+            if (hackableDoorLevel)
             {
                 objectiveRooms[i].doorType = Random.Range(0, 2);
             }
@@ -637,6 +773,19 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void InstantiateBoss()
+    {
+        int BossSpawnRoom = Random.Range(0, objectiveRooms.Length);
+
+        int BossXPos = Mathf.RoundToInt(objectiveRooms[BossSpawnRoom].xpos + (objectiveRooms[BossSpawnRoom].roomWidth / 2));
+        int BossYPos = Mathf.RoundToInt(objectiveRooms[BossSpawnRoom].ypos + (objectiveRooms[BossSpawnRoom].roomHeight / 2));
+
+        Vector3 bossSpawnerPos = new Vector3(tilespacing * BossXPos, tilespacing * BossYPos, 0);
+        GameObject go = Instantiate(BossSpawner, bossSpawnerPos, Quaternion.identity);
+
+        go.GetComponent<BossGenerator>().levelManagerRef = this;
+    }
+
     void InstantiateSecurityObject()
     {
         foreach(var oR in objectiveRooms)
@@ -661,7 +810,7 @@ public class LevelManager : MonoBehaviour
                 if (venttiles[RandomXPos][RandomYPos] != TileType.VENT_E)
                     break;
             }
-            RandomPosInRoom = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos);
+            RandomPosInRoom = new Vector3(tilespacing * RandomXPos, tilespacing * RandomYPos, -1.0f);
 
             //IF BOTH BOOLEANS ARE TRUE
             if (RandomHealthpackCollecitbles && RandomAmmoCollecitbles)
@@ -828,7 +977,7 @@ public class LevelManager : MonoBehaviour
                 int RandomObstacle = Random.Range(0, Obstacles.Count);
                 InstantiateObstacleID(RandomObstacle, objectiveRooms[i]);
                 int temp = RandomObstacle;
-                while(RandomObstacle == temp)
+                while (RandomObstacle == temp)
                 {
                     RandomObstacle = Random.Range(0, Obstacles.Count);
                 }
@@ -927,44 +1076,69 @@ public class LevelManager : MonoBehaviour
                 {
                     for (int idx = 0; idx < Obstacles.Count; idx++)
                     {
-                        if (Obstacles[idx].name == "LaserAlarm" && LaserAlarmObstacle == true)
+                        if (Obstacles[idx].name == "LaserAlarmObstacle" && LaserAlarmObstacle == true)
                         {
                             switch(ObjectiveRoom.doorDirection)
                             {
                                 case RoomScript.DoorDirection.NORTH:
                                     {
-                                        int sizeOfLaser = ObjectiveRoom.roomWidth - 1;
-                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + Mathf.RoundToInt(ObjectiveRoom.roomWidth * 0.5f)),tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight - 2)), 0);
-                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        float fromX = (tilespacing * ObjectiveRoom.xpos);
+                                        float toX = (tilespacing * ObjectiveRoom.xpos) + ((tilespacing * ObjectiveRoom.roomWidth) - 1);
+
+                                        //Debug.Log(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth * 0.5f)));
+                                        Debug.Log(tilespacing * ((ObjectiveRoom.xpos + ObjectiveRoom.roomWidth) * 0.5f));
+
+                                        Vector3 MidXPos = new Vector3(((ObjectiveRoom.xpos + ObjectiveRoom.roomWidth * 0.5f) * tilespacing) - 0.15f, tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight - 2)), 0);
+
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], MidXPos, Quaternion.Euler(0, 0, 90));
+                                        LaserAlarm.GetComponentInChildren<LaserAlarm>().gameObject.transform.localScale = new Vector3(1, 2 * (toX - fromX), 1);
+
                                         LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                        LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
                                     }
                                     break;
                                 case RoomScript.DoorDirection.SOUTH:
                                     {
-                                        int sizeOfLaser = ObjectiveRoom.roomWidth - 1;
-                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + Mathf.RoundToInt(ObjectiveRoom.roomWidth * 0.5f)), tilespacing * (ObjectiveRoom.ypos + 1), 0);
-                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        float fromX = (tilespacing * ObjectiveRoom.xpos);
+                                        float toX = (tilespacing * ObjectiveRoom.xpos) + ((tilespacing * ObjectiveRoom.roomWidth) - 1);
+
+                                        //Debug.Log(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth * 0.5f)));
+
+                                        Vector3 MidXPos = new Vector3(((ObjectiveRoom.xpos + ObjectiveRoom.roomWidth * 0.5f) * tilespacing) - 0.15f, tilespacing * (ObjectiveRoom.ypos + 1), 0);
+
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], MidXPos, Quaternion.Euler(0, 0, 90));
+                                        LaserAlarm.GetComponentInChildren<LaserAlarm>().gameObject.transform.localScale = new Vector3(1, 2 * (toX - fromX), 1);
+
                                         LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                        LaserAlarm.transform.localScale = new Vector3(2 * sizeOfLaser, 0.7f, 1);
                                     }
                                     break;
                                 case RoomScript.DoorDirection.EAST:
                                     {
-                                        int sizeOfLaser = ObjectiveRoom.roomHeight - 1;
-                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth - 2)), tilespacing * (ObjectiveRoom.ypos + Mathf.RoundToInt(ObjectiveRoom.roomHeight * 0.5f)), 0);
-                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        float fromY = (tilespacing * ObjectiveRoom.ypos);
+                                        float toY = (tilespacing * ObjectiveRoom.ypos) + ((tilespacing * ObjectiveRoom.roomHeight) - 1);
+
+                                        //Debug.Log(tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight * 0.5f)));
+
+                                        Vector3 MidYPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + (ObjectiveRoom.roomWidth - 2)), ((ObjectiveRoom.ypos + ObjectiveRoom.roomHeight * 0.5f) * tilespacing) - 0.15f, 0);
+
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], MidYPos, Quaternion.Euler(0, 0, 0));
+                                        LaserAlarm.GetComponentInChildren<LaserAlarm>().gameObject.transform.localScale = new Vector3(1, 2 * (toY - fromY), 1);
+
                                         LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                        LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
                                     }
                                     break;
                                 case RoomScript.DoorDirection.WEST:
                                     {
-                                        int sizeOfLaser = ObjectiveRoom.roomHeight - 1;
-                                        Vector3 LAPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + 1), tilespacing * (ObjectiveRoom.ypos + Mathf.RoundToInt(ObjectiveRoom.roomHeight * 0.5f)), 0);
-                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], LAPos, Quaternion.identity);
+                                        float fromY = (tilespacing * ObjectiveRoom.ypos);
+                                        float toY = (tilespacing * ObjectiveRoom.ypos) + ((tilespacing * ObjectiveRoom.roomHeight) - 1);
+
+                                        //Debug.Log(tilespacing * (ObjectiveRoom.ypos + (ObjectiveRoom.roomHeight * 0.5f)));
+
+                                        Vector3 MidYPos = new Vector3(tilespacing * (ObjectiveRoom.xpos + 1), ((ObjectiveRoom.ypos + ObjectiveRoom.roomHeight * 0.5f) * tilespacing) - 0.15f, 0);
+
+                                        GameObject LaserAlarm = Instantiate(Obstacles[idx], MidYPos, Quaternion.Euler(0, 0, 0));
+                                        LaserAlarm.GetComponentInChildren<LaserAlarm>().gameObject.transform.localScale = new Vector3(1, 2 * (toY - fromY), 1);
+
                                         LaserAlarm.transform.parent = ObstacleLayout.transform;
-                                        LaserAlarm.transform.localScale = new Vector3(0.7f, 2 * sizeOfLaser, 1);
                                     }
                                     break;
                             }
@@ -1221,6 +1395,12 @@ public class LevelManager : MonoBehaviour
 	{
         return objectiveRooms[Random.Range(0, objectiveRooms.Length - 1)];
 	}
+
+    // Gets the array of misc rooms
+    public RoomScript[] GetAllMiscRooms()
+    {
+        return miscRooms;
+    }
 
     // Set a TileType on the given position
     // Also returns the grid position of the object
