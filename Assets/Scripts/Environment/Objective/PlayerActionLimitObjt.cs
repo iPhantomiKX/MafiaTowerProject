@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerActionLimitObjt : Objective {
     public bool limitMelee;
     public bool limitGun;
+    public bool limitHeal;
     public override void onFail()
     {
         failed = true;
@@ -16,10 +17,13 @@ public class PlayerActionLimitObjt : Objective {
     public override void Start () {
         failed = false;
         objtname = "Finish this floor without using ";
-        if (limitMelee && limitGun) objtname += "any weapons!";
+        if (limitMelee && limitGun && limitHeal) objtname += "any weapons or healing items!";
+        else if (limitMelee && limitGun) objtname += "any weapons!";
+        else if (limitMelee && limitHeal) objtname += "healing items and melee weapon!";
+        else if (limitGun && limitHeal) objtname += "healing items and your gun!";
         else if (limitGun) objtname += "your gun!";
         else if (limitMelee) objtname += "your melee weapon!";
-        
+        else if (limitHeal) objtname += "healing items!";
         base.Start();
 	}
 	
@@ -40,6 +44,10 @@ public class PlayerActionLimitObjt : Objective {
         {
             onFail();
         }
+    }
+    public void NotifyHeal()
+    {
+        if (limitHeal) onFail();
     }
 
     public override bool check()
