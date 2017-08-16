@@ -192,3 +192,86 @@ public class SummonGuards : BossSpecial
         return false;
     }
 }
+
+//Grants an extreme boost to defenses for a duration
+public class Invulnerability : BossSpecial
+{
+    bool triggered = false;
+    bool cooldown_done = true;
+
+    float invul_timer = 0.0f;
+    float invul_duration = 5.0f;
+
+    float invul_cooldown_timer = 0.0f;
+    float invul_cooldown_duration = 10.0f;
+
+    GameObject invul_image = null;
+    float original_melee_def_value = 0.0f;
+    float original_range_def_value = 0.0f;
+
+    public Invulnerability()
+    {
+        m_name = "Invulnerability";
+        m_trait_type = BOSS_SPECIAL_TYPE.DEFENSIVE;
+    }
+
+    public override void Init(BossData boss)
+    {
+        original_melee_def_value = boss.m_meleeDefense;
+        original_range_def_value = boss.m_rangeDefense;
+
+        invul_image = GameObject.Instantiate(Resources.Load("InvulnerableImage")) as GameObject;
+        invul_image.transform.SetParent(boss.gameObject.transform);
+        invul_image.transform.localPosition = Vector3.zero;
+        invul_image.SetActive(false);
+    }
+
+    public override void Update(BossData boss)
+    {
+        if (triggered)
+        {
+            invul_timer += Time.deltaTime;
+            if (invul_timer >= invul_duration)
+            {
+                DeactivateShield(boss);
+                invul_timer = 0.0f;
+                triggered = false;
+                cooldown_done = false;
+            }
+        }
+        else
+        {
+            invul_cooldown_timer += Time.deltaTime;
+            if (invul_cooldown_timer >= invul_cooldown_duration)
+            {
+                invul_cooldown_timer = 0.0f;
+                cooldown_done = true;
+            }
+        }
+    }
+
+    public override bool TriggerSpecial(BossData boss)
+    {
+        if (triggered || !cooldown_done)
+            return false;
+
+        ActivateShield(boss);
+        return true;
+    }
+
+    void ActivateShield(BossData boss)
+    {
+        triggered = true;
+        invul_image.SetActive(true);
+        boss.m_meleeDefense *= 9999.9f;
+        boss.m_rangeDefense *= 9999.9f; 
+    }
+
+    void DeactivateShield(BossData boss)
+    {
+        triggered = false;
+        invul_image.SetActive(false);
+        boss.m_meleeDefense = original_melee_def_value;
+        boss.m_rangeDefense = original_range_def_value;
+    }
+}
