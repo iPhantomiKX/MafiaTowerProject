@@ -777,7 +777,7 @@ public class LevelManager : MonoBehaviour
         Vector3 bossSpawnerPos = new Vector3(tilespacing * BossXPos, tilespacing * BossYPos, 0);
         GameObject go = Instantiate(BossSpawner, bossSpawnerPos, Quaternion.identity);
 
-        go.GetComponent<BossGenerator>().CreateBoss(bossSpawnerPos);
+        go.GetComponent<BossGenerator>().levelManagerRef = this;
     }
 
     void InstantiateSecurityObject()
