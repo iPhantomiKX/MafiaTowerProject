@@ -35,6 +35,15 @@ public class SpeechScript : MonoBehaviour {
 
     private SpeechDatabase speech_database;
 
+	public AudioSource source;
+	public AudioClip sound1;
+	public AudioClip sound2;
+	public AudioClip sound3;
+
+	void Awake(){
+		source = this.transform.parent.GetChild (0).GetComponent<AudioSource> ();
+	}
+
 	// Use this for initialization
 	void Start ()
     {
@@ -121,9 +130,17 @@ public class SpeechScript : MonoBehaviour {
 
     void DisplayText()
     {
+		RandomSound ();
         SpeechText.text = speech_database.GetRandomString(this);
         is_displaying_text = true;
     }
+
+	void RandomSound(){
+		int random = Random.Range(1,4);
+		if(random == 1)source.PlayOneShot (sound1,sound1.length);
+		else if (random == 2)source.PlayOneShot (sound2,sound2.length);
+		else source.PlayOneShot (sound3,sound3.length);
+	}
 
     void Reset()
     {

@@ -36,6 +36,10 @@ public class CivilianSM : NeutralSM {
     bool playerSeen;
     EnemySM nearbyGuard;
 
+	public AudioSource source;
+	public AudioClip scream1;
+	public AudioClip scream2;
+
 	// Use this for initialization
     public override void Start()
     {
@@ -393,9 +397,17 @@ public class CivilianSM : NeutralSM {
     public void StartRunning()
     {
         CurrentState = CIVILIAN_STATE.RUNNING;
+		RandomSound ();
         transform.parent.GetComponentInChildren<SpeechScript>().SetDisplayText(SpeechType.Damaged);
         PathfinderRef.Reset();
     }
+
+	void RandomSound(){
+		int random = Random.Range (1, 3);
+		if(random == 1)source.PlayOneShot (scream1,scream1.length);
+		else if(random == 2)source.PlayOneShot (scream2,scream2.length);
+	}
+
 
     void OnTriggerEnter2D(Collider2D col)
     {
