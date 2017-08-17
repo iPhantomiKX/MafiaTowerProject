@@ -48,8 +48,12 @@ public class Melee : MonoBehaviour {
 			source.PlayOneShot (stabEnemySound , stabEnemySound.length);
 			collider.enabled = false;
 			EnemySM enem = col.gameObject.GetComponent<EnemySM> ();
-			enem.TakeDamage (2f);
-		}
+
+            if (enem)
+                enem.TakeDamage(2f);
+            else
+                col.gameObject.GetComponentInChildren<HealthComponent>().TakeDmg(2);
+        }
 	}
 
 }

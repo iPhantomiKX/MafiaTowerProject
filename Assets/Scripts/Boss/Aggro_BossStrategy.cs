@@ -189,7 +189,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
             return;
         }
 
-        if (collGO.GetComponent<Bullet>() && m_currentState != STATES.ATTACKING)
+        if ((collGO.GetComponent<Bullet>() || collGO.name.Contains("Melee")) && m_currentState != STATES.ATTACKING)
         {
             //Debug.Log("bulleted " + m_currentState.ToString());
 
