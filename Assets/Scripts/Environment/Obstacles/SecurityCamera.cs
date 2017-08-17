@@ -25,6 +25,9 @@ public class SecurityCamera : NeutralSM
     public float soundInterval = 1.0f;
     private float sound_counter;
 
+    public Sprite cameraOnSprite;
+    public Sprite cameraOffSprite;
+
     private STATE current_state = STATE.ON;
 
     public override void Sense()
@@ -57,6 +60,8 @@ public class SecurityCamera : NeutralSM
         angleFOV = detectionAngle;
         visionRange = detectionDistance;
         //GetComponent<LineRenderer>().SetPosition(1, new Vector3(0, detectionAngle / 360.0f, 0));
+
+        GetComponent<SpriteRenderer>().sprite = cameraOnSprite;
     }
 
     // Update is called once per frame
@@ -108,6 +113,8 @@ public class SecurityCamera : NeutralSM
         current_state = STATE.OFF;
         GetComponent<LineRenderer>().enabled = false;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
+
+        GetComponent<SpriteRenderer>().sprite = cameraOffSprite;
     }
 
     public void CameraOn()
@@ -118,6 +125,8 @@ public class SecurityCamera : NeutralSM
         current_state = STATE.ON;
         GetComponent<LineRenderer>().enabled = true;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
+
+        GetComponent<SpriteRenderer>().sprite = cameraOnSprite;
     }
 
     public void ToggleAlert()
