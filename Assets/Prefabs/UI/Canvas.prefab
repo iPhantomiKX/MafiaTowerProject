@@ -105,6 +105,9 @@ MonoBehaviour:
   - name: Minimap
     activeOnStart: 1
     UIPrefab: {fileID: 1199774378179456, guid: cdc0ca2ceca9bdd4b9fc023798b60f16, type: 2}
+  - name: LevelSummary
+    activeOnStart: 0
+    UIPrefab: {fileID: 1048049013948716, guid: 94a6883222930d34aaff35c6ba4e5cad, type: 2}
 --- !u!114 &114343453719431342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,7 +163,7 @@ Canvas:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1326243579416688}
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
@@ -169,7 +172,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

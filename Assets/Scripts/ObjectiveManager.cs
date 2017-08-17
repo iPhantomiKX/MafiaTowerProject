@@ -23,11 +23,12 @@ public class ObjectiveManager : MonoBehaviour {
         canvas = GameObject.Find("Canvas").GetComponent<PanelManager>().GetPanel("ObjectiveUI"); //Added by Randall - To reference the UIObject
 
         objectives = FindObjectsOfType<Objective>();
-		Invoke ("GenerateObjtUI" , 0.5f);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        Invoke ("GenerateObjtUI" , 0.05f);
+        Invoke("LevelSummary", 0.1f);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
@@ -83,7 +84,7 @@ public class ObjectiveManager : MonoBehaviour {
 		}
 		panel.SetActive (true);
 		panel.GetComponent<Animator> ().Play ("ObjectiveUIAnimation");
-	}
+    }
 
     public void OnFail(GameObject failObjt)
     {
@@ -122,5 +123,12 @@ public class ObjectiveManager : MonoBehaviour {
             }
         }
 	}
+
+    private void LevelSummary()
+    {
+        GameObject ls = GameObject.Find("Canvas").GetComponent<PanelManager>().GetPanel("LevelSummary");
+        ls.SetActive(true);
+        ls.GetComponent<StartOfLevelDisplay>().GenerateLevelSummary();
+    }
 
 }
