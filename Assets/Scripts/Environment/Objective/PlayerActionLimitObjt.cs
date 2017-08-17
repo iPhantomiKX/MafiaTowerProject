@@ -33,21 +33,21 @@ public class PlayerActionLimitObjt : Objective {
 	}
     public void NotifyGun()
     {
-        if(limitGun)
+        if(limitGun && !failed)
         {
             onFail();
         }
     }
     public void NotifyMelee()
     {
-        if (limitMelee)
+        if (limitMelee && !failed)
         {
             onFail();
         }
     }
     public void NotifyHeal()
     {
-        if (limitHeal) onFail();
+        if (limitHeal && !failed) onFail();
     }
 
     public override bool check()
