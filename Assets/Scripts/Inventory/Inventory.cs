@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
     public int slotItemAmount { get; set; }
     public int slotAmount { get; set; }
     public List<Item> items;
-
+    public float suitcaseSpeedPenalty = 0.5f;
     private bool continueLooping;
 
     public class InventoryDataItem
@@ -122,10 +122,26 @@ public class Inventory : MonoBehaviour
         {
             DestroyItem = false;
         }
-
+        if (DestroyItem) ApplyItemEffect(itemToAdd);
         return DestroyItem;
     }
+    void ApplyItemEffect(Item item)
+    {
+        if(item.ID == 4)
+        {
+            Debug.Log("Apply suitcase slow");
+            gameObject.GetComponent<PlayerController>().mod_speed *= suitcaseSpeedPenalty;
+        } 
+    }
+    public void RemoveItemEffect(Item item)
+    {
+        if (item.ID == 4)
+        {
+            Debug.Log("Remove suitcase slow");
+            gameObject.GetComponent<PlayerController>().mod_speed /= suitcaseSpeedPenalty;
+        }
 
+    }
     public bool InventoryIsFull()
     {
         if (slotItemAmount > slotAmount)
@@ -154,6 +170,7 @@ public class Inventory : MonoBehaviour
                 if (itemToRemove.ID == InventoryDataItems[i].ID)
                 {
                     InventoryDataItems[i].Amount--;
+                    RemoveItemEffect(itemToRemove);
                     break;
                 }
             }

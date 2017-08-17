@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
 
     //Player Mods
     public float speed;
+    public float base_speed = 1;
+    public float carrying_speed = 0.5f; //speed if carrying heavy object
     public float mod_speed = 1; // speed added on by traits
 
     //Button stuff

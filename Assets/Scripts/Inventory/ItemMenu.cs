@@ -9,6 +9,8 @@ public class ItemMenu : MonoBehaviour
     public Button itemMenuButton;
     public GameObject medkit;
     public GameObject pistol;
+    public GameObject yellowKey;
+    public GameObject suitcase;
 
     private List<GameObject> itemObjects { get; set; }
     private Tooltip tooltip;
@@ -131,7 +133,16 @@ public class ItemMenu : MonoBehaviour
             {
                 Instantiate(pistol, new Vector3(player.transform.position.x, player.transform.position.y), Quaternion.identity);
             }
+            else if(item.ID == 2)
+            {
+                Instantiate(yellowKey, new Vector3(player.transform.position.x, player.transform.position.y), Quaternion.identity);
+            }
+            else if(item.ID == 4)
+            {
+                Instantiate(suitcase, new Vector3(player.transform.position.x, player.transform.position.y), Quaternion.identity);
+            }
 
+            inv.RemoveItemEffect(item);
             itemMenuExists = false;
             panel.enabled = false;
             Destroy(panel.gameObject);
@@ -156,7 +167,9 @@ public class ItemMenu : MonoBehaviour
         {
             case 0:
                 {
-                    GameObject.FindObjectOfType<PlayerController>().gameObject.GetComponent<HealthComponent>().health += 1;
+                    GameObject.FindObjectOfType<PlayerController>().gameObject.GetComponent<HealthComponent>().AddHealth(1);
+                    if (FindObjectOfType<PlayerActionLimitObjt>() != null)
+                        FindObjectOfType<PlayerActionLimitObjt>().NotifyHeal();
                     break;
                 }
 

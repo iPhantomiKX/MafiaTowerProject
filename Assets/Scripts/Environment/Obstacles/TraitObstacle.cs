@@ -24,11 +24,12 @@ public class TraitObstacle : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void Update () {
 
         if (!traitHolderRef)
-            traitHolderRef = FindObjectOfType<TraitHolder>();
-		
+        {
+            traitHolderRef = FindObjectOfType<TraitHolder>();    
+        }  
 	}
 
     public bool CheckForTrait()

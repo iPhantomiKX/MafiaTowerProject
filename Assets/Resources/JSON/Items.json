@@ -34,5 +34,14 @@
     "itemType": "Consumable",
     "actionName": "testAction",
     "slug":  "test"
+  },      
+  {
+    "id": 4,
+    "itemName": "Heavy Suitcase",
+    "description": "A very, very heavy suitcase",
+    "stackable": false,
+    "itemType": "KeyItem",
+    "actionName": "---",
+    "slug":  "suitcase_temp"
   }      
 ]

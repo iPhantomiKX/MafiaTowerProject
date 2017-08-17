@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 60612935755365720}
   - component: {fileID: 50857769856280330}
   - component: {fileID: 114467529989049884}
+  - component: {fileID: 114741101323607650}
   - component: {fileID: 114757369734686794}
   - component: {fileID: 114646501178299374}
   - component: {fileID: 82550238432451370}
@@ -405,6 +406,22 @@ MonoBehaviour:
   maxRadius: 60
   fadeSpeed: 0.01
   sc: {fileID: 114821803060620018, guid: f09d552dff7a86444a0fad6c845a325a, type: 2}
+--- !u!114 &114741101323607650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241847312241758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed5e235acfb43c489ca91bfcb7fc692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TraitHolderRef: {fileID: 0}
+  actionName: Switch off
+  takesTime: 0
+  time: 0
+  remainingTime: 0
 --- !u!114 &114757369734686794
 MonoBehaviour:
   m_ObjectHideFlags: 1

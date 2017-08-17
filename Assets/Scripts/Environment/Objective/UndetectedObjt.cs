@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UndetectedObjt : Objective {
-    bool failed;
     public override bool check()
     {
         return !failed;
