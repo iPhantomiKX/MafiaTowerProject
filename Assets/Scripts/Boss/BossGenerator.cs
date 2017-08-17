@@ -105,12 +105,12 @@ public class BossGenerator : MonoBehaviour {
         go.GetComponentInChildren<Pathfinder>().theLevelManager = levelManagerRef;
 
         // Random values for various stats
-        go.GetComponentInChildren<BossData>().m_moveSpeed = GetRandomValue("Movement Speed");
-        go.GetComponentInChildren<BossData>().m_attackSpeed = GetRandomValue("Attack Speed");
-        go.GetComponentInChildren<BossData>().m_meleeDamage = GetRandomValue("Melee Attack Damage");
-        go.GetComponentInChildren<BossData>().m_rangeDamage = GetRandomValue("Ranged Attack Damage");
-        go.GetComponentInChildren<BossData>().m_meleeDefense = GetRandomValue("Melee Attack Defense");
-        go.GetComponentInChildren<BossData>().m_rangeDefense = GetRandomValue("Ranged Attack Defense");
+        go.GetComponentInChildren<BossData>().m_moveSpeed = GetRandomValue("Movement Speed") + (0.2f * (LevelManager.GetCurrentStage() - 1));
+        go.GetComponentInChildren<BossData>().m_attackSpeed = GetRandomValue("Attack Speed") + (0.35f * (LevelManager.GetCurrentStage() - 1));
+        go.GetComponentInChildren<BossData>().m_meleeDamage = GetRandomValue("Melee Attack Damage") + (LevelManager.GetCurrentStage());
+        go.GetComponentInChildren<BossData>().m_rangeDamage = GetRandomValue("Ranged Attack Damage") + (LevelManager.GetCurrentStage());
+        go.GetComponentInChildren<BossData>().m_meleeDefense = GetRandomValue("Melee Attack Defense") + (LevelManager.GetCurrentStage() - 1);
+        go.GetComponentInChildren<BossData>().m_rangeDefense = GetRandomValue("Ranged Attack Defense") + (LevelManager.GetCurrentStage() - 1);
 
         // Random strategy -> the sprite used will be based on this strategy
         // Coward -> 'Thin' sprite
