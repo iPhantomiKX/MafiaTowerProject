@@ -10,7 +10,6 @@ public class CameraConsole : MonoBehaviour {
 
     private int camera_index = 0;
     private GameObject camera_offline_screen;
-    private PlayerController player;
     private PanelManager pm;
 
     // Use this for initialization
@@ -23,7 +22,6 @@ public class CameraConsole : MonoBehaviour {
         pm = GameObject.Find("Canvas").GetComponent<PanelManager>();
         securityCameraList = GameObject.FindGameObjectsWithTag("SecurityCamera");
         camera_offline_screen = transform.GetChild(0).gameObject; //A bit hardcoded but uh should be fine as long as the first child is the offline screen
-        player = GameObject.Find("PlayerObject").GetComponent<PlayerController>();
     }
 
     void MoveToCamera(int indexInArray)
@@ -87,7 +85,7 @@ public class CameraConsole : MonoBehaviour {
     public void ClosePanel()
     {
         Camera.main.GetComponent<PlayerCamera>().free = false;
-        player.freeze = false;
+        GameObject.Find("PlayerObject").GetComponent<PlayerController>().enabled = true;
 
         pm.ActivatePanels(new[] { "PlayerUI", "ObjectiveUI" });
 
@@ -99,7 +97,7 @@ public class CameraConsole : MonoBehaviour {
     public void OpenPanel()
     {
         Camera.main.GetComponent<PlayerCamera>().free = true;
-        player.freeze = true;
+        GameObject.Find("PlayerObject").GetComponent<PlayerController>().enabled = false;
         MoveToCamera(camera_index);
     }
 }

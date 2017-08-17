@@ -20,6 +20,9 @@ public class LaserAlarm : TraitObstacle {
 	
 	// Update is called once per frame
 	void Update () {
+
+        base.Update();
+
         if (cooldownLeft <= 0) cooldownLeft = 0;
         else cooldownLeft -= Time.deltaTime;
 	}

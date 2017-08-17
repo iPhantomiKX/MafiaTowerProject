@@ -165,7 +165,7 @@ public abstract class EnemySM : BaseSM {
 				} else if (player.GetComponent<PlayerController>().inspectingObject != null) {
 					detectValue = 0.4f;
 				} else {
-					detectValue = 0.1f;
+					detectValue = 0.15f;
 				}
 				detectGauge += (Time.deltaTime / Vector2.Distance (this.transform.position, player.transform.position)) * detectValue;
 				if (detectGauge >= 1f) {
