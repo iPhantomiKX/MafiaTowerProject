@@ -225,7 +225,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Level Spawned");
     }
 
-    int GetCurrentStage()
+    public static int GetCurrentStage()
     {
         int stageNumber = 1;
         while (PersistentData.m_Instance.CurrentLevel > stageNumber * 3)
