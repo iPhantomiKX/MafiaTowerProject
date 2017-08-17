@@ -46,7 +46,7 @@ public class Console : TraitObstacle {
 
     void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.name.Contains("Enemy") || col.gameObject.name.Contains("Civilian"))
+        if (col.gameObject.name.Contains("Enemy") || col.gameObject.name.Contains("Civilian") || col.gameObject.name.Contains("Boss"))
         {
             if (d_timer >= TimeToOpenDoor)
             {
@@ -66,7 +66,7 @@ public class Console : TraitObstacle {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.name.Contains("Enemy") || col.gameObject.name.Contains("Civilian"))
+        if (col.gameObject.name.Contains("Enemy") || col.gameObject.name.Contains("Civilian") || col.gameObject.name.Contains("Boss"))
         {
             d_timer = 0.0;
         }
