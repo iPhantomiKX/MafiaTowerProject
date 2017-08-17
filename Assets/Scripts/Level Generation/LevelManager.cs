@@ -909,8 +909,8 @@ public class LevelManager : MonoBehaviour
                     break;
                 case "SecurityCameraConsole":
                     {
-                        int XPos = Random.Range(securityRoom.xpos + 1, securityRoom.xpos + securityRoom.roomWidth - 2);
-                        int YPos = Random.Range(securityRoom.ypos + 1, securityRoom.ypos + securityRoom.roomHeight - 2);
+                        int XPos = securityRoom.xpos + Mathf.RoundToInt(securityRoom.roomWidth / 2);
+                        int YPos = securityRoom.ypos + Mathf.RoundToInt(securityRoom.roomHeight / 2);
                         interactabletiles[XPos][YPos] = TileType.INTERACTABLES;
                         Vector3 ConsolePos = new Vector3(tilespacing * XPos, tilespacing * YPos, 0);
                         GameObject Console = Instantiate(Interactables[i], ConsolePos, Quaternion.identity);
