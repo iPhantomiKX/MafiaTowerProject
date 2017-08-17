@@ -152,7 +152,7 @@ public class LevelManager : MonoBehaviour
     private GameObject DoorsTileLayout;
     private GameObject ObstacleLayout;
 
-    private List<GameObject> SubGameObjectiveList;
+    private List<GameObject> SubGameObjectiveList = new List<GameObject>();
 
     private bool areaIsIntersecting;
 
@@ -225,7 +225,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Level Spawned");
     }
 
-    public static int GetCurrentStage()
+    public int GetCurrentStage()
     {
         int stageNumber = 1;
         while (PersistentData.m_Instance.CurrentLevel > stageNumber * 3)
@@ -962,15 +962,25 @@ public class LevelManager : MonoBehaviour
 
     void InstantiateSubObjective()
     {
-        SubGameObjectiveList = new List<GameObject>();
         if (SubObjectivesLevel)
         {
             for (int i = 0; i < numberOfSubObjectives; i++)
             {
                 int randomSubObjectives = Random.Range(0, SubObjectives.Count);
                 GameObject sgo = Instantiate(SubObjectives[randomSubObjectives]) as GameObject;
-                if (SubGameObjectiveList != null && SubGameObjectiveList.Contains(sgo))
-                    InstantiateSubObjective();
+                if (SubGameObjectiveList != null)
+                {
+                    for (int idx = 0; idx < SubGameObjectiveList.Count; idx++ )
+                    {
+                        if (sgo == SubGameObjectiveList[idx])
+                        {
+                            randomSubObjectives = Random.Range(0, SubObjectives.Count);
+                            sgo = Instantiate(SubObjectives[randomSubObjectives]) as GameObject;
+                        }
+                        else
+                            SubGameObjectiveList.Add(sgo);
+                    }
+                }
                 else
                     SubGameObjectiveList.Add(sgo);
             }
