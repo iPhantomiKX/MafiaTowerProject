@@ -198,8 +198,6 @@ public class LevelManager : MonoBehaviour
         InstantiateOuterWalls();
         InstantiatePlayerPosition();
         InstantiateNextLevelPlatformPosition();
-        if (SubObjectivesLevel)
-            InstantiateSubObjective();
         InstantiateCollectibles();
         InstantiateInteractables();
         if (BossLevel)
@@ -210,6 +208,8 @@ public class LevelManager : MonoBehaviour
         {
             InstantiateSecurityObject();
             InstantiateMainObjective();
+            if (SubObjectivesLevel)
+                InstantiateSubObjective();
             if (GlassObstacle || BlinkingTrapObstacle || WaitTrapObstacle || LaserAlarmObstacle)
                 InstantiateObstacle();
             InstantiateEnemyPosition();
@@ -938,16 +938,25 @@ public class LevelManager : MonoBehaviour
             int ObjectiveYPos = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2));
 
             Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
-            GameObject go = Instantiate(MainObjectives[Random.Range(0, MainObjectives.Count)], ObjectivePos, Quaternion.identity) as GameObject;
-
-            if (go.tag == "Rescue")
+            if(!BossLevel)
             {
-                go.GetComponentInChildren<Pathfinder>().theLevelManager = this;
-                go.GetComponentInChildren<BaseSM>().SpawnPoint = ObjectivePos;
-                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
+                GameObject go = Instantiate(MainObjectives[Random.Range(0, MainObjectives.Count)], ObjectivePos, Quaternion.identity) as GameObject;
+                if (go.tag == "Rescue")
+                {
+                    go.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+                    go.GetComponentInChildren<BaseSM>().SpawnPoint = ObjectivePos;
+                    maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
+                }
+                else
+                    maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
             }
             else
-                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
+            {
+                for(int idx = 0; idx < MainObjectives.Count; idx++ )
+                {
+
+                }
+            }
         }
     }
 
