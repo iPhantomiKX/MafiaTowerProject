@@ -8,7 +8,7 @@ public class DeliveryObjt : Objective {
     public override bool check()
     {
         Inventory playerInv = FindObjectOfType<PlayerController>().GetComponent<Inventory>();
-        return playerInv.ItemIsInInventory(suitcase);
+        return playerInv.ItemIsInInventory(suitcase) && !failed;
     }
 
     public override void onFail()
