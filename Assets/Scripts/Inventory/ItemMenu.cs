@@ -167,7 +167,7 @@ public class ItemMenu : MonoBehaviour
         {
             case 0:
                 {
-                    GameObject.FindObjectOfType<PlayerController>().gameObject.GetComponent<HealthComponent>().health += 1;
+                    GameObject.FindObjectOfType<PlayerController>().gameObject.GetComponent<HealthComponent>().AddHealth(1);
                     if (FindObjectOfType<PlayerActionLimitObjt>() != null)
                         FindObjectOfType<PlayerActionLimitObjt>().NotifyHeal();
                     break;

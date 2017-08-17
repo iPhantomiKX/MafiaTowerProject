@@ -79,8 +79,15 @@ public class HealthComponent : MonoBehaviour {
 
     public void SetHealthMod(int amount)
     {
-        Debug.Log("health mod");
+        Debug.Log("set health mod");
 
         mod_health = amount;
+    }
+
+    public void AddHealth(int amount)
+    {
+        Debug.Log("add health mod");
+
+        base_health += amount;
     }
 }
