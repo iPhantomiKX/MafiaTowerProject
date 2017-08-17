@@ -21,6 +21,8 @@ public class Console : TraitObstacle {
     // Update is called once per frame
     void Update()
     {
+        base.Update();
+
         if (!AttachedDoor.activeInHierarchy)
             d_timer += Time.deltaTime;
 
