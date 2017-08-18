@@ -114,14 +114,13 @@ public class BossData : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        //If it's a Melee Attack
-        {
-            //Health -= Damage * m_meleeDefense;
-        }
-
         //If it's a Range Attack
+        if (coll.gameObject.GetComponent<Bullet>())
         {
             //Health -= Damage * m_rangeDefense;
+            GetComponent<HealthComponent>().TakeDmg(1 * (1 / m_rangeDefense));
+
+            Debug.Log("ranged " + 1 * (1 / m_rangeDefense));
         }
 
         strategy.OnCollide(coll.gameObject, this);
@@ -129,6 +128,15 @@ public class BossData : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
+        //If it's a Melee Attack
+        if (coll.gameObject.name.Contains("Melee"))
+        {
+            //Health -= Damage * m_meleeDefense;
+            GetComponent<HealthComponent>().TakeDmg(2 * (1 / m_meleeDefense));
+
+            Debug.Log("melee " + 2 * (1 / m_meleeDefense));
+        }
+
         strategy.OnCollide(coll.gameObject, this);
     }
 }

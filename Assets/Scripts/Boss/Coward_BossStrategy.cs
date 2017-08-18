@@ -174,6 +174,7 @@ public class Coward_BossStrategy : Base_BossStrategy {
         float dist = Vector3.Distance(boss.transform.position, origSpawn);
         if ((!IsTargetSeen(boss.m_player, boss) || dist > returnDist) && !isSuspicious)
         {
+            Debug.Log("back to idle");
             m_currentState = STATES.IDLE;
         }
 
@@ -242,7 +243,7 @@ public class Coward_BossStrategy : Base_BossStrategy {
 
         if ((collGO.GetComponent<Bullet>() || collGO.name.Contains("Melee")) && m_currentState != STATES.ATTACKING)
         {
-            //Debug.Log("bulleted " + m_currentState.ToString());
+            Debug.Log("bulleted " + m_currentState.ToString());
 
             m_currentState = STATES.ATTACKING;
 

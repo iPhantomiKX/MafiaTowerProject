@@ -44,15 +44,19 @@ public class Melee : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.tag == "Enemy") {
-			source.PlayOneShot (stabEnemySound , stabEnemySound.length);
-			collider.enabled = false;
-			EnemySM enem = col.gameObject.GetComponent<EnemySM> ();
+        if (col.tag == "Enemy")
+        {
+            source.PlayOneShot(stabEnemySound, stabEnemySound.length);
+            collider.enabled = false;
+            EnemySM enem = col.gameObject.GetComponent<EnemySM>();
 
             if (enem)
                 enem.TakeDamage(2f);
             else
-                col.gameObject.GetComponentInChildren<HealthComponent>().TakeDmg(2);
+            {
+                if (!col.gameObject.name.Contains("Boss"))
+                    col.gameObject.GetComponentInChildren<HealthComponent>().TakeDmg(2);
+            }
         }
 	}
 

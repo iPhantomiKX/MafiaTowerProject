@@ -193,8 +193,6 @@ public class Aggro_BossStrategy : Base_BossStrategy {
 
             m_currentState = STATES.SEARCHING;
 
-            boss.m_pathfinderRef.Reset();
-
             isSuspicious = true;
             suspicion_timer = 0;
             suspiciousPos = collGO.transform.position;
@@ -204,7 +202,7 @@ public class Aggro_BossStrategy : Base_BossStrategy {
 
         if ((collGO.GetComponent<Bullet>() || collGO.name.Contains("Melee")) && m_currentState != STATES.ATTACKING)
         {
-            //Debug.Log("bulleted " + m_currentState.ToString());
+            Debug.Log("bulleted " + m_currentState.ToString());
 
             m_currentState = STATES.ATTACKING;
 
