@@ -30,11 +30,12 @@ public class PlayerUIScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		healthSlider.value = hc.health;
+        healthSlider.maxValue = hc.GetMaxHealth();
 		UpdateText ();
 	}
 
 	void UpdateText(){
 		currentAmmo.text = gun.ammo + "";
-		healthText.text = (healthSlider.value/healthSlider.maxValue)*100 + "%";
+        healthText.text = (int)((healthSlider.value / healthSlider.maxValue) * 100) + "%";
 	}
 }

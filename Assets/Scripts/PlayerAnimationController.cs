@@ -19,12 +19,12 @@ public class PlayerAnimationController : MonoBehaviour {
 	}
 
 	void Start () {
-		animator.SetInteger ("health", this.gameObject.GetComponent<HealthComponent> ().health);
+		animator.SetFloat ("health", this.gameObject.GetComponent<HealthComponent> ().health);
 	}
 		
 	void Update () {
-		animator.SetInteger ("health", this.gameObject.GetComponent<HealthComponent> ().health);
-		if (animator.GetInteger ("health") > 0) {
+        animator.SetFloat("health", this.gameObject.GetComponent<HealthComponent>().health);
+		if (animator.GetFloat ("health") > 0) {
 			Alive ();
 		}
 	}

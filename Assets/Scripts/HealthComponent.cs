@@ -8,16 +8,16 @@ using UnityEngine.EventSystems;
 public class HealthComponent : MonoBehaviour {
 
 	public GameObject GO;
-	public int health;
+	public float health;
 	public UnityEvent death;
 
 	public AudioSource source;
 	public AudioClip takeDamageSound;
 
-    int origHealth;
+    float origHealth;
 
-    int base_health;    
-    int mod_health = 0;
+    float base_health;
+    float mod_health = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -43,7 +43,7 @@ public class HealthComponent : MonoBehaviour {
             health = origHealth+ mod_health;
 	}
 
-	public void TakeDmg(int dmg)
+	public void TakeDmg(float dmg)
 	{
         if (health == 0) //Added by Randall - This ensures that onDeath is only called once
             return;
@@ -89,5 +89,10 @@ public class HealthComponent : MonoBehaviour {
         Debug.Log("add health mod");
 
         base_health += amount;
+    }
+
+    public float GetMaxHealth()
+    {
+        return (float)origHealth + mod_health;
     }
 }

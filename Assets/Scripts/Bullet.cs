@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour {
 		{
             if (otherCollider.gameObject.GetComponent<BaseSM>())
                 otherCollider.gameObject.GetComponent<BaseSM>().TakeDamage(1f);
-            else if (otherCollider.gameObject.GetComponent<HealthComponent>())
+            else if (otherCollider.gameObject.GetComponent<HealthComponent>() && !otherCollider.gameObject.name.Contains("Boss"))
                 otherCollider.gameObject.GetComponent<HealthComponent>().TakeDmg(1);
 
 			Destroy (this.gameObject);
