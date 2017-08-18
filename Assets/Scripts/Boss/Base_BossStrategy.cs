@@ -32,6 +32,8 @@ public class Base_BossStrategy
     public float suspicion_timer;
     
     public float attack_timer;          // timer to calculate when to attack
+    public float melee_attack_dist = 0.3f;
+    public GameObject bullet_prefab;
 
     public float look_time = 3;         // time it takes to look around
     public float look_timer;            // timer to calculate when to look around

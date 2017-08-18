@@ -52,7 +52,7 @@ public class Restart : MonoBehaviour {
             }
 
             Debug.Log("...restarted... playertrait size " + PersistentData.m_Instance.PlayerTraits.Count);
-            PersistentData.m_Instance.CurrentLevel = 0;
+            PersistentData.m_Instance.CurrentLevel = 1;
         }
         else if (ChosenTraitPanel != null)
         {

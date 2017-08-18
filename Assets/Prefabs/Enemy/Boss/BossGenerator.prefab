@@ -53,6 +53,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelManagerRef: {fileID: 0}
   playerRef: {fileID: 0}
+  currentBossObject: {fileID: 1534882795907588, guid: 314361b6f0aa7014f996211f84b8fd2d,
+    type: 2}
+  b_BossSpawned: 0
+  bullet_prefab: {fileID: 1634767128882160, guid: 4d8d95f2d89a1fc45abf8b51f0fca20c,
+    type: 2}
   BossStatsRanges:
   - name: Movement Speed
     min_value: 1
@@ -72,6 +77,3 @@ MonoBehaviour:
   - name: Ranged Attack Defense
     min_value: 2
     max_value: 3
-  currentBossObject: {fileID: 1534882795907588, guid: 314361b6f0aa7014f996211f84b8fd2d,
-    type: 2}
-  b_BossSpawned: 0
