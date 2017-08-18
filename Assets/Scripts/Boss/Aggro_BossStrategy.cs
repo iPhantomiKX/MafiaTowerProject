@@ -59,11 +59,11 @@ public class Aggro_BossStrategy : Base_BossStrategy {
                 }
                 else
                 {
-					boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isRangeAtk" , true);
 					GameObject go = GameObject.Instantiate(bullet_prefab, boss.transform.position + (boss.transform.up * 0.3f), boss.transform.rotation);
 
                     Physics2D.IgnoreCollision(go.GetComponent<Collider2D>(), boss.GetComponentInChildren<Collider2D>());
 
+					boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isRangeAtk" , true);
                     go.GetComponent<EnemyBullet>().Damage = boss.m_rangeDamage;
                     go.GetComponent<Rigidbody2D>().AddForce(boss.transform.up * 400f);
 
