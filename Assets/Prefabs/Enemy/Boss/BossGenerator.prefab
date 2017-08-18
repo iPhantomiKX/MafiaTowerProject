@@ -66,14 +66,14 @@ MonoBehaviour:
     min_value: 0.5
     max_value: 0.75
   - name: Melee Attack Damage
-    min_value: 2
+    min_value: 1.2
     max_value: 3
   - name: Ranged Attack Damage
-    min_value: 2
+    min_value: 1.2
     max_value: 3
   - name: Melee Attack Defense
-    min_value: 2
+    min_value: 1.5
     max_value: 3
   - name: Ranged Attack Defense
-    min_value: 2
+    min_value: 1.5
     max_value: 3

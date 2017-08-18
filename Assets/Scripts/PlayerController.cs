@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool Meleebutton()
 	{
-		if (Input.GetKeyDown(KeyCode.C) && inspectingObject == null) {
+		if (Input.GetMouseButtonDown (1) && inspectingObject == null) {
 			meleeButton = true;
 		} 
 		else
