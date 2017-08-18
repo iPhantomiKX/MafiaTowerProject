@@ -21,6 +21,8 @@ public class Coward_BossStrategy : Base_BossStrategy {
         origSpawn = boss.transform.position;
 
         boss.m_moveSpeed *= mod_speed;
+
+		boss.transform.GetChild (0).GetComponent<Animator> ().runtimeAnimatorController = Resources.Load ("CowardBoss") as RuntimeAnimatorController;
     }
 
     public override void Idle(BossData boss)
@@ -106,16 +108,20 @@ public class Coward_BossStrategy : Base_BossStrategy {
             {
                 if (boss.m_currentAttackType == BossData.ATTACK_TYPE.MELEE)
                 {
+					boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isMeleeAtk" , true);
                     boss.m_player.GetComponent<HealthComponent>().TakeDmg((int)boss.m_meleeDamage);
+
                 }
                 else
                 {
-                    GameObject go = GameObject.Instantiate(bullet_prefab, boss.transform.position + (boss.transform.up * 0.3f), boss.transform.rotation);
+					boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isRangeAtk" , true);
+					GameObject go = GameObject.Instantiate(bullet_prefab, boss.transform.position + (boss.transform.up * 0.3f), boss.transform.rotation);
 
                     Physics2D.IgnoreCollision(go.GetComponent<Collider2D>(), boss.GetComponentInChildren<Collider2D>());
 
                     go.GetComponent<EnemyBullet>().Damage = boss.m_rangeDamage;
                     go.GetComponent<Rigidbody2D>().AddForce(boss.transform.up * 400f);
+
                 }
 
                 attack_timer = 0;
@@ -128,7 +134,10 @@ public class Coward_BossStrategy : Base_BossStrategy {
             }
             else
             {
-                attack_timer += Time.deltaTime;
+				boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isMeleeAtk" , false);
+				boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isRangeAtk" , false);
+
+				attack_timer += Time.deltaTime;
             }
         }
         else
@@ -206,11 +215,13 @@ public class Coward_BossStrategy : Base_BossStrategy {
                     // Attack player
                     if (attack_timer > boss.m_attackSpeed)
                     {
+						boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isMeleeAtk" , true);
                         boss.m_player.GetComponent<HealthComponent>().TakeDmg((int)boss.m_meleeDamage);
                         attack_timer = 0;
                     }
                     else
                     {
+						boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isMeleeAtk" , false);
                         attack_timer += Time.deltaTime;
                     }
                 }

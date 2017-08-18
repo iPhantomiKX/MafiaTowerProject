@@ -13,6 +13,8 @@ public class Aggro_BossStrategy : Base_BossStrategy {
 
         m_name = "Aggro";
         suspicion_time = 5;
+
+		boss.transform.GetChild (0).GetComponent<Animator> ().runtimeAnimatorController = Resources.Load ("AggroBoss") as RuntimeAnimatorController;
     }
 
     public override void Idle(BossData boss)
@@ -51,16 +53,20 @@ public class Aggro_BossStrategy : Base_BossStrategy {
             {
                 if (boss.m_currentAttackType == BossData.ATTACK_TYPE.MELEE)
                 {
+					boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isMeleeAtk" , true);
                     boss.m_player.GetComponent<HealthComponent>().TakeDmg((int)boss.m_meleeDamage);
+
                 }
                 else
                 {
-                    GameObject go = GameObject.Instantiate(bullet_prefab, boss.transform.position + (boss.transform.up * 0.3f), boss.transform.rotation);
+					boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isRangeAtk" , true);
+					GameObject go = GameObject.Instantiate(bullet_prefab, boss.transform.position + (boss.transform.up * 0.3f), boss.transform.rotation);
 
                     Physics2D.IgnoreCollision(go.GetComponent<Collider2D>(), boss.GetComponentInChildren<Collider2D>());
 
                     go.GetComponent<EnemyBullet>().Damage = boss.m_rangeDamage;
                     go.GetComponent<Rigidbody2D>().AddForce(boss.transform.up * 400f);
+
                 }
                 
                 attack_timer = 0;
@@ -73,6 +79,9 @@ public class Aggro_BossStrategy : Base_BossStrategy {
             }
             else
             {
+				boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isMeleeAtk" , false);
+				boss.transform.GetChild (0).GetComponent<Animator> ().SetBool("isRangeAtk" , false);
+
                 attack_timer += Time.deltaTime;
             }
         }
