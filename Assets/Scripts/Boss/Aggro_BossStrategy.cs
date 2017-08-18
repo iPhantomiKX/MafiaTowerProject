@@ -44,12 +44,25 @@ public class Aggro_BossStrategy : Base_BossStrategy {
     {
         base.Attacking(boss);
 
-        if (Vector2.Distance(boss.transform.position, boss.m_player.transform.position) < 0.3f && IsTargetSeen(boss.m_player, boss)) 
+        if ((Vector2.Distance(boss.transform.position, boss.m_player.transform.position) < melee_attack_dist || boss.m_currentAttackType == BossData.ATTACK_TYPE.RANGED) && IsTargetSeen(boss.m_player, boss)) 
         {
             // Attack player
             if (attack_timer > boss.m_attackSpeed)
             {
-                boss.m_player.GetComponent<HealthComponent>().TakeDmg((int)boss.m_meleeDamage);
+                if (boss.m_currentAttackType == BossData.ATTACK_TYPE.MELEE)
+                {
+                    boss.m_player.GetComponent<HealthComponent>().TakeDmg((int)boss.m_meleeDamage);
+                }
+                else
+                {
+                    GameObject go = GameObject.Instantiate(bullet_prefab, boss.transform.position + (boss.transform.up * 0.3f), boss.transform.rotation);
+
+                    Physics2D.IgnoreCollision(go.GetComponent<Collider2D>(), boss.GetComponentInChildren<Collider2D>());
+
+                    go.GetComponent<EnemyBullet>().Damage = boss.m_rangeDamage;
+                    go.GetComponent<Rigidbody2D>().AddForce(boss.transform.up * 400f);
+                }
+                
                 attack_timer = 0;
 
                 if (isSuspicious)

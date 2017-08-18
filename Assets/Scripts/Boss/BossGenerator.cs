@@ -20,13 +20,15 @@ public class BossGenerator : MonoBehaviour {
     public LevelManager levelManagerRef;
     public PlayerController playerRef;
 
+    public GameObject currentBossObject;
+    public bool b_BossSpawned = false;
+
+    public GameObject bullet_prefab;
+
     public List<MinMaxData> BossStatsRanges = new List<MinMaxData>();
     public List<Base_BossStrategy> BossStrategyList = new List<Base_BossStrategy>();
     public List<BossSpecial> BossSpecialList = new List<BossSpecial>();
     public List<BossTrait> BossTraitList = new List<BossTrait>();
-
-    public GameObject currentBossObject;
-    public bool b_BossSpawned = false;
 
 	// Use this for initialization
 	void Start () {
@@ -136,6 +138,9 @@ public class BossGenerator : MonoBehaviour {
 
         // Random attack type
         go.GetComponentInChildren<BossData>().m_currentAttackType = (BossData.ATTACK_TYPE)Random.Range(0, (int)BossData.ATTACK_TYPE.NUM_STATES);
+
+        // Set bullet prefab
+        go.GetComponentInChildren<BossData>().strategy.bullet_prefab = bullet_prefab;
     }
 
     public float GetRandomValue(string name)
