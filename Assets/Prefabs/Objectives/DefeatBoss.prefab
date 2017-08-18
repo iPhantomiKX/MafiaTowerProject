@@ -60,7 +60,7 @@ MonoBehaviour:
   timeBarWidth: 0
   numCompleted: 0
   numRequired: 1
-  mandatory: 0
+  mandatory: 1
   objtText: {fileID: 0}
   failed: 0
   boss: {fileID: 0}

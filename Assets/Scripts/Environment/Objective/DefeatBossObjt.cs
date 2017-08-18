@@ -25,6 +25,8 @@ public class DefeatBossObjt : Objective {
 	
 	// Update is called once per frame
 	public override void Update () {
+        if (boss == null)
+            boss = FindObjectOfType<BossData>();
         if(boss.GetComponent<HealthComponent>().health <= 0 && !complete)
         {
             complete = true;

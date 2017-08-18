@@ -108,6 +108,7 @@ public class LevelManager : MonoBehaviour
     [Header("Level Objectives")]
     public List<GameObject> MainObjectives;
     public List<GameObject> SubObjectives;
+    public GameObject BossObjective;
 
     [Space]
     [Header("Enemy Object")]
@@ -152,6 +153,7 @@ public class LevelManager : MonoBehaviour
     private GameObject DoorsTileLayout;
     private GameObject ObstacleLayout;
 
+    private List<GameObject> MainGameObjectiveList = new List<GameObject>();
     private List<GameObject> SubGameObjectiveList = new List<GameObject>();
 
     private bool areaIsIntersecting;
@@ -203,6 +205,7 @@ public class LevelManager : MonoBehaviour
         if (BossLevel)
         {
             InstantiateBoss();
+            InstantiateBossObjective();
         }
         else
         {
@@ -248,12 +251,38 @@ public class LevelManager : MonoBehaviour
 
         //Level Values
         columns = 25 + (10 * stageNumber);
+        if (columns >= 50)
+        {
+            columns = 50;
+        }
         rows = 25 + (10 * stageNumber);
+        if (rows >= 50)
+        {
+            rows = 50;
+        }
+
 
         //Room Datas
         numberOfMiscRooms = 2 + (2 * stageNumber);
-        roomWidth = new IntRange(4 + (2 * stageNumber), 5 + (3 * stageNumber));
-        roomHeight = new IntRange(4 + (2 * stageNumber), 5 + (3 * stageNumber));
+        numberOfObjectiveRooms = 1 * stageNumber;
+        roomWidth = new IntRange(3 + (2 * stageNumber), 5 + (3 * stageNumber));
+        if(roomWidth.m_Min >= 7)
+        {
+            roomWidth.m_Min = 7;
+        }
+        if(roomWidth.m_Max >= 11)
+        {
+            roomWidth.m_Max = 11;
+        }
+        roomHeight = new IntRange(3 + (2 * stageNumber), 5 + (3 * stageNumber));
+        if (roomHeight.m_Min >= 7)
+        {
+            roomHeight.m_Min = 7;
+        }
+        if (roomHeight.m_Max >= 11)
+        {
+            roomHeight.m_Max = 11;
+        }
 
         //Collectibles
         RandomAmmoCollecitbles = true;
@@ -265,8 +294,16 @@ public class LevelManager : MonoBehaviour
         {
             case true:
                 {
-                    columns = 20 + (10 * stageNumber);
-                    rows = 20 + (10 * stageNumber);
+                    columns = 20 + (15 * stageNumber);
+                    if (columns >= 50)
+                    {
+                        columns = 50;
+                    }
+                    rows = 20 + (15 * stageNumber);
+                    if (columns >= 50)
+                    {
+                        columns = 50;
+                    }
 
                     numberOfMiscRooms = 2 + (2 * stageNumber);
                     roomWidth = new IntRange(3 + (2 * stageNumber), 4 + (3 * stageNumber));
@@ -320,7 +357,6 @@ public class LevelManager : MonoBehaviour
             case 1:
                 {
                     //JUST A DEFAULT LEVEL
-                    numberOfSubObjectives = stageNumber;
                     if(BossLevel)
                     {
                         SubObjectivesLevel = true;
@@ -329,12 +365,13 @@ public class LevelManager : MonoBehaviour
                 break;
             case 2:
                 {
-                    numberOfSubObjectives = stageNumber;
+                    numberOfSubObjectives = stageNumber - 1;
                     SubObjectivesLevel = true;
                 }
                 break;
             case 3:
                 {
+                    numberOfSubObjectives = stageNumber - 1;
                     FogOfWar = true;
                 }
                 break;
@@ -938,25 +975,17 @@ public class LevelManager : MonoBehaviour
             int ObjectiveYPos = Mathf.RoundToInt(objectiveRooms[i].ypos + (objectiveRooms[i].roomHeight / 2));
 
             Vector3 ObjectivePos = new Vector3(tilespacing * ObjectiveXPos, tilespacing * ObjectiveYPos, -1f);
-            if(!BossLevel)
+            GameObject go = Instantiate(MainObjectives[Random.Range(0, MainObjectives.Count)], ObjectivePos, Quaternion.identity) as GameObject;
+            MainGameObjectiveList.Add(go);
+            if (go.tag == "Rescue")
             {
-                GameObject go = Instantiate(MainObjectives[Random.Range(0, MainObjectives.Count)], ObjectivePos, Quaternion.identity) as GameObject;
-                if (go.tag == "Rescue")
-                {
-                    go.GetComponentInChildren<Pathfinder>().theLevelManager = this;
-                    go.GetComponentInChildren<BaseSM>().SpawnPoint = ObjectivePos;
-                    maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
-                }
-                else
-                    maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
+                go.GetComponentInChildren<Pathfinder>().theLevelManager = this;
+                go.GetComponentInChildren<BaseSM>().SpawnPoint = ObjectivePos;
+                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
             }
             else
-            {
-                for(int idx = 0; idx < MainObjectives.Count; idx++ )
-                {
-
-                }
-            }
+                maptiles[ObjectiveXPos][ObjectiveYPos] = TileType.OBJECTIVE;
+            
         }
     }
 
@@ -968,23 +997,35 @@ public class LevelManager : MonoBehaviour
             {
                 int randomSubObjectives = Random.Range(0, SubObjectives.Count);
                 GameObject sgo = Instantiate(SubObjectives[randomSubObjectives]) as GameObject;
-                if (SubGameObjectiveList != null)
+                for(int idx = 0; idx < MainGameObjectiveList.Count; idx++)
                 {
-                    for (int idx = 0; idx < SubGameObjectiveList.Count; idx++ )
+                    for(int idx2 = 0; idx2 < SubGameObjectiveList.Count; idx2++)
                     {
-                        if (sgo == SubGameObjectiveList[idx])
+                        if(SubGameObjectiveList[idx2].GetComponent<PlayerActionLimitObjt>() && MainGameObjectiveList[idx].GetComponent<DefeatEnemy>())
                         {
-                            randomSubObjectives = Random.Range(0, SubObjectives.Count);
-                            sgo = Instantiate(SubObjectives[randomSubObjectives]) as GameObject;
+                            InstantiateSubObjective();
                         }
                         else
-                            SubGameObjectiveList.Add(sgo);
+                        {
+                            while(sgo == SubGameObjectiveList[idx2])
+                            {
+                                InstantiateSubObjective();
+                            }
+                            if(sgo != SubGameObjectiveList[idx2])
+                            {
+                                SubGameObjectiveList.Add(sgo);
+                            }
+                        }
                     }
                 }
-                else
-                    SubGameObjectiveList.Add(sgo);
+
             }
         }
+    }
+
+    void InstantiateBossObjective()
+    {
+        GameObject bgo = Instantiate(BossObjective) as GameObject;
     }
 
     void InstantiateObstacle()

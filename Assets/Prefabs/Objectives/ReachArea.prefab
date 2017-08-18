@@ -70,7 +70,7 @@ MonoBehaviour:
   om: {fileID: 0}
   objtname: 
   isTimed: 1
-  time: 30
+  time: 60
   remainingTime: 0
   timeBar: {fileID: 0}
   timeBarWidth: 0

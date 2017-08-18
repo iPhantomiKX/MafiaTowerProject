@@ -109,6 +109,8 @@ MonoBehaviour:
   - {fileID: 1947948597877622, guid: 4682e802a14f0cc47a6236dfd8e73c4b, type: 2}
   - {fileID: 1145892065867122, guid: 8b70fb0319dbe2540a8e5488bbaf8527, type: 2}
   - {fileID: 1151426344935160, guid: ba3ac5efaec627e47a8d1b3e3b28c402, type: 2}
+  BossObjective: {fileID: 1560217070883950, guid: c9f47e0d18f666042a7514a07dc06484,
+    type: 2}
   SpawnList:
   - name: Civilian
     stateMachine: {fileID: 1331038616227058, guid: 4e45d4c47a8526a40be637c7b26ac6e8,
