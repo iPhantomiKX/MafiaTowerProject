@@ -404,8 +404,11 @@ public class CivilianSM : NeutralSM {
 
 	void RandomSound(){
 		int random = Random.Range (1, 3);
-		if(random == 1)source.PlayOneShot (scream1,scream1.length);
-		else if(random == 2)source.PlayOneShot (scream2,scream2.length);
+		if (random == 1)
+			source.PlayOneShot (scream1, scream1.length);
+		else if (random == 2)
+			source.PlayOneShot (scream2, scream2.length);
+		
 	}
 
 

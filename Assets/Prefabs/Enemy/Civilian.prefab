@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 114537401731861370}
   - component: {fileID: 114842795971540188}
   - component: {fileID: 114612377242529542}
+  - component: {fileID: 82172036827583738}
   m_Layer: 16
   m_Name: CivilianCanvas
   m_TagString: Untagged
@@ -302,6 +303,86 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1450524761547108}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 256
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!82 &82172036827583738
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1941878913915850}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -628,6 +709,10 @@ MonoBehaviour:
   TextDuration: 10
   TextIntervalMin: 1
   TextIntervalMax: 10
+  source: {fileID: 82172036827583738}
+  sound1: {fileID: 8300000, guid: bdcc0e1393f095c4d842a02aacafffa5, type: 3}
+  sound2: {fileID: 8300000, guid: 5743bceab7206ca4c8e59cb262270dd6, type: 3}
+  sound3: {fileID: 8300000, guid: 55e980414b8ca4c49bb7821d25313ad6, type: 3}
 --- !u!114 &114733262249000036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -791,6 +876,9 @@ MonoBehaviour:
   maxPatrolRooms: 3
   PersuadeActionTime: 5
   emitSoundInterval: 2
+  source: {fileID: 82019162340268062}
+  scream1: {fileID: 8300000, guid: 2bf1ea67cd8a2324aa62bf6a372ecbd3, type: 3}
+  scream2: {fileID: 8300000, guid: e1d9ebbe2e31f344086de490f8b091e3, type: 3}
 --- !u!212 &212507821859615220
 SpriteRenderer:
   m_ObjectHideFlags: 1
