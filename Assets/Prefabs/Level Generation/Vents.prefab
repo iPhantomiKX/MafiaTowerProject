@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1030155233907756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.8459415, y: 1.2596225, z: 0}
   m_LocalScale: {x: 0.44, y: 0.44, z: 1}
   m_Children:
   - {fileID: 4368126176944538}
@@ -261,7 +261,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.01}
+  m_Size: {x: 0.05, y: 0.02}
 --- !u!61 &61269251022737720
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -275,7 +275,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.01}
+  m_Size: {x: 0.05, y: 0.02}
 --- !u!61 &61639620213414172
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -289,7 +289,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.1}
+  m_Size: {x: 0.02, y: 0.05}
 --- !u!61 &61917621635629506
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -303,7 +303,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.1}
+  m_Size: {x: 0.02, y: 0.05}
 --- !u!114 &114118557149057066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HorizontalPiece: 0
-  Incremental: 0.05
+  Incremental: 0.075
 --- !u!114 &114476993902033936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HorizontalPiece: 0
-  Incremental: 0.05
+  Incremental: 0.075
 --- !u!114 &114753946176750440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HorizontalPiece: 1
-  Incremental: 0.05
+  Incremental: 0.075
 --- !u!114 &114821462614209046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HorizontalPiece: 1
-  Incremental: 0.05
+  Incremental: 0.075
 --- !u!212 &212645710806331572
 SpriteRenderer:
   m_ObjectHideFlags: 1
