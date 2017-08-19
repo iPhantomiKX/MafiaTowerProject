@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 114989350413289082}
   - component: {fileID: 82903827863363432}
   - component: {fileID: 114115100777342168}
+  - component: {fileID: 114503607477672142}
   m_Layer: 9
   m_Name: EnemyObject
   m_TagString: Enemy
@@ -627,7 +628,7 @@ MonoBehaviour:
   SpawnPoint: {x: 0, y: 0, z: 0}
   PathfinderRef: {fileID: 114367738643029800}
   isBeingDragged: 0
-  role: 0
+  role: 1
   attackAble: 0
   isHunting: 0
   SuspiciousPosition: {x: 0, y: 0, z: 0}
@@ -647,6 +648,18 @@ MonoBehaviour:
   CurrentState: 0
   animator: {fileID: 95060186102862262}
   maxPatrolRooms: 5
+--- !u!114 &114503607477672142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894137219359046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05cfd9d02c61c8a4ab9fb960e01d24bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  segments: 10
 --- !u!114 &114529978568909140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -815,15 +828,15 @@ LineRenderer:
   - {x: 0, y: 0.25, z: 0}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.9
+    widthMultiplier: 1
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0
-        inSlope: 1.0749692
-        outSlope: 1.0749692
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
         tangentMode: 0
       - serializedVersion: 2
         time: 1
@@ -879,7 +892,7 @@ LineRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 3
     numCornerVertices: 0
-    numCapVertices: 15
+    numCapVertices: 0
     alignment: 0
     textureMode: 0
   m_UseWorldSpace: 0
