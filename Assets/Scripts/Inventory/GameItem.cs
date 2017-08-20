@@ -21,7 +21,9 @@ public class GameItem : MonoBehaviour
 
     public void LoadItemData()
     {
-        mySprite = GetComponent<SpriteRenderer>();
+		mySprite = this.transform.GetChild(1).GetComponent<SpriteRenderer>();
+		Debug.Log("name of sprite " + this.name);
+        //mySprite = GetComponent<SpriteRenderer>();
         database = (ItemDatabase)FindObjectOfType(typeof(ItemDatabase));
         item = database.FetchItemBySpriteName(mySprite.sprite.name);
     }
