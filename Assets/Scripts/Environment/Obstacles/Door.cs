@@ -73,6 +73,8 @@ public class Door : MonoBehaviour {
             GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.5f);
             GetComponent<DoorInspect>().actionName = "Close";
             closed = false;
+
+            GetComponent<SpriteRenderer>().sprite = DoorSprites[DoorSprites.Count - 1];
         }
     }
 
@@ -87,6 +89,8 @@ public class Door : MonoBehaviour {
                 GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.5f);
                 GetComponent<DoorInspect>().actionName = "Close";
                 closed = false;
+
+                GetComponent<SpriteRenderer>().sprite = DoorSprites[DoorSprites.Count - 1];
             }
         }
     }
@@ -100,6 +104,8 @@ public class Door : MonoBehaviour {
             GetComponent<Collider2D>().isTrigger = false;
             GetComponent<DoorInspect>().actionName = "Open";
             closed = true;
+
+            GetComponent<SpriteRenderer>().sprite = DoorSprites[0];
         }
     }
 }
