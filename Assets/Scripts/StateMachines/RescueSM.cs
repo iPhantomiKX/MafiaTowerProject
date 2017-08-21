@@ -151,6 +151,7 @@ public class RescueSM : NeutralSM {
 			PathfinderRef.Reset ();
         }
 
+        FaceTowardPoint(player.transform.position, 0.5f);
     }
 
     void DoExit()
@@ -174,6 +175,12 @@ public class RescueSM : NeutralSM {
             objt.numCompleted++;
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<Collider2D>().enabled = false;
+
+            SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer renderer in sr)
+            {
+                renderer.enabled = false;
+            }
         }
     }
 

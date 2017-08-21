@@ -351,7 +351,7 @@ MonoBehaviour:
   PathfinderRef: {fileID: 0}
   isBeingDragged: 0
   ExitPoint: {fileID: 0}
-  followDist: 1.1
+  followDist: 0.5
   startFollowDist: 0.5
   startPathfindDist: 2
 --- !u!114 &114167714291059072
