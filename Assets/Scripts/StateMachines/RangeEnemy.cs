@@ -442,8 +442,11 @@ public class RangeEnemy : EnemySM {
 	}
 
 	private void DoDead(){
-		this.GetComponent<CircleCollider2D> ().enabled = false;
-		Destroy (this.transform.parent.gameObject,1);
+		if (this.GetComponent<LineRenderer> ().enabled) {
+			this.GetComponent<LineRenderer> ().enabled = false;
+			OnDeath ();
+		}
+		base.CheckForBodyDrag ();
 	}
 
 	public override void ProcessMessage ()
