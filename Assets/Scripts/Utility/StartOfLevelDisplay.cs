@@ -115,7 +115,7 @@ public class StartOfLevelDisplay : MonoBehaviour {
         gameObject.SetActive(false);
 
         //Open the Approriate Gameplay Panels
-        GameObject.Find("Canvas").GetComponent<PanelManager>().ActivatePanels(new string[] { "PlayerUI", "ObjectiveUI" });
+        GameObject.Find("Canvas").GetComponent<PanelManager>().ActivatePanels(new string[] { "PlayerUI", "ObjectiveUI", "Minimap"});
     }
 
     //this is where we reuse the UI
