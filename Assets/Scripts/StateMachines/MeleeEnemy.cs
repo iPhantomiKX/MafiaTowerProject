@@ -428,7 +428,12 @@ public class MeleeEnemy : EnemySM {
 	}
 
 	private void DoDead()
-    {
+	{
+		
+		if (this.GetComponent<LineRenderer> ().enabled) {
+			this.GetComponent<LineRenderer> ().enabled = false;
+			OnDeath ();
+		}
         base.CheckForBodyDrag();
     }
 
