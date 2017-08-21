@@ -25,11 +25,11 @@ public class EnemyUI : MonoBehaviour {
 	void Update () {
 		this.transform.position = enemy.transform.position;
 		if (inital) {
-			lastHP = enemy.GetComponent<HealthComponent> ().health;
+            lastHP = enemy.GetComponent<HealthComponent>().GetHealth();
 			healthBar.maxValue = lastHP;
 			inital = false;
 		}
-        float curHp = enemy.GetComponent<HealthComponent>().health;
+        float curHp = enemy.GetComponent<HealthComponent>().GetHealth();
 		if (curHp != lastHP) {
 			healthBar.value = curHp;
 			lastHP = curHp;

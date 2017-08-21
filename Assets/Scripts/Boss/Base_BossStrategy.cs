@@ -66,6 +66,12 @@ public class Base_BossStrategy
             case STATES.RETREAT: Retreat(boss);
                 break;
         }
+
+        // Quick-fix to stop boss from not dieing
+        if (boss.GetComponent<HealthComponent>().GetHealth() <= 0)
+        {
+            boss.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     //protected abstract void Idle(BossData boss);

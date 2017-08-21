@@ -27,7 +27,7 @@ public class DefeatBossObjt : Objective {
 	public override void Update () {
         if (boss == null)
             boss = FindObjectOfType<BossData>();
-        if(boss.GetComponent<HealthComponent>().health <= 0 && !complete)
+        if (boss.GetComponent<HealthComponent>().GetHealth() <= 0 && !complete)
         {
             complete = true;
             om.OnComplete(gameObject);
