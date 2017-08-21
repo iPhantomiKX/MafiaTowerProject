@@ -32,7 +32,7 @@ public class BurstRegeneration : Active_BossTrait
 
     public BurstRegeneration()
     {
-        m_name = "BurstRegen";
+        m_name = "Burst Regen";
         timer_trigger = 5.0f;
     }
 
@@ -58,7 +58,7 @@ public class ConstantRegeneration : Active_BossTrait
 
     public ConstantRegeneration()
     {
-        m_name = "PassiveRegen";
+        m_name = "Passive Regen";
     }
 
     public override void Init(BossData boss)
@@ -84,7 +84,7 @@ public class MoveSpeedBurst : Active_BossTrait
 
     public MoveSpeedBurst()
     {
-        m_name = "MoveSpeedBurst";
+        m_name = "Move Speed Burst";
         timer_trigger = 5.0f;
     }
 
@@ -126,7 +126,7 @@ public class MoveSpeedIncrease : Passive_BossTrait
 
     public MoveSpeedIncrease()
     { 
-        m_name = "MoveSpeedIncrease";
+        m_name = "Move Speed Increase";
     }
 
     public override void Init(BossData boss)
@@ -143,7 +143,7 @@ public class MoveSpeedDecrease : Passive_BossTrait
 
     public MoveSpeedDecrease()
     {
-        m_name = "MoveSpeedDecrease";
+        m_name = "Move Speed Decrease";
     }
 
     public override void Init(BossData boss)
@@ -160,7 +160,7 @@ public class MeleeDamageIncrease : Passive_BossTrait
 
     public MeleeDamageIncrease()
     {
-        m_name = "MeleeDamageIncrease";
+        m_name = "Melee Damage Increase";
     }
 
     public override void Init(BossData boss)
@@ -178,7 +178,7 @@ public class MeleeDamageDecrease : Passive_BossTrait
 
     public MeleeDamageDecrease()
     {
-        m_name = "MeleeDamageDecrease";
+        m_name = "Melee Damage Decrease";
     }
 
     public override void Init(BossData boss)
@@ -196,7 +196,7 @@ public class MeleeDefenseIncrease : Passive_BossTrait
 
     public MeleeDefenseIncrease()
     {
-        m_name = "MeleeDefenseIncrease";
+        m_name = "Melee Defense Increase";
     }
 
     public override void Init(BossData boss)
@@ -214,7 +214,7 @@ public class MeleeDefenseDecrease : Passive_BossTrait
 
     public MeleeDefenseDecrease()
     {
-        m_name = "MeleeDefenseDecrease";
+        m_name = "Melee Defense Decrease";
     }
 
     public override void Init(BossData boss)
@@ -232,7 +232,7 @@ public class RangeDamageIncrease : Passive_BossTrait
 
     public RangeDamageIncrease()
     {
-        m_name = "RangeDamageIncrease";
+        m_name = "Range Damage Increase";
     }
 
     public override void Init(BossData boss)
@@ -250,7 +250,7 @@ public class RangeDamageDecrease : Passive_BossTrait
 
     public RangeDamageDecrease ()
     {
-        m_name = "RangeDamageDecrease";
+        m_name = "Range Damage Decrease";
     }
 
     public override void Init(BossData boss)
@@ -268,7 +268,7 @@ public class RangeDefenseIncrease : Passive_BossTrait
 
     public RangeDefenseIncrease()
     {
-        m_name = "RangeDefenseIncrease";
+        m_name = "Range Defense Increase";
     }
 
     public override void Init(BossData boss)
@@ -286,7 +286,7 @@ public class RangeDefenseDecrease : Passive_BossTrait
 
     public RangeDefenseDecrease()
     {
-        m_name = "RangeDefenseDecrease";
+        m_name = "Range Defense Decrease";
     }
 
     public override void Init(BossData boss)
