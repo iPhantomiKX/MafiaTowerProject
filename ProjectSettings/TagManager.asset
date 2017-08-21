@@ -15,6 +15,7 @@ TagManager:
   - VIP
   - PlayerSpawn
   - Rescue
+  - Vent
   layers:
   - Default
   - TransparentFX
