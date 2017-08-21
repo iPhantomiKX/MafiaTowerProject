@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114072483355066166}
   m_Layer: 13
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114049513260184578}
   m_Layer: 13
   m_Name: Collider (3)
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 114022632921622594}
   m_Layer: 13
   m_Name: Collider (1)
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 212261243402699858}
   m_Layer: 17
   m_Name: MinimapIcon
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 114497191332369722}
   m_Layer: 13
   m_Name: Collider (2)
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 50330509038234470}
   m_Layer: 16
   m_Name: VentEntrance
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,7 +178,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1884849801718694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.4719286, y: 8.321641, z: 0}
   m_LocalScale: {x: 0.44887286, y: 0.44887286, z: 0.44887286}
   m_Children:
   - {fileID: 4027731312178194}
@@ -452,6 +452,7 @@ MonoBehaviour:
   takesTime: 0
   time: 0
   remainingTime: 0
+  black_image: {fileID: 0}
 --- !u!212 &212261243402699858
 SpriteRenderer:
   m_ObjectHideFlags: 1

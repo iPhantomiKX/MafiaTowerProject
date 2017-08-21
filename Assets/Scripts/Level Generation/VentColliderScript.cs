@@ -41,6 +41,9 @@ public class VentColliderScript : MonoBehaviour {
     //This is turned off as the script is disabled so that Players are not Despawned.
     void OnCollisionEnter2D(Collision2D coll)
     {
+        if (coll.gameObject.tag != "Vent")
+            return;
+
         Destroy(gameObject);
         Destroy(coll.gameObject);
     }

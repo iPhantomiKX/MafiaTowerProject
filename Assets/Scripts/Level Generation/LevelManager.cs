@@ -221,11 +221,15 @@ public class LevelManager : MonoBehaviour
 
         //Added by Randall - To set the black image for the Vent Entrances
         GameObject bi = Instantiate(Resources.Load("BlackImage")) as GameObject;
-        bi.SetActive(false);
         VentInspect[] via = VentsEntranceLayout.GetComponentsInChildren<VentInspect>();
         foreach (VentInspect vi in via)
+        {
+            if (VentsLayout == null) Debug.Log("VENTS NULL");
+            vi.vents_layout = VentsLayout;
             vi.black_image = bi;
-
+        }
+        bi.SetActive(false);
+        VentsLayout.SetActive(false);
         Debug.Log("Level Spawned");
     }
 
@@ -381,13 +385,13 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        //HOTFIX Added by Randall - THIS IS QUITE BAD BUT UH IDK 
-        if(counter++ == 1)
-        {
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Vent"), LayerMask.NameToLayer("Vent"));
-            VentsLayout.SetActive(false);
-            //gameObject.SetActive(false);
-        }
+        ////HOTFIX Added by Randall - THIS IS QUITE BAD BUT UH IDK 
+        //if(counter++ == 1)
+        //{
+        //    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Vent"), LayerMask.NameToLayer("Vent"));
+        //    VentsLayout.SetActive(false);
+        //    //gameObject.SetActive(false);
+        //}
     }
 
     void SetupTilesArray()
