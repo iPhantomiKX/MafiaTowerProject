@@ -88,11 +88,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64bb6e89e6625a54e97c13701dd18fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxInitialRadius: 20
-  expandSpeed: 0.75
-  stayExpandSpeed: 0.1
-  maxRadius: 25
-  fadeSpeed: 0.02
+  maxInitialRadius: 5
+  expandSpeed: 1
+  stayExpandSpeed: 0.5
+  maxRadius: 9
+  fadeSpeed: 0.05
+  senderTeam: 1
 --- !u!212 &212677591981407126
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -123,7 +124,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 0.3455882, b: 0.3455882, a: 1}
   m_FlipX: 0

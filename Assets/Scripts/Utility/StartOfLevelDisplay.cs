@@ -62,6 +62,7 @@ public class StartOfLevelDisplay : MonoBehaviour {
 
     public void generateBossInfo()
     {
+        Debug.Log("generateBossInfo()");
         //Search for boss GameObject
         bossdata = GameObject.Find("BossObject").GetComponent<BossData>();
 
