@@ -343,7 +343,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -423,7 +423,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -476,6 +476,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  base_speed: 1
+  carrying_speed: 0.5
   mod_speed: 1
   PauseCanvasTemplate: {fileID: 223070812105744754, guid: 8f8bd4c18a2c8a34984a30120cc5cf19,
     type: 2}
@@ -531,6 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f1a44b86caf04d4db79a790d14f619b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  suitcaseSpeedPenalty: 0.5
 --- !u!114 &114456858354432972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -572,7 +575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stabEnemySound: {fileID: 8300000, guid: 3f04ff060e29bd84e9796994e1f7c192, type: 3}
-  stabAirSound: {fileID: 8300000, guid: 5bd50f2a3972a114cab066b23e98163f, type: 3}
+  stabAirSound: {fileID: 8300000, guid: d12ac793869277d4daae7bc50660c4fd, type: 3}
 --- !u!114 &114605435350371124
 MonoBehaviour:
   m_ObjectHideFlags: 1
