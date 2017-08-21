@@ -95,4 +95,9 @@ public class HealthComponent : MonoBehaviour {
     {
         return (float)origHealth + mod_health;
     }
+
+    public float GetHealth()
+    {
+        return base_health + mod_health;
+    }
 }
