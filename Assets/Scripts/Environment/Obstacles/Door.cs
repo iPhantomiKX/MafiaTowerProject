@@ -10,6 +10,7 @@ public class Door : MonoBehaviour {
 
 	private AudioSource source;
 	public AudioClip openSound;
+    public List<Sprite> DoorSprites;
 
 	void Awake(){
 		source = GetComponent<AudioSource> ();
@@ -30,7 +31,8 @@ public class Door : MonoBehaviour {
 			source.PlayOneShot (openSound);
             GetComponent<Collider2D>().isTrigger = true;
             GetComponent<EmitSound>().emitSound();
-            GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.5f);
+            //GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.5f);
+            GetComponent<SpriteRenderer>().sprite = DoorSprites[DoorSprites.Count - 1];
             GetComponent<DoorInspect>().actionName = "Close";
             closed = false;
         }
@@ -43,7 +45,8 @@ public class Door : MonoBehaviour {
     public void Close()
     {
         GetComponent<EmitSound>().emitSound();
-        GetComponent<SpriteRenderer>().color = color;
+        //GetComponent<SpriteRenderer>().color = color;
+        GetComponent<SpriteRenderer>().sprite = DoorSprites[0];
         GetComponent<Collider2D>().isTrigger = false;
         GetComponent<DoorInspect>().actionName = "Open";
         closed = true;

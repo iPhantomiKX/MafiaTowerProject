@@ -135,6 +135,7 @@ public class LevelManager : MonoBehaviour
     private TileType[][] obstacletiles;
     private TileType[][] venttiles;
     private TileType[][] interactabletiles;
+    private TileType[][] Doortiles;
 
     private List<RoomScript> existingRooms;
     private RoomScript spawnRoom;
@@ -395,12 +396,14 @@ public class LevelManager : MonoBehaviour
         venttiles = new TileType[columns][];
         obstacletiles = new TileType[columns][];
         interactabletiles = new TileType[columns][];
+        Doortiles = new TileType[columns][];
         for (int i = 0; i < maptiles.Length; i++)
         {
             maptiles[i] = new TileType[rows];
             venttiles[i] = new TileType[rows];
             obstacletiles[i] = new TileType[rows];
             interactabletiles[i] = new TileType[rows];
+            Doortiles[i] = new TileType[rows];
         }
     }
 
@@ -547,25 +550,22 @@ public class LevelManager : MonoBehaviour
                             break;
                     }
 
-                    for (int idx = 0; idx < wallTile.Length; idx++ )
-                    {
-                        //left wall
-                        maptiles[currentRoom.xpos][yCoord] = TileType.WALL_VERTICAL;
-                        //right wall
-                        maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][yCoord] = TileType.WALL_VERTICAL;
-                        //bottom wall
-                        maptiles[xCoord][currentRoom.ypos] = TileType.WALL_HORIZONTAL;
-                        //top wall
-                        maptiles[xCoord][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_HORIZONTAL;
-                        //Top Left Corner
-                        maptiles[currentRoom.xpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_TOP_LEFT_CORNER;
-                        //Top Right Corner
-                        maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_TOP_RIGHT_CORNER;
-                        //Bottom Left Corner
-                        maptiles[currentRoom.xpos][currentRoom.ypos] = TileType.WALL_BOTTOM_LEFT_CORNER;
-                        //Bottom Right Corner
-                        maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][currentRoom.ypos] = TileType.WALL_BOTTOM_RIGHT_CORNER;
-                    }
+                    //left wall
+                    maptiles[currentRoom.xpos][yCoord] = TileType.WALL_VERTICAL;
+                    //right wall
+                    maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][yCoord] = TileType.WALL_VERTICAL;
+                    //bottom wall
+                    maptiles[xCoord][currentRoom.ypos] = TileType.WALL_HORIZONTAL;
+                    //top wall
+                    maptiles[xCoord][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_HORIZONTAL;
+                    //Top Left Corner
+                    maptiles[currentRoom.xpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_TOP_LEFT_CORNER;
+                    //Top Right Corner
+                    maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_TOP_RIGHT_CORNER;
+                    //Bottom Left Corner
+                    maptiles[currentRoom.xpos][currentRoom.ypos] = TileType.WALL_BOTTOM_LEFT_CORNER;
+                    //Bottom Right Corner
+                    maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][currentRoom.ypos] = TileType.WALL_BOTTOM_RIGHT_CORNER;
                 }
             }
             IntRange randdoorXPos = new IntRange(currentRoom.xpos + 2, currentRoom.xpos + currentRoom.roomWidth - 2);
@@ -580,18 +580,23 @@ public class LevelManager : MonoBehaviour
                     {
                         if (currentRoom.doorType == 0)
                         {
-                            maptiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.DOOR;
+                            Doortiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.DOOR;
+                            maptiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.FLOOR;
                             maptiles[doorXpos + 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_ENDING_LEFT;
                             maptiles[doorXpos - 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_ENDING_RIGHT;
+                            Vector3 doorposition = new Vector3(tilespacing * (doorXpos), tilespacing * (currentRoom.ypos + currentRoom.roomHeight - 1), 0f);
+                            GameObject Door = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 180));
+                            Door.transform.parent = DoorsTileLayout.transform;
                         }
                         else if (currentRoom.doorType == 1)
                         {
-                            maptiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.HACKABLE_DOOR;
+                            Doortiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.HACKABLE_DOOR;
+                            maptiles[doorXpos][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.FLOOR;
                             maptiles[doorXpos + 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_ENDING_LEFT;
                             maptiles[doorXpos - 1][currentRoom.ypos + currentRoom.roomHeight - 1] = TileType.WALL_ENDING_RIGHT;
                             Vector3 doorposition = new Vector3(tilespacing * (doorXpos), tilespacing * (currentRoom.ypos + currentRoom.roomHeight - 1), 0f);
                             GameObject hackDoor = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 90));
-                            hackDoor.transform.parent = LevelLayout.transform;
+                            hackDoor.transform.parent = DoorsTileLayout.transform;
                         }
                     }
                     break;
@@ -599,18 +604,23 @@ public class LevelManager : MonoBehaviour
                     {
                         if (currentRoom.doorType == 0)
                         {
-                            maptiles[doorXpos][currentRoom.ypos] = TileType.DOOR;
+                            Doortiles[doorXpos][currentRoom.ypos] = TileType.DOOR;
+                            maptiles[doorXpos][currentRoom.ypos] = TileType.FLOOR;
                             maptiles[doorXpos + 1][currentRoom.ypos] = TileType.WALL_ENDING_LEFT;
                             maptiles[doorXpos - 1][currentRoom.ypos] = TileType.WALL_ENDING_RIGHT;
+                            Vector3 doorposition = new Vector3(tilespacing * (doorXpos), tilespacing * currentRoom.ypos, 0f);
+                            GameObject Door = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 0));
+                            Door.transform.parent = DoorsTileLayout.transform;
                         }
                         else if (currentRoom.doorType == 1)
                         {
-                            maptiles[doorXpos][currentRoom.ypos] = TileType.HACKABLE_DOOR;
+                            Doortiles[doorXpos][currentRoom.ypos] = TileType.HACKABLE_DOOR;
+                            maptiles[doorXpos][currentRoom.ypos] = TileType.FLOOR;
                             maptiles[doorXpos + 1][currentRoom.ypos] = TileType.WALL_ENDING_LEFT;
                             maptiles[doorXpos - 1][currentRoom.ypos] = TileType.WALL_ENDING_RIGHT;
                             Vector3 doorposition = new Vector3(tilespacing * (doorXpos), tilespacing * currentRoom.ypos, 0f);
                             GameObject hackDoor = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 270));
-                            hackDoor.transform.parent = LevelLayout.transform;
+                            hackDoor.transform.parent = DoorsTileLayout.transform;
                         }
                     }
                     break;
@@ -619,18 +629,23 @@ public class LevelManager : MonoBehaviour
                         //Door on Left Side
                         if (currentRoom.doorType == 0)
                         {
-                            maptiles[currentRoom.xpos][doorYPos] = TileType.DOOR;
+                            Doortiles[currentRoom.xpos][doorYPos] = TileType.DOOR;
+                            maptiles[currentRoom.xpos][doorYPos] = TileType.FLOOR;
                             maptiles[currentRoom.xpos][doorYPos + 1] = TileType.WALL_ENDING_BOTTOM;
                             maptiles[currentRoom.xpos][doorYPos - 1] = TileType.WALL_ENDING_TOP;
+                            Vector3 doorposition = new Vector3(tilespacing * (currentRoom.xpos), tilespacing * doorYPos, 0f);
+                            GameObject Door = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 270));
+                            Door.transform.parent = DoorsTileLayout.transform;
                         }
                         else if (currentRoom.doorType == 1)
                         {
-                            maptiles[currentRoom.xpos][doorYPos] = TileType.HACKABLE_DOOR;
+                            Doortiles[currentRoom.xpos][doorYPos] = TileType.HACKABLE_DOOR;
+                            maptiles[currentRoom.xpos][doorYPos] = TileType.FLOOR;
                             maptiles[currentRoom.xpos][doorYPos + 1] = TileType.WALL_ENDING_BOTTOM;
                             maptiles[currentRoom.xpos][doorYPos - 1] = TileType.WALL_ENDING_TOP;
                             Vector3 doorposition = new Vector3(tilespacing * (currentRoom.xpos), tilespacing * doorYPos, 0f);
                             GameObject hackDoor = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 180));
-                            hackDoor.transform.parent = LevelLayout.transform;
+                            hackDoor.transform.parent = DoorsTileLayout.transform;
                         }
                     }
                     break;
@@ -639,18 +654,23 @@ public class LevelManager : MonoBehaviour
                         //Door on Right Side
                         if (currentRoom.doorType == 0)
                         {
-                            maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.DOOR;
+                            Doortiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.DOOR;
+                            maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.FLOOR;
                             maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos + 1] = TileType.WALL_ENDING_BOTTOM;
                             maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos - 1] = TileType.WALL_ENDING_TOP;
+                            Vector3 doorposition = new Vector3(tilespacing * (currentRoom.xpos + currentRoom.roomWidth - 1), tilespacing * doorYPos, 0f);
+                            GameObject Door = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 90));
+                            Door.transform.parent = DoorsTileLayout.transform;
                         }
                         else if (currentRoom.doorType == 1)
                         {
-                            maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.HACKABLE_DOOR;
+                            Doortiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.HACKABLE_DOOR;
+                            maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos] = TileType.FLOOR;
                             maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos + 1] = TileType.WALL_ENDING_BOTTOM;
                             maptiles[currentRoom.xpos + currentRoom.roomWidth - 1][doorYPos - 1] = TileType.WALL_ENDING_TOP;
                             Vector3 doorposition = new Vector3(tilespacing * (currentRoom.xpos + currentRoom.roomWidth - 1), tilespacing * doorYPos, 0f);
                             GameObject hackDoor = Instantiate(doorTile[currentRoom.doorType], doorposition, Quaternion.Euler(0, 0, 0));
-                            hackDoor.transform.parent = LevelLayout.transform;
+                            hackDoor.transform.parent = DoorsTileLayout.transform;
                         }
                     }
                     break;
@@ -1227,7 +1247,6 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
-        //Amirul: I'll figure out a way to do this better
         for (int i = 0; i < maptiles.Length; i++)
         {
             for (int j = 0; j < maptiles[i].Length; j++)
@@ -1272,9 +1291,6 @@ public class LevelManager : MonoBehaviour
                         break;
                     case TileType.FLOOR:
                         InstantiateFromArray(floorTile, tilespacing * i, tilespacing * j, 0f);
-                        break;
-                    case TileType.DOOR:
-                        InstantiateFromArray(doorTile[0], tilespacing * i, tilespacing * j, 0f);
                         break;
                 }
             }
@@ -1383,10 +1399,14 @@ public class LevelManager : MonoBehaviour
             case TileType.INTERACTABLES: return -1;
         }
 
+        switch(Doortiles[x][y])
+        {
+            case TileType.HACKABLE_DOOR: return 5;
+        }
+
         switch (maptiles[x][y])
         {
             case TileType.FLOOR: return 1;
-            case TileType.HACKABLE_DOOR: return 5;
             //case TileType.WALL_HORIZONTAL: return -1;
             //case TileType.WALL_VERTICAL: return -1;
             //case TileType.WALL_TOP_LEFT_CORNER: return -1;
