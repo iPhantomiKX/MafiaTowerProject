@@ -34,16 +34,6 @@ public class StartOfLevelDisplay : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            bossdata = GameObject.Find("BossObject").GetComponent<BossData>();
-            generateBossInfo();
-        }
-        else if (Input.GetKeyDown(KeyCode.H))
-        {
-            generateObjectiveText();
-        }
     }
 
     void generateObjectiveText()

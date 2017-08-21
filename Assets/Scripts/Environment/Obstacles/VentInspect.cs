@@ -9,7 +9,7 @@ public class VentInspect : Inspect
     //public LayerMask PlayerLayer;
     //public LayerMask VentLayer;
 
-    private GameObject vents_layout;
+    public GameObject vents_layout;
     private GameObject player_object;
 
     private GameObject vent_entrances;
@@ -19,7 +19,7 @@ public class VentInspect : Inspect
     {
         GetComponent<SpriteRenderer>().sortingOrder = 5;
         player_object = GameObject.Find("PlayerObject");
-        vents_layout = GameObject.Find("VentsLayout");
+        //vents_layout = GameObject.Find("VentsLayout");
         //RANDALL - TODO. Can just leave as "vents" to remove this shit.
         //this fucking sucks la. idk.
         vent_entrances = GameObject.Find("VentsEntranceLayout");
