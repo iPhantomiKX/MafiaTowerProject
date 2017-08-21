@@ -67,6 +67,9 @@ public class BossGenerator : MonoBehaviour {
 
         if (!playerRef)
             playerRef = FindObjectOfType<PlayerController>();
+
+        if (!b_BossSpawned)
+            CreateBoss(this.transform.position);
     }
 	
 	// Update is called once per frame
@@ -78,8 +81,6 @@ public class BossGenerator : MonoBehaviour {
         if (!playerRef)
             playerRef = FindObjectOfType<PlayerController>();
 
-        if (!b_BossSpawned)
-            CreateBoss(this.transform.position);
 
         // Debug
         if (Input.GetKeyDown(KeyCode.M))
@@ -90,6 +91,8 @@ public class BossGenerator : MonoBehaviour {
 
     public void CreateBoss(Vector3 spawnPos)
     {
+        Debug.Log("Boss Created");
+
         b_BossSpawned = true;
 
         // Create object and give it the boss data component
@@ -123,7 +126,7 @@ public class BossGenerator : MonoBehaviour {
         go.GetComponentInChildren<BossData>().special = BossSpecialList[Random.Range(0, BossSpecialList.Count)];
 
         // Random modifiers
-        int randAmount = Random.Range(1, BossTraitList.Count);
+        int randAmount = Random.Range(1, 1 * (levelManagerRef.GetCurrentStage()));
         List<BossTrait> tempList = BossTraitList;
 
         while (randAmount > 0)
