@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212404644580446904}
   - component: {fileID: 114355813897645896}
   - component: {fileID: 114005924824343882}
+  - component: {fileID: 61390145861004008}
   m_Layer: 16
   m_Name: LaserEmitter2
   m_TagString: Untagged
@@ -37,7 +38,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4931845346361764}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: end2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +68,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4693403235669266}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: end1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +92,8 @@ GameObject:
   - component: {fileID: 114757369734686794}
   - component: {fileID: 114646501178299374}
   - component: {fileID: 82550238432451370}
-  m_Layer: 0
+  - component: {fileID: 114087445916171728}
+  m_Layer: 16
   m_Name: LaserBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,6 +111,7 @@ GameObject:
   - component: {fileID: 212262322825081612}
   - component: {fileID: 114383033336422804}
   - component: {fileID: 114351441950315054}
+  - component: {fileID: 61869302822884004}
   m_Layer: 16
   m_Name: LaserEmitter1
   m_TagString: Untagged
@@ -237,6 +240,34 @@ PolygonCollider2D:
       - {x: -0.04, y: -0.34}
       - {x: 0.03, y: -0.34}
       - {x: 0.03, y: 0.34}
+--- !u!61 &61390145861004008
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1046354389585756}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.07, y: 0.09}
+--- !u!61 &61869302822884004
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404589759817432}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.07, y: 0.09}
 --- !u!82 &82550238432451370
 AudioSource:
   m_ObjectHideFlags: 1
@@ -323,6 +354,18 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1046354389585756}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63f3e9e05a98fc4dbd13f5d5241b221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &114087445916171728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241847312241758}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b63f3e9e05a98fc4dbd13f5d5241b221, type: 3}
@@ -532,7 +575,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7763cf91494b86b468508dc79121aedd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
