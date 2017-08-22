@@ -20,7 +20,7 @@ public class ReachArea : Objective
     //// Update is called once per frame
     public override void Update()
     {
-        if(stayTimerRemain <= 0)
+        if(stayTimerRemain <= 0 && !complete)
         {
             complete = true;
             GetComponent<SpriteRenderer>().enabled = false;
